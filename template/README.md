@@ -29,7 +29,10 @@ my-docs/
 ├── public/              # 静态资源
 ├── nuxt.config.ts       # Nuxt 配置
 ├── tsconfig.json        # TypeScript 配置
-└── package.json         # 依赖与脚本
+├── package.json         # 依赖与脚本
+├── .npmrc               # npm 配置
+├── pnpm-workspace.yaml   # pnpm 工作区配置
+└── README.md             # 项目说明
 ```
 
 ## 📝 开始编写
