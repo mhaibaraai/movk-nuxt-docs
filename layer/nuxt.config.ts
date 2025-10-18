@@ -39,21 +39,6 @@ export default defineNuxtConfig({
       autoSubfolderIndex: false
     }
   },
-  vite: {
-    optimizeDeps: {
-      include: [
-        '@nuxt/content > slugify',
-        'colortranslator',
-        'tailwindcss/colors',
-        'tailwind-variants',
-        'ufo',
-        'zod',
-        'scule',
-        'motion-v',
-        'ohash'
-      ]
-    }
-  },
   icon: {
     provider: 'iconify'
   },

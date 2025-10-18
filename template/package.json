@@ -1,8 +1,9 @@
 {
   "name": "movk-nuxt-docs-template",
+  "packageManager": "pnpm@10.18.3",
   "scripts": {
-    "build": "nuxt build --extends @movk/nuxt-docs",
-    "dev": "nuxt dev --extends @movk/nuxt-docs"
+    "build": "nuxt build",
+    "dev": "nuxt dev"
   },
   "dependencies": {
     "@movk/nuxt-docs": "latest",
