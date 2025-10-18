@@ -1,0 +1,12 @@
+{
+  "name": "movk-nuxt-docs-template",
+  "scripts": {
+    "build": "nuxt build --extends @movk/nuxt-docs",
+    "dev": "nuxt dev --extends @movk/nuxt-docs"
+  },
+  "dependencies": {
+    "@movk/nuxt-docs": "latest",
+    "better-sqlite3": "^12.4.1",
+    "nuxt": "^4.1.3"
+  }
+}
