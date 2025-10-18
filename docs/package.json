@@ -1,0 +1,16 @@
+{
+  "name": "movk-nuxt-docs",
+  "type": "module",
+  "description": "An elegant documentation theme for Nuxt, powered by Nuxt UI and Nuxt Content.",
+  "scripts": {
+    "build": "nuxt build",
+    "dev": "nuxt dev"
+  },
+  "dependencies": {
+    "@movk/nuxt-docs": "workspace:*",
+    "@vercel/analytics": "^1.5.0",
+    "@vercel/speed-insights": "^1.2.0",
+    "better-sqlite3": "^12.4.1",
+    "nuxt": "^4.1.3"
+  }
+}
