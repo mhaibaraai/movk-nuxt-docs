@@ -40,7 +40,7 @@ export default defineAppConfig({
     links: [] as ButtonProps[]
   },
   footer: {
-    credits: `Copyright © 2024 - ${new Date().getFullYear()} YiXuan - <span class="text-highlighted">MIT License</span>`,
+    credits: `Copyright © 2024 - ${new Date().getFullYear()}`,
     socials: [] as ButtonProps[]
   },
   toc: {
@@ -49,8 +49,5 @@ export default defineAppConfig({
       title: '社区',
       links: [] as ButtonProps[]
     }
-  },
-  github: {
-    rootDir: 'docs'
   }
 })

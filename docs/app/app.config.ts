@@ -1,4 +1,7 @@
 export default defineAppConfig({
+  github: {
+    rootDir: 'docs'
+  },
   toc: {
     bottom: {
       links: [

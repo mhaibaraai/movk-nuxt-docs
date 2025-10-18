@@ -1,6 +1,6 @@
 import { addTemplate, createResolver, defineNuxtModule } from '@nuxt/kit'
-import { resolveModulePath } from 'exsolve'
 import { joinURL } from 'ufo'
+import { resolveModulePath } from 'exsolve'
 
 export default defineNuxtModule({
   meta: {
@@ -8,15 +8,15 @@ export default defineNuxtModule({
   },
   async setup(_options, nuxt) {
     const dir = nuxt.options.rootDir
-    const resolver = createResolver(import.meta.url)
+    const { resolve } = createResolver(import.meta.url)
 
+    const layerDir = resolve('../app')
     const contentDir = joinURL(dir, 'content')
     const uiPath = resolveModulePath('@nuxt/ui', { from: import.meta.url, conditions: ['style'] })
     const tailwindPath = resolveModulePath('tailwindcss', { from: import.meta.url, conditions: ['style'] })
-    const layerDir = resolver.resolve('../app')
 
     const cssTemplate = addTemplate({
-      filename: 'docs.css',
+      filename: 'movk-nuxt-docs.css',
       getContents: () => {
         return `@import ${JSON.stringify(tailwindPath)};
 @import ${JSON.stringify(tailwindPath)}/theme.css theme(static);
