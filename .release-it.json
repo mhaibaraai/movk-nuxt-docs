@@ -1,0 +1,51 @@
+{
+  "$schema": "https://unpkg.com/release-it@19/schema/release-it.json",
+  "git": {
+    "requireCleanWorkingDir": false,
+    "commitMessage": "chore(release): v${version}",
+    "tagName": "v${version}"
+  },
+  "npm": {
+    "publish": false,
+    "allowSameVersion": true,
+    "ignoreVersion": true
+  },
+  "github": {
+    "release": true,
+    "releaseName": "Release v${version}",
+    "web": true
+  },
+  "hooks": {
+    "before:init": [
+      "nr lint",
+      "nr typecheck"
+    ],
+    "after:release": "echo Successfully released ${name} v${version} to ${repo.repository}."
+  },
+  "plugins": {
+    "@release-it/conventional-changelog": {
+      "preset": {
+        "name": "conventionalcommits",
+        "types": [
+          { "type": "feat", "section": "✨ Features" },
+          { "type": "fix", "section": "🐛 Bug Fixes" },
+          { "type": "docs", "section": "📚 Documentation" },
+          { "type": "style", "section": "💄 Styles" },
+          { "type": "refactor", "section": "♻️ Code Refactoring" },
+          { "type": "perf", "section": "⚡ Performance Improvements" },
+          { "type": "test", "section": "✅ Tests" },
+          { "type": "build", "section": "📦 Build System" },
+          { "type": "ci", "section": "👷 CI" },
+          { "type": "chore", "section": "🔧 Chores" }
+        ]
+      },
+      "infile": "CHANGELOG.md",
+      "header": "# 📋 Changelog",
+      "ignoreRecommendedBump": true,
+      "parserOpts": {
+        "headerPattern": "^(?::\\w+:|[\\u{1F300}-\\u{1F9FF}])\\s*(\\w+)(?:\\(([^)]*)\\))?:\\s*(.*)$",
+        "headerCorrespondence": ["type", "scope", "subject"]
+      }
+    }
+  }
+}
