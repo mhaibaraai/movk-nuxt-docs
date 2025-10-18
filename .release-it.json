@@ -42,8 +42,11 @@
       "infile": "CHANGELOG.md",
       "header": "# 📋 Changelog",
       "ignoreRecommendedBump": true,
+      "gitRawCommitsOpts": {
+        "path": "."
+      },
       "parserOpts": {
-        "headerPattern": "^(?::\\w+:|[\\u{1F300}-\\u{1F9FF}])\\s*(\\w+)(?:\\(([^)]*)\\))?:\\s*(.*)$",
+        "headerPattern": "^(?:(?:[\\uD83C-\\uDBFF\\uDC00-\\uDFFF]|[\\u2600-\\u27BF])+\\s+)?(\\w+)(?:\\(([^)]*)\\))?!?:\\s(.+)$",
         "headerCorrespondence": ["type", "scope", "subject"]
       }
     }
