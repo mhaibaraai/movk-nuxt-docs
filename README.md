@@ -31,36 +31,35 @@
 
 ### 使用模板创建项目
 
-```bash
+```bash [Terminal]
 # 使用此模板创建新项目
-npx nuxi init -t gh:mhaibaraai/movk-nuxt-docs/template my-docs
-
+npx nuxi init -t gh:mhaibaraai/movk-nuxt-docs/template/default my-docs
 # 进入项目目录
 cd my-docs
-
 # 启动开发服务器
 pnpm dev
 ```
+访问 `http://localhost:3000` 查看你的文档网站。
 
 ### 作为 Layer 使用
 
 在现有 Nuxt 项目中使用 Movk Nuxt Docs 作为 layer：
 
-```bash
+```bash [Terminal]
 # 安装依赖
 pnpm add @movk/nuxt-docs better-sqlite3
 ```
 
 在 CSS 中导入 Tailwind CSS 和 Nuxt UI
 
-```css [~/assets/css/main.css]
+```css [app/assets/css/main.css]
 @import 'tailwindcss';
 @import '@nuxt/ui';
 ```
 
 在 `nuxt.config.ts` 中配置：
 
-```ts
+```ts [nuxt.config.ts]
 export default defineNuxtConfig({
   extends: ['@movk/nuxt-docs'],
   css: ['~/assets/css/main.css'],
@@ -80,17 +79,19 @@ export default defineNuxtConfig({
 
 ```bash
 my-docs/
-├── app/assets/css/main.css             # 全局样式
-├── content/             # Markdown 内容
-│   ├── index.md         # 首页
-│   └── docs/            # 文档页面
-├── public/              # 静态资源
-├── nuxt.config.ts       # Nuxt 配置
-├── tsconfig.json        # TypeScript 配置
-├── package.json         # 依赖与脚本
-├── .npmrc               # npm 配置
-├── pnpm-workspace.yaml   # pnpm 工作区配置
-└── README.md             # 项目说明
+├── app/
+│   ├── assets/css/main.css      # 全局样式
+│   └── composables/             # 自定义 Composables
+├── content/                     # Markdown 内容
+│   ├── index.md                 # 首页
+│   └── docs/                    # 文档页面
+├── public/                      # 静态资源
+├── scripts/                     # 脚本
+├── nuxt.config.ts               # Nuxt 配置
+├── tsconfig.json                # TypeScript 配置
+├── package.json                 # 依赖与脚本
+├── pnpm-workspace.yaml          # pnpm 工作区配置
+└── README.md                    # 项目说明
 ```
 
 ### Monorepo 结构
@@ -142,13 +143,13 @@ icon: i-lucide-rocket
 
 ### Vercel Analytics
 
-```bash
+```bash [Terminal]
 pnpm add @vercel/analytics @vercel/speed-insights
 ```
 
 创建 `app/plugins/analytics.client.ts`：
 
-```typescript
+```typescript [app/plugins/analytics.client.ts]
 import { Analytics } from '@vercel/analytics/nuxt'
 import { SpeedInsights } from '@vercel/speed-insights/nuxt'
 import { createApp, h } from 'vue'
@@ -189,16 +190,13 @@ export default defineNuxtPlugin({
 
 ### 本地开发
 
-```bash
+```bash [Terminal]
 # 克隆项目
 git clone https://github.com/mhaibaraai/movk-nuxt-docs.git
-
 # 进入项目目录
 cd movk-nuxt-docs
-
 # 安装依赖
 pnpm install
-
 # 启动开发服务器
 pnpm dev
 ```
@@ -207,20 +205,18 @@ pnpm dev
 
 ### 构建生产版本
 
-```bash
+```bash [Terminal]
 # 构建应用
 pnpm build
-
 # 本地预览生产构建
 pnpm preview
 ```
 
 ### 发布
 
-```bash
+```bash [Terminal]
 # 发布 layer 到 npm
 pnpm release:layer
-
 # 发布完整项目
 pnpm release
 ```
