@@ -9,8 +9,8 @@ importers:
   .:
     devDependencies:
       '@antfu/ni':
-        specifier: ^26.2.0
-        version: 26.2.0
+        specifier: ^27.0.0
+        version: 27.0.0
       '@nuxt/devtools':
         specifier: ^2.6.5
         version: 2.6.5(vite@7.1.10(@types/node@24.8.1)(jiti@2.6.1)(lightningcss@1.30.1)(terser@5.44.0)(tsx@4.20.6)(yaml@2.8.1))(vue@3.5.22(typescript@5.9.3))
