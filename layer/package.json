@@ -27,7 +27,7 @@
     "README.md"
   ],
   "dependencies": {
-    "@iconify-json/lucide": "^1.2.69",
+    "@iconify-json/lucide": "^1.2.70",
     "@iconify-json/simple-icons": "^1.2.54",
     "@iconify-json/vscode-icons": "^1.2.32",
     "@movk/core": "^0.0.5",
@@ -42,7 +42,7 @@
     "pathe": "^2.0.3",
     "exsolve": "^1.0.7",
     "git-url-parse": "^16.1.0",
-    "motion-v": "^1.7.2",
+    "motion-v": "^1.7.3",
     "nuxt-component-meta": "^0.14.1",
     "prettier": "^3.6.2",
     "nuxt-llms": "^0.1.3",
