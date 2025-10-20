@@ -1,0 +1,27 @@
+{
+  "name": "movk-nuxt-docs-template",
+  "packageManager": "pnpm@10.18.3",
+  "scripts": {
+    "build": "nuxt build",
+    "dev": "nuxt dev",
+    "preview": "nuxt preview",
+    "up": "taze major -wIr",
+    "typecheck": "nuxt typecheck",
+    "lint": "eslint .",
+    "lint:fix": "eslint . --fix",
+    "clean": "tsx scripts/rm.ts"
+  },
+  "dependencies": {
+    "@movk/nuxt-docs": "latest",
+    "better-sqlite3": "^12.4.1",
+    "nuxt": "^4.1.3"
+  },
+  "devDependencies": {
+    "@nuxt/eslint": "^1.9.0",
+    "tsx": "^4.20.6",
+    "typescript": "^5.9.3",
+    "taze": "^19.8.1",
+    "fast-glob": "^3.3.3",
+    "vue-tsc": "^3.1.1"
+  }
+}

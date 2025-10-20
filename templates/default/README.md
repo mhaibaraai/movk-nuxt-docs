@@ -8,9 +8,9 @@
 
 ### 使用此模板创建项目
 
-```bash
+```bash [Terminal]
 # 使用此模板创建新项目
-npx nuxi init -t gh:mhaibaraai/movk-nuxt-docs/template my-docs
+npx nuxi init -t gh:mhaibaraai/movk-nuxt-docs/template/default my-docs
 # 进入项目目录
 cd my-docs
 # 启动开发服务器
@@ -23,17 +23,19 @@ pnpm dev
 
 ```bash
 my-docs/
-├── app/assets/css/main.css             # 全局样式
-├── content/             # Markdown 内容
-│   ├── index.md         # 首页
-│   └── docs/            # 文档页面
-├── public/              # 静态资源
-├── nuxt.config.ts       # Nuxt 配置
-├── tsconfig.json        # TypeScript 配置
-├── package.json         # 依赖与脚本
-├── .npmrc               # npm 配置
-├── pnpm-workspace.yaml   # pnpm 工作区配置
-└── README.md             # 项目说明
+├── app/
+│   ├── assets/css/main.css      # 全局样式
+│   └── composables/             # 自定义 Composables
+├── content/                     # Markdown 内容
+│   ├── index.md                 # 首页
+│   └── docs/                    # 文档页面
+├── public/                      # 静态资源
+├── scripts/                     # 脚本
+├── nuxt.config.ts               # Nuxt 配置
+├── tsconfig.json                # TypeScript 配置
+├── package.json                 # 依赖与脚本
+├── pnpm-workspace.yaml          # pnpm 工作区配置
+└── README.md                    # 项目说明
 ```
 
 ## 📝 开始编写
@@ -121,10 +123,16 @@ public/
 
 编辑 `nuxt.config.ts`:
 
-```ts
+```ts [nuxt.config.ts]
 export default defineNuxtConfig({
   extends: ['@movk/nuxt-docs'],
+  modules: ['@nuxt/eslint'],
   css: ['~/assets/css/main.css'],
+  routeRules: {
+    // redirects - default root pages
+    '/docs': { redirect: '/docs/getting-started', prerender: false },
+  },
+  compatibilityDate: 'latest',
   // 你的自定义配置
   site: {
     url: 'https://your-domain.com',
@@ -137,7 +145,7 @@ export default defineNuxtConfig({
 
 创建 `app.config.ts` 来自定义主题：
 
-```ts
+```ts [app.config.ts]
 export default defineAppConfig({
   ui: {
     colors: {
@@ -154,7 +162,7 @@ export default defineAppConfig({
 
 创建 `app/components/` 目录来添加自定义组件：
 
-```
+```bash
 app/
 └── components/
     └── MyCustomComponent.vue
@@ -172,7 +180,7 @@ app/
 
 创建 `app/assets/css/main.css`:
 
-```css
+```css [app/assets/css/main.css]
 @import 'tailwindcss';
 @import '@nuxt/ui';
 
@@ -184,15 +192,6 @@ app/
 :root {
   --ui-container: var(--container-8xl);
 }
-```
-
-在 `nuxt.config.ts` 中引入：
-
-```ts
-export default defineNuxtConfig({
-  extends: ['@movk/nuxt-docs'],
-  css: ['~/app/assets/css/main.css']
-})
 ```
 
 ## 🔧 脚本命令
@@ -208,6 +207,8 @@ pnpm preview          # 预览生产构建
 # 其他
 pnpm typecheck        # 类型检查
 pnpm lint             # 代码检查
+pnpm lint:fix         # 自动修复代码问题
+pnpm clean            # 清理生成文件
 ```
 
 ## 📦 构建和部署
@@ -225,13 +226,6 @@ pnpm build
 1. 将项目推送到 GitHub
 2. 在 [Vercel](https://vercel.com) 导入项目
 3. Vercel 会自动检测 Nuxt 项目并部署
-
-### 部署到 Netlify
-
-1. 将项目推送到 GitHub
-2. 在 [Netlify](https://netlify.com) 导入项目
-3. 设置构建命令: `pnpm build`
-4. 设置发布目录: `.output/public`
 
 ### 部署到其他平台
 
