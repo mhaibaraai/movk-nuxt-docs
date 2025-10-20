@@ -25,7 +25,7 @@
     "clean": "tsx scripts/rm.ts"
   },
   "devDependencies": {
-    "@antfu/ni": "^26.2.0",
+    "@antfu/ni": "^27.0.0",
     "@nuxt/devtools": "^2.6.5",
     "@nuxt/eslint": "^1.9.0",
     "@release-it/bumper": "^7.0.5",
