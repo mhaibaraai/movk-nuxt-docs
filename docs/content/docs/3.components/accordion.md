@@ -19,8 +19,8 @@ options:
   - name: 'type'
     label: 'type'
     items:
-    - 'multiple'
-    - 'single'
+      - 'multiple'
+      - 'single'
     default: 'single'
   - name: 'trailingIcon'
     label: 'trailingIcon'
@@ -43,8 +43,8 @@ options:
   - name: 'type'
     label: 'type'
     items:
-    - 'multiple'
-    - 'single'
+      - 'multiple'
+      - 'single'
     default: 'single'
   - name: 'trailingIcon'
     label: 'trailingIcon'
@@ -56,5 +56,3 @@ props:
 :::
 ```
 ::
-
-
