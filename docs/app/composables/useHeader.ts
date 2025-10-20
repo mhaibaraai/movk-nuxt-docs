@@ -21,10 +21,10 @@ export function useHeader() {
     to: '/docs/essentials',
     active: route.path.startsWith('/docs/essentials')
   }, {
-    label: 'Composables',
+    label: 'Components',
     icon: 'i-lucide-square-function',
-    to: '/docs/composables',
-    active: route.path.startsWith('/docs/composables')
+    to: '/docs/components',
+    active: route.path.startsWith('/docs/components')
   }, {
     label: '发布版本',
     icon: 'i-lucide-newspaper',
