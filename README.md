@@ -33,7 +33,7 @@
 
 ```bash [Terminal]
 # 使用此模板创建新项目
-npx nuxi init -t gh:mhaibaraai/movk-nuxt-docs/template/default my-docs
+npx nuxi init -t gh:mhaibaraai/movk-nuxt-docs/templates/default my-docs
 # 进入项目目录
 cd my-docs
 # 启动开发服务器
