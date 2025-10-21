@@ -29,14 +29,14 @@ async function removePath(targetPath: string): Promise<RemovalResult> {
   try {
     await rm(targetPath, { recursive: true, force: true, maxRetries: 3 })
     return { path: targetPath, success: true }
-  } catch (error: any) {
-    if (error.code === 'ENOENT') {
+  } catch (error) {
+    if ((error as NodeJS.ErrnoException).code === 'ENOENT') {
       return { path: targetPath, success: true }
     }
     return {
       path: targetPath,
       success: false,
-      error: error.message
+      error: error instanceof Error ? error.message : String(error)
     }
   }
 }
@@ -68,8 +68,8 @@ async function cleanProject(): Promise<void> {
       ignore: ['**/node_modules/**/node_modules/**'],
       suppressErrors: true
     })
-  } catch (error: any) {
-    console.error('Error searching for files:', error.message)
+  } catch (error) {
+    console.error('Error searching for files:', error instanceof Error ? error.message : String(error))
     process.exit(1)
   }
 
@@ -78,13 +78,10 @@ async function cleanProject(): Promise<void> {
     return
   }
 
-  // 去重和排序（从深到浅，避免删除父目录后子目录不存在）
   pathsToRemove = [...new Set(pathsToRemove)].sort((a, b) => b.length - a.length)
 
-  // 批量处理删除
   const results = await processBatch(pathsToRemove)
 
-  // 统计结果
   const stats: CleanupStats = {
     totalRemoved: 0,
     totalAttempted: results.length,
@@ -113,13 +110,12 @@ async function cleanProject(): Promise<void> {
   }
 }
 
-// 处理 Ctrl+C 中断
 process.on('SIGINT', () => {
   console.log('\nCleanup interrupted')
   process.exit(130)
 })
 
 cleanProject().catch((error) => {
-  console.error('Cleanup failed:', error.message)
+  console.error('Cleanup failed:', error instanceof Error ? error.message : String(error))
   process.exit(1)
 })

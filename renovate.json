@@ -1,48 +1,26 @@
 {
   "$schema": "https://docs.renovatebot.com/renovate-schema.json",
   "extends": [
-    "config:recommended",
     "github>nuxt/renovate-config-nuxt"
   ],
   "lockFileMaintenance": {
-    "enabled": true,
-    "schedule": ["before 3am on Monday"]
+    "enabled": true
   },
-  "ignoreDeps": [
-    "typescript"
-  ],
   "packageRules": [
     {
-      "groupName": "nuxt",
-      "matchPackageNames": [
-        "nuxt",
-        "@nuxt/devtools",
-        "@nuxt/eslint"
-      ]
+      "matchDepTypes": [
+        "peerDependencies"
+      ],
+      "enabled": false
     },
     {
-      "groupName": "eslint",
-      "matchPackageNames": [
-        "eslint",
-        "@nuxt/eslint"
-      ]
-    },
-    {
-      "groupName": "release-it",
-      "matchPackageNames": [
-        "release-it",
-        "@release-it/bumper",
-        "@release-it/conventional-changelog"
-      ]
-    },
-    {
-      "matchDepTypes": ["peerDependencies"],
+      "matchDepTypes": [
+        "resolutions"
+      ],
       "enabled": false
     }
   ],
   "postUpdateOptions": [
     "pnpmDedupe"
-  ],
-  "prConcurrentLimit": 5,
-  "prHourlyLimit": 2
+  ]
 }

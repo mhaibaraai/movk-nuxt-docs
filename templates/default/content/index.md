@@ -12,22 +12,33 @@ orientation: horizontal
 :hero-background
 
 #title
+:::motion
 打造精美[文档]{.text-primary}.
+:::
 
 #description
+:::motion
+---
+transition: { duration: 0.6, delay: 0.3 }
+---
 一款由 Nuxt UI 和 Nuxt Content 强力驱动的 Nuxt 优雅文档主题，内置内容管理、SEO、暗黑模式、全文搜索等功能，助您轻松构建美观、专业的文档网站。
+:::
 
 #links
-  :::u-button
+:::motion{class="flex flex-wrap gap-x-6 gap-y-3"}
+---
+transition: { duration: 0.6, delay: 0.5 }
+---
+  ::::u-button
   ---
   to: /docs/getting-started
   size: xl
   trailing-icon: i-lucide-arrow-right
   ---
   快速入门
-  :::
+  ::::
 
-  :::u-button
+  ::::u-button
   ---
   icon: i-simple-icons-github
   color: neutral
@@ -37,10 +48,15 @@ orientation: horizontal
   target: _blank
   ---
   使用模板
-  :::
+  ::::
+:::
 
 #default
-  :::prose-pre
+:::motion
+---
+transition: { duration: 0.6, delay: 0.1 }
+---
+  ::::prose-pre
   ---
   code: |
     export default defineNuxtConfig({
@@ -66,7 +82,8 @@ orientation: horizontal
     }
   })
   ```
-  :::
+  ::::
+:::
 ::
 
 ::u-page-section{class="dark:bg-neutral-950"}
