@@ -6,5 +6,13 @@ export default defineNuxtConfig({
     // redirects - default root pages
     '/docs': { redirect: '/docs/getting-started', prerender: false }
   },
-  compatibilityDate: 'latest'
+  compatibilityDate: 'latest',
+  eslint: {
+    config: {
+      stylistic: {
+        commaDangle: 'never',
+        braceStyle: '1tbs'
+      }
+    }
+  }
 })

@@ -1,5 +1,11 @@
 {
   "eslint.useFlatConfig": true,
+  "editor.formatOnSave": false,
+  // Auto fix
+  "editor.codeActionsOnSave": {
+    "source.fixAll.eslint": "explicit",
+    "source.organizeImports": "never"
+  },
   "iconify.annotations": true,
   "iconify.inplace": true,
   "files.associations": {
@@ -15,7 +21,10 @@
     "inactive-class"
   ],
   "tailwindCSS.experimental.classRegex": [
-    ["ui:\\s*{([^)]*)\\s*}", "(?:'|\"|`)([^']*)(?:'|\"|`)"]
+    [
+      "ui:\\s*{([^)]*)\\s*}",
+      "(?:'|\"|`)([^']*)(?:'|\"|`)"
+    ]
   ],
   // Required for the extension
   "mdc.enableFormatting": true,
