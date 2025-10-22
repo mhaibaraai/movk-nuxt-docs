@@ -37,10 +37,10 @@ export default defineContentConfig({
     })),
     docs: defineCollection(asSeoCollection({
       type: 'page',
-      source: {
+      source: [{
         cwd,
         include: 'docs/**/*'
-      },
+      }],
       schema: z.object({
         links: z.array(Button),
         category: z.string().optional(),
