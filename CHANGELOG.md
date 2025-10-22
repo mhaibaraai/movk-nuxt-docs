@@ -1,5 +1,15 @@
 # 📋 Changelog
 
+## [1.1.2](https://github.com/mhaibaraai/movk-nuxt-docs/compare/v1.1.1...v1.1.2) (2025-10-22)
+
+### ✨ Features
+
+* 为首页添加动画效果 ([bcb520a](https://github.com/mhaibaraai/movk-nuxt-docs/commit/bcb520a562514c2c175351fdf674c7b7dfe4689f))
+
+### 🐛 Bug Fixes
+
+* 修复导航引用和内容配置格式 ([0f9d0aa](https://github.com/mhaibaraai/movk-nuxt-docs/commit/0f9d0aa2d4ac029cd1bcf8b5f90338d2ebd942db))
+
 ## [1.1.1](https://github.com/mhaibaraai/movk-nuxt-docs/compare/v1.1.0...v1.1.1) (2025-10-20)
 
 ### 🐛 Bug Fixes
