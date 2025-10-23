@@ -27,6 +27,9 @@ export default defineNuxtConfig({
   },
   compatibilityDate: 'latest',
   nitro: {
+    prerender: {
+      routes: ['/llms.txt', '/llms-full.txt']
+    },
     externals: {
       inline: [
         '@nuxtjs/mdc',
