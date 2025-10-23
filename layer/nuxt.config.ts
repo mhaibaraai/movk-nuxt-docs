@@ -31,6 +31,10 @@ export default defineNuxtConfig({
       noApiRoute: false
     }
   },
+  routeRules: {
+    '/llms.txt': { prerender: true },
+    '/llms-full.txt': { prerender: true }
+  },
   compatibilityDate: 'latest',
   nitro: {
     prerender: {

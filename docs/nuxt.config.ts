@@ -17,6 +17,9 @@ export default defineNuxtConfig({
     url: 'https://docs.mhaibaraai.cn'
   },
   routeRules: {
+    // llms routes should be prerendered as static files
+    '/llms.txt': { prerender: true },
+    '/llms-full.txt': { prerender: true },
     // redirects - default root pages
     '/docs': { redirect: '/docs/getting-started', prerender: false },
     '/docs/essentials': { redirect: '/docs/essentials/markdown-syntax', prerender: false },
