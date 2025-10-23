@@ -32,8 +32,8 @@ export default defineNuxtConfig({
     }
   },
   routeRules: {
-    '/llms.txt': { prerender: true },
-    '/llms-full.txt': { prerender: true }
+    '/llms.txt': { prerender: true, isr: false },
+    '/llms-full.txt': { prerender: true, isr: false }
   },
   compatibilityDate: 'latest',
   nitro: {
