@@ -34,26 +34,26 @@ export default defineNuxtConfig({
   compatibilityDate: 'latest',
   nitro: {
     prerender: {
-      routes: ['/', '/sitemap.xml', '/robots.txt', '/404.html'],
+      routes: ['/', '/sitemap.xml', '/robots.txt', '/404.html', '/llms.txt', '/llms-full.txt'],
       crawlLinks: true,
       autoSubfolderIndex: false
     }
   },
-  // vite: {
-  //   optimizeDeps: {
-  //     include: [
-  //       '@nuxt/content > slugify',
-  //       'colortranslator',
-  //       'tailwindcss/colors',
-  //       'tailwind-variants',
-  //       'ufo',
-  //       'zod',
-  //       'scule',
-  //       'motion-v',
-  //       'ohash'
-  //     ]
-  //   }
-  // },
+  vite: {
+    optimizeDeps: {
+      include: [
+        '@nuxt/content > slugify',
+        'colortranslator',
+        'tailwindcss/colors',
+        'tailwind-variants',
+        'ufo',
+        'zod',
+        'scule',
+        'motion-v',
+        'ohash'
+      ]
+    }
+  },
   icon: {
     provider: 'iconify'
   },

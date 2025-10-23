@@ -14,12 +14,13 @@ export default defineNuxtModule({
     const contentDir = joinURL(dir, 'content')
     const uiPath = resolveModulePath('@nuxt/ui', { from: import.meta.url, conditions: ['style'] })
     const tailwindPath = resolveModulePath('tailwindcss', { from: import.meta.url, conditions: ['style'] })
+    const tailwindThemePath = tailwindPath.replace(/index\.css$/, 'theme.css')
 
     const cssTemplate = addTemplate({
       filename: 'movk-nuxt-docs.css',
       getContents: () => {
         return `@import ${JSON.stringify(tailwindPath)};
-@import ${JSON.stringify(tailwindPath)}/theme.css theme(static);
+@import ${JSON.stringify(tailwindThemePath)} layer(theme) theme(static);
 @import ${JSON.stringify(uiPath)};
 
 @source "${contentDir.replace(/\\/g, '/')}/**/*";
