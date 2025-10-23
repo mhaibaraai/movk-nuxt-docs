@@ -42,7 +42,6 @@ export default defineNuxtConfig({
   vite: {
     optimizeDeps: {
       include: [
-        '@nuxt/content > slugify',
         'colortranslator',
         'tailwindcss/colors',
         'tailwind-variants',
