@@ -23,6 +23,14 @@ export default defineNuxtConfig({
     '/docs/components': { redirect: '/docs/components/component-props', prerender: false }
   },
   compatibilityDate: 'latest',
+  nitro: {
+    externals: {
+      inline: [
+        '@nuxtjs/mdc',
+        '@nuxt/content'
+      ]
+    }
+  },
   llms: {
     domain: 'https://docs.mhaibaraai.cn',
     title: 'Movk Nuxt Docs',
