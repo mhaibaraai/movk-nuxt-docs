@@ -18,8 +18,8 @@ export default defineNuxtConfig({
   },
   routeRules: {
     // llms routes should be prerendered as static files for Vercel
-    '/llms.txt': { prerender: true, isr: false },
-    '/llms-full.txt': { prerender: true, isr: false },
+    '/llms.txt': { prerender: true, static: true, noScripts: true },
+    '/llms-full.txt': { prerender: true, static: true, noScripts: true },
     // redirects - default root pages
     '/docs': { redirect: '/docs/getting-started', prerender: false },
     '/docs/essentials': { redirect: '/docs/essentials/markdown-syntax', prerender: false },
