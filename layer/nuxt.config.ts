@@ -9,13 +9,13 @@ export default defineNuxtConfig({
     resolve('./modules/component-example'),
     resolve('./modules/component-meta'),
     '@nuxt/ui',
+    '@nuxtjs/seo',
     '@nuxt/content',
     '@nuxt/image',
     '@vueuse/nuxt',
-    '@nuxtjs/seo',
+    'nuxt-llms',
     'nuxt-component-meta',
-    'motion-v/nuxt',
-    'nuxt-llms'
+    'motion-v/nuxt'
   ],
   content: {
     build: {
@@ -38,7 +38,7 @@ export default defineNuxtConfig({
   compatibilityDate: 'latest',
   nitro: {
     prerender: {
-      routes: ['/', '/sitemap.xml', '/robots.txt', '/404.html', '/llms.txt', '/llms-full.txt'],
+      routes: ['/', '/sitemap.xml', '/robots.txt', '/404.html'],
       crawlLinks: true,
       autoSubfolderIndex: false
     }
@@ -70,6 +70,7 @@ export default defineNuxtConfig({
     }
   },
   ogImage: {
+    zeroRuntime: true,
     googleFontMirror: 'fonts.loli.net',
     fonts: [
       // 思源黑体 - 支持中文
