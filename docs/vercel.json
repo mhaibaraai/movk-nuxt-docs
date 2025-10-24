@@ -1,20 +1,16 @@
 {
   "routes": [
     {
-      "src": "/llms\\.txt",
+      "src": "/llms.txt",
       "dest": "/llms.txt",
-      "headers": {
-        "Content-Type": "text/plain; charset=utf-8",
-        "Cache-Control": "public, max-age=3600, s-maxage=3600"
-      }
+      "methods": ["GET"],
+      "continue": false
     },
     {
-      "src": "/llms-full\\.txt",
+      "src": "/llms-full.txt", 
       "dest": "/llms-full.txt",
-      "headers": {
-        "Content-Type": "text/plain; charset=utf-8",
-        "Cache-Control": "public, max-age=3600, s-maxage=3600"
-      }
+      "methods": ["GET"],
+      "continue": false
     }
   ]
 }

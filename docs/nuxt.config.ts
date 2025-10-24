@@ -17,26 +17,12 @@ export default defineNuxtConfig({
     url: 'https://docs.mhaibaraai.cn'
   },
   routeRules: {
-    // llms routes should be prerendered as static files for Vercel
-    '/llms.txt': { prerender: true, static: true, noScripts: true },
-    '/llms-full.txt': { prerender: true, static: true, noScripts: true },
     // redirects - default root pages
     '/docs': { redirect: '/docs/getting-started', prerender: false },
     '/docs/essentials': { redirect: '/docs/essentials/markdown-syntax', prerender: false },
     '/docs/components': { redirect: '/docs/components/component-props', prerender: false }
   },
   compatibilityDate: 'latest',
-  nitro: {
-    prerender: {
-      routes: ['/llms.txt', '/llms-full.txt']
-    },
-    externals: {
-      inline: [
-        '@nuxtjs/mdc',
-        '@nuxt/content'
-      ]
-    }
-  },
   llms: {
     domain: 'https://docs.mhaibaraai.cn',
     title: 'Movk Nuxt Docs',
