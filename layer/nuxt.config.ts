@@ -34,7 +34,7 @@ export default defineNuxtConfig({
   compatibilityDate: 'latest',
   nitro: {
     prerender: {
-      routes: ['/', '/sitemap.xml', '/robots.txt', '/404.html'],
+      routes: ['/', '/sitemap.xml', '/robots.txt', '/404.html', 'llms.txt', 'llms-full.txt'],
       crawlLinks: true,
       autoSubfolderIndex: false
     }
