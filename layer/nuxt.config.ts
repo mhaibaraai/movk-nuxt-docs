@@ -9,7 +9,6 @@ export default defineNuxtConfig({
     resolve('./modules/css'),
     resolve('./modules/component-example'),
     resolve('./modules/component-meta'),
-    resolve('./modules/llms-rename'),
     '@nuxt/ui',
     '@nuxt/content',
     '@nuxt/image',
@@ -37,10 +36,6 @@ export default defineNuxtConfig({
     public: {
       version: pkg.version
     }
-  },
-  routeRules: {
-    '/llms.txt': { redirect: '/_llms.txt' },
-    '/llms-full.txt': { redirect: '/_llms-full.txt' }
   },
   experimental: {
     typescriptPlugin: true
