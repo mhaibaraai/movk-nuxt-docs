@@ -25,8 +25,8 @@
     "clean": "tsx scripts/rm.ts"
   },
   "devDependencies": {
-    "@antfu/ni": "^27.0.0",
-    "@nuxt/devtools": "^2.6.5",
+    "@antfu/ni": "^27.0.1",
+    "@nuxt/devtools": "^2.7.0",
     "@nuxt/eslint": "^1.9.0",
     "@release-it/bumper": "^7.0.5",
     "@release-it/conventional-changelog": "^10.0.1",
@@ -37,6 +37,6 @@
     "taze": "^19.8.1",
     "tsx": "^4.20.6",
     "typescript": "^5.9.3",
-    "vue-tsc": "^3.1.1"
+    "vue-tsc": "^3.1.2"
   }
 }
