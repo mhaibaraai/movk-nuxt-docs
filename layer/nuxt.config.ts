@@ -9,6 +9,7 @@ export default defineNuxtConfig({
     resolve('./modules/css'),
     resolve('./modules/component-example'),
     resolve('./modules/component-meta'),
+    resolve('./modules/llms-rename'),
     '@nuxt/ui',
     '@nuxt/content',
     '@nuxt/image',
@@ -37,6 +38,10 @@ export default defineNuxtConfig({
       version: pkg.version
     }
   },
+  routeRules: {
+    '/llms.txt': { redirect: '/_llms.txt' },
+    '/llms-full.txt': { redirect: '/_llms-full.txt' }
+  },
   experimental: {
     typescriptPlugin: true
   },
@@ -50,20 +55,19 @@ export default defineNuxtConfig({
   },
   vite: {
     optimizeDeps: {
-      // Pre-bundle CommonJS dependencies for Nuxt 4.2+ compatibility
+      // 预打包 CommonJS 依赖以兼容 Nuxt 4.2+
       // See: https://cn.vite.dev/config/dep-optimization-options.html
       include: [
         '@nuxt/content',
-        'extend', // Required by unified (used in @nuxt/content for markdown processing)
-        'debug', // Required by Babel and dev tools
+        'extend', // unified 所需（用于 @nuxt/content 的 markdown 处理）
+        'debug', // Babel 和开发工具所需
         'tailwind-variants'
       ]
     },
     resolve: {
       alias: {
-        // Ensure CommonJS modules resolve to correct entry points
         extend: 'extend/index.js',
-        debug: 'debug/src/browser.js' // Use browser version for client-side
+        debug: 'debug/src/browser.js'
       }
     }
   },

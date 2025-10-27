@@ -17,9 +17,6 @@ export default defineNuxtConfig({
     url: 'https://docs.mhaibaraai.cn'
   },
   routeRules: {
-    // 强制预渲染 llms 文件为静态资源,避免 Vercel 转换为函数导致 500 错误
-    '/llms.txt': { prerender: true },
-    '/llms-full.txt': { prerender: true },
     // redirects - default root pages
     '/docs': { redirect: '/docs/getting-started', prerender: false },
     '/docs/essentials': { redirect: '/docs/essentials/markdown-syntax', prerender: false },
