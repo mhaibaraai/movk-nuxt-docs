@@ -32,10 +32,19 @@ export default defineNuxtConfig({
   compatibilityDate: 'latest',
   hooks: {
     async 'nitro:build:public-assets'() {
-      const outputPath = process.env.NITRO_PRESET === 'vercel'
-        ? join(process.cwd(), '.vercel/output/static')
-        : resolve('.output/public')
-      await rename(join(outputPath, 'llms-full.txt'), join(outputPath, '_llms-full.txt'))
+      if (process.env.NITRO_PRESET !== 'vercel') {
+        return
+      }
+
+      const outputPath = resolve('.output/public')
+      const sourcePath = join(outputPath, 'llms-full.txt')
+      const targetPath = join(outputPath, '_llms-full.txt')
+
+      try {
+        await rename(sourcePath, targetPath)
+      } catch {
+        console.warn('llms-full.txt not found, skipping rename')
+      }
     }
   },
   llms: {
