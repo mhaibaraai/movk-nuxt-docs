@@ -19,7 +19,7 @@ interface RemovalResult {
 const args = process.argv.slice(2)
 const TARGETS_TO_REMOVE = args.length > 0
   ? args
-  : ['node_modules', '.nuxt', '.data', '.output', '.cache', 'dist', 'dist.zip', 'pnpm-lock.yaml']
+  : ['node_modules', '.nuxt', '.data', '.output', '.cache', 'dist', 'dist.zip']
 const ROOT_DIR = resolve(process.cwd())
 
 // 批处理大小，避免同时打开过多文件句柄
