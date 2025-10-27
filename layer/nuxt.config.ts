@@ -1,4 +1,5 @@
 import { createResolver } from '@nuxt/kit'
+import pkg from './package.json'
 
 const { resolve } = createResolver(import.meta.url)
 
@@ -31,6 +32,14 @@ export default defineNuxtConfig({
       noApiRoute: false
     }
   },
+  runtimeConfig: {
+    public: {
+      version: pkg.version
+    }
+  },
+  experimental: {
+    typescriptPlugin: true
+  },
   compatibilityDate: 'latest',
   nitro: {
     prerender: {
@@ -41,17 +50,21 @@ export default defineNuxtConfig({
   },
   vite: {
     optimizeDeps: {
+      // Pre-bundle CommonJS dependencies for Nuxt 4.2+ compatibility
+      // See: https://cn.vite.dev/config/dep-optimization-options.html
       include: [
-        '@nuxt/content > slugify',
-        'colortranslator',
-        'tailwindcss/colors',
-        'tailwind-variants',
-        'ufo',
-        'zod',
-        'scule',
-        'motion-v',
-        'ohash'
+        '@nuxt/content',
+        'extend', // Required by unified (used in @nuxt/content for markdown processing)
+        'debug', // Required by Babel and dev tools
+        'tailwind-variants'
       ]
+    },
+    resolve: {
+      alias: {
+        // Ensure CommonJS modules resolve to correct entry points
+        extend: 'extend/index.js',
+        debug: 'debug/src/browser.js' // Use browser version for client-side
+      }
     }
   },
   icon: {
@@ -66,6 +79,7 @@ export default defineNuxtConfig({
     }
   },
   ogImage: {
+    zeroRuntime: true,
     googleFontMirror: 'fonts.loli.net',
     fonts: [
       // 思源黑体 - 支持中文
