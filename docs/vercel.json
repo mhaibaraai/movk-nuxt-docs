@@ -1,9 +1,0 @@
-{
-  "$schema": "https://openapi.vercel.sh/vercel.json",
-  "functions": {
-    ".output/server/**": {
-      "excludeFiles": "{llms-full.txt}"
-    }
-  }
-}
-  
