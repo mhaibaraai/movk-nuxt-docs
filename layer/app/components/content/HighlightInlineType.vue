@@ -1,4 +1,3 @@
-<!-- https://github.com/nuxt/ui/blob/v4/docs/app/components/content/HighlightInlineType.vue -->
 <script setup lang="ts">
 import { hash } from 'ohash'
 
@@ -24,16 +23,9 @@ const type = computed(() => {
   return type
 })
 
-const { data: ast } = await useAsyncData(`hightlight-inline-code-${hash(type.value).slice(0, 10)}`, () => parseMarkdown(`\`${type.value}\`{lang="ts-type"}`), {
-  watch: [type]
-})
+const { data: ast } = await useAsyncData(`hightlight-inline-code-${hash(type.value).slice(0, 10)}`, () => parseMarkdown(`\`${type.value}\`{lang="ts-type"}`))
 </script>
 
 <template>
-  <ClientOnly>
-    <MDCRenderer v-if="ast?.body" :body="ast.body" :data="ast.data || {}" />
-    <template #fallback>
-      <ProseCode>{{ type }}</ProseCode>
-    </template>
-  </ClientOnly>
+  <MDCRenderer v-if="ast" :body="ast.body" :data="ast.data" />
 </template>

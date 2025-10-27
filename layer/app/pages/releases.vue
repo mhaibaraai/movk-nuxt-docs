@@ -63,7 +63,7 @@ const { data: versions } = await useFetch(page.value.hero.releases || '', {
       />
     </UPageHero>
 
-    <UPageSection :ui="{ container: '!py-0' }">
+    <UPageSection :ui="{ container: 'py-0!' }">
       <div class="py-4 md:py-8 lg:py-16 md:border-x border-default">
         <UContainer class="max-w-5xl">
           <UChangelogVersions>
