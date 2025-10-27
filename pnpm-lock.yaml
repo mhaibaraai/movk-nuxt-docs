@@ -9,10 +9,10 @@ importers:
   .:
     devDependencies:
       '@antfu/ni':
-        specifier: ^27.0.0
+        specifier: ^27.0.1
         version: 27.0.1
       '@nuxt/devtools':
-        specifier: ^2.6.5
+        specifier: ^2.7.0
         version: 2.7.0(vite@7.1.12(@types/node@24.8.1)(jiti@2.6.1)(lightningcss@1.30.2)(terser@5.44.0)(tsx@4.20.6)(yaml@2.8.1))(vue@3.5.22(typescript@5.9.3))
       '@nuxt/eslint':
         specifier: ^1.9.0
@@ -45,7 +45,7 @@ importers:
         specifier: ^5.9.3
         version: 5.9.3
       vue-tsc:
-        specifier: ^3.1.1
+        specifier: ^3.1.2
         version: 3.1.2(typescript@5.9.3)
 
   docs:
@@ -69,7 +69,7 @@ importers:
   layer:
     dependencies:
       '@iconify-json/lucide':
-        specifier: ^1.2.70
+        specifier: ^1.2.71
         version: 1.2.71
       '@iconify-json/simple-icons':
         specifier: ^1.2.55
