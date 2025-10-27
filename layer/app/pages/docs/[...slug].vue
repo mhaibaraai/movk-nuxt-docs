@@ -139,10 +139,10 @@ defineOgImageComponent('Nuxt', {
         :title="toc?.title"
         :links="page.body?.toc?.links"
         highlight
-        class="z-[2]"
+        class="z-2"
       >
         <template v-if="toc?.bottom" #bottom>
-          <div class="hidden lg:block space-y-6" :class="{ '!mt-6': page.body?.toc?.links?.length }">
+          <div class="hidden lg:block space-y-6" :class="{ 'mt-6!': page.body?.toc?.links?.length }">
             <USeparator v-if="page.body?.toc?.links?.length" type="dashed" />
 
             <UPageLinks v-if="communityLinks?.length" :title="toc.bottom.title" :links="communityLinks" />
