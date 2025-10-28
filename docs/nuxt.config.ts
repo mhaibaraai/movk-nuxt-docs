@@ -1,4 +1,4 @@
-import { addPrerenderRoutes, createResolver } from '@nuxt/kit'
+import { createResolver } from '@nuxt/kit'
 import { rename } from 'node:fs/promises'
 import { join } from 'node:path'
 
@@ -22,14 +22,15 @@ export default defineNuxtConfig({
     '/docs': { redirect: '/docs/getting-started', prerender: false },
     '/docs/essentials': { redirect: '/docs/essentials/markdown-syntax', prerender: false },
     '/docs/components': { redirect: '/docs/components/component-props', prerender: false },
-    '/_llms-full.txt': { prerender: true },
     '/llms-full.txt': { proxy: '/_llms-full.txt' }
   },
   compatibilityDate: 'latest',
+  nitro: {
+    prerender: {
+      ignore: ['/_llms-full.txt']
+    }
+  },
   hooks: {
-    'prerender:routes'() {
-      addPrerenderRoutes('/_llms-full.txt')
-    },
     async 'nitro:build:public-assets'(nitro) {
       console.log('\n📋 Processing llms files...')
       const outputDir = nitro.options.output.publicDir
