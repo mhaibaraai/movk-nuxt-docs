@@ -1,4 +1,6 @@
 import { createResolver } from '@nuxt/kit'
+import { copyFile } from 'node:fs/promises'
+import { join } from 'node:path'
 
 const { resolve } = createResolver(import.meta.url)
 
@@ -19,10 +21,27 @@ export default defineNuxtConfig({
   routeRules: {
     '/docs': { redirect: '/docs/getting-started', prerender: false },
     '/docs/essentials': { redirect: '/docs/essentials/markdown-syntax', prerender: false },
-    '/docs/components': { redirect: '/docs/components/component-props', prerender: false },
-    '/llms-full.txt': { prerender: false }
+    '/docs/components': { redirect: '/docs/components/component-props', prerender: false }
   },
   compatibilityDate: 'latest',
+  hooks: {
+    // async 'build:done'() {
+    //   console.log('🚀 Build completed successfully!')
+    //   const destPath = resolve('./public/_llms-full.txt')
+    //   await writeFile(destPath, '', 'utf-8')
+    // },
+    async 'nitro:build:public-assets'({ options }) {
+      try {
+        const source = join(options.output.publicDir, 'llms-full.txt')
+        const dest = resolve('./public/llms-full.txt')
+        await copyFile(source, dest)
+
+        console.log(`✅ Copied: ${source} → ${dest}`)
+      } catch (err) {
+        console.warn(`⚠️  Failed to process:`, err instanceof Error ? err.message : String(err))
+      }
+    }
+  },
   llms: {
     domain: 'https://docs.mhaibaraai.cn',
     title: 'Movk Nuxt Docs',
