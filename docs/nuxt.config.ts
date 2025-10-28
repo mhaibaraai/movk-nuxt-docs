@@ -22,14 +22,9 @@ export default defineNuxtConfig({
     '/docs': { redirect: '/docs/getting-started', prerender: false },
     '/docs/essentials': { redirect: '/docs/essentials/markdown-syntax', prerender: false },
     '/docs/components': { redirect: '/docs/components/component-props', prerender: false },
-    '/llms-full.txt': { proxy: '/_llms-full.txt' }
+    '/llms-full.txt': { redirect: { to: '/_llms-full.txt', statusCode: 301 } }
   },
   compatibilityDate: 'latest',
-  nitro: {
-    prerender: {
-      failOnError: false
-    }
-  },
   hooks: {
     async 'nitro:build:public-assets'(nitro) {
       console.log('\n📋 Processing llms files...')
