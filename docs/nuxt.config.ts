@@ -1,5 +1,5 @@
 import { createResolver } from '@nuxt/kit'
-import { rename } from 'node:fs/promises'
+import { copyFile } from 'node:fs/promises'
 import { join } from 'node:path'
 
 const { resolve } = createResolver(import.meta.url)
@@ -23,27 +23,20 @@ export default defineNuxtConfig({
     '/docs': { redirect: '/docs/getting-started', prerender: false },
     '/docs/essentials': { redirect: '/docs/essentials/markdown-syntax', prerender: false },
     '/docs/components': { redirect: '/docs/components/component-props', prerender: false },
-    ...(process.env.NITRO_PRESET === 'vercel'
-      ? {
-          '/llms-full.txt': { proxy: '/_llms-full.txt' }
-        }
-      : {})
+    '/llms-full.txt': { proxy: '/_llms-full.txt' }
   },
   compatibilityDate: 'latest',
   hooks: {
     async 'nitro:build:public-assets'() {
-      if (process.env.NITRO_PRESET !== 'vercel') {
-        return
-      }
-
+      console.log('start copying llms-full.txt')
       const outputPath = resolve('.output/public')
       const sourcePath = join(outputPath, 'llms-full.txt')
       const targetPath = join(outputPath, '_llms-full.txt')
 
       try {
-        await rename(sourcePath, targetPath)
+        await copyFile(sourcePath, targetPath)
       } catch {
-        console.warn('llms-full.txt not found, skipping rename')
+        console.warn('llms-full.txt not found, skipping copy')
       }
     }
   },
