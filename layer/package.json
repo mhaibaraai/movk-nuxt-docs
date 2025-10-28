@@ -1,7 +1,7 @@
 {
   "name": "@movk/nuxt-docs",
   "type": "module",
-  "version": "1.1.2",
+  "version": "1.2.0",
   "private": false,
   "description": "An elegant documentation theme for Nuxt, powered by Nuxt UI and Nuxt Content.",
   "author": "YiXuan <mhaibaraai@gmail.com>",
