@@ -17,7 +17,6 @@ export default defineNuxtConfig({
     url: 'https://docs.mhaibaraai.cn'
   },
   routeRules: {
-    // redirects - default root pages
     '/docs': { redirect: '/docs/getting-started', prerender: false },
     '/docs/essentials': { redirect: '/docs/essentials/markdown-syntax', prerender: false },
     '/docs/components': { redirect: '/docs/components/component-props', prerender: false }

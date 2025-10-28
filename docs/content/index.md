@@ -52,7 +52,7 @@ transition: { duration: 0.6, delay: 0.5 }
 :::
 
 #default
-:::motion
+:::motion{class="mx-auto"}
 ---
 transition: { duration: 0.6, delay: 0.1 }
 ---

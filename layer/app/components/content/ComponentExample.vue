@@ -167,7 +167,7 @@ const urlSearchParams = computed(() => {
 <template>
   <div ref="el" class="my-5" :style="{ '--ui-header-height': '4rem' }">
     <template v-if="preview">
-      <div class="border border-muted relative z-[1]" :class="[{ 'border-b-0 rounded-t-md': source, 'rounded-md': !source, 'overflow-hidden': props.overflowHidden }]">
+      <div class="border border-muted relative z-1" :class="{ 'border-b-0 rounded-t-md': source, 'rounded-md': !source, 'overflow-hidden': props.overflowHidden }">
         <div v-if="props.options?.length || !!slots.options" class="flex gap-4 p-4 border-b border-muted">
           <slot name="options" />
 
@@ -194,7 +194,7 @@ const urlSearchParams = computed(() => {
               variant="soft"
               class="rounded-sm rounded-l-none min-w-12"
               :multiple="option.multiple"
-              :class="[option.name.toLowerCase().endsWith('color') && 'pl-6']"
+              :class="{ 'pl-6': option.name.toLowerCase().endsWith('color') }"
               :ui="{ itemLeadingChip: 'size-2' }"
               @update:model-value="set(optionsValues, option.name, $event)"
             >
@@ -224,7 +224,7 @@ const urlSearchParams = computed(() => {
           v-bind="typeof iframe === 'object' ? iframe : {}"
           :src="`/examples/${name}?${urlSearchParams}`"
           class="relative w-full"
-          :class="[props.class, !iframeMobile && 'lg:left-1/2 lg:-translate-x-1/2 lg:w-[1024px]']"
+          :class="[props.class, { 'lg:left-1/2 lg:-translate-x-1/2 lg:w-[1024px]': !iframeMobile }]"
         />
         <div v-else class="flex justify-center p-4" :class="props.class">
           <component :is="camelName" v-bind="{ ...componentProps, ...optionsValues }" />
@@ -233,14 +233,14 @@ const urlSearchParams = computed(() => {
     </template>
 
     <template v-if="source">
-      <div v-if="!!slots.code" class="[&_pre]:!rounded-t-none [&_div.my-5]:!mt-0">
+      <div v-if="!!slots.code" class="[&_pre]:rounded-t-none! [&_div.my-5]:mt-0!">
         <slot name="code" />
       </div>
       <MDCRenderer
         v-else-if="ast"
         :body="ast.body"
         :data="ast.data"
-        class="[&_pre]:!rounded-t-none [&_div.my-5]:!mt-0"
+        class="[&_pre]:rounded-t-none! [&_div.my-5]:mt-0!"
       />
     </template>
   </div>

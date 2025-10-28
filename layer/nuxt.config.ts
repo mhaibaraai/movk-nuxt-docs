@@ -1,4 +1,5 @@
 import { createResolver } from '@nuxt/kit'
+import pkg from './package.json'
 
 const { resolve } = createResolver(import.meta.url)
 
@@ -8,6 +9,7 @@ export default defineNuxtConfig({
     resolve('./modules/css'),
     resolve('./modules/component-example'),
     resolve('./modules/component-meta'),
+    resolve('./modules/llms'),
     '@nuxt/ui',
     '@nuxt/content',
     '@nuxt/image',
@@ -31,6 +33,21 @@ export default defineNuxtConfig({
       noApiRoute: false
     }
   },
+  runtimeConfig: {
+    public: {
+      version: pkg.version
+    }
+  },
+  routeRules: {
+    ...process.env.NODE_ENV === 'development'
+      ? {
+          '/_llms-full.txt': { proxy: '/llms-full.txt' }
+        }
+      : {}
+  },
+  experimental: {
+    typescriptPlugin: true
+  },
   compatibilityDate: 'latest',
   nitro: {
     prerender: {
@@ -41,17 +58,20 @@ export default defineNuxtConfig({
   },
   vite: {
     optimizeDeps: {
+      // 预打包 CommonJS 依赖以兼容 Nuxt 4.2+
+      // See: https://cn.vite.dev/config/dep-optimization-options.html
       include: [
-        '@nuxt/content > slugify',
-        'colortranslator',
-        'tailwindcss/colors',
-        'tailwind-variants',
-        'ufo',
-        'zod',
-        'scule',
-        'motion-v',
-        'ohash'
+        '@nuxt/content',
+        'extend', // unified 所需（用于 @nuxt/content 的 markdown 处理）
+        'debug', // Babel 和开发工具所需
+        'tailwind-variants'
       ]
+    },
+    resolve: {
+      alias: {
+        extend: 'extend/index.js',
+        debug: 'debug/src/browser.js'
+      }
     }
   },
   icon: {
@@ -66,6 +86,7 @@ export default defineNuxtConfig({
     }
   },
   ogImage: {
+    zeroRuntime: true,
     googleFontMirror: 'fonts.loli.net',
     fonts: [
       // 思源黑体 - 支持中文
