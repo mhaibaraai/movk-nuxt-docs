@@ -27,7 +27,7 @@ export default defineNuxtConfig({
   compatibilityDate: 'latest',
   nitro: {
     prerender: {
-      ignore: ['/_llms-full.txt']
+      failOnError: false
     }
   },
   hooks: {
