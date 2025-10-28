@@ -38,6 +38,13 @@ export default defineNuxtConfig({
       version: pkg.version
     }
   },
+  routeRules: {
+    ...process.env.NODE_ENV === 'development'
+      ? {
+          '/_llms-full.txt': { proxy: '/llms-full.txt' }
+        }
+      : {}
+  },
   experimental: {
     typescriptPlugin: true
   },
@@ -46,7 +53,6 @@ export default defineNuxtConfig({
     prerender: {
       routes: ['/', '/sitemap.xml', '/robots.txt', '/404.html'],
       crawlLinks: true,
-      failOnError: false,
       autoSubfolderIndex: false
     }
   },
