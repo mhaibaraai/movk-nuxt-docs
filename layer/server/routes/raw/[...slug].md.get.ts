@@ -3,7 +3,7 @@ import { queryCollection } from '@nuxt/content/server'
 import { stringify } from 'minimark/stringify'
 import { withLeadingSlash } from 'ufo'
 
-export default eventHandler(async (event) => {
+export default defineEventHandler(async (event) => {
   const slug = getRouterParams(event)['slug.md']
   if (!slug?.endsWith('.md')) {
     throw createError({ statusCode: 404, statusMessage: 'Page not found', fatal: true })
