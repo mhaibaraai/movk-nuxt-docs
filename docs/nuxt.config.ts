@@ -23,7 +23,7 @@ export default defineNuxtConfig({
     '/docs': { redirect: '/docs/getting-started', prerender: false },
     '/docs/essentials': { redirect: '/docs/essentials/markdown-syntax', prerender: false },
     '/docs/components': { redirect: '/docs/components/component-props', prerender: false },
-    '/llms-full.txt': { proxy: '/_llms-full.txt' }
+    '/llms-full.txt': { proxy: '/_llms-full.txt', prerender: false }
   },
   compatibilityDate: 'latest',
   hooks: {
