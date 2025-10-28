@@ -1,5 +1,5 @@
 import { createResolver } from '@nuxt/kit'
-import { copyFile } from 'node:fs/promises'
+import { rename, access } from 'node:fs/promises'
 import { join } from 'node:path'
 
 const { resolve } = createResolver(import.meta.url)
@@ -22,22 +22,35 @@ export default defineNuxtConfig({
     // redirects - default root pages
     '/docs': { redirect: '/docs/getting-started', prerender: false },
     '/docs/essentials': { redirect: '/docs/essentials/markdown-syntax', prerender: false },
-    '/docs/components': { redirect: '/docs/components/component-props', prerender: false },
-    '/llms-full.txt': { proxy: '/_llms-full.txt', prerender: false }
+    '/docs/components': { redirect: '/docs/components/component-props', prerender: false }
   },
   compatibilityDate: 'latest',
   hooks: {
-    async 'nitro:build:public-assets'() {
-      console.log('start copying llms-full.txt')
-      const outputPath = resolve('.output/public')
-      const sourcePath = join(outputPath, 'llms-full.txt')
-      const targetPath = join(outputPath, '_llms-full.txt')
+    async 'nitro:build:public-assets'(nitro) {
+      console.log('\n📋 Renaming llms files to avoid Serverless Function...')
 
-      try {
-        await copyFile(sourcePath, targetPath)
-      } catch {
-        console.warn('llms-full.txt not found, skipping copy')
+      const outputDir = nitro.options.output.publicDir
+      console.log('📁 Output directory:', outputDir)
+
+      const files = [
+        { from: 'llms.txt', to: '_llms.txt' },
+        { from: 'llms-full.txt', to: '_llms-full.txt' }
+      ]
+
+      for (const { from, to } of files) {
+        try {
+          const source = join(outputDir, from)
+          const dest = join(outputDir, to)
+
+          await access(source)
+          await rename(source, dest)
+          console.log(`✅ Renamed: ${from} → ${to}`)
+        } catch (err) {
+          console.warn(`⚠️  Failed to rename ${from}:`, err instanceof Error ? err.message : String(err))
+        }
       }
+
+      console.log('✨ Rename process completed\n')
     }
   },
   llms: {
