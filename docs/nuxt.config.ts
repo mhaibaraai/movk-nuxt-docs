@@ -1,4 +1,4 @@
-import { createResolver } from '@nuxt/kit'
+import { addPrerenderRoutes, createResolver } from '@nuxt/kit'
 import { rename } from 'node:fs/promises'
 import { join } from 'node:path'
 
@@ -22,32 +22,25 @@ export default defineNuxtConfig({
     '/docs': { redirect: '/docs/getting-started', prerender: false },
     '/docs/essentials': { redirect: '/docs/essentials/markdown-syntax', prerender: false },
     '/docs/components': { redirect: '/docs/components/component-props', prerender: false },
-    '/llms.txt': { proxy: '/_llms.txt', prerender: false },
-    '/llms-full.txt': { proxy: '/_llms-full.txt', prerender: false }
+    '/_llms-full.txt': { prerender: true },
+    '/llms-full.txt': { proxy: '/_llms-full.txt' }
   },
   compatibilityDate: 'latest',
   hooks: {
+    'prerender:routes'() {
+      addPrerenderRoutes('/_llms-full.txt')
+    },
     async 'nitro:build:public-assets'(nitro) {
       console.log('\n📋 Processing llms files...')
       const outputDir = nitro.options.output.publicDir
-
-      const files = [
-        { from: 'llms.txt', to: '_llms.txt' },
-        { from: 'llms-full.txt', to: '_llms-full.txt' }
-      ]
-
-      for (const { from, to } of files) {
-        try {
-          const source = join(outputDir, from)
-          const dest = join(outputDir, to)
-
-          await rename(source, dest)
-          console.log(`✅ Renamed: ${from} → ${to}`)
-        } catch (err) {
-          console.warn(`⚠️  Failed to process ${from}:`, err instanceof Error ? err.message : String(err))
-        }
+      try {
+        const source = join(outputDir, 'llms-full.txt')
+        const dest = join(outputDir, '_llms-full.txt')
+        await rename(source, dest)
+        console.log(`✅ Renamed: ${source} → ${dest}`)
+      } catch (err) {
+        console.warn(`⚠️  Failed to process :`, err instanceof Error ? err.message : String(err))
       }
-
       console.log('✨ Processing completed\n')
     }
   },
