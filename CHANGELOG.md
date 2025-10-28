@@ -5,19 +5,13 @@
 ### ✨ Features
 
 * 新增 OgImage 组件 ([e9588b3](https://github.com/mhaibaraai/movk-nuxt-docs/commit/e9588b33fc4bb6e424e8b0b3fac5661ae2837257))
-* 新增 Vercel 部署配置 ([babafa7](https://github.com/mhaibaraai/movk-nuxt-docs/commit/babafa7fa3dc5c768a8947172323775138c8ad81))
 * 替换 OgImage 组件为新的 Nuxt 组件 ([7cdfb2e](https://github.com/mhaibaraai/movk-nuxt-docs/commit/7cdfb2ee3085f457ec6dbbf0ba24b57ccbc8e8c4))
 * 添加 LLMs 模块并启用预渲染容错配置 ([2307df6](https://github.com/mhaibaraai/movk-nuxt-docs/commit/2307df6dd94f5fe15ca6ce156d0dd28314a63a23))
 
 ### 🐛 Bug Fixes
 
-* 修复 LLMs 路由预渲染错误 ([155b36a](https://github.com/mhaibaraai/movk-nuxt-docs/commit/155b36a23e5cdce66450e74856563adfe3647f05))
-* 修复 llms-full.txt 预渲染错误和文件生成问题 ([1032b48](https://github.com/mhaibaraai/movk-nuxt-docs/commit/1032b48fdbfcd3bac47bfff94db7d5b602623ffb))
-* 修复 Vercel 部署时 functions 路径配置错误 ([3e6b183](https://github.com/mhaibaraai/movk-nuxt-docs/commit/3e6b18371a34c60fd23713599ac3e285b7c55dc8))
 * 修复原始路由处理函数类型定义 ([1194697](https://github.com/mhaibaraai/movk-nuxt-docs/commit/1194697785bf3debe35612543d0360ce4443b4ab))
 * 修复文档页面中 Tailwind CSS 类名语法错误 ([292aff5](https://github.com/mhaibaraai/movk-nuxt-docs/commit/292aff58e8ac9cd236cb8080e7463539f29a008c))
-* 改进 LLMs 文件重命名逻辑以避免 Serverless Function 冲突 ([203c30f](https://github.com/mhaibaraai/movk-nuxt-docs/commit/203c30f235411b0204946f9489fbd7d8a9011d81))
-* 添加 LLMs 路由重定向并修复文件复制目标路径 ([bd125d7](https://github.com/mhaibaraai/movk-nuxt-docs/commit/bd125d72398e579c4e8e4eb963da101e03917548))
 * 添加开发环境 LLMs 代理路由并优化文档引用 ([69ffce4](https://github.com/mhaibaraai/movk-nuxt-docs/commit/69ffce4ce521a5853a0832d507c4f0a97705fc2c))
 
 ### 📚 Documentation
@@ -39,15 +33,11 @@
 * **deps:** update devdependency @nuxt/devtools to v3 ([71e9812](https://github.com/mhaibaraai/movk-nuxt-docs/commit/71e9812bcf011be59e2a5ce35bb7fc2834f4cc11))
 * **deps:** update nuxt framework to ^4.2.0 ([edd1789](https://github.com/mhaibaraai/movk-nuxt-docs/commit/edd1789b60440487631ce35239847781d4d57d4a))
 * **deps:** update vueuse monorepo to v14 ([f9f47dc](https://github.com/mhaibaraai/movk-nuxt-docs/commit/f9f47dc89ae3e5de4f69665a2899bf23b077d05c))
-* 优化 Vercel 部署配置以支持 LLMs 文件 ([83e5b4b](https://github.com/mhaibaraai/movk-nuxt-docs/commit/83e5b4beb9836a68b192ec2e6b5d82b720ddba86))
 * 优化 VSCode 编辑器自动格式化和代码修复配置 ([853cfa9](https://github.com/mhaibaraai/movk-nuxt-docs/commit/853cfa9f1c22420cac66ad5b8c7e29f47e257ae4))
 * 更新 TypeScript 配置使用新的引用结构 ([9b1e099](https://github.com/mhaibaraai/movk-nuxt-docs/commit/9b1e099c4241f99fbca7dc2658e8109e5a154be8))
-* 添加 Vercel 配置以支持 LLMs 文件路由和缓存 ([a58f440](https://github.com/mhaibaraai/movk-nuxt-docs/commit/a58f440cb239db1a54c33802003ef649b5c5faa6))
 * 清理未使用的 composables 和更新清理脚本 ([a992455](https://github.com/mhaibaraai/movk-nuxt-docs/commit/a992455090cb3bfb313d2cb0274de1a5dfc18820))
-* 禁用 LLMs 代理路由的预渲染 ([ed30337](https://github.com/mhaibaraai/movk-nuxt-docs/commit/ed30337d63b288b6e5e45f2cffd037010c08b5d7))
 * 移除 CI 工作流中的类型检查步骤 ([788ee65](https://github.com/mhaibaraai/movk-nuxt-docs/commit/788ee6582a7718bdeec1339c0782f6cab985be6f))
 * 简化发布流程，移除 typecheck 检查 ([fd1b446](https://github.com/mhaibaraai/movk-nuxt-docs/commit/fd1b4460f8cca22d472bbcebccd77967924aa559))
-* 调整预渲染配置为不因错误而失败 ([3c4e32e](https://github.com/mhaibaraai/movk-nuxt-docs/commit/3c4e32eed10659fdd0d4556a4174fffbf96afe47))
 
 ## [1.1.2](https://github.com/mhaibaraai/movk-nuxt-docs/compare/v1.1.1...v1.1.2) (2025-10-22)
 
