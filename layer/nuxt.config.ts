@@ -9,6 +9,7 @@ export default defineNuxtConfig({
     resolve('./modules/css'),
     resolve('./modules/component-example'),
     resolve('./modules/component-meta'),
+    resolve('./modules/llms'),
     '@nuxt/ui',
     '@nuxt/content',
     '@nuxt/image',
@@ -45,6 +46,7 @@ export default defineNuxtConfig({
     prerender: {
       routes: ['/', '/sitemap.xml', '/robots.txt', '/404.html'],
       crawlLinks: true,
+      failOnError: false,
       autoSubfolderIndex: false
     }
   },
