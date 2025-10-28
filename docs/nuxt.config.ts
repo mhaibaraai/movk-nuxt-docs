@@ -19,7 +19,12 @@ export default defineNuxtConfig({
   routeRules: {
     '/docs': { redirect: '/docs/getting-started', prerender: false },
     '/docs/essentials': { redirect: '/docs/essentials/markdown-syntax', prerender: false },
-    '/docs/components': { redirect: '/docs/components/component-props', prerender: false }
+    '/docs/components': { redirect: '/docs/components/component-props', prerender: false },
+    ...process.env.NODE_ENV === 'development'
+      ? {
+          '/_llms-full.txt': { proxy: '/llms-full.txt' }
+        }
+      : {}
   },
   compatibilityDate: 'latest',
   llms: {
