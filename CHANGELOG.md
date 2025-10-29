@@ -20,10 +20,6 @@
 
 ### 🔧 Chores
 
-* **deps:** lock file maintenance ([e8e0d22](https://github.com/mhaibaraai/movk-nuxt-docs/commit/e8e0d226da0ab57624f43b27ebccacd344e2b913))
-* **deps:** lock file maintenance ([8dd96d5](https://github.com/mhaibaraai/movk-nuxt-docs/commit/8dd96d572ba23bf91dbd23e1011c5246a4748a49))
-* **deps:** lock file maintenance ([e87e6ee](https://github.com/mhaibaraai/movk-nuxt-docs/commit/e87e6ee4ce5ba43cd4c8ea027a3bcb056ec04729))
-* **deps:** lock file maintenance ([126bcba](https://github.com/mhaibaraai/movk-nuxt-docs/commit/126bcba662c1bf8fdfb97f5b7497d4884d9e73e2))
 * **deps:** lock file maintenance ([98b5650](https://github.com/mhaibaraai/movk-nuxt-docs/commit/98b56507b6a5403de81cf94d8fa59f0d15e05dc6))
 * **deps:** update all non-major dependencies ([258342a](https://github.com/mhaibaraai/movk-nuxt-docs/commit/258342af6fcaa199748e4a97cdf728349fa81ba9))
 * **deps:** update all non-major dependencies ([f4bd3cb](https://github.com/mhaibaraai/movk-nuxt-docs/commit/f4bd3cbe18c1aed1b0de02cd3dd621d7304d36d8))
