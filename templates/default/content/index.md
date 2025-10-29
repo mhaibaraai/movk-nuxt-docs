@@ -7,6 +7,8 @@ seo:
 ::u-page-hero{class="dark:bg-gradient-to-b from-neutral-900 to-neutral-950"}
 ---
 orientation: horizontal
+ui:
+  container: lg:py-20
 ---
 #top
 :hero-background
