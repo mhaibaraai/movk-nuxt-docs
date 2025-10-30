@@ -195,7 +195,7 @@ const urlSearchParams = computed(() => {
               class="rounded-sm rounded-l-none min-w-12"
               :multiple="option.multiple"
               :class="{ 'pl-6': option.name.toLowerCase().endsWith('color') }"
-              :ui="{ itemLeadingChip: 'size-2' }"
+              :ui="{ itemLeadingChip: 'w-2' }"
               @update:model-value="set(optionsValues, option.name, $event)"
             >
               <template v-if="option.name.toLowerCase().endsWith('color')" #leading="{ modelValue, ui }">
