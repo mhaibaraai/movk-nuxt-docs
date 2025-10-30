@@ -16,6 +16,11 @@ export default defineNuxtModule({
             delete (slot as any).schema
           }
         }
+        if (component?.meta?.events) {
+          for (const event of component.meta.events) {
+            delete (event as any).schema
+          }
+        }
       }
     })
   }
