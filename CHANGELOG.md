@@ -1,5 +1,26 @@
 # 📋 Changelog
 
+## [1.2.1](https://github.com/mhaibaraai/movk-nuxt-docs/compare/v1.2.0...v1.2.1) (2025-10-30)
+
+### 📚 Documentation
+
+* 清理 CHANGELOG 中与 Vercel 部署相关的条目 ([851103d](https://github.com/mhaibaraai/movk-nuxt-docs/commit/851103d00613e4864753a449e47cb6e50a404296))
+* 清理 CHANGELOG 中重复的 lock file maintenance 条目 ([188db9a](https://github.com/mhaibaraai/movk-nuxt-docs/commit/188db9ae09a53c03708098e97b77630c09d6f216))
+
+### 💄 Styles
+
+* 优化首页布局容器样式 ([72dcce7](https://github.com/mhaibaraai/movk-nuxt-docs/commit/72dcce7eaf7534a3d4ed6ad846f82f9a6d0dcb07))
+* 修复组件示例中颜色选择器的样式类名 ([6cd2f71](https://github.com/mhaibaraai/movk-nuxt-docs/commit/6cd2f7196e2ac51ca5d04131a98811d0d76a2499))
+* 同步首页容器样式到模板文件 ([42cf173](https://github.com/mhaibaraai/movk-nuxt-docs/commit/42cf1732787d5384335f4837371e7614e954b19a))
+
+### 🔧 Chores
+
+* **deps:** lock file maintenance ([60ea10b](https://github.com/mhaibaraai/movk-nuxt-docs/commit/60ea10b8f575c0126800694c57da4290dfdf6008))
+* **deps:** lock file maintenance ([ee605bc](https://github.com/mhaibaraai/movk-nuxt-docs/commit/ee605bc03d2e96c8aeb2669bc247c50614bfa764))
+* **deps:** update all non-major dependencies ([5480a38](https://github.com/mhaibaraai/movk-nuxt-docs/commit/5480a387e494952cffce5bb5f3a536553acf8b2b))
+* **deps:** update all non-major dependencies ([f635ab9](https://github.com/mhaibaraai/movk-nuxt-docs/commit/f635ab9a370fc3ac42d47bba20853fd0a5a73f62))
+* 优化 Vite 依赖预打包配置 ([348ee6d](https://github.com/mhaibaraai/movk-nuxt-docs/commit/348ee6d116e41f35fa839f018a74672b056983c1))
+
 ## [1.2.0](https://github.com/mhaibaraai/movk-nuxt-docs/compare/v1.1.2...v1.2.0) (2025-10-28)
 
 ### ✨ Features
