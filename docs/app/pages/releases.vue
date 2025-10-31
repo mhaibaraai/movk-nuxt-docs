@@ -81,7 +81,9 @@ const { data: versions } = await useFetch(page.value.releases || '', {
               }"
             >
               <template #body>
-                <MDC v-if="version.markdown" :value="version.markdown" />
+                <ClientOnly>
+                  <MDC v-if="version.markdown" :value="version.markdown" />
+                </ClientOnly>
               </template>
             </UChangelogVersion>
           </UChangelogVersions>
