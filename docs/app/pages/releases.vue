@@ -19,7 +19,7 @@ defineOgImageComponent('Nuxt', {
   description
 })
 
-const { data: versions } = await useFetch(page.value.hero.releases || '', {
+const { data: versions } = await useFetch(page.value.releases || '', {
   transform: (data: {
     releases: {
       name?: string
