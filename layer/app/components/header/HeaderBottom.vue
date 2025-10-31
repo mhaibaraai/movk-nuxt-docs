@@ -6,7 +6,7 @@ const route = useRoute()
 
 const navigation = inject<Ref<ContentNavigationItem[]>>('navigation')
 
-const items = computed(() => mapContentNavigation(navigation?.value.map(item => ({ ...item, children: undefined })) ?? [])?.map(item => ({
+const items = computed(() => mapContentNavigation(navigation?.value?.map(item => ({ ...item, children: undefined })) ?? [])?.map(item => ({
   ...item,
   active: route.path.startsWith(item.to as string)
 })))
