@@ -2,6 +2,10 @@
 
 ## [1.3.0](https://github.com/mhaibaraai/movk-nuxt-docs/compare/v1.2.1...v1.3.0) (2025-10-31)
 
+### ♻️ refactor
+
+* 重构 releases 页面架构到 docs 目录 ([c03e1d4](https://github.com/mhaibaraai/movk-nuxt-docs/commit/c03e1d4e6a4bb2f914375677ad4e0d62b78d25ed))
+
 ### 🐛 Bug Fixes
 
 * 修复 HeaderBottom 组件空值处理 ([bf502c0](https://github.com/mhaibaraai/movk-nuxt-docs/commit/bf502c0e40db2e53886ea79263e3cd2b87fb915a))
