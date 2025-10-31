@@ -1,5 +1,20 @@
 # 📋 Changelog
 
+## [1.3.0](https://github.com/mhaibaraai/movk-nuxt-docs/compare/v1.2.1...v1.3.0) (2025-10-31)
+
+### 🐛 Bug Fixes
+
+* 修复 HeaderBottom 组件空值处理 ([bf502c0](https://github.com/mhaibaraai/movk-nuxt-docs/commit/bf502c0e40db2e53886ea79263e3cd2b87fb915a))
+* 修复 llms 文档中的外部链接地址 ([6e2b339](https://github.com/mhaibaraai/movk-nuxt-docs/commit/6e2b339dc3403e43be7291fa24919c54f49ebd0e))
+
+### 📚 Documentation
+
+* 更新入门教程关于页面扩展的说明 ([8d84e22](https://github.com/mhaibaraai/movk-nuxt-docs/commit/8d84e224c4eb9dfa58d7206fcffccb3661244d96))
+
+### 💄 Styles
+
+* 调整容器最大宽度 ([2fa88ba](https://github.com/mhaibaraai/movk-nuxt-docs/commit/2fa88babf07c25beb64a0619d0c601fbd2080207))
+
 ## [1.2.1](https://github.com/mhaibaraai/movk-nuxt-docs/compare/v1.2.0...v1.2.1) (2025-10-30)
 
 ### 📚 Documentation
