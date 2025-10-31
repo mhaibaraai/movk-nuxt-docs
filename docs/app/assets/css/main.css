@@ -3,7 +3,7 @@
 
 @theme static {
   --font-sans: 'Public Sans', sans-serif;
-  --container-8xl: 90rem;
+  --container-8xl: 96rem;
 }
 
 :root {
