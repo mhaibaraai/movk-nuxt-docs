@@ -85,22 +85,18 @@ const starLayers = computed(() => [
 .stars {
   left: 50%;
   transform: translate(-50%);
-  -webkit-mask-image: linear-gradient(
-    180deg,
-    rgba(217, 217, 217, 0) 0%,
-    rgba(217, 217, 217, 0.8) 25%,
-    #d9d9d9 50%,
-    rgba(217, 217, 217, 0.8) 75%,
-    rgba(217, 217, 217, 0) 100%
-  );
-  mask-image: linear-gradient(
-    180deg,
-    rgba(217, 217, 217, 0) 0%,
-    rgba(217, 217, 217, 0.8) 25%,
-    #d9d9d9 50%,
-    rgba(217, 217, 217, 0.8) 75%,
-    rgba(217, 217, 217, 0) 100%
-  );
+  -webkit-mask-image: linear-gradient(180deg,
+      rgba(217, 217, 217, 0) 0%,
+      rgba(217, 217, 217, 0.8) 25%,
+      #d9d9d9 50%,
+      rgba(217, 217, 217, 0.8) 75%,
+      rgba(217, 217, 217, 0) 100%);
+  mask-image: linear-gradient(180deg,
+      rgba(217, 217, 217, 0) 0%,
+      rgba(217, 217, 217, 0.8) 25%,
+      #d9d9d9 50%,
+      rgba(217, 217, 217, 0.8) 75%,
+      rgba(217, 217, 217, 0) 100%);
   -webkit-mask-size: cover;
   mask-size: cover;
 }
@@ -115,6 +111,7 @@ const starLayers = computed(() => [
   0% {
     transform: translateY(0);
   }
+
   100% {
     transform: translateY(-2000px);
   }

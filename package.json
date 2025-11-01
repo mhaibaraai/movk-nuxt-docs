@@ -30,7 +30,7 @@
     "@nuxt/eslint": "^1.10.0",
     "@release-it/bumper": "^7.0.5",
     "@release-it/conventional-changelog": "^10.0.1",
-    "eslint": "^9.38.0",
+    "eslint": "^9.39.0",
     "fast-glob": "^3.3.3",
     "nuxt": "^4.2.0",
     "release-it": "^19.0.5",
