@@ -30,13 +30,13 @@
     "@nuxt/eslint": "^1.10.0",
     "@release-it/bumper": "^7.0.5",
     "@release-it/conventional-changelog": "^10.0.1",
-    "eslint": "^9.39.0",
+    "eslint": "^9.39.1",
     "fast-glob": "^3.3.3",
     "nuxt": "^4.2.0",
     "release-it": "^19.0.5",
     "taze": "^19.9.0",
     "tsx": "^4.20.6",
     "typescript": "^5.9.3",
-    "vue-tsc": "^3.1.2"
+    "vue-tsc": "^3.1.3"
   }
 }
