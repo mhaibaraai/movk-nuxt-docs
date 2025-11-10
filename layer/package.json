@@ -39,7 +39,7 @@
     "@vueuse/core": "^14.0.0",
     "@vueuse/nuxt": "^14.0.0",
     "defu": "^6.1.4",
-    "exsolve": "^1.0.7",
+    "exsolve": "^1.0.8",
     "git-url-parse": "^16.1.0",
     "motion-v": "^1.7.4",
     "nuxt-component-meta": "^0.14.1",
