@@ -1,5 +1,17 @@
 # 📋 Changelog
 
+## [1.3.2](https://github.com/mhaibaraai/movk-nuxt-docs/compare/v1.3.1...v1.3.2) (2025-11-11)
+
+### 📚 Documentation
+
+* 优化项目结构文档和模板配置 ([7d8aaf3](https://github.com/mhaibaraai/movk-nuxt-docs/commit/7d8aaf3ef5d4bff87e03d94408a743f3891f9309))
+
+### 🔧 Chores
+
+* 优化 nuxt.config.ts 依赖配置 ([bb314d8](https://github.com/mhaibaraai/movk-nuxt-docs/commit/bb314d8c26fa1db8254b739a339d9d21b22af53b))
+* 清理项目依赖配置 ([309eead](https://github.com/mhaibaraai/movk-nuxt-docs/commit/309eead78281a2f997f47ce8c05e40a92e85c5cd))
+* 重新生成 pnpm-lock.yaml ([a56916e](https://github.com/mhaibaraai/movk-nuxt-docs/commit/a56916ea5dafc8adff39e2e32c64c25a05ecc75f))
+
 ## [1.3.1](https://github.com/mhaibaraai/movk-nuxt-docs/compare/v1.3.0...v1.3.1) (2025-11-11)
 
 ### 🐛 Bug Fixes
