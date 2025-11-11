@@ -30,7 +30,6 @@ my-docs/
 │   ├── index.md                 # 首页
 │   └── docs/                    # 文档页面
 ├── public/                      # 静态资源
-├── scripts/                     # 脚本
 ├── nuxt.config.ts               # Nuxt 配置
 ├── tsconfig.json                # TypeScript 配置
 ├── package.json                 # 依赖与脚本
@@ -208,7 +207,6 @@ pnpm preview          # 预览生产构建
 pnpm typecheck        # 类型检查
 pnpm lint             # 代码检查
 pnpm lint:fix         # 自动修复代码问题
-pnpm clean            # 清理生成文件
 ```
 
 ## 📦 构建和部署
