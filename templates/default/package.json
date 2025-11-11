@@ -5,11 +5,9 @@
     "build": "nuxt build",
     "dev": "nuxt dev",
     "preview": "nuxt preview",
-    "up": "taze major -wIr",
     "typecheck": "nuxt typecheck",
     "lint": "eslint .",
-    "lint:fix": "eslint . --fix",
-    "clean": "tsx scripts/rm.ts"
+    "lint:fix": "eslint . --fix"
   },
   "dependencies": {
     "@movk/nuxt-docs": "latest",
@@ -19,10 +17,7 @@
   "devDependencies": {
     "@nuxt/eslint": "^1.10.0",
     "eslint": "^9.39.1",
-    "tsx": "^4.20.6",
     "typescript": "^5.9.3",
-    "taze": "^19.9.0",
-    "fast-glob": "^3.3.3",
     "vue-tsc": "^3.1.3"
   }
 }

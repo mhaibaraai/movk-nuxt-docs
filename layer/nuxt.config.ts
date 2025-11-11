@@ -61,7 +61,6 @@ export default defineNuxtConfig({
       // See: https://cn.vite.dev/config/dep-optimization-options.html
       include: [
         '@nuxt/content > slugify',
-        '@movk/nuxt-docs > @nuxt/content > ',
         'extend', // unified 所需（用于 @nuxt/content 的 markdown 处理）
         'debug', // Babel 和开发工具所需
         'tailwind-variants',
