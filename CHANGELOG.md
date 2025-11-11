@@ -1,5 +1,32 @@
 # 📋 Changelog
 
+## [1.3.1](https://github.com/mhaibaraai/movk-nuxt-docs/compare/v1.3.0...v1.3.1) (2025-11-11)
+
+### 🐛 Bug Fixes
+
+* 为 MDC 组件添加 ClientOnly 包装解决 SSR 问题 ([a101c2d](https://github.com/mhaibaraai/movk-nuxt-docs/commit/a101c2d8e45c645fcbd555d2801ed5074895754c))
+
+### 📚 Documentation
+
+* 更新 CHANGELOG 记录 releases 页面重构 ([ff16a36](https://github.com/mhaibaraai/movk-nuxt-docs/commit/ff16a3688d458566e46beebed9892cbd63315b0a))
+
+### 💄 Styles
+
+* 优化 StarsBg 组件 CSS 代码格式 ([a5b70fd](https://github.com/mhaibaraai/movk-nuxt-docs/commit/a5b70fdfa89c25c8b4da0beaab4ed72f5143cb74))
+
+### 🔧 Chores
+
+* **deps:** lock file maintenance ([ba61a0d](https://github.com/mhaibaraai/movk-nuxt-docs/commit/ba61a0d8c9250dc6d8f7340dcdf3aead3e3c61b7))
+* **deps:** update all non-major dependencies ([9073e6d](https://github.com/mhaibaraai/movk-nuxt-docs/commit/9073e6dc8a7847234e8f838f226caeabde9b7150))
+* **deps:** update all non-major dependencies ([a8976ef](https://github.com/mhaibaraai/movk-nuxt-docs/commit/a8976ef93f5b53914db26f427cb02039842677ef))
+* **deps:** update all non-major dependencies ([8c6831f](https://github.com/mhaibaraai/movk-nuxt-docs/commit/8c6831fc649e34b6c743d33589c209f25df9e516))
+* **deps:** update dependency @nuxt/image to v2 ([9225ab6](https://github.com/mhaibaraai/movk-nuxt-docs/commit/9225ab66ba833473074e1d696c5b88d3d1bebee8))
+* **deps:** update dependency exsolve to ^1.0.8 ([ea1b983](https://github.com/mhaibaraai/movk-nuxt-docs/commit/ea1b983acaddab24a29eede691ebbed2a9d36011))
+* **deps:** update devdependency @nuxt/devtools to ^3.0.1 ([e879bb2](https://github.com/mhaibaraai/movk-nuxt-docs/commit/e879bb24229263247dfdf105bd0af4b3d891b40e))
+* **deps:** update devdependency eslint to ^9.39.0 ([fc2d0ba](https://github.com/mhaibaraai/movk-nuxt-docs/commit/fc2d0bae7bf03b74a476c24c966d3a4728c5a31a))
+* **deps:** update nuxt framework to ^4.2.1 ([564d8ac](https://github.com/mhaibaraai/movk-nuxt-docs/commit/564d8ace5d1766b32a52ecbc675bee1c37c08996))
+* 关闭 TypeScript unified-signatures ESLint 规则 ([8fea873](https://github.com/mhaibaraai/movk-nuxt-docs/commit/8fea873ef8d5e618aa6913458dd726ff1a8b4d31))
+
 ## [1.3.0](https://github.com/mhaibaraai/movk-nuxt-docs/compare/v1.2.1...v1.3.0) (2025-10-31)
 
 ### ♻️ refactor
