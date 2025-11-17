@@ -1,5 +1,12 @@
 # 📋 Changelog
 
+## [1.3.3](https://github.com/mhaibaraai/movk-nuxt-docs/compare/v1.3.2...v1.3.3) (2025-11-17)
+
+### 🔧 Chores
+
+* **deps:** lock file maintenance ([573542f](https://github.com/mhaibaraai/movk-nuxt-docs/commit/573542fe238908c4f8246583a51e360a89f2dc27))
+* **deps:** update all non-major dependencies ([7eabaf6](https://github.com/mhaibaraai/movk-nuxt-docs/commit/7eabaf6181282511b0a5a78dcbb2a0781159135e))
+
 ## [1.3.2](https://github.com/mhaibaraai/movk-nuxt-docs/compare/v1.3.1...v1.3.2) (2025-11-11)
 
 ### 📚 Documentation
