@@ -2,6 +2,8 @@
 
 ## [1.3.4](https://github.com/mhaibaraai/movk-nuxt-docs/compare/v1.3.3...v1.3.4) (2025-11-19)
 
+* **deps:** update all non-major dependencies ([5baccc8](https://github.com/mhaibaraai/movk-nuxt-docs/commit/5baccc817405a16547c66eec519dedb53c8758d5))
+
 ## [1.3.3](https://github.com/mhaibaraai/movk-nuxt-docs/compare/v1.3.2...v1.3.3) (2025-11-17)
 
 ### 🔧 Chores
