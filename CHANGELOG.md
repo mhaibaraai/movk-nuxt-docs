@@ -1,5 +1,7 @@
 # 📋 Changelog
 
+## [1.3.4](https://github.com/mhaibaraai/movk-nuxt-docs/compare/v1.3.3...v1.3.4) (2025-11-19)
+
 ## [1.3.3](https://github.com/mhaibaraai/movk-nuxt-docs/compare/v1.3.2...v1.3.3) (2025-11-17)
 
 ### 🔧 Chores
