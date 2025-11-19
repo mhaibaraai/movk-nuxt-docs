@@ -1,6 +1,7 @@
 {
   "$schema": "https://unpkg.com/release-it@19/schema/release-it.json",
   "git": {
+    "requireCleanWorkingDir": false,
     "commitMessage": "chore(release): v${version}",
     "tagName": "v${version}"
   },
@@ -30,14 +31,6 @@
       "ignoreRecommendedBump": true,
       "gitRawCommitsOpts": {
         "path": "."
-      },
-      "parserOpts": {
-        "headerPattern": "^(?:(?:[\\uD83C-\\uDBFF\\uDC00-\\uDFFF]|[\\u2600-\\u27BF])+\\s+)?(\\w+)(?:\\(([^)]*)\\))?!?:\\s(.+)$",
-        "headerCorrespondence": [
-          "type",
-          "scope",
-          "subject"
-        ]
       }
     }
   }
