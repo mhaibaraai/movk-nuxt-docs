@@ -5,7 +5,7 @@ description: 'A composable to display toast notifications in your app.'
 
 ## Usage
 
-Use the auto-imported `useToast` composable to display [Toast](/docs/components/toast) notifications.
+Use the auto-imported `useToast` composable to display [Toast](https://ui.nuxt.com/docs/components/toast) notifications.
 
 ```vue
 <script setup lang="ts">
@@ -18,10 +18,10 @@ const toast = useToast()
 - When removing a toast, there's a 200ms delay before it's actually removed from the state, allowing for exit animations.
 
 ::warning
-Make sure to wrap your app with the [`App`](/docs/components/app) component which uses our [`Toaster`](https://github.com/nuxt/ui/blob/v4/src/runtime/components/Toaster.vue) component which uses the [`ToastProvider`](https://reka-ui.com/docs/components/toast#provider) component from Reka UI.
+Make sure to wrap your app with the [`App`](https://ui.nuxt.com/docs/components/app) component which uses our [`Toaster`](https://github.com/nuxt/ui/blob/v4/src/runtime/components/Toaster.vue) component which uses the [`ToastProvider`](https://reka-ui.com/docs/components/toast#provider) component from Reka UI.
 ::
 
-::tip{to="/docs/components/toast"}
+::tip{to="https://ui.nuxt.com/docs/components/toast"}
 Learn how to customize the appearance and behavior of toasts in the **Toast** component documentation.
 ::
 
