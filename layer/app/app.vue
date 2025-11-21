@@ -55,7 +55,7 @@ provide('navigation', rootNavigation)
         <Footer />
 
         <ClientOnly>
-          <LazyUContentSearch :files="files" :navigation="rootNavigation" />
+          <LazyUContentSearch :files="files" :navigation="rootNavigation" :fuse="{ resultLimit: 1000 }"/>
         </ClientOnly>
       </template>
     </div>
