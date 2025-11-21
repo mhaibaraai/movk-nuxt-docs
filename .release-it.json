@@ -28,10 +28,7 @@
       },
       "infile": "CHANGELOG.md",
       "header": "# 📋 Changelog",
-      "ignoreRecommendedBump": true,
-      "gitRawCommitsOpts": {
-        "path": "."
-      }
+      "ignoreRecommendedBump": true
     }
   }
 }

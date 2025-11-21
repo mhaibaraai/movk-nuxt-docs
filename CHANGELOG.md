@@ -1,5 +1,16 @@
 # 📋 Changelog
 
+## [1.3.5](https://github.com/mhaibaraai/movk-nuxt-docs/compare/v1.3.4...v1.3.5) (2025-11-21)
+
+### Features
+
+* 为内容搜索添加结果数量限制 ([ee06e7d](https://github.com/mhaibaraai/movk-nuxt-docs/commit/ee06e7de68dc5a8b958120b51454a471c9f26dfe))
+* 添加 “Composables” 文档页面 ([542f2a3](https://github.com/mhaibaraai/movk-nuxt-docs/commit/542f2a383fdbc8c25ed6bb60432aa42feebcc973))
+
+### Documentation
+
+* 修复 code-tree 组件语法格式 ([f20e95d](https://github.com/mhaibaraai/movk-nuxt-docs/commit/f20e95db5b4aeef2563f2fda02d70447295098c1))
+
 ## [1.3.4](https://github.com/mhaibaraai/movk-nuxt-docs/compare/v1.3.3...v1.3.4) (2025-11-19)
 
 * **deps:** update all non-major dependencies ([5baccc8](https://github.com/mhaibaraai/movk-nuxt-docs/commit/5baccc817405a16547c66eec519dedb53c8758d5))
