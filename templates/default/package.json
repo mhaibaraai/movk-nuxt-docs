@@ -1,6 +1,6 @@
 {
   "name": "movk-nuxt-docs-template",
-  "packageManager": "pnpm@10.22.0",
+  "packageManager": "pnpm@10.23.0",
   "scripts": {
     "build": "nuxt build",
     "dev": "nuxt dev",
@@ -11,7 +11,7 @@
   },
   "dependencies": {
     "@movk/nuxt-docs": "latest",
-    "better-sqlite3": "^12.4.1",
+    "better-sqlite3": "^12.4.5",
     "nuxt": "^4.2.1"
   },
   "devDependencies": {
