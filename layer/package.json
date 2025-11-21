@@ -27,9 +27,9 @@
     "README.md"
   ],
   "dependencies": {
-    "@iconify-json/lucide": "^1.2.73",
+    "@iconify-json/lucide": "^1.2.74",
     "@iconify-json/simple-icons": "^1.2.59",
-    "@iconify-json/vscode-icons": "^1.2.35",
+    "@iconify-json/vscode-icons": "^1.2.36",
     "@movk/core": "^0.0.5",
     "@nuxt/content": "^3.8.2",
     "@nuxt/image": "^2.0.0",
