@@ -28,13 +28,13 @@
     "@nuxt/devtools": "^3.1.0",
     "@nuxt/eslint": "^1.10.0",
     "@release-it/bumper": "^7.0.5",
-    "@release-it/conventional-changelog": "^10.0.1",
+    "@release-it/conventional-changelog": "^10.0.2",
     "eslint": "^9.39.1",
     "fast-glob": "^3.3.3",
     "nuxt": "^4.2.1",
     "release-it": "^19.0.6",
     "tsx": "^4.20.6",
     "typescript": "^5.9.3",
-    "vue-tsc": "^3.1.4"
+    "vue-tsc": "^3.1.5"
   }
 }
