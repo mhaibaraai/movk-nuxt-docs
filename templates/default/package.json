@@ -11,7 +11,7 @@
   },
   "dependencies": {
     "@movk/nuxt-docs": "latest",
-    "better-sqlite3": "^12.4.5",
+    "better-sqlite3": "^12.4.6",
     "nuxt": "^4.2.1"
   },
   "devDependencies": {
