@@ -1,14 +1,14 @@
 # 📋 Changelog
 
-## [1.3.7](///compare/v1.3.6...v1.3.7) (2025-11-25)
+## [1.3.7](https://github.com/mhaibaraai/movk-nuxt-docs/compare/v1.3.6...v1.3.7) (2025-11-25)
 
 ### Features
 
-* 增强组件属性显示功能 d68bce6
+* 增强组件属性显示功能 ([d68bce6](https://github.com/mhaibaraai/movk-nuxt-docs/commit/d68bce69021966cdb71246c610d09da3c3d146e9))
 
 ### Bug Fixes
 
-* 修复内联类型高亮的服务端渲染问题 17ea5b7
+* 修复内联类型高亮的服务端渲染问题 ([17ea5b7](https://github.com/mhaibaraai/movk-nuxt-docs/commit/17ea5b7fd3db2c035db73e20a42965dfb676e94e))
 
 ## [1.3.6](https://github.com/mhaibaraai/movk-nuxt-docs/compare/v1.3.5...v1.3.6) (2025-11-24)
 
