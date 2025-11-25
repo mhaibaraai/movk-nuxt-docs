@@ -1,8 +1,34 @@
 <script setup lang="ts">
 import type { ComponentMeta } from 'vue-component-meta'
-import { camelCase, kebabCase } from 'scule'
+import { camelCase, kebabCase, upperFirst } from 'scule'
 
-const { ignore = [], slug } = defineProps<{
+const { ignore = [
+  'activeClass',
+  'inactiveClass',
+  'exactActiveClass',
+  'ariaCurrentValue',
+  'href',
+  'rel',
+  'noRel',
+  'prefetch',
+  'prefetchOn',
+  'noPrefetch',
+  'prefetchedClass',
+  'replace',
+  'exact',
+  'exactQuery',
+  'exactHash',
+  'external',
+  'onClick',
+  'viewTransition',
+  'enterKeyHint',
+  'form',
+  'formaction',
+  'formenctype',
+  'formmethod',
+  'formnovalidate',
+  'formtarget'
+], slug, prose } = defineProps<{
   /**
    * The slug of the component to fetch props for.
    * @defaultValue route path's last segment
@@ -12,11 +38,12 @@ const { ignore = [], slug } = defineProps<{
    * An array of prop names to ignore.
    */
   ignore?: string[]
+  prose?: boolean
 }>()
 
 const route = useRoute()
-
-const componentName = camelCase(slug ?? route.path.split('/').pop() ?? '')
+const camelName = camelCase(slug ?? route.path.split('/').pop() ?? '')
+const componentName = prose ? `Prose${upperFirst(camelName)}` : `${upperFirst(camelName)}`
 const meta = await fetchComponentMeta(componentName as any)
 
 const metaProps: ComputedRef<ComponentMeta['props']> = computed(() => {
