@@ -12,27 +12,27 @@ category: example
 
 :::div{class="flex flex-col w-full"}
 ### Props
-:component-props{slug=Api}
+:component-props
 
 ### Slots
-:component-slots{slug=Api}
+:component-slots
 
 ### Emits
-:component-emits{slug=Api}
+:component-emits
 :::
 
 #code
 ```mdc
 ### Props
 
-:component-props{slug=Api}
+:component-props
 
 ### Slots
 
-:component-slots{slug=Api}
+:component-slots
 
 ### Emits
 
-:component-emits{slug=Api}
+:component-emits
 ```
 ::
