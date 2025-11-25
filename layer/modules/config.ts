@@ -70,8 +70,8 @@ export default defineNuxtModule({
       metaFields: {
         type: false,
         props: true,
-        slots: true,
-        events: true,
+        slots: 'no-schema' as const,
+        events: 'no-schema' as const,
         exposed: false
       }
     })
