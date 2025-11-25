@@ -8,7 +8,6 @@ export default defineNuxtConfig({
     resolve('./modules/config'),
     resolve('./modules/css'),
     resolve('./modules/component-example'),
-    resolve('./modules/component-meta'),
     resolve('./modules/llms'),
     '@nuxt/ui',
     '@nuxt/content',
