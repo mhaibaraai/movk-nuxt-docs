@@ -49,6 +49,9 @@ export default defineNuxtModule({
       owner: gitInfo?.owner,
       name: gitInfo?.name,
       url: gitInfo?.url,
+      commitPath: 'src',
+      suffix: 'vue',
+      since: '2025-01-31T04:00:00Z',
       branch: getGitBranch()
     })
 
@@ -65,7 +68,7 @@ export default defineNuxtModule({
         'nuxt-og-image',
         '@nuxtjs/plausible',
         '@nuxt/ui',
-        new RegExp(`${componentsPath.replace(/[/\\]/g, '[/\\\\]')}/(?!content/(ComponentEmits|ComponentProps|ComponentSlots|ComponentExample)\\.vue$)`)
+        new RegExp(`${componentsPath.replace(/[/\\]/g, '[/\\\\]')}/(?!content/(ComponentEmits|ComponentProps|ComponentSlots|ComponentExample|CommitChangelog)\\.vue$)`)
       ],
       metaFields: {
         type: false,
