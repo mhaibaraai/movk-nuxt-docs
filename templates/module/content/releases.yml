@@ -1,0 +1,14 @@
+title: 版本发布
+description: 查看 Movk Nuxt Docs 的版本更新、功能增强与问题修复。
+navigation: false
+releases: https://ungh.cc/repos/mhaibaraai/movk-nuxt-docs/releases
+hero:
+  title: 版本发布
+  description: 查看 Movk Nuxt Docs 的版本更新、功能增强与问题修复。
+  links:
+    - label: 在 GitHub 上标星
+      color: neutral
+      variant: outline
+      to: https://github.com/mhaibaraai/movk-nuxt-docs
+      target: _blank
+      icon: i-lucide-star
