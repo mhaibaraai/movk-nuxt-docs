@@ -19,6 +19,7 @@
 - 🎨 **采用 Nuxt UI** - 集成全面的 UI 组件库，开箱即用
 - 📝 **MDC 语法增强** - 支持 Markdown 与 Vue 组件的无缝集成，实现动态内容
 - 🧩 **组件文档自动生成** - 自动生成 Props、Slots、Emits 文档及交互式示例
+- 📦 **Git 提交历史集成** - 通过 CommitChangelog 组件自动展示文件的提交历史记录
 - 📚 **智能侧边栏导航** - 根据内容结构自动生成导航
 - 🔍 **全文搜索** - 内置强大的全文搜索功能
 - 🌙 **暗黑模式** - 支持亮色/暗色主题切换
@@ -31,14 +32,30 @@
 
 ### 使用模板创建项目
 
-```bash [Terminal]
-# 使用此模板创建新项目
+根据您的需求选择合适的模板：
+
+#### 📚 完整文档站点（推荐）
+
+适合构建完整的文档网站，包含 ESLint、TypeScript 检查等开发工具。
+
+```bash
+# 使用完整模板创建新项目
 npx nuxi init -t gh:mhaibaraai/movk-nuxt-docs/templates/default my-docs
-# 进入项目目录
 cd my-docs
-# 启动开发服务器
 pnpm dev
 ```
+
+#### 📦 模块文档站点（精简）
+
+适合为 npm 包或库快速创建文档，内置 Release 页面展示版本发布历史，无额外开发工具。
+
+```bash
+# 使用模块模板创建新项目
+npx nuxi init -t gh:mhaibaraai/movk-nuxt-docs/templates/module my-module-docs
+cd my-module-docs
+pnpm dev
+```
+
 访问 `http://localhost:3000` 查看你的文档网站。
 
 ### 作为 Layer 使用
@@ -73,9 +90,9 @@ export default defineNuxtConfig({
 
 ## 📁 项目结构
 
-### 完整项目结构
+### 模板项目结构
 
-使用模板创建的项目结构：
+使用模板创建的项目结构（以 `default` 模板为例）：
 
 ```bash
 my-docs/
@@ -86,22 +103,27 @@ my-docs/
 │   ├── index.md                 # 首页
 │   └── docs/                    # 文档页面
 ├── public/                      # 静态资源
-├── scripts/                     # 脚本
 ├── nuxt.config.ts               # Nuxt 配置
+├── app.config.ts                # 应用配置
+├── content.config.ts            # 内容配置
 ├── tsconfig.json                # TypeScript 配置
 ├── package.json                 # 依赖与脚本
-├── pnpm-workspace.yaml          # pnpm 工作区配置
 └── README.md                    # 项目说明
 ```
 
 ### Monorepo 结构
 
-本项目采用 monorepo 结构：
+本仓库采用 monorepo 结构：
 
-- `/docs` - 官方文档站点
-- `/layer` - Movk Nuxt Docs 主题 layer（`@movk/nuxt-docs`）
-- `/template` - 项目模板
-- `/scripts` - 构建脚本
+```bash
+movk-nuxt-docs/
+├── docs/                        # 官方文档站点
+├── layer/                       # @movk/nuxt-docs layer 包
+├── templates/
+│   ├── default/                 # 完整文档站点模板
+│   └── module/                  # 模块文档站点模板（精简）
+└── scripts/                     # 构建脚本
+```
 
 ## 📝 内容编写
 
