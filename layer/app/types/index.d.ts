@@ -29,6 +29,9 @@ declare module 'nuxt/schema' {
       url: string
       branch: string
       rootDir: string
+      commitPath: string
+      since: string
+      suffix: string
     } | false
   }
 }

@@ -1,5 +1,27 @@
 # 📋 Changelog
 
+## [1.3.8](https://github.com/mhaibaraai/movk-nuxt-docs/compare/v1.3.7...v1.3.8) (2025-11-26)
+
+### ✨ Features
+
+* **config:** 扩展 GitHub 配置以支持提交历史功能 ([ace88d5](https://github.com/mhaibaraai/movk-nuxt-docs/commit/ace88d5fcf2a0021a27c69e6af65e1c5b8903b6e))
+* 新增 CommitChangelog 组件 ([b4084b5](https://github.com/mhaibaraai/movk-nuxt-docs/commit/b4084b5bd16df1a3c076ccc327676225e9ca7e95))
+* 新增模块模板和环境配置示例 ([9035d66](https://github.com/mhaibaraai/movk-nuxt-docs/commit/9035d665a035e6044a66e6539ad65aa4e076533c))
+
+### 📝 Documentation
+
+* 完善文档内容并新增模板说明 ([85c53c1](https://github.com/mhaibaraai/movk-nuxt-docs/commit/85c53c1b1831dbcda09614f82aabb631d884baae))
+
+### ♻️ Code Refactoring
+
+* **component:** 调整 ComponentExample 默认配置 ([9cfe622](https://github.com/mhaibaraai/movk-nuxt-docs/commit/9cfe622dfdd7f613be46842da4bd09c495826b26))
+
+### 🔧 Chores
+
+* **config:** 扩展 changelog 配置以显示所有提交类型 ([db2d250](https://github.com/mhaibaraai/movk-nuxt-docs/commit/db2d250c4da0977610c5d920ce3280fbc1934a69))
+* **deps:** update all non-major dependencies ([6d73240](https://github.com/mhaibaraai/movk-nuxt-docs/commit/6d732405280d1e72535db117e87a54d99fc0aeb2))
+* **deps:** 更新依赖包 ([85edb34](https://github.com/mhaibaraai/movk-nuxt-docs/commit/85edb347a249e115dff061143719a1c608de5c36))
+
 ## [1.3.7](https://github.com/mhaibaraai/movk-nuxt-docs/compare/v1.3.6...v1.3.7) (2025-11-25)
 
 ### Features

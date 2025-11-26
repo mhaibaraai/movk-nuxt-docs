@@ -5,7 +5,7 @@ import { hash } from 'ohash'
 import { useElementSize } from '@vueuse/core'
 import { get, set } from '#ui/utils'
 
-const { preview = true, source = true, prettier = true, ...props } = defineProps<{
+const { preview = true, source = true, prettier = false, ...props } = defineProps<{
   name: string
   class?: any
   /**
