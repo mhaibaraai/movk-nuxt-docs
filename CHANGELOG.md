@@ -1,5 +1,11 @@
 # 📋 Changelog
 
+## [1.3.9](https://github.com/mhaibaraai/movk-nuxt-docs/compare/v1.3.8...v1.3.9) (2025-11-27)
+
+### 🔧 Chores
+
+* 移除 GitHub 提交接口的调试日志 ([2ee66a4](https://github.com/mhaibaraai/movk-nuxt-docs/commit/2ee66a4b2b1c6bb4d1aebea7399437d43eba1fe9))
+
 ## [1.3.8](https://github.com/mhaibaraai/movk-nuxt-docs/compare/v1.3.7...v1.3.8) (2025-11-26)
 
 ### ✨ Features
