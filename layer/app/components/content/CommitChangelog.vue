@@ -25,6 +25,10 @@ const props = defineProps<{
    * The name of the component or file to get the changelog for.
    */
   name?: string
+  /**
+   * The author to filter commits by.
+   */
+  author?: string
 }>()
 
 const SHA_SHORT_LENGTH = 5
@@ -50,8 +54,8 @@ const filePath = computed(() => {
 })
 
 const { data: commits } = await useLazyFetch<Commit[]>('/api/github/commits', {
-  key: `commit-changelog-${props.name ?? routeName.value}`,
-  query: { path: filePath.value }
+  key: `commit-changelog-${props.name ?? routeName.value}-${props.author ?? 'all'}`,
+  query: { path: filePath.value, author: props.author }
 })
 
 // 格式化提交消息
@@ -83,11 +87,7 @@ const formattedCommits = computed(() => {
   <div v-else class="flex flex-col gap-1.5 relative">
     <div class="bg-accented w-px h-full absolute left-[11px] z-[-1]" />
 
-    <div
-      v-for="commit of formattedCommits"
-      :key="commit.sha"
-      class="flex gap-1.5 items-center"
-    >
+    <div v-for="commit of formattedCommits" :key="commit.sha" class="flex gap-1.5 items-center">
       <div class="bg-accented ring-2 ring-bg size-1.5 mx-[8.5px] rounded-full" />
       <MDC :value="commit.formatted" class="text-sm *:py-0 *:my-0 [&_code]:text-xs" tag="div" />
     </div>
