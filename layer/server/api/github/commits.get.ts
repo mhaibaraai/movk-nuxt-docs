@@ -16,6 +16,7 @@ export default defineCachedEventHandler(async (event) => {
   const { github } = useAppConfig()
   const octokit = new Octokit({ auth: process.env.NUXT_GITHUB_TOKEN })
   const commits = await octokit.paginate(octokit.rest.repos.listCommits, {
+    sha: github.branch,
     owner: github.owner,
     repo: github.name,
     path,
