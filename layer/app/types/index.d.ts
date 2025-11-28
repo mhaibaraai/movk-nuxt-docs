@@ -26,12 +26,17 @@ declare module 'nuxt/schema' {
       }
     }
     github: {
+      owner: string
+      name: string
       url: string
       branch: string
       rootDir: string
       commitPath: string
       since: string
       suffix: string
+      per_page: number
+      until: string
+      author?: string
     } | false
   }
 }

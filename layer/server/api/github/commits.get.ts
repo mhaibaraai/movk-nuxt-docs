@@ -5,7 +5,7 @@ export default defineCachedEventHandler(async (event) => {
     return []
   }
 
-  const { path } = getQuery(event) as { path: string }
+  const { path, author } = getQuery(event) as { path: string, author?: string }
   if (!path) {
     throw createError({
       statusCode: 400,
@@ -16,10 +16,14 @@ export default defineCachedEventHandler(async (event) => {
   const { github } = useAppConfig()
   const octokit = new Octokit({ auth: process.env.NUXT_GITHUB_TOKEN })
   const commits = await octokit.paginate(octokit.rest.repos.listCommits, {
+    sha: github.branch,
     owner: github.owner,
     repo: github.name,
     path,
-    since: github.since
+    since: github.since,
+    per_page: github.per_page,
+    until: github.until,
+    ...(author && { author })
   })
 
   return commits.map(commit => ({
@@ -29,5 +33,8 @@ export default defineCachedEventHandler(async (event) => {
   }))
 }, {
   maxAge: 60 * 60,
-  getKey: event => `commits-${getQuery(event).path}`
+  getKey: (event) => {
+    const { path, author } = getQuery(event)
+    return `commits-${path}${author ? `-${author}` : ''}`
+  }
 })

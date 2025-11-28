@@ -52,7 +52,9 @@ export default defineNuxtModule({
       commitPath: 'src',
       suffix: 'vue',
       since: '2025-01-31T04:00:00Z',
-      branch: getGitBranch()
+      branch: getGitBranch(),
+      per_page: 100,
+      until: new Date().toISOString()
     })
 
     const componentsPath = resolve('../app/components')
