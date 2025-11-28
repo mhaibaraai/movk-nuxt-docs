@@ -1,5 +1,24 @@
 # 📋 Changelog
 
+## [1.3.10](https://github.com/mhaibaraai/movk-nuxt-docs/compare/v1.3.9...v1.3.10) (2025-11-28)
+
+### ✨ Features
+
+* 增强 GitHub 提交 API 支持更多过滤和分页参数 ([a87b363](https://github.com/mhaibaraai/movk-nuxt-docs/commit/a87b36391678ee5e4acef264be8757fb1b0bfaf9))
+
+### 🐛 Bug Fixes
+
+* 更新 @release-it/conventional-changelog 依赖版本至 ^10.0.2 ([5ec1399](https://github.com/mhaibaraai/movk-nuxt-docs/commit/5ec139991b352ced1c3e53a6938e0deb0c22df93))
+* 添加分支参数以正确获取指定分支的提交记录 ([b7abba5](https://github.com/mhaibaraai/movk-nuxt-docs/commit/b7abba5a7923672120833a07462a18c5131c3c82))
+
+### 📝 Documentation
+
+* 更新 GitHub 配置和 CommitChangelog 组件文档 ([9cd4dd4](https://github.com/mhaibaraai/movk-nuxt-docs/commit/9cd4dd4c6b6b6687094e3fa0ddd8d3dca96f9bfa))
+
+### 🔧 Chores
+
+* **deps:** update all non-major dependencies ([9126100](https://github.com/mhaibaraai/movk-nuxt-docs/commit/9126100e84101571d40163e35349a3d17e8a9405))
+
 ## [1.3.9](https://github.com/mhaibaraai/movk-nuxt-docs/compare/v1.3.8...v1.3.9) (2025-11-27)
 
 ### 🔧 Chores
