@@ -37,6 +37,14 @@ declare module 'nuxt/schema' {
       per_page: number
       until: string
       author?: string
+      /**
+       * 日期格式化配置
+       * @example { locale: 'zh-CN', options: { year: 'numeric', month: '2-digit', day: '2-digit', hour: '2-digit', minute: '2-digit' } }
+       */
+      dateFormat?: {
+        locale?: string
+        options?: Intl.DateTimeFormatOptions
+      }
     } | false
   }
 }

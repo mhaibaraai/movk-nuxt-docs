@@ -22,7 +22,7 @@ export default defineContentConfig({
         include: 'docs/**/*'
       }],
       schema: z.object({
-        links: property(z.object({})).inherit('@nuxt/ui/components/Button.vue'),
+        links: z.array(property(z.object({})).inherit('@nuxt/ui/components/Button.vue')),
         category: z.string().optional(),
         navigation: z.object({
           title: z.string().optional()
