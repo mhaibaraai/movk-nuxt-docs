@@ -106,6 +106,8 @@ defineOgImageComponent('Nuxt', {
           unwrap="p"
           :cache-key="`${kebabCase(route.path)}-description`"
         />
+
+        <PageLastCommit v-if="github && page?.stem && page?.extension" :stem="page.stem" :extension="page.extension" />
       </template>
 
       <template #links>

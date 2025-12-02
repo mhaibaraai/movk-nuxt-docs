@@ -70,7 +70,7 @@ export default defineNuxtModule({
         'nuxt-og-image',
         '@nuxtjs/plausible',
         '@nuxt/ui',
-        new RegExp(`${componentsPath.replace(/[/\\]/g, '[/\\\\]')}/(?!content/(ComponentEmits|ComponentProps|ComponentSlots|ComponentExample|CommitChangelog)\\.vue$)`)
+        new RegExp(`${componentsPath.replace(/[/\\]/g, '[/\\\\]')}/(?!content/(ComponentEmits|ComponentProps|ComponentSlots|ComponentExample|CommitChangelog|PageLastCommit)\\.vue$)`)
       ],
       metaFields: {
         type: false,
