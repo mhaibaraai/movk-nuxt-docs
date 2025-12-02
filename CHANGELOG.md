@@ -1,5 +1,25 @@
 # 📋 Changelog
 
+## [1.3.11](https://github.com/mhaibaraai/movk-nuxt-docs/compare/v1.3.10...v1.3.11) (2025-12-02)
+
+### ✨ Features
+
+* 添加页面最后提交信息展示功能 ([b3c3d27](https://github.com/mhaibaraai/movk-nuxt-docs/commit/b3c3d27ac6343a7f0c808ff5876957fbd80acf6b))
+
+### 📝 Documentation
+
+* 添加 CommitChangelog 组件 author 参数示例 ([53bd400](https://github.com/mhaibaraai/movk-nuxt-docs/commit/53bd400e52632c81d266c10a049ef22b12eb1945))
+* 重构配置文档层级结构 ([631594c](https://github.com/mhaibaraai/movk-nuxt-docs/commit/631594caa0dee84286dce9ad102a994f20afd59a))
+
+### ♻️ Code Refactoring
+
+* 优化 PageLastCommit 组件实现 ([c48bb7f](https://github.com/mhaibaraai/movk-nuxt-docs/commit/c48bb7f6de3730d56274e0da5624f3194f8c1d94))
+
+### 🔧 Chores
+
+* **deps:** lock file maintenance ([7cde0bd](https://github.com/mhaibaraai/movk-nuxt-docs/commit/7cde0bd34554870c83cf3d14bffdfcfc2742e50c))
+* **deps:** update all non-major dependencies ([ad1e2bc](https://github.com/mhaibaraai/movk-nuxt-docs/commit/ad1e2bcb3eeb741d713113543b768a2ce8cb39ac))
+
 ## [1.3.10](https://github.com/mhaibaraai/movk-nuxt-docs/compare/v1.3.9...v1.3.10) (2025-11-28)
 
 ### ✨ Features
