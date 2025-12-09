@@ -33,7 +33,7 @@
     "@movk/core": "^1.0.2",
     "@nuxt/content": "^3.8.2",
     "@nuxt/image": "^2.0.0",
-    "@nuxt/kit": "^4.2.1",
+    "@nuxt/kit": "^4.2.2",
     "@nuxt/ui": "^4.2.1",
     "@nuxtjs/seo": "^3.2.2",
     "@octokit/rest": "^22.0.1",
