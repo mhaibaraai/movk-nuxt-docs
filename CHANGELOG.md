@@ -1,5 +1,24 @@
 # 📋 Changelog
 
+## [1.3.12](https://github.com/mhaibaraai/movk-nuxt-docs/compare/v1.3.11...v1.3.12) (2025-12-10)
+
+### 🐛 Bug Fixes
+
+* 修复部署文档重定向路径 ([3c7c13b](https://github.com/mhaibaraai/movk-nuxt-docs/commit/3c7c13b15cead3aa0462b2420a255e2c36a97479))
+
+### 📝 Documentation
+
+* 在首页添加 @movk/nuxt 项目卡片 ([6d67762](https://github.com/mhaibaraai/movk-nuxt-docs/commit/6d67762c39f6b658367da8a99eb0817c9b39e14d))
+
+### 🔧 Chores
+
+* **deps:** lock file maintenance ([91b876d](https://github.com/mhaibaraai/movk-nuxt-docs/commit/91b876d7cc47617a62f35144fb9a5c204cd04624))
+* **deps:** update all non-major dependencies ([1701cc0](https://github.com/mhaibaraai/movk-nuxt-docs/commit/1701cc01bba444fa76b70d9e06a147c284bdec88))
+* **deps:** update all non-major dependencies ([bdc9674](https://github.com/mhaibaraai/movk-nuxt-docs/commit/bdc9674a844280aa00e193419b3f2fbde43b20ef))
+* **deps:** update devdependency @antfu/ni to v28 ([6863b16](https://github.com/mhaibaraai/movk-nuxt-docs/commit/6863b160fc9a59f047fd84ffd8a03b41d2cc5a2d))
+* **deps:** update nuxt framework to ^4.2.2 ([249c4eb](https://github.com/mhaibaraai/movk-nuxt-docs/commit/249c4eb35aac969c553c4a848e601499fe023916))
+* **deps:** 降级 @release-it/conventional-changelog 到 10.0.1 版本 ([efca7c1](https://github.com/mhaibaraai/movk-nuxt-docs/commit/efca7c1b51b53159f9f74111621a6fee13836ccc))
+
 ## [1.3.11](https://github.com/mhaibaraai/movk-nuxt-docs/compare/v1.3.10...v1.3.11) (2025-12-02)
 
 ### ✨ Features
