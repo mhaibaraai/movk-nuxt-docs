@@ -31,7 +31,7 @@
     "@release-it/conventional-changelog": "^10.0.2",
     "eslint": "^9.39.1",
     "fast-glob": "^3.3.3",
-    "nuxt": "^4.2.1",
+    "nuxt": "^4.2.2",
     "release-it": "^19.0.6",
     "tsx": "^4.21.0",
     "typescript": "^5.9.3",
