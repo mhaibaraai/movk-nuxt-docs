@@ -63,12 +63,14 @@ export default defineCachedEventHandler(async (event) => {
     const date = commit.commit.author?.date ?? ''
     const dateFormat = github.dateFormat ?? {}
     const locale = dateFormat.locale ?? 'zh-CN'
+    const timeZone = dateFormat.timeZone ?? 'Asia/Shanghai'
     const formatOptions: Intl.DateTimeFormatOptions = dateFormat.options ?? {
       year: 'numeric',
       month: 'numeric',
       day: 'numeric',
       hour: '2-digit',
-      minute: '2-digit'
+      minute: '2-digit',
+      timeZone
     }
     const dateFormatted = date
       ? new Date(date).toLocaleDateString(locale, formatOptions)
