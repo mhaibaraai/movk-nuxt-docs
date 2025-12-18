@@ -2,7 +2,10 @@ import type { ButtonProps } from '@nuxt/ui'
 
 declare module 'nuxt/schema' {
   interface AppConfig {
-    vercelAnalytics: boolean
+    vercelAnalytics: {
+      enable: boolean
+      debug: boolean
+    }
     seo: {
       titleTemplate: string
       title: string
@@ -38,12 +41,12 @@ declare module 'nuxt/schema' {
       suffix: string
       per_page: number
       until: string
-      author?: string
+      author: string
       /**
        * 日期格式化配置
        * @example { locale: 'zh-CN', options: { year: 'numeric', month: '2-digit', day: '2-digit', hour: '2-digit', minute: '2-digit' } }
        */
-      dateFormat?: {
+      dateFormat: {
         locale?: string
         options?: Intl.DateTimeFormatOptions
       }
