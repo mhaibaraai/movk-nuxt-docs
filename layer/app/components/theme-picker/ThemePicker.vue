@@ -13,7 +13,7 @@ const { track } = useAnalytics()
 const open = ref(false)
 
 watch(open, (isOpen) => {
-  if (isOpen && appConfig.vercelAnalytics) {
+  if (isOpen && appConfig.vercelAnalytics?.debug) {
     track('Theme Picker Opened')
   }
 })
@@ -29,7 +29,7 @@ const neutral = computed({
   set(option) {
     appConfig.ui.colors.neutral = option
     window.localStorage.setItem(`${site.name}-ui-neutral`, appConfig.ui.colors.neutral)
-    if (appConfig.vercelAnalytics) track('Theme Changed', { setting: 'neutral', value: option })
+    if (appConfig.vercelAnalytics?.debug) track('Theme Changed', { setting: 'neutral', value: option })
   }
 })
 
@@ -43,7 +43,7 @@ const primary = computed({
     appConfig.ui.colors.primary = option
     window.localStorage.setItem(`${site.name}-ui-primary`, appConfig.ui.colors.primary)
     setBlackAsPrimary(false)
-    if (appConfig.vercelAnalytics) track('Theme Changed', { setting: 'primary', value: option })
+    if (appConfig.vercelAnalytics?.debug) track('Theme Changed', { setting: 'primary', value: option })
   }
 })
 
@@ -55,7 +55,7 @@ const radius = computed({
   set(option) {
     appConfig.theme.radius = option
     window.localStorage.setItem(`${site.name}-ui-radius`, String(appConfig.theme.radius))
-    if (appConfig.vercelAnalytics) track('Theme Changed', { setting: 'radius', value: option })
+    if (appConfig.vercelAnalytics?.debug) track('Theme Changed', { setting: 'radius', value: option })
   }
 })
 
@@ -70,14 +70,14 @@ const mode = computed({
   },
   set(option) {
     colorMode.preference = option
-    if (appConfig.vercelAnalytics) track('Theme Changed', { setting: 'color mode', value: option })
+    if (appConfig.vercelAnalytics?.debug) track('Theme Changed', { setting: 'color mode', value: option })
   }
 })
 
 function setBlackAsPrimary(value: boolean) {
   appConfig.theme.blackAsPrimary = value
   window.localStorage.setItem(`${site.name}-ui-black-as-primary`, String(value))
-  if (appConfig.vercelAnalytics) track('Theme Changed', { setting: 'black as primary', value })
+  if (appConfig.vercelAnalytics?.debug) track('Theme Changed', { setting: 'black as primary', value })
 }
 
 const fonts = ['Public Sans', 'DM Sans', 'Geist', 'Inter', 'Poppins', 'Outfit', 'Raleway']
@@ -88,7 +88,7 @@ const font = computed({
   set(option) {
     appConfig.theme.font = option
     window.localStorage.setItem(`${site.name}-ui-font`, appConfig.theme.font)
-    if (appConfig.vercelAnalytics) track('Theme Changed', { setting: 'font', value: option })
+    if (appConfig.vercelAnalytics?.debug) track('Theme Changed', { setting: 'font', value: option })
   }
 })
 
@@ -113,7 +113,7 @@ const icon = computed({
     appConfig.theme.icons = option
     appConfig.ui.icons = themeIcons[option as keyof typeof themeIcons] as any
     window.localStorage.setItem(`${site.name}-ui-icons`, appConfig.theme.icons)
-    if (appConfig.vercelAnalytics) track('Theme Changed', { setting: 'icons', value: option })
+    if (appConfig.vercelAnalytics?.debug) track('Theme Changed', { setting: 'icons', value: option })
   }
 })
 
@@ -130,7 +130,7 @@ const hasAppConfigChanges = computed(() => {
 })
 
 function exportCSS() {
-  if (appConfig.vercelAnalytics) track('Theme Exported', { type: 'css' })
+  if (appConfig.vercelAnalytics?.debug) track('Theme Exported', { type: 'css' })
 
   const lines = [
     '@import "tailwindcss";',
@@ -161,7 +161,7 @@ function exportCSS() {
 }
 
 function exportAppConfig() {
-  if (appConfig.vercelAnalytics) track('Theme Exported', { type: 'appConfig' })
+  if (appConfig.vercelAnalytics?.debug) track('Theme Exported', { type: 'appConfig' })
 
   const config: Record<string, any> = {}
 
@@ -192,7 +192,7 @@ function exportAppConfig() {
 }
 
 function resetTheme() {
-  if (appConfig.vercelAnalytics) track('Theme Reset')
+  if (appConfig.vercelAnalytics?.debug) track('Theme Reset')
 
   // Reset without triggering individual tracking events
   appConfig.ui.colors.primary = 'green'

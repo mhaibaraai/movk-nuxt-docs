@@ -13,7 +13,7 @@ const items = [
     label: 'Copy Markdown link',
     icon: 'i-lucide-link',
     onSelect() {
-      if (vercelAnalytics) track ('Page Action', { action: 'Copy Markdown Link' })
+      if (vercelAnalytics?.debug) track ('Page Action', { action: 'Copy Markdown Link' })
       copy(mdPath.value)
       toast.add({
         title: 'Copied to clipboard',
@@ -27,7 +27,7 @@ const items = [
     target: '_blank',
     to: `/raw${route.path}.md`,
     onSelect() {
-      if (vercelAnalytics) track('Page Action', { action: 'View as Markdown' })
+      if (vercelAnalytics?.debug) track('Page Action', { action: 'View as Markdown' })
     }
   },
   {
@@ -36,7 +36,7 @@ const items = [
     target: '_blank',
     to: `https://chatgpt.com/?hints=search&q=${encodeURIComponent(`Read ${mdPath.value} so I can ask questions about it.`)}`,
     onSelect() {
-      if (vercelAnalytics) track('Page Action', { action: 'Open in ChatGPT' })
+      if (vercelAnalytics?.debug) track('Page Action', { action: 'Open in ChatGPT' })
     }
   },
   {
@@ -45,13 +45,13 @@ const items = [
     target: '_blank',
     to: `https://claude.ai/new?q=${encodeURIComponent(`Read ${mdPath.value} so I can ask questions about it.`)}`,
     onSelect() {
-      if (vercelAnalytics) track('Page Action', { action: 'Open in Claude' })
+      if (vercelAnalytics?.debug) track('Page Action', { action: 'Open in Claude' })
     }
   }
 ]
 
 async function copyPage() {
-  if (vercelAnalytics) track('Page Action', { action: 'Copy Page Content' })
+  if (vercelAnalytics?.debug) track('Page Action', { action: 'Copy Page Content' })
   copy(await $fetch<string>(`/raw${route.path}.md`))
 }
 </script>

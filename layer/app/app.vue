@@ -45,8 +45,8 @@ provide('navigation', rootNavigation)
 <template>
   <UApp :toaster="appConfig.toaster">
     <NuxtLoadingIndicator color="var(--ui-primary)" :height="2" />
-    <Analytics v-if="appConfig.vercelAnalytics" />
-    <SpeedInsights v-if="appConfig.vercelAnalytics" />
+    <Analytics v-if="appConfig.vercelAnalytics" :debug="appConfig.vercelAnalytics?.debug" />
+    <SpeedInsights v-if="appConfig.vercelAnalytics" :debug="appConfig.vercelAnalytics?.debug" />
 
     <div :class="{ root: route.path.startsWith('/docs/') }">
       <template v-if="!route.path.startsWith('/examples')">
