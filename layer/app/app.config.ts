@@ -34,7 +34,10 @@ export default defineAppConfig({
       }
     }
   },
-  vercelAnalytics: false,
+  vercelAnalytics: {
+    enable: false,
+    debug: false
+  },
   header: {
     avatar: 'https://docs.mhaibaraai.cn/avatar.png',
     title: 'Movk Nuxt Docs',
