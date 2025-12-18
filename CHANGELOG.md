@@ -1,5 +1,12 @@
 # 📋 Changelog
 
+## [1.4.2](https://github.com/mhaibaraai/movk-nuxt-docs/compare/v1.4.1...v1.4.2) (2025-12-18)
+
+### ♻️ Code Refactoring
+
+* 优化 Vercel Analytics 追踪逻辑 ([89b2011](https://github.com/mhaibaraai/movk-nuxt-docs/commit/89b2011ce2c832c02aaf08ea05a13bbecce95a6d))
+* 重构 vercelAnalytics 配置结构 ([17fc01f](https://github.com/mhaibaraai/movk-nuxt-docs/commit/17fc01f3781e86c004a158267f056238c73b34ad))
+
 ## [1.4.1](https://github.com/mhaibaraai/movk-nuxt-docs/compare/v1.4.0...v1.4.1) (2025-12-18)
 
 ### ✨ Features
