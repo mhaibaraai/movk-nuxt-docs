@@ -2,6 +2,7 @@ import type { ButtonProps } from '@nuxt/ui'
 
 declare module 'nuxt/schema' {
   interface AppConfig {
+    vercelAnalytics: boolean
     seo: {
       titleTemplate: string
       title: string
@@ -9,6 +10,7 @@ declare module 'nuxt/schema' {
     }
     header: {
       title: string
+      avatar: string
       to: string
       search: boolean
       colorMode: boolean
