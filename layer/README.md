@@ -159,47 +159,6 @@ icon: i-lucide-rocket
 
 了解更多关于 MDC 语法，请查看 [Nuxt Content 文档](https://content.nuxt.com/docs/files/markdown#mdc-syntax)。
 
-## 🔌 集成第三方服务
-
-本主题不内置任何分析或监控工具，你可以根据需求自由选择。
-
-### Vercel Analytics
-
-```bash [Terminal]
-pnpm add @vercel/analytics @vercel/speed-insights
-```
-
-创建 `app/plugins/analytics.client.ts`：
-
-```typescript [app/plugins/analytics.client.ts]
-import { Analytics } from '@vercel/analytics/nuxt'
-import { SpeedInsights } from '@vercel/speed-insights/nuxt'
-import { createApp, h } from 'vue'
-
-export default defineNuxtPlugin({
-  name: 'vercel-analytics',
-  enforce: 'post',
-  hooks: {
-    'app:mounted': () => {
-      if (import.meta.dev) return
-
-      const container = document.createElement('div')
-      container.id = 'vercel-analytics'
-      document.body.appendChild(container)
-
-      const app = createApp({
-        render: () => h('div', { style: 'display: none;' }, [
-          h(Analytics, { debug: false }),
-          h(SpeedInsights, { debug: false })
-        ])
-      })
-
-      app.mount(container)
-    }
-  }
-})
-```
-
 ### 其他工具
 
 - **Google Analytics** - [@nuxtjs/google-analytics](https://google-analytics.nuxtjs.org/)
