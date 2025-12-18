@@ -1,7 +1,7 @@
 {
   "name": "nuxt-docs-workspace",
   "type": "module",
-  "version": "1.3.12",
+  "version": "1.4.0",
   "private": true,
   "packageManager": "pnpm@10.26.0",
   "license": "MIT",
@@ -17,7 +17,7 @@
     "dev": "nuxt dev docs --extends ../layer",
     "dev:prepare": "nuxt prepare layer && nuxt prepare docs --extends ../layer",
     "release": "nr release:layer && release-it",
-    "release:layer": "release-it --config .release-it.layer.json && cd layer && npm publish --access public",
+    "release:layer": "release-it --config .release-it.layer.json && cd layer && npm publish",
     "lint": "eslint .",
     "lint:fix": "eslint . --fix",
     "typecheck": "nuxt typecheck layer",

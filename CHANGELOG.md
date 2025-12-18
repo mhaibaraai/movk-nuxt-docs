@@ -1,5 +1,15 @@
 # 📋 Changelog
 
+## [1.4.0](https://github.com/mhaibaraai/movk-nuxt-docs/compare/v1.3.12...v1.4.0) (2025-12-18)
+
+### ✨ Features
+
+* 增强主题定制系统并优化 UI 组件 ([5a468e3](https://github.com/mhaibaraai/movk-nuxt-docs/commit/5a468e33643ba83329131e37a704e1288d428fac))
+
+### 🔧 Chores
+
+* **deps:** update all non-major dependencies ([6868077](https://github.com/mhaibaraai/movk-nuxt-docs/commit/686807733404206b289c82a331b5fa6c071e3dbf))
+
 ## [1.3.12](https://github.com/mhaibaraai/movk-nuxt-docs/compare/v1.3.11...v1.3.12) (2025-12-10)
 
 ### 🐛 Bug Fixes
