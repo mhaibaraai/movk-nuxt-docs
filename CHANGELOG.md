@@ -1,5 +1,19 @@
 # 📋 Changelog
 
+## [1.4.1](https://github.com/mhaibaraai/movk-nuxt-docs/compare/v1.4.0...v1.4.1) (2025-12-18)
+
+### ✨ Features
+
+* 内置 Vercel Analytics 和 Speed Insights 集成 ([66e2ede](https://github.com/mhaibaraai/movk-nuxt-docs/commit/66e2edef3df8a5ac2846bb05c6be76bdc9105b2f))
+
+### 📝 Documentation
+
+* 更新 Vercel Analytics 集成文档 ([59f9956](https://github.com/mhaibaraai/movk-nuxt-docs/commit/59f9956668d997d1eb39ed63295873701d17adf5))
+
+### ♻️ Code Refactoring
+
+* 优化页面组件并添加分析追踪 ([ceb4213](https://github.com/mhaibaraai/movk-nuxt-docs/commit/ceb4213bfd271bca82aa43b4784c8a544f2fa26a))
+
 ## [1.4.0](https://github.com/mhaibaraai/movk-nuxt-docs/compare/v1.3.12...v1.4.0) (2025-12-18)
 
 ### ✨ Features
