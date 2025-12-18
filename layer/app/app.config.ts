@@ -2,19 +2,21 @@ import type { ButtonProps } from '@nuxt/ui'
 
 export default defineAppConfig({
   toaster: {
-    expand: true,
-    position: 'top-right' as const,
-    duration: 3000,
-    max: 5
+    position: 'bottom-right' as const,
+    duration: 5000,
+    max: 5,
+    expand: true
   },
   theme: {
     radius: 0.25,
-    blackAsPrimary: false
+    blackAsPrimary: false,
+    icons: 'lucide',
+    font: 'Public Sans'
   },
   ui: {
     colors: {
-      primary: 'indigo',
-      neutral: 'zinc'
+      primary: 'green',
+      neutral: 'slate'
     },
     contentNavigation: {
       slots: {
