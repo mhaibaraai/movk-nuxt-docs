@@ -55,7 +55,7 @@ const filePath = computed(() => {
 
 const { data: commits } = await useLazyFetch<Commit[]>('/api/github/commits', {
   key: `commit-changelog-${props.name ?? routeName.value}-${props.author ?? 'all'}`,
-  query: { path: filePath.value, author: props.author }
+  query: { path: [filePath.value], author: props.author }
 })
 
 // 格式化提交消息
