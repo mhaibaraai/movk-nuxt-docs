@@ -1,4 +1,4 @@
-[![Movk Nuxt Docs](https://docs.mhaibaraai.cn/__og-image__/static/og.png)](https://docs.mhaibaraai.cn/)
+[![Movk Nuxt Docs](https://docs.mhaibaraai.cn/og-image.png)](https://docs.mhaibaraai.cn/)
 
 > 一款由 Nuxt UI 和 Nuxt Content 强力驱动的优雅文档主题
 
