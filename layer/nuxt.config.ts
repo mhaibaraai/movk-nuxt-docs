@@ -45,7 +45,8 @@ export default defineNuxtConfig({
       : {}
   },
   experimental: {
-    typescriptPlugin: true
+    typescriptPlugin: true,
+    asyncContext: true
   },
   compatibilityDate: 'latest',
   nitro: {
@@ -65,12 +66,6 @@ export default defineNuxtConfig({
         'tailwind-variants',
         'tailwindcss/colors'
       ]
-    },
-    resolve: {
-      alias: {
-        extend: 'extend/index.js',
-        debug: 'debug/src/browser.js'
-      }
     }
   },
   fonts: {
