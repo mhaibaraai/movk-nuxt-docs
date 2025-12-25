@@ -49,6 +49,14 @@ const links = computed<ButtonProps[]>(() => github && github.url
       </template>
     </template>
 
+    <template #toggle="{ open, toggle, ui }">
+      <HeaderToggleButton
+        :open="open"
+        :class="ui.toggle({ toggleSide: 'right' })"
+        @click="toggle"
+      />
+    </template>
+
     <template #body>
       <HeaderBody />
     </template>

@@ -140,6 +140,9 @@ importers:
       scule:
         specifier: ^1.3.0
         version: 1.3.0
+      shiki-transformer-color-highlight:
+        specifier: ^1.0.0
+        version: 1.0.0
       tailwindcss:
         specifier: ^4.1.18
         version: 4.1.18
@@ -3314,6 +3317,9 @@ packages:
   colord@2.9.3:
     resolution: {integrity: sha512-jeC1axXpnb0/2nn/Y1LPuLdgXBLH7aDcHu4KEKfqw3CUhX7ZpfBSlPKyqXE6btIgEzfWtrX3/tyBCaCvXvMkOw==}
 
+  colorjs.io@0.5.2:
+    resolution: {integrity: sha512-twmVoizEW7ylZSN32OgKdXRmo1qg+wT5/6C3xu5b9QsWzSFAhHLn2xd8ro0diCsKfCj1RdaTP/nrcW+vAoQPIw==}
+
   colortranslator@5.0.0:
     resolution: {integrity: sha512-Z3UPUKasUVDFCDYAjP2fmlVRf1jFHJv1izAmPjiOa0OCIw1W7iC8PZ2GsoDa8uZv+mKyWopxxStT9q05+27h7w==}
 
@@ -6129,6 +6135,9 @@ packages:
   shell-quote@1.8.3:
     resolution: {integrity: sha512-ObmnIF4hXNg1BqhnHmgbDETF8dLPCggZWBjkQfhZpbszZnYur5DUljTcCHii5LC3J5E0yeO/1LIMyH+UvHQgyw==}
     engines: {node: '>= 0.4'}
+
+  shiki-transformer-color-highlight@1.0.0:
+    resolution: {integrity: sha512-WwoXcbSQF4Hcfu/F4V7jvZxqmix4f8KNYNlYiNwz0w9RcABqhdNQOLeRRw3VNV2LBYdNcNR0qd9HVnlV+D+uzg==}
 
   shiki@3.20.0:
     resolution: {integrity: sha512-kgCOlsnyWb+p0WU+01RjkCH+eBVsjL1jOwUYWv0YDWkM2/A46+LDKVs5yZCUXjJG6bj4ndFoAg5iLIIue6dulg==}
@@ -10604,6 +10613,8 @@ snapshots:
 
   colord@2.9.3: {}
 
+  colorjs.io@0.5.2: {}
+
   colortranslator@5.0.0: {}
 
   comma-separated-tokens@2.0.3: {}
@@ -14335,6 +14346,12 @@ snapshots:
   shebang-regex@3.0.0: {}
 
   shell-quote@1.8.3: {}
+
+  shiki-transformer-color-highlight@1.0.0:
+    dependencies:
+      '@shikijs/core': 3.20.0
+      '@shikijs/types': 3.20.0
+      colorjs.io: 0.5.2
 
   shiki@3.20.0:
     dependencies:
