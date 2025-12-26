@@ -32,6 +32,11 @@ export default defineNuxtConfig({
       noApiRoute: false
     }
   },
+  ui: {
+    experimental: {
+      componentDetection: true
+    }
+  },
   runtimeConfig: {
     public: {
       version: pkg.version
