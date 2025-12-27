@@ -15,7 +15,7 @@
     "build": "nuxt build docs --extends ../layer",
     "dev": "nuxt dev docs --extends ../layer",
     "dev:prepare": "nuxt prepare layer && nuxt prepare docs --extends ../layer",
-    "release": "nr release:layer && release-it",
+    "release": "pnpm release:layer && release-it",
     "release:layer": "release-it --config .release-it.layer.json && cd layer && npm publish",
     "lint": "eslint .",
     "lint:fix": "eslint . --fix",
@@ -23,7 +23,6 @@
     "clean": "movk-clean"
   },
   "devDependencies": {
-    "@antfu/ni": "^28.0.0",
     "@nuxt/devtools": "^3.1.1",
     "@nuxt/eslint": "^1.12.1",
     "@release-it/bumper": "^7.0.5",
