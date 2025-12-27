@@ -1,4 +1,4 @@
-import { addTypeTemplate, createResolver, defineNuxtModule } from '@nuxt/kit'
+import { createResolver, defineNuxtModule } from '@nuxt/kit'
 import { defu } from 'defu'
 import { getGitBranch, getGitEnv, getLocalGitInfo } from '../utils/git'
 import { getPackageJsonMetadata, inferSiteURL } from '../utils/meta'
@@ -69,6 +69,7 @@ export default defineNuxtModule({
         'nuxt/dist',
         'nuxt-og-image',
         '@nuxtjs/plausible',
+        '@nuxt/ui',
         new RegExp(`${componentsPath.replace(/[/\\]/g, '[/\\\\]')}/(?!content/(ComponentEmits|ComponentProps|ComponentSlots|ComponentExample|CommitChangelog|PageLastCommit)\\.vue$)`)
       ],
       metaFields: {
@@ -78,11 +79,6 @@ export default defineNuxtModule({
         events: 'no-schema' as const,
         exposed: false
       }
-    })
-
-    addTypeTemplate({
-      filename: 'types/index.d.ts',
-      src: resolve('../types/index.d.ts')
     })
   }
 })
