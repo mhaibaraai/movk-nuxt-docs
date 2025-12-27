@@ -18,6 +18,12 @@ export default defineNuxtConfig({
     'motion-v/nuxt',
     'nuxt-llms'
   ],
+  app: {
+    rootAttrs: {
+      'data-vaul-drawer-wrapper': '',
+      'class': 'bg-default'
+    }
+  },
   content: {
     build: {
       markdown: {
@@ -51,7 +57,12 @@ export default defineNuxtConfig({
   },
   experimental: {
     typescriptPlugin: true,
-    asyncContext: true
+    asyncContext: true,
+    defaults: {
+      nuxtLink: {
+        externalRelAttribute: 'noopener'
+      }
+    }
   },
   compatibilityDate: 'latest',
   nitro: {
@@ -86,6 +97,10 @@ export default defineNuxtConfig({
   },
   icon: {
     provider: 'iconify'
+  },
+  image: {
+    format: ['webp', 'jpeg', 'jpg', 'png', 'svg'],
+    provider: 'ipx'
   },
   linkChecker: {
     report: {
