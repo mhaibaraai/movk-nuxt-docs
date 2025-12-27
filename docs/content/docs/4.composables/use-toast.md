@@ -5,7 +5,7 @@ description: 'A composable to display toast notifications in your app.'
 
 ## Usage
 
-Use the auto-imported `useToast` composable to display [Toast](https://ui.nuxt.com/docs/components/toast) notifications.
+Use the auto-imported `useToast` composable to display [Toast](/docs/components/toast) notifications.
 
 ```vue
 <script setup lang="ts">
@@ -18,10 +18,10 @@ const toast = useToast()
 - When removing a toast, there's a 200ms delay before it's actually removed from the state, allowing for exit animations.
 
 ::warning
-Make sure to wrap your app with the [`App`](https://ui.nuxt.com/docs/components/app) component which uses our [`Toaster`](https://github.com/nuxt/ui/blob/v4/src/runtime/components/Toaster.vue) component which uses the [`ToastProvider`](https://reka-ui.com/docs/components/toast#provider) component from Reka UI.
+Make sure to wrap your app with the [`App`](/docs/components/app) component which uses our [`Toaster`](https://github.com/nuxt/ui/blob/v4/src/runtime/components/Toaster.vue) component which uses the [`ToastProvider`](https://reka-ui.com/docs/components/toast#provider) component from Reka UI.
 ::
 
-::tip{to="https://ui.nuxt.com/docs/components/toast"}
+::tip{to="/docs/components/toast"}
 Learn how to customize the appearance and behavior of toasts in the **Toast** component documentation.
 ::
 
@@ -53,8 +53,56 @@ Adds a new toast notification.
       Whether the toast is open. Defaults to `true`.
       ::
 
-      ::field{name="..." type="Toast"}
-      Other properties from the `Toast` interface.
+      ::field{name="title" type="string"}
+      The title displayed in the toast.
+      ::
+
+      ::field{name="description" type="string"}
+      The description displayed in the toast.
+      ::
+
+      ::field{name="icon" type="string"}
+      The icon displayed in the toast.
+      ::
+
+      ::field{name="avatar" type="AvatarProps"}
+      The avatar displayed in the toast. See [Avatar](/docs/components/avatar#props).
+      ::
+
+      ::field{name="color" type="string"}
+      The color of the toast.
+      ::
+
+      ::field{name="orientation" type="'horizontal' | 'vertical'"}
+      The orientation between the content and the actions. Defaults to `vertical`.
+      ::
+
+      ::field{name="close" type="boolean | ButtonProps"}
+      Customize or hide the close button (with `false` value). Defaults to `true`.
+      ::
+
+      ::field{name="closeIcon" type="string"}
+      The icon displayed in the close button.
+      ::
+
+      ::field{name="actions" type="ButtonProps[]"}
+      The actions displayed in the toast. See [Button](/docs/components/button#props).
+      ::
+
+      ::field{name="progress" type="boolean | ProgressProps"}
+      Customize or hide the progress bar (with `false` value). Defaults to `true`.
+      ::
+
+      ::field{name="duration" type="number"}
+      The duration in milliseconds before the toast auto-closes. Can also be set globally on the [`App`](/docs/components/app) component.
+      ::
+
+      ::field{name="onClick" type="(toast: Toast) => void"}
+      A callback function invoked when the toast is clicked.
+      ::
+
+      ::field{name="onUpdateOpen" type="(open: boolean) => void"}
+      A callback function invoked when the toast open state changes. Useful to perform an action when the toast closes (expired or dismissed).
       ::
     ::
   ::
@@ -148,9 +196,20 @@ function clearAllToasts() {
 </script>
 ```
 
-### `toasts`
+### toasts
 
 `toasts: Ref<Toast[]>`{lang="ts-type"}
 
-- Type: `Ref<Toast[]>`
-- Description: A reactive array containing all current toast notifications.
+A reactive array containing all current toast notifications.
+
+```vue
+<script setup lang="ts">
+const { toasts } = useToast()
+</script>
+
+<template>
+  <div>
+    <pre>{{ toasts }}</pre>
+  </div>
+</template>
+```

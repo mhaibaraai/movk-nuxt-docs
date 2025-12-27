@@ -5,7 +5,7 @@ description: 'A composable to programmatically control overlays.'
 
 ## Usage
 
-Use the auto-imported `useOverlay` composable to programmatically control [Modal](https://ui.nuxt.com/docs/components/modal) and [Slideover](https://ui.nuxt.com/docs/components/slideover) components.
+Use the auto-imported `useOverlay` composable to programmatically control [Modal](/docs/components/modal) and [Slideover](/docs/components/slideover) components.
 
 ```vue
 <script setup lang="ts">
@@ -286,6 +286,8 @@ As such, using `provide()` in pages or parent components isn't supported directl
 ```vue
 <script setup lang="ts">
 import { LazyModalExample } from '#components'
+
+const overlay = useOverlay()
 
 const providedValue = inject('valueProvidedInPage')
 
