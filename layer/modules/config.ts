@@ -70,7 +70,18 @@ export default defineNuxtModule({
         'nuxt-og-image',
         '@nuxtjs/plausible',
         '@nuxt/ui',
-        new RegExp(`${componentsPath.replace(/[/\\]/g, '[/\\\\]')}/(?!content/(ComponentEmits|ComponentProps|ComponentSlots|ComponentExample|CommitChangelog|PageLastCommit)\\.vue$)`)
+        (component: { filePath: string }) => {
+          const allowedComponents = [
+            'ComponentEmits.vue',
+            'ComponentProps.vue',
+            'ComponentSlots.vue',
+            'ComponentExample.vue',
+            'CommitChangelog.vue',
+            'PageLastCommit.vue'
+          ]
+          return component.filePath.startsWith(componentsPath)
+            && !allowedComponents.some(name => component.filePath.endsWith(`/content/${name}`))
+        }
       ],
       metaFields: {
         type: false,
