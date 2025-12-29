@@ -41,10 +41,10 @@ Creates a new locale object with the provided options.
 #### Parameters
 
 ::field-group
-  ::field{name="options" type="DefineLocaleOptions<M>" required}
+  :::field{name="options" type="DefineLocaleOptions<M>" required}
   The locale configuration object with the following properties:
 
-  ::collapsible
+  :::collapsible
     ::field-group
       ::field{name="name" type="string" required}
       The display name of the locale (e.g., `'English'`, `'Français'`).
@@ -62,8 +62,8 @@ Creates a new locale object with the provided options.
       The translation messages object. Use the `Messages` type from `@nuxt/ui` for type safety.
       ::
     ::
-  ::
-  ::
+  :::
+  :::
 ::
 
 **Returns:** A `Locale<M>` object that can be passed to the `locale` prop of the [App](/docs/components/app) component.
