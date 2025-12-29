@@ -16,6 +16,14 @@ export default defineCachedEventHandler(async (event) => {
   }
 
   const { github } = useAppConfig()
+
+  if (!github || typeof github === 'boolean') {
+    throw createError({
+      statusCode: 500,
+      statusMessage: 'GitHub configuration is not available'
+    })
+  }
+
   const octokit = new Octokit({ auth: process.env.NUXT_GITHUB_TOKEN })
 
   const allCommits = await Promise.all(

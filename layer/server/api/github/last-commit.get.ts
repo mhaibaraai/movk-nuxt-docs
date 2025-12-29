@@ -14,6 +14,14 @@ export default defineCachedEventHandler(async (event) => {
   }
 
   const { github } = useAppConfig()
+
+  if (!github || typeof github === 'boolean') {
+    throw createError({
+      statusCode: 500,
+      statusMessage: 'GitHub configuration is not available'
+    })
+  }
+
   const octokit = new Octokit({ auth: process.env.NUXT_GITHUB_TOKEN })
 
   try {
@@ -30,6 +38,9 @@ export default defineCachedEventHandler(async (event) => {
     }
 
     const commit = commits[0]
+    if (!commit) {
+      return null
+    }
 
     // 获取提交者信息，处理 web-flow 场景（PR squash merge）
     let authorName = commit.commit.author?.name ?? ''
@@ -63,14 +74,13 @@ export default defineCachedEventHandler(async (event) => {
     const date = commit.commit.author?.date ?? ''
     const dateFormat = github.dateFormat ?? {}
     const locale = dateFormat.locale ?? 'zh-CN'
-    const timeZone = dateFormat.timeZone ?? 'Asia/Shanghai'
     const formatOptions: Intl.DateTimeFormatOptions = dateFormat.options ?? {
       year: 'numeric',
       month: 'numeric',
       day: 'numeric',
       hour: '2-digit',
       minute: '2-digit',
-      timeZone
+      timeZone: 'Asia/Shanghai'
     }
     const dateFormatted = date
       ? new Date(date).toLocaleDateString(locale, formatOptions)
