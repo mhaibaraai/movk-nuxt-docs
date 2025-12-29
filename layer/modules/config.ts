@@ -72,12 +72,13 @@ export default defineNuxtModule({
         '@nuxt/ui',
         (component: { filePath: string }) => {
           const allowedComponents = [
+            'CommitChangelog.vue',
             'ComponentEmits.vue',
+            'ComponentExample.vue',
             'ComponentProps.vue',
             'ComponentSlots.vue',
-            'ComponentExample.vue',
-            'CommitChangelog.vue',
-            'PageLastCommit.vue'
+            'PageLastCommit.vue',
+            'Motion.vue'
           ]
           return component.filePath.startsWith(componentsPath)
             && !allowedComponents.some(name => component.filePath.endsWith(`/content/${name}`))
