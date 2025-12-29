@@ -1,5 +1,9 @@
 import type { ButtonProps } from '@nuxt/ui'
 
+export interface ExtendedButtonProps extends ButtonProps {
+  label?: string
+}
+
 declare module 'nuxt/schema' {
   interface AppConfig {
     vercelAnalytics: {
@@ -17,17 +21,17 @@ declare module 'nuxt/schema' {
       to: string
       search: boolean
       colorMode: boolean
-      links: ButtonProps[]
+      links: ExtendedButtonProps[]
     }
     footer: {
       credits: string
-      socials: ButtonProps[]
+      socials: ExtendedButtonProps[]
     }
     toc: {
       title: string
       bottom: {
         title: string
-        links: ButtonProps[]
+        links: ExtendedButtonProps[]
       }
     }
     github: {

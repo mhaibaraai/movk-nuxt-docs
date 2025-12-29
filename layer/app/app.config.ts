@@ -1,4 +1,4 @@
-import type { ButtonProps } from '@nuxt/ui'
+import type { ExtendedButtonProps } from './types'
 
 export default defineAppConfig({
   toaster: {
@@ -44,17 +44,31 @@ export default defineAppConfig({
     to: '/',
     search: true,
     colorMode: true,
-    links: [] as ButtonProps[]
+    links: [] as ExtendedButtonProps[]
   },
   footer: {
     credits: `Copyright © 2024 - ${new Date().getFullYear()}`,
-    socials: [] as ButtonProps[]
+    socials: [] as ExtendedButtonProps[]
   },
   toc: {
     title: '页面导航',
     bottom: {
       title: '社区',
-      links: [] as ButtonProps[]
+      links: [] as ExtendedButtonProps[]
+    }
+  },
+  github: {
+    rootDir: '',
+    dateFormat: {
+      locale: 'zh-CN',
+      options: {
+        year: 'numeric',
+        month: 'numeric',
+        day: 'numeric',
+        hour: '2-digit',
+        minute: '2-digit',
+        timeZone: 'Asia/Shanghai'
+      }
     }
   }
 })
