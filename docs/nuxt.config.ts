@@ -20,7 +20,7 @@ export default defineNuxtConfig({
     '/docs': { redirect: '/docs/getting-started', prerender: false },
     '/docs/essentials': { redirect: '/docs/essentials/markdown-syntax', prerender: false },
     '/docs/components': { redirect: '/docs/components/component-props', prerender: false },
-    '/docs/composables': { redirect: '/docs/composables/define-shortcuts', prerender: false }
+    '/docs/composables': { redirect: '/docs/composables/define-locale', prerender: false }
   },
   compatibilityDate: 'latest',
   llms: {
