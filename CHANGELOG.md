@@ -1,5 +1,52 @@
 # 📋 Changelog
 
+## [1.5.0](https://github.com/mhaibaraai/movk-nuxt-docs/compare/v1.4.2...v1.5.0) (2025-12-29)
+
+### ⚠ BREAKING CHANGES
+
+* 不再依赖 @nuxt/ui 组件的运行时类型推导,改用静态 schema 定义。这确保了更好的类型安全和编辑器支持
+
+### ✨ Features
+
+* 增强应用配置和实验性功能 ([b40a9ac](https://github.com/mhaibaraai/movk-nuxt-docs/commit/b40a9ac9bffa0a7cb8fd80f1fcef7ebcde8caa6b))
+* 新增 Shiki 代码高亮图标转换器 ([ee9801f](https://github.com/mhaibaraai/movk-nuxt-docs/commit/ee9801f7f0ad2c66af3dff54420e9b7b4733b8b1))
+* 新增 useOverlay 和 useToast composables 文档 ([5e64622](https://github.com/mhaibaraai/movk-nuxt-docs/commit/5e646226ca4d8ba89e309d3c7cd7b20771f03383))
+
+### 🐛 Bug Fixes
+
+* 增强 GitHub API 端点的错误处理和边界条件校验 ([67fad6d](https://github.com/mhaibaraai/movk-nuxt-docs/commit/67fad6dd92469aed013625160537e562f3b1bedc))
+
+### 📝 Documentation
+
+* 为 composables 文档中的提示组件添加导航链接 ([00308c7](https://github.com/mhaibaraai/movk-nuxt-docs/commit/00308c72ceebb5be43a37b3bb4ebc1735f8d8348))
+* 优化组合式函数文档内容 ([9ea0a11](https://github.com/mhaibaraai/movk-nuxt-docs/commit/9ea0a11db939c84d8df9b26cfa1007eba5ae655a))
+* 修复 composables 文档中的 markdown 语法错误 ([c52b6f3](https://github.com/mhaibaraai/movk-nuxt-docs/commit/c52b6f38638d00843b11a7058517aa5520a43f9a))
+* 新增组合式函数文档 ([30d9476](https://github.com/mhaibaraai/movk-nuxt-docs/commit/30d947636ec58ffa77b447279cff7d385097bf00))
+* 更新 OG 图片路径和资源文件 ([d877d52](https://github.com/mhaibaraai/movk-nuxt-docs/commit/d877d52a56d1e7a82a5fd0d8d49f1dbea027c318))
+* 清理过时的 composables 文档 ([0a45f56](https://github.com/mhaibaraai/movk-nuxt-docs/commit/0a45f56bb395bb696868770bd50aaf899ea0ef9b))
+* 移除 tip 组件中冗余的链接属性 ([bd3b7e2](https://github.com/mhaibaraai/movk-nuxt-docs/commit/bd3b7e2e2f8a1653c7bbd0cf0db6b8848aa03625))
+
+### ♻️ Code Refactoring
+
+* 优化 Nuxt 配置并移除冗余 alias ([45952e0](https://github.com/mhaibaraai/movk-nuxt-docs/commit/45952e000cb46c52961c3796c1d445f8466d8473))
+* 优化类型声明文件结构并启用 Nuxt UI 实验性功能 ([54b3972](https://github.com/mhaibaraai/movk-nuxt-docs/commit/54b3972ff98f50a6ff09d7ec991ba2a622cb0080))
+* 移除 Nuxt Content 的 property 继承,改用显式 schema 定义 ([984996c](https://github.com/mhaibaraai/movk-nuxt-docs/commit/984996cae2ac30d542bcdf16766a81b3b4d180c7))
+* 迁移类型声明至 app/types 目录并启用 Nuxt 自动发现 ([539736e](https://github.com/mhaibaraai/movk-nuxt-docs/commit/539736ec368362305206ab249df954f3fb54d7a3))
+
+### 👷 CI
+
+* 优化构建流程，将准备步骤移至 postinstall 钩子 ([8e32fa4](https://github.com/mhaibaraai/movk-nuxt-docs/commit/8e32fa4b1373fec0ec6de8fca2289f6f01d69c61))
+* 新增开发环境准备步骤 ([a137e77](https://github.com/mhaibaraai/movk-nuxt-docs/commit/a137e77a970e4828abbd67f8f00fd5b17b3317dc))
+
+### 🔧 Chores
+
+* **deps:** update all non-major dependencies ([fb98fc3](https://github.com/mhaibaraai/movk-nuxt-docs/commit/fb98fc3d626a84fea7cc3c6a1a66946fa6cc5277))
+* 优化发布前钩子配置 ([354316c](https://github.com/mhaibaraai/movk-nuxt-docs/commit/354316c18456a55cde738b01f6bd2b7479faf881))
+* 升级 @movk/core 并移除冗余脚本 ([999b45f](https://github.com/mhaibaraai/movk-nuxt-docs/commit/999b45f2cf09eccde9ea4c702c450cce6b22f303))
+* 放宽 TypeScript 注释限制以支持必要的类型忽略 ([a513551](https://github.com/mhaibaraai/movk-nuxt-docs/commit/a513551e4060dd8d88da167f9b549f7e69891b93))
+* 更新项目配置 ([f1dcf44](https://github.com/mhaibaraai/movk-nuxt-docs/commit/f1dcf44cf808b462f9bde094340d4fd7d7d335b0))
+* 移除 @antfu/ni 依赖并使用显式 pnpm 命令 ([f2a7e22](https://github.com/mhaibaraai/movk-nuxt-docs/commit/f2a7e22fedea092ec92074c1c9eeeca3c4e6ad7b))
+
 ## [1.4.2](https://github.com/mhaibaraai/movk-nuxt-docs/compare/v1.4.1...v1.4.2) (2025-12-18)
 
 ### ♻️ Code Refactoring
