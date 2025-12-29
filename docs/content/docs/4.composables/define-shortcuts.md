@@ -23,7 +23,7 @@ defineShortcuts({
 - The composable uses VueUse's [`useEventListener`](https://vueuse.org/core/useEventListener/) to handle keydown events.
 - For a complete list of available shortcut keys, refer to the [`KeyboardEvent.key`](https://developer.mozilla.org/en-US/docs/Web/API/UI_Events/Keyboard_event_key_values) API documentation. Note that the key should be written in lowercase.
 
-::tip
+::tip{to="https://ui.nuxt.com/docs/components/kbd"}
 Learn how to display shortcuts in components in the **Kbd** component documentation.
 ::
 
@@ -141,6 +141,6 @@ defineShortcuts({
 
 Use the `extractShortcuts` utility to automatically define shortcuts from menu items.
 
-::tip
+::tip{to="https://ui.nuxt.com/docs/composables/extract-shortcuts"}
 Learn more about the **extractShortcuts** utility.
 ::
