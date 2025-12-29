@@ -1,7 +1,7 @@
 import type { ButtonProps } from '@nuxt/ui'
 
 declare module 'nuxt/schema' {
-  interface AppConfigInput {
+  interface AppConfig {
     vercelAnalytics: {
       enable: boolean
       debug: boolean
