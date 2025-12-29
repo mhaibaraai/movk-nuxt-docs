@@ -1,5 +1,20 @@
 # 📋 Changelog
 
+## [1.5.1](https://github.com/mhaibaraai/movk-nuxt-docs/compare/v1.5.0...v1.5.1) (2025-12-29)
+
+### ✨ Features
+
+* 在组件白名单中添加 Motion 组件支持 ([1247306](https://github.com/mhaibaraai/movk-nuxt-docs/commit/12473067dd073b6291e29e28764a12a1156956c3))
+
+### 🐛 Bug Fixes
+
+* 使用函数过滤器替代正则表达式以避免路径长度限制 ([a320218](https://github.com/mhaibaraai/movk-nuxt-docs/commit/a320218773a46bc3bdf7e520661e60c7c1a22963))
+* 修复 AppConfig 类型定义缺失导致的 TypeScript 错误 ([d139e83](https://github.com/mhaibaraai/movk-nuxt-docs/commit/d139e83ddb6dea813ffcef90872c9db2523aa390))
+
+### 👷 CI
+
+* 在 CI 工作流中添加类型检查步骤 ([1fcd44b](https://github.com/mhaibaraai/movk-nuxt-docs/commit/1fcd44b6f9f2bd0a791d5908eb253c87273ac59a))
+
 ## [1.5.0](https://github.com/mhaibaraai/movk-nuxt-docs/compare/v1.4.2...v1.5.0) (2025-12-29)
 
 ### ⚠ BREAKING CHANGES
