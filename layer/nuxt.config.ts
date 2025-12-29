@@ -1,4 +1,5 @@
 import { createResolver } from '@nuxt/kit'
+import { defineNuxtConfig } from 'nuxt/config'
 import pkg from './package.json'
 
 const { resolve } = createResolver(import.meta.url)
@@ -24,6 +25,7 @@ export default defineNuxtConfig({
       'class': 'bg-default'
     }
   },
+  // @ts-ignore - content 配置的类型定义在运行时才能正确解析
   content: {
     build: {
       markdown: {
