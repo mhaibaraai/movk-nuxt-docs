@@ -1,6 +1,12 @@
 import { createConfigForNuxt } from '@nuxt/eslint-config/flat'
 
 export default createConfigForNuxt({
+  dirs: {
+    src: [
+      './layer',
+      './docs'
+    ]
+  },
   features: {
     tooling: true,
     stylistic: {
@@ -13,5 +19,6 @@ export default createConfigForNuxt({
   'vue/max-attributes-per-line': ['error', { singleline: 3, multiline: 1 }],
   '@typescript-eslint/unified-signatures': 'off',
   '@typescript-eslint/no-explicit-any': 'off',
-  '@typescript-eslint/no-empty-object-type': 'off'
+  '@typescript-eslint/no-empty-object-type': 'off',
+  '@typescript-eslint/ban-ts-comment': 'off'
 })

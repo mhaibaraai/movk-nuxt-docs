@@ -1,4 +1,5 @@
 import { createResolver } from '@nuxt/kit'
+import { defineNuxtConfig } from 'nuxt/config'
 import pkg from './package.json'
 
 const { resolve } = createResolver(import.meta.url)
@@ -18,6 +19,13 @@ export default defineNuxtConfig({
     'motion-v/nuxt',
     'nuxt-llms'
   ],
+  app: {
+    rootAttrs: {
+      'data-vaul-drawer-wrapper': '',
+      'class': 'bg-default'
+    }
+  },
+  // @ts-ignore - content 配置的类型定义在运行时才能正确解析
   content: {
     build: {
       markdown: {
@@ -30,6 +38,11 @@ export default defineNuxtConfig({
   mdc: {
     highlight: {
       noApiRoute: false
+    }
+  },
+  ui: {
+    experimental: {
+      componentDetection: true
     }
   },
   runtimeConfig: {
@@ -45,7 +58,13 @@ export default defineNuxtConfig({
       : {}
   },
   experimental: {
-    typescriptPlugin: true
+    typescriptPlugin: true,
+    asyncContext: true,
+    defaults: {
+      nuxtLink: {
+        externalRelAttribute: 'noopener'
+      }
+    }
   },
   compatibilityDate: 'latest',
   nitro: {
@@ -65,12 +84,6 @@ export default defineNuxtConfig({
         'tailwind-variants',
         'tailwindcss/colors'
       ]
-    },
-    resolve: {
-      alias: {
-        extend: 'extend/index.js',
-        debug: 'debug/src/browser.js'
-      }
     }
   },
   fonts: {
@@ -86,6 +99,10 @@ export default defineNuxtConfig({
   },
   icon: {
     provider: 'iconify'
+  },
+  image: {
+    format: ['webp', 'jpeg', 'jpg', 'png', 'svg'],
+    provider: 'ipx'
   },
   linkChecker: {
     report: {

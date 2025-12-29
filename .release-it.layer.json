@@ -2,7 +2,7 @@
   "git": false,
   "github": false,
   "hooks": {
-    "before:init": ["nr lint"]
+    "before:init": ["pnpm lint", "pnpm typecheck"]
   },
   "npm": {
     "publish": false

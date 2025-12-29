@@ -12,28 +12,25 @@
   },
   "sideEffects": false,
   "scripts": {
-    "postinstall": "nr dev:prepare",
+    "postinstall": "pnpm dev:prepare",
     "build": "nuxt build docs --extends ../layer",
     "dev": "nuxt dev docs --extends ../layer",
     "dev:prepare": "nuxt prepare layer && nuxt prepare docs --extends ../layer",
-    "release": "nr release:layer && release-it",
+    "release": "pnpm release:layer && release-it",
     "release:layer": "release-it --config .release-it.layer.json && cd layer && npm publish",
     "lint": "eslint .",
     "lint:fix": "eslint . --fix",
     "typecheck": "nuxt typecheck layer",
-    "clean": "tsx scripts/rm.ts"
+    "clean": "movk-clean"
   },
   "devDependencies": {
-    "@antfu/ni": "^28.0.0",
     "@nuxt/devtools": "^3.1.1",
     "@nuxt/eslint": "^1.12.1",
     "@release-it/bumper": "^7.0.5",
     "@release-it/conventional-changelog": "^10.0.4",
     "eslint": "^9.39.2",
-    "fast-glob": "^3.3.3",
     "nuxt": "^4.2.2",
     "release-it": "^19.2.1",
-    "tsx": "^4.21.0",
     "typescript": "^5.9.3",
     "vue-tsc": "^3.2.1"
   }
