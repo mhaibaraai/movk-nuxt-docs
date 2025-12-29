@@ -28,7 +28,7 @@ const locale = defineLocale<Messages>({
 </template>
 ```
 
-::tip{to="/docs/getting-started/integrations/i18n"}
+::tip{to="https://ui.nuxt.com/docs/getting-started/integrations/i18n"}
 Learn more about internationalization in the **i18n integration** documentation.
 ::
 
@@ -66,7 +66,7 @@ Creates a new locale object with the provided options.
   :::
 ::
 
-**Returns:** A `Locale<M>` object that can be passed to the `locale` prop of the [App](/docs/components/app) component.
+**Returns:** A `Locale<M>` object that can be passed to the `locale` prop of the [App](https://ui.nuxt.com/docs/components/app) component.
 
 ## Example
 
