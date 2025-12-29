@@ -16,10 +16,10 @@ importers:
         version: 1.12.1(@typescript-eslint/utils@8.50.1(eslint@9.39.2(jiti@2.6.1))(typescript@5.9.3))(@vue/compiler-sfc@3.5.26)(eslint@9.39.2(jiti@2.6.1))(magicast@0.5.1)(typescript@5.9.3)(vite@7.3.0(@types/node@25.0.3)(jiti@2.6.1)(lightningcss@1.30.2)(terser@5.44.1)(yaml@2.8.2))
       '@release-it/bumper':
         specifier: ^7.0.5
-        version: 7.0.5(release-it@19.2.1(@types/node@25.0.3)(magicast@0.5.1))
+        version: 7.0.5(release-it@19.2.2(@types/node@25.0.3)(magicast@0.5.1))
       '@release-it/conventional-changelog':
         specifier: ^10.0.4
-        version: 10.0.4(conventional-commits-filter@5.0.0)(conventional-commits-parser@6.2.1)(release-it@19.2.1(@types/node@25.0.3)(magicast@0.5.1))
+        version: 10.0.4(conventional-commits-filter@5.0.0)(conventional-commits-parser@6.2.1)(release-it@19.2.2(@types/node@25.0.3)(magicast@0.5.1))
       eslint:
         specifier: ^9.39.2
         version: 9.39.2(jiti@2.6.1)
@@ -27,8 +27,8 @@ importers:
         specifier: ^4.2.2
         version: 4.2.2(@parcel/watcher@2.5.1)(@types/node@25.0.3)(@vue/compiler-sfc@3.5.26)(better-sqlite3@12.5.0)(cac@6.7.14)(db0@0.3.4(better-sqlite3@12.5.0))(eslint@9.39.2(jiti@2.6.1))(ioredis@5.8.2)(lightningcss@1.30.2)(magicast@0.5.1)(meow@13.2.0)(optionator@0.9.4)(rollup@4.54.0)(terser@5.44.1)(typescript@5.9.3)(vite@7.3.0(@types/node@25.0.3)(jiti@2.6.1)(lightningcss@1.30.2)(terser@5.44.1)(yaml@2.8.2))(vue-tsc@3.2.1(typescript@5.9.3))(yaml@2.8.2)
       release-it:
-        specifier: ^19.2.1
-        version: 19.2.1(@types/node@25.0.3)(magicast@0.5.1)
+        specifier: ^19.2.2
+        version: 19.2.2(@types/node@25.0.3)(magicast@0.5.1)
       typescript:
         specifier: ^5.9.3
         version: 5.9.3
@@ -54,8 +54,8 @@ importers:
         specifier: ^1.2.82
         version: 1.2.82
       '@iconify-json/simple-icons':
-        specifier: ^1.2.63
-        version: 1.2.63
+        specifier: ^1.2.64
+        version: 1.2.64
       '@iconify-json/vscode-icons':
         specifier: ^1.2.37
         version: 1.2.37
@@ -752,8 +752,8 @@ packages:
   '@iconify-json/lucide@1.2.82':
     resolution: {integrity: sha512-fHZWegspOZonl5GNTvOkHsjnTMdSslFh3EzpzUtRyLxO8bOonqk2OTU3hCl0k4VXzViMjqpRK3X1sotnuBXkFA==}
 
-  '@iconify-json/simple-icons@1.2.63':
-    resolution: {integrity: sha512-xZl2UWCwE58VlqZ+pDPmaUhE2tq8MVSTJRr4/9nzzHlDdjJ0Ud1VxNXPrwTSgESKY29iCQw3S0r2nJTSNNngHw==}
+  '@iconify-json/simple-icons@1.2.64':
+    resolution: {integrity: sha512-SMmm//tjZBvHnT0EAzZLnBTL6bukSkncM0pwkOXjr0FsAeCqjQtqoxBR0Mp+PazIJjXJKHm1Ju0YgnCIPOodJg==}
 
   '@iconify-json/vscode-icons@1.2.37':
     resolution: {integrity: sha512-HLRdU6nZks4N8x3JYz6j+b3+hcUCvYvlTLwGzM3xyXfTJyDSA2cAdWcEXfoA4hQMJGA+zCDSPAWFelFptH5Kbw==}
@@ -5904,8 +5904,8 @@ packages:
     peerDependencies:
       vue: '>= 3.2.0'
 
-  release-it@19.2.1:
-    resolution: {integrity: sha512-Tu9kZKtCJkrLG6nD0OLbVdVP8wHgpQBpRvtZQmdEgGHDwg0FiiHmdnnPskTQllPWJFMtpHo3O7MHtr8/AWEFbA==}
+  release-it@19.2.2:
+    resolution: {integrity: sha512-57TBUTBbBXLJsPufYS+Hsb1dSZKZ0ktiYgPkNc3Pmlq/QQtH9X0oD0SG2ib5CsXHTI11m19pyK60NXmvtE6cLg==}
     engines: {node: ^20.12.0 || >=22.0.0}
     hasBin: true
 
@@ -6875,6 +6875,7 @@ packages:
   whatwg-encoding@3.1.1:
     resolution: {integrity: sha512-6qN4hJdMwfYBtE3YBTTHhoeuUrDBPZmbQaxWAqSALV/MeEnR5z1xd8UKud2RAkFoPkmB+hli1TZSnyi84xz1vQ==}
     engines: {node: '>=18'}
+    deprecated: Use @exodus/bytes instead for a more spec-conformant and faster implementation
 
   whatwg-mimetype@4.0.0:
     resolution: {integrity: sha512-QaKxh0eNIi2mE9p2vEdzfagOKHCcj1pJ56EEHGQOVxp8r9/iszLUUV7v89x9O1p/T+NlTM5W7jW6+cz4Fq1YVg==}
@@ -7573,7 +7574,7 @@ snapshots:
     dependencies:
       '@iconify/types': 2.0.0
 
-  '@iconify-json/simple-icons@1.2.63':
+  '@iconify-json/simple-icons@1.2.64':
     dependencies:
       '@iconify/types': 2.0.0
 
@@ -9005,7 +9006,7 @@ snapshots:
 
   '@poppinss/exception@1.2.3': {}
 
-  '@release-it/bumper@7.0.5(release-it@19.2.1(@types/node@25.0.3)(magicast@0.5.1))':
+  '@release-it/bumper@7.0.5(release-it@19.2.2(@types/node@25.0.3)(magicast@0.5.1))':
     dependencies:
       '@iarna/toml': 3.0.0
       cheerio: 1.1.2
@@ -9014,10 +9015,10 @@ snapshots:
       ini: 5.0.0
       js-yaml: 4.1.1
       lodash-es: 4.17.22
-      release-it: 19.2.1(@types/node@25.0.3)(magicast@0.5.1)
+      release-it: 19.2.2(@types/node@25.0.3)(magicast@0.5.1)
       semver: 7.7.3
 
-  '@release-it/conventional-changelog@10.0.4(conventional-commits-filter@5.0.0)(conventional-commits-parser@6.2.1)(release-it@19.2.1(@types/node@25.0.3)(magicast@0.5.1))':
+  '@release-it/conventional-changelog@10.0.4(conventional-commits-filter@5.0.0)(conventional-commits-parser@6.2.1)(release-it@19.2.2(@types/node@25.0.3)(magicast@0.5.1))':
     dependencies:
       '@conventional-changelog/git-client': 2.5.1(conventional-commits-filter@5.0.0)(conventional-commits-parser@6.2.1)
       concat-stream: 2.0.0
@@ -9025,7 +9026,7 @@ snapshots:
       conventional-changelog-angular: 8.1.0
       conventional-changelog-conventionalcommits: 9.1.0
       conventional-recommended-bump: 11.2.0
-      release-it: 19.2.1(@types/node@25.0.3)(magicast@0.5.1)
+      release-it: 19.2.2(@types/node@25.0.3)(magicast@0.5.1)
       semver: 7.7.3
     transitivePeerDependencies:
       - conventional-commits-filter
@@ -13926,7 +13927,7 @@ snapshots:
       - '@vue/composition-api'
       - typescript
 
-  release-it@19.2.1(@types/node@25.0.3)(magicast@0.5.1):
+  release-it@19.2.2(@types/node@25.0.3)(magicast@0.5.1):
     dependencies:
       '@nodeutils/defaults-deep': 1.1.0
       '@octokit/rest': 22.0.1
