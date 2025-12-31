@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { camelCase, upperFirst } from '@movk/core'
+import { camelCase, kebabCase, upperFirst } from '@movk/core'
 
 interface Commit {
   sha: string
@@ -29,6 +29,15 @@ const props = defineProps<{
    * The author to filter commits by.
    */
   author?: string
+  /**
+   * The casing format for the file name.
+   * - 'auto': Vue files use PascalCase, others use camelCase (default)
+   * - 'kebab': Keep kebab-case (e.g., use-user.ts)
+   * - 'camel': Convert to camelCase (e.g., useUser.ts)
+   * - 'pascal': Convert to PascalCase (e.g., UseUser.ts)
+   * @defaultValue 'auto'
+   */
+  casing?: 'auto' | 'kebab' | 'camel' | 'pascal'
 }>()
 
 const SHA_SHORT_LENGTH = 5
@@ -46,11 +55,26 @@ const filePath = computed(() => {
   const fileExtension = props.suffix ?? (github && typeof github === 'object' ? github.suffix : 'vue')
   const fileName = props.name ?? routeName.value
 
-  const camelName = fileExtension === 'vue'
-    ? upperFirst(camelCase(fileName))
-    : camelCase(fileName)
+  // 根据 casing 参数转换文件名
+  const transformedName = (() => {
+    const casing = props.casing ?? (github && typeof github === 'object' ? github.casing : undefined) ?? 'auto'
 
-  return `${basePath}/${filePrefix}${camelName}.${fileExtension}`
+    switch (casing) {
+      case 'kebab':
+        return kebabCase(fileName)
+      case 'camel':
+        return camelCase(fileName)
+      case 'pascal':
+        return upperFirst(camelCase(fileName))
+      case 'auto':
+      default:
+        return fileExtension === 'vue'
+          ? upperFirst(camelCase(fileName))
+          : camelCase(fileName)
+    }
+  })()
+
+  return `${basePath}/${filePrefix}${transformedName}.${fileExtension}`
 })
 
 const { data: commits } = await useLazyFetch<Commit[]>('/api/github/commits', {
