@@ -1,5 +1,20 @@
 # 📋 Changelog
 
+## [1.5.2](https://github.com/mhaibaraai/movk-nuxt-docs/compare/v1.5.1...v1.5.2) (2025-12-31)
+
+### ✨ Features
+
+* 添加文件命名格式配置支持 ([e61d5a2](https://github.com/mhaibaraai/movk-nuxt-docs/commit/e61d5a2d5eab87ab89edc66152da4bf13bdae5ca))
+
+### ♻️ Code Refactoring
+
+* 调整 zod 导入路径以支持 v4 ([4d831ae](https://github.com/mhaibaraai/movk-nuxt-docs/commit/4d831ae8499a41ac97ddffaa9775802ae5416b21))
+
+### 🔧 Chores
+
+* **deps:** update all non-major dependencies ([b2784da](https://github.com/mhaibaraai/movk-nuxt-docs/commit/b2784dadf03bf0121ba679ed7a7b9aaa1af62f48))
+* **deps:** 升级到 zod v4 ([f45af34](https://github.com/mhaibaraai/movk-nuxt-docs/commit/f45af34a4c16d03d342f55d7e4ea69559c005e5d))
+
 ## [1.5.1](https://github.com/mhaibaraai/movk-nuxt-docs/compare/v1.5.0...v1.5.1) (2025-12-29)
 
 ### ✨ Features
