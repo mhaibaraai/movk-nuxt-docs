@@ -47,6 +47,12 @@ declare module 'nuxt/schema' {
       until: string
       author: string
       /**
+       * 文件命名格式
+       * @default 'auto'
+       * @example 'kebab' | 'camel' | 'pascal' | 'auto'
+       */
+      casing: 'auto' | 'kebab' | 'camel' | 'pascal'
+      /**
        * 日期格式化配置
        * @example { locale: 'zh-CN', options: { year: 'numeric', month: '2-digit', day: '2-digit', hour: '2-digit', minute: '2-digit' } }
        */
