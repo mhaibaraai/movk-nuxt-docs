@@ -1,5 +1,6 @@
-import { defineCollection, defineContentConfig, z } from '@nuxt/content'
+import { defineCollection, defineContentConfig } from '@nuxt/content'
 import { asSeoCollection } from '@nuxtjs/seo/content'
+import { z } from 'zod/v4'
 
 const Avatar = z.object({
   src: z.string(),

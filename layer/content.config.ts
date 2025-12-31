@@ -1,7 +1,8 @@
-import { defineCollection, defineContentConfig, z } from '@nuxt/content'
+import { defineCollection, defineContentConfig } from '@nuxt/content'
 import { useNuxt } from '@nuxt/kit'
 import { asSeoCollection } from '@nuxtjs/seo/content'
 import { joinURL } from 'ufo'
+import { z } from 'zod/v4'
 
 const { options } = useNuxt()
 const cwd = joinURL(options.rootDir, 'content')
