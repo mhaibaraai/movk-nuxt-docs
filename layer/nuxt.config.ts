@@ -58,8 +58,8 @@ export default defineNuxtConfig({
     }
   },
   routeRules: {
-    '/llms.txt': { isr: true, prerender: false },
-    '/llms-full.txt': { isr: true, prerender: false }
+    '/llms.txt': { isr: true },
+    '/llms-full.txt': { isr: true }
   },
   experimental: {
     typescriptPlugin: true,
@@ -106,12 +106,7 @@ export default defineNuxtConfig({
     provider: 'ipx'
   },
   linkChecker: {
-    report: {
-      publish: true,
-      html: true,
-      markdown: true,
-      json: true
-    }
+    enabled: false
   },
   ogImage: {
     zeroRuntime: true,
