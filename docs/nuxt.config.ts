@@ -18,6 +18,7 @@ export default defineNuxtConfig({
   },
   routeRules: {
     '/docs': { redirect: '/docs/getting-started', prerender: false },
+    '/docs/getting-started/ai': { redirect: '/docs/getting-started/ai/mcp', prerender: false },
     '/docs/essentials': { redirect: '/docs/essentials/markdown-syntax', prerender: false },
     '/docs/components': { redirect: '/docs/components/component-props', prerender: false },
     '/docs/composables': { redirect: '/docs/composables/define-locale', prerender: false }
@@ -33,7 +34,6 @@ export default defineNuxtConfig({
     }
   },
   mcp: {
-    // enabled: false,
     name: 'Movk Nuxt Docs',
     browserRedirect: '/docs/getting-started/ai/mcp'
   }

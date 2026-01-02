@@ -58,8 +58,8 @@ export default defineNuxtConfig({
     }
   },
   routeRules: {
-    '/llms.txt': { isr: true },
-    '/llms-full.txt': { isr: true }
+    '/llms.txt': { isr: true, prerender: false },
+    '/llms-full.txt': { isr: true, prerender: false }
   },
   experimental: {
     typescriptPlugin: true,
@@ -73,7 +73,6 @@ export default defineNuxtConfig({
   compatibilityDate: 'latest',
   nitro: {
     prerender: {
-      routes: ['/sitemap.xml', '/robots.txt', '/404.html'],
       crawlLinks: true,
       autoSubfolderIndex: false
     }
