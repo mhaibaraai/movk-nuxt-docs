@@ -13,6 +13,7 @@ export default defineNuxtConfig({
     '@nuxt/content',
     '@nuxt/image',
     '@vueuse/nuxt',
+    '@nuxtjs/mcp-toolkit',
     '@nuxtjs/seo',
     'nuxt-component-meta',
     'motion-v/nuxt',
