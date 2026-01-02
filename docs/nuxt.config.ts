@@ -18,6 +18,7 @@ export default defineNuxtConfig({
   },
   routeRules: {
     '/docs': { redirect: '/docs/getting-started', prerender: false },
+    '/docs/getting-started/core': { redirect: '/docs/getting-started/core/configuration', prerender: false },
     '/docs/getting-started/ai': { redirect: '/docs/getting-started/ai/mcp', prerender: false },
     '/docs/essentials': { redirect: '/docs/essentials/markdown-syntax', prerender: false },
     '/docs/components': { redirect: '/docs/components/component-props', prerender: false },
