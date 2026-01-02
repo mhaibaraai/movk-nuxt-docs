@@ -190,19 +190,19 @@ export default defineAppConfig({
 
 | 属性 | 类型 | 默认值 | 描述 |
 |------|------|--------|------|
-| `owner` | `string` | 自动检测 | 仓库所有者用户名 |
-| `name` | `string` | 自动检测 | 仓库名称 |
-| `url` | `string` | 自动检测 | 仓库完整 URL |
-| `branch` | `string` | 自动检测 | Git 分支名称 |
-| `rootDir` | `string` | - | 文档根目录路径 |
-| `commitPath` | `string` | `'src'` | 组件文件所在的基础路径，用于 `CommitChangelog` 组件 |
-| `suffix` | `string` | `'vue'` | 组件文件的默认扩展名，用于 `CommitChangelog` 组件 |
-| `casing` | `'auto' \| 'kebab' \| 'camel' \| 'pascal'` | `'auto'` | 文件命名格式，用于 `CommitChangelog` 组件。`auto`：Vue 文件用 PascalCase，其他用 camelCase；`kebab`：保持 kebab-case（如 `use-user.ts`）；`camel`：camelCase（如 `useUser.ts`）；`pascal`：PascalCase（如 `UseUser.ts`） |
-| `since` | `string` | `'2025-01-31T04:00:00Z'` | 提交历史的起始时间(ISO 8601 格式)，用于 `CommitChangelog` 组件 |
-| `until` | `string` | 当前时间 | 提交历史的截止时间(ISO 8601 格式)，用于 `CommitChangelog` 组件 |
-| `per_page` | `number` | `100` | 每次请求获取的提交数量 (1-100)，推荐设为 100 以减少 API 调用，用于 `CommitChangelog` 组件 |
-| `author` | `string` | - | 按作者过滤提交记录，可使用 GitHub 用户名或邮箱，用于 `CommitChangelog`
-| `dateFormat` | `object` | `{ locale: 'zh-CN', options: {...} }` | 日期格式化配置，用于 `PageLastCommit` 组件
+| `owner` | `string`{lang="ts-type"} | 自动检测 | 仓库所有者用户名 |
+| `name` | `string`{lang="ts-type"} | 自动检测 | 仓库名称 |
+| `url` | `string`{lang="ts-type"} | 自动检测 | 仓库完整 URL |
+| `branch` | `string`{lang="ts-type"} | 自动检测 | Git 分支名称 |
+| `rootDir` | `string`{lang="ts-type"} | - | 文档根目录路径 |
+| `commitPath` | `string`{lang="ts-type"} | `'src'` | 组件文件所在的基础路径，用于 `CommitChangelog` 组件 |
+| `suffix` | `string`{lang="ts-type"} | `'vue'` | 组件文件的默认扩展名，用于 `CommitChangelog` 组件 |
+| `casing` | `'auto' \| 'kebab' \| 'camel' \| 'pascal'`{lang="ts-type"} | `'auto'` | 文件命名格式，用于 `CommitChangelog` 组件。`auto`：Vue 文件用 PascalCase，其他用 camelCase；`kebab`：保持 kebab-case（如 `use-user.ts`）；`camel`：camelCase（如 `useUser.ts`）；`pascal`：PascalCase（如 `UseUser.ts`） |
+| `since` | `string`{lang="ts-type"} | `'2025-01-31T04:00:00Z'` | 提交历史的起始时间(ISO 8601 格式)，用于 `CommitChangelog` 组件 |
+| `until` | `string`{lang="ts-type"} | 当前时间 | 提交历史的截止时间(ISO 8601 格式)，用于 `CommitChangelog` 组件 |
+| `per_page` | `number`{lang="ts-type"} | `100` | 每次请求获取的提交数量 (1-100)，推荐设为 100 以减少 API 调用，用于 `CommitChangelog` 组件 |
+| `author` | `string`{lang="ts-type"} | - | 按作者过滤提交记录，可使用 GitHub 用户名或邮箱，用于 `CommitChangelog`
+| `dateFormat` | `object`{lang="ts-type"} | `{ locale: 'zh-CN', options: {...} }` | 日期格式化配置，用于 `PageLastCommit` 组件
 
 ::tip{to="/docs/components/commit-changelog"}
 `commitPath`、`suffix`、`casing`、`since`、`until`、`per_page` 和 `author` 主要用于 `CommitChangelog` 组件。`dateFormat` 用于 `PageLastCommit` 组件的日期显示格式。了解更多请查看 CommitChangelog 文档。
