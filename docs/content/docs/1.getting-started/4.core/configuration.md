@@ -1,10 +1,9 @@
 ---
 title: 配置
 description: "学习如何通过 `app.config.ts` 和 `nuxt.config.ts` 文件自定义您的 Movk Nuxt Docs 文档，涵盖 SEO、头部、页脚、目录及 GitHub 集成等。"
-category: core-concepts
 ---
 
-Movk Nuxt Docs 允许您通过 Nuxt 提供的 [`app.config.ts`](https://nuxt.com/docs/guide/directory-structure/app-config) 文件来配置您的文档。
+Movk Nuxt Docs 允许您通过 Nuxt 提供的 [`app.config.ts`](https://nuxt.com/docs/4.x/directory-structure/app/app-config) 文件来配置您的文档。
 
 ::warning
 若要覆盖应用配置，您需要同时创建一个 `nuxt.config.ts` 文件。否则，您的更改将不会生效。

@@ -1,7 +1,6 @@
 ---
 title: 自定义
 description: 了解如何通过覆盖内置组件来自定义您的 Movk Nuxt Docs 文档，包括头部、页脚和页面特定元素，以打造独特的文档外观。
-category: core-concepts
 ---
 
 要覆盖一个组件，只需在您的 `components/` 目录下创建一个同名的 Vue 文件即可。

@@ -1,7 +1,6 @@
 ---
 description: 学习如何利用 Nuxt 的页面和布局系统，在 Movk Nuxt Docs 中构建交互式和可重用的元素，以增强您的文档网站。
 title: Nuxt
-category: core-concepts
 ---
 
 ## Vue 页面
