@@ -1,13 +1,6 @@
 export function useCategory() {
   const categories = {
-    'getting-started': [
-      {
-        id: 'core-concepts',
-        title: '核心概念',
-        icon: 'i-lucide-settings'
-      }
-    ],
-    'components': [
+    components: [
       {
         id: 'components',
         title: 'Components',

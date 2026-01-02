@@ -31,5 +31,10 @@ export default defineNuxtConfig({
       title: 'Movk Nuxt Docs - 优雅的 Nuxt 文档主题',
       description: '一款由 Nuxt UI 和 Nuxt Content 强力驱动的 Nuxt 优雅文档主题，内置内容管理、SEO、暗黑模式、全文搜索等功能，助您轻松构建美观、专业的文档网站。'
     }
+  },
+  mcp: {
+    // enabled: false,
+    name: 'Movk Nuxt Docs',
+    browserRedirect: '/docs/getting-started/ai/mcp'
   }
 })
