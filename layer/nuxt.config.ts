@@ -9,7 +9,6 @@ export default defineNuxtConfig({
     resolve('./modules/config'),
     resolve('./modules/css'),
     resolve('./modules/component-example'),
-    resolve('./modules/llms'),
     '@nuxt/ui',
     '@nuxt/content',
     '@nuxt/image',
@@ -30,7 +29,14 @@ export default defineNuxtConfig({
     build: {
       markdown: {
         highlight: {
-          langs: ['bash', 'ts', 'typescript', 'diff', 'vue', 'json', 'yml', 'css', 'mdc', 'blade', 'edge']
+          langs: ['bash', 'ts', 'typescript', 'diff', 'vue', 'json', 'yml', 'yaml', 'css', 'mdc', 'blade', 'edge']
+        },
+        remarkPlugins: {
+          'remark-mdc': {
+            options: {
+              autoUnwrap: true
+            }
+          }
         }
       }
     }
@@ -51,11 +57,8 @@ export default defineNuxtConfig({
     }
   },
   routeRules: {
-    ...process.env.NODE_ENV === 'development'
-      ? {
-          '/_llms-full.txt': { proxy: '/llms-full.txt' }
-        }
-      : {}
+    '/llms.txt': { isr: true },
+    '/llms-full.txt': { isr: true }
   },
   experimental: {
     typescriptPlugin: true,
@@ -69,7 +72,7 @@ export default defineNuxtConfig({
   compatibilityDate: 'latest',
   nitro: {
     prerender: {
-      routes: ['/', '/sitemap.xml', '/robots.txt', '/404.html'],
+      routes: ['/sitemap.xml', '/robots.txt', '/404.html'],
       crawlLinks: true,
       autoSubfolderIndex: false
     }
@@ -79,8 +82,6 @@ export default defineNuxtConfig({
       // See: https://cn.vite.dev/config/dep-optimization-options.html
       include: [
         '@nuxt/content > slugify',
-        'extend', // unified 所需（用于 @nuxt/content 的 markdown 处理）
-        'debug', // Babel 和开发工具所需
         'tailwind-variants',
         'tailwindcss/colors'
       ]
