@@ -10,6 +10,7 @@ export default defineNuxtModule({
     const { resolve } = createResolver(import.meta.url)
 
     const layerDir = resolve('../app')
+    const modulesDir = resolve('../modules')
     const contentDir = joinURL(dir, 'content')
 
     const cssTemplate = addTemplate({
@@ -21,6 +22,7 @@ export default defineNuxtModule({
 
 @source "${contentDir.replace(/\\/g, '/')}/**/*";
 @source "${layerDir.replace(/\\/g, '/')}/**/*";
+@source "${modulesDir.replace(/\\/g, '/')}/**/*";
 @source "../../app.config.ts";
 
 /* Shiki icon highlight transformer styles */

@@ -9,6 +9,7 @@ export default defineNuxtConfig({
     resolve('./modules/config'),
     resolve('./modules/css'),
     resolve('./modules/component-example'),
+    resolve('./modules/ai-chat'),
     '@nuxt/ui',
     '@nuxt/content',
     '@nuxt/image',

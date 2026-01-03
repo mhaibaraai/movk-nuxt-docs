@@ -27,6 +27,18 @@ const links = computed<ButtonProps[]>(() => github && github.url
     <UNavigationMenu :items="desktopLinks" variant="link" />
 
     <template #right>
+      <div v-if="header?.ai" class="hidden md:block">
+        <UButton
+          v-if="route.path === '/'"
+          to="/docs"
+          label="Get Started"
+          variant="ghost"
+          trailing
+          icon="i-lucide-arrow-right"
+        />
+        <AiChat v-else />
+      </div>
+
       <ThemePicker />
 
       <UTooltip text="Search" :kbds="['meta', 'K']">
@@ -50,11 +62,7 @@ const links = computed<ButtonProps[]>(() => github && github.url
     </template>
 
     <template #toggle="{ open, toggle, ui }">
-      <HeaderToggleButton
-        :open="open"
-        :class="ui.toggle({ toggleSide: 'right' })"
-        @click="toggle"
-      />
+      <HeaderToggleButton :open="open" :class="ui.toggle({ toggleSide: 'right' })" @click="toggle" />
     </template>
 
     <template #body>

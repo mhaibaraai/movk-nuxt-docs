@@ -21,6 +21,7 @@ declare module 'nuxt/schema' {
       to: string
       search: boolean
       colorMode: boolean
+      ai: boolean
       links: ExtendedButtonProps[]
     }
     footer: {

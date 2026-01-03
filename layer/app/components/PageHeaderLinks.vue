@@ -6,14 +6,16 @@ const site = useSiteConfig()
 const { vercelAnalytics } = useAppConfig()
 const { track } = useAnalytics()
 
+const appBaseURL = useRuntimeConfig().app?.baseURL || '/'
+
 const mdPath = computed(() => `${site.url}/raw${route.path}.md`)
 
-const items = [
+const items = [[
   {
     label: 'Copy Markdown link',
     icon: 'i-lucide-link',
     onSelect() {
-      if (vercelAnalytics?.debug) track ('Page Action', { action: 'Copy Markdown Link' })
+      if (vercelAnalytics?.debug) track('Page Action', { action: 'Copy Markdown Link' })
       copy(mdPath.value)
       toast.add({
         title: 'Copied to clipboard',
@@ -48,7 +50,25 @@ const items = [
       if (vercelAnalytics?.debug) track('Page Action', { action: 'Open in Claude' })
     }
   }
-]
+], [
+  {
+    label: 'Copy MCP Server URL',
+    icon: 'i-lucide-cpu',
+    onSelect() {
+      copy(`${window?.location?.origin}${appBaseURL}mcp`)
+      toast.add({
+        title: 'Copied to clipboard',
+        icon: 'i-lucide-circle-check'
+      })
+    }
+  },
+  {
+    label: 'Add MCP Server',
+    icon: 'i-simple-icons-cursor',
+    target: '_blank',
+    to: `/mcp/deeplink`
+  }
+]]
 
 async function copyPage() {
   if (vercelAnalytics?.debug) track('Page Action', { action: 'Copy Page Content' })

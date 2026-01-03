@@ -1,4 +1,6 @@
 <script setup lang="ts">
+import type { ButtonProps } from '@nuxt/ui'
+
 const { data: page } = await useAsyncData('releases', () => queryCollection('releases').first())
 if (!page.value) {
   throw createError({ statusCode: 404, statusMessage: 'Page not found', fatal: true })
@@ -20,6 +22,7 @@ defineOgImageComponent('Nuxt', {
 })
 
 const { data: versions } = await useFetch(page.value.releases || '', {
+  server: false,
   transform: (data: {
     releases: {
       name?: string
@@ -43,30 +46,30 @@ const { data: versions } = await useFetch(page.value.releases || '', {
     <UPageHero
       :title="page.hero.title"
       :description="page.hero.description"
-      :links="page.hero.links as any[]"
+      :links="(page.hero.links as ButtonProps[]) || []"
       class="md:border-b border-default"
-      :ui="{
-        container: 'relative lg:py-32'
-      }"
+      :ui="{ container: 'relative py-10 sm:py-16 lg:py-24' }"
     >
       <template #top>
-        <div
-          class="absolute z-[-1] rounded-full bg-primary blur-[300px] size-60 sm:size-80 transform -translate-x-1/2 left-1/2 -translate-y-80"
-        />
+        <div class="absolute z-[-1] rounded-full bg-primary blur-[300px] size-60 sm:size-80 transform -translate-x-1/2 left-1/2 -translate-y-80" />
       </template>
 
       <LazyStarsBg />
 
-      <div
-        aria-hidden="true"
-        class="hidden md:block absolute z-[-1] border-x border-default inset-0 mx-4 sm:mx-6 lg:mx-8"
-      />
+      <div aria-hidden="true" class="hidden md:block absolute z-[-1] border-x border-default inset-0 mx-4 sm:mx-6 lg:mx-8" />
     </UPageHero>
 
     <UPageSection :ui="{ container: 'py-0!' }">
       <div class="py-4 md:py-8 lg:py-16 md:border-x border-default">
         <UContainer class="max-w-5xl">
-          <UChangelogVersions>
+          <UChangelogVersions
+            as="main"
+            :indicator-motion="false"
+            :ui="{
+              root: 'py-16 sm:py-24 lg:py-32',
+              indicator: 'inset-y-0'
+            }"
+          >
             <UChangelogVersion
               v-for="version in versions"
               :key="version.tag"
@@ -81,9 +84,10 @@ const { data: versions } = await useFetch(page.value.releases || '', {
               }"
             >
               <template #body>
-                <ClientOnly>
-                  <MDC v-if="version.markdown" :value="version.markdown" />
-                </ClientOnly>
+                <MDC
+                  v-if="version.markdown"
+                  :value="version.markdown"
+                />
               </template>
             </UChangelogVersion>
           </UChangelogVersions>

@@ -44,6 +44,7 @@ export default defineAppConfig({
     to: '/',
     search: true,
     colorMode: true,
+    ai: true,
     links: [] as ExtendedButtonProps[]
   },
   footer: {
