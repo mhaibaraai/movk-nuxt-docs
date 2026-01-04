@@ -109,6 +109,7 @@ clearMessages()
 | 属性 | 类型 | 默认值 | 描述 |
 |------|------|---------|-------------|
 | `title` | `string` | `Ask AI` | 标题栏显示的标题 |
+| `description` | `string` | `Ask AI` | 标题栏显示的描述 |
 | `placeholder` | `string` | `Ask a question...` | 输入框占位符文本 |
 | `faqQuestions` | `FaqCategory[]` | `undefined` | 聊天为空时显示的常见问题分类 |
 
@@ -124,7 +125,7 @@ interface FaqCategory {
 ## 环境要求
 
 - Nuxt 4.x
-- Nuxt UI 3.x（用于 `USlideover`、`UButton`、`UTextarea`、`UChatMessages` 等组件）
+- Nuxt UI 4.x（用于 `USlideover`、`UButton`、`UTextarea`、`UChatMessages` 等组件）
 - 运行中的 MCP 服务器（路径可通过 `mcpPath` 配置）
 - AI SDK Gateway Key
 

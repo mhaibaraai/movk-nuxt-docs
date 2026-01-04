@@ -1,4 +1,4 @@
-import { addComponent, addImports, addServerHandler, createResolver, defineNuxtModule } from '@nuxt/kit'
+import { addComponentsDir, addImportsDir, addServerHandler, createResolver, defineNuxtModule } from '@nuxt/kit'
 
 export interface AiChatModuleOptions {
   /**
@@ -16,6 +16,11 @@ export interface AiChatModuleOptions {
    * @default 'moonshotai/kimi-k2-turbo'
    */
   model?: string
+  /**
+   * 可用模型列表
+   * @default []
+   */
+  models?: string[]
 }
 
 export default defineNuxtModule<AiChatModuleOptions>({
@@ -26,46 +31,26 @@ export default defineNuxtModule<AiChatModuleOptions>({
   defaults: {
     apiPath: '/api/ai-chat',
     mcpPath: '/mcp',
-    model: 'moonshotai/kimi-k2-turbo'
+    model: '',
+    models: []
   },
   setup(options, nuxt) {
     const { resolve } = createResolver(import.meta.url)
 
     nuxt.options.runtimeConfig.public.aiChat = {
-      apiPath: options.apiPath!
+      apiPath: options.apiPath!,
+      model: options.model!,
+      models: options.models!
     }
     nuxt.options.runtimeConfig.aiChat = {
-      mcpPath: options.mcpPath!,
-      model: options.model!
+      mcpPath: options.mcpPath!
     }
 
-    addComponent({
-      name: 'AiChat',
-      filePath: resolve('./runtime/components/AiChat.vue')
-    })
-    addComponent({
-      name: 'AiChatSlideover',
-      filePath: resolve('./runtime/components/AiChatSlideover.vue')
-    })
-    addComponent({
-      name: 'AiChatToolCall',
-      filePath: resolve('./runtime/components/AiChatToolCall.vue')
-    })
-    addComponent({
-      name: 'AiChatFloatingInput',
-      filePath: resolve('./runtime/components/AiChatFloatingInput.vue')
+    addComponentsDir({
+      path: resolve('runtime/components')
     })
 
-    addImports([
-      {
-        name: 'useAIChat',
-        from: resolve('./runtime/composables/useAIChat')
-      },
-      {
-        name: 'useHighlighter',
-        from: resolve('./runtime/composables/useHighlighter')
-      }
-    ])
+    addImportsDir(resolve('runtime/composables'))
 
     const routePath = options.apiPath!.replace(/^\//, '')
     addServerHandler({
@@ -79,12 +64,13 @@ declare module 'nuxt/schema' {
   interface PublicRuntimeConfig {
     aiChat: {
       apiPath: string
+      model: string
+      models: string[]
     }
   }
   interface RuntimeConfig {
     aiChat: {
       mcpPath: string
-      model: string
     }
   }
 }

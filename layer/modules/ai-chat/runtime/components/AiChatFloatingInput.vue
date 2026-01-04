@@ -48,7 +48,7 @@ defineShortcuts({
       class="fixed bottom-6 left-1/2 -translate-x-1/2 z-50 px-4"
       style="will-change: transform"
     >
-      <form @submit.prevent="handleSubmit">
+      <UForm @submit="handleSubmit">
         <UInput
           ref="inputRef"
           v-model="input"
@@ -56,14 +56,14 @@ defineShortcuts({
           size="lg"
           :ui="{
             root: 'w-72 py-0.5 focus-within:w-96 transition-all duration-300 ease-out',
-            base: 'bg-default/80 backdrop-blur-xl shadow-lg rounded-xl',
+            base: 'bg-default/80 backdrop-blur-xl shadow-lg',
             trailing: 'pe-2'
           }"
           @keydown.enter.exact.prevent="handleSubmit"
         >
           <template #trailing>
             <div class="flex items-center gap-2">
-              <div class="hidden sm:flex items-center gap-1">
+              <div class="hidden sm:!flex items-center gap-1">
                 <UKbd value="meta" />
                 <UKbd value="I" />
               </div>
@@ -79,7 +79,7 @@ defineShortcuts({
             </div>
           </template>
         </UInput>
-      </form>
+      </UForm>
     </motion.div>
   </AnimatePresence>
 </template>

@@ -23,6 +23,10 @@ export default defineNuxtConfig({
     '/docs/composables': { redirect: '/docs/composables/define-locale', prerender: false }
   },
   compatibilityDate: 'latest',
+  aiChat: {
+    model: 'zai/glm-4.6v-flash',
+    models: ['zai/glm-4.6v-flash', 'meta/llama-3.1-8b', 'moonshotai/kimi-k2:free', 'xiaomi/mimo-v2-flash:free', 'openai/gpt-oss-120b:free', 'mistralai/devstral-2512:free']
+  },
   llms: {
     domain: 'https://docs.mhaibaraai.cn',
     title: 'Movk Nuxt Docs',

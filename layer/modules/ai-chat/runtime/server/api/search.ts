@@ -42,18 +42,18 @@ export default defineEventHandler(async (event) => {
   const httpClient = await createMCPClient({
     transport: {
       type: 'http',
-      url: new URL(import.meta.dev ? `http://localhost:3000${mcpPath}` : `${getRequestURL(event).origin}${mcpPath}`)
+      url: new URL(import.meta.dev ? `http://localhost:3000${mcpPath}` : `${getRequestURL(event).origin}${mcpPath}`).href
     }
   })
   const mcpTools = await httpClient.tools()
 
-  const searchDocumentation = createDocumentationAgentTool(mcpTools, config.aiChat.model)
+  const searchDocumentation = createDocumentationAgentTool(mcpTools, config.public.aiChat.model)
 
   const stream = createUIMessageStream({
     execute: async ({ writer }) => {
       const modelMessages = await convertToModelMessages(messages)
       const result = streamText({
-        model: config.aiChat.model,
+        model: config.public.aiChat.model,
         maxOutputTokens: 10000,
         system: MAIN_AGENT_SYSTEM_PROMPT,
         messages: modelMessages,

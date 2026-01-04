@@ -1,9 +1,7 @@
 <script setup lang="ts">
-withDefaults(defineProps<{
+const { tooltipText = '向 AI 提问' } = defineProps<{
   tooltipText?: string
-}>(), {
-  tooltipText: '向 AI 提问'
-})
+}>()
 
 const { toggle } = useAIChat()
 </script>
