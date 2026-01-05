@@ -27,17 +27,7 @@ const links = computed<ButtonProps[]>(() => github && github.url
     <UNavigationMenu :items="desktopLinks" variant="link" />
 
     <template #right>
-      <div v-if="header?.ai" class="hidden md:block">
-        <UButton
-          v-if="route.path === '/'"
-          to="/docs"
-          label="Get Started"
-          variant="ghost"
-          trailing
-          icon="i-lucide-arrow-right"
-        />
-        <AiChat v-else />
-      </div>
+      <HeaderCTA />
 
       <ThemePicker />
 
