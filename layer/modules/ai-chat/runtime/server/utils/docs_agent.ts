@@ -1,5 +1,5 @@
 import { tool, stepCountIs, generateText } from 'ai'
-import { z } from 'zod'
+import { z } from 'zod/v4'
 
 const SUB_AGENT_SYSTEM_PROMPT = `你是文档搜索代理。你的工作是从文档中查找并检索相关信息。
 
@@ -17,7 +17,7 @@ const SUB_AGENT_SYSTEM_PROMPT = `你是文档搜索代理。你的工作是从�
 **输出：**
 返回你找到的相关文档内容，如果有代码示例也一并包含。`
 
-export function createDocumentationAgentTool(mcpTools: Record<string, any>, model: string) {
+export function createDocumentationAgentTool(mcpTools: Record<string, any>, model: any) {
   return tool({
     description: '从文档中搜索并检索信息。使用此工具回答有关文档的任何问题。将用户的问题作为查询参数传递。',
     inputSchema: z.object({
@@ -27,7 +27,7 @@ export function createDocumentationAgentTool(mcpTools: Record<string, any>, mode
       const writer = (executionOptions as any)?.experimental_context?.writer
 
       const result = await generateText({
-        model: model,
+        model,
         tools: mcpTools,
         system: SUB_AGENT_SYSTEM_PROMPT,
         stopWhen: stepCountIs(5),

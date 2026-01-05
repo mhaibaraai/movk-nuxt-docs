@@ -12,13 +12,12 @@ export interface AiChatModuleOptions {
    */
   mcpPath?: string
   /**
-   * 通过 AI SDK Gateway 使用的 AI 模型
-   * @default 'moonshotai/kimi-k2-turbo'
+   * 通过 AI SDK Gateway 、OpenRouter 使用的 AI 模型
    */
   model?: string
   /**
    * 可用模型列表
-   * @default []
+   * - 格式为 "provider/model" 或 "model"
    */
   models?: string[]
 }
@@ -35,6 +34,16 @@ export default defineNuxtModule<AiChatModuleOptions>({
     models: []
   },
   setup(options, nuxt) {
+    const hasApiKey = !!(
+      process.env.AI_GATEWAY_API_KEY
+      || process.env.OPENROUTER_API_KEY
+    )
+
+    if (!hasApiKey) {
+      console.info('[ai-chat] Module disabled: no AI_GATEWAY_API_KEY or OPENROUTER_API_KEY found')
+      return
+    }
+
     const { resolve } = createResolver(import.meta.url)
 
     nuxt.options.runtimeConfig.public.aiChat = {
