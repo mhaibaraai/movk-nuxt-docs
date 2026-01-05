@@ -24,8 +24,14 @@ export default defineNuxtConfig({
   },
   compatibilityDate: 'latest',
   aiChat: {
-    model: 'zai/glm-4.6v-flash',
-    models: ['zai/glm-4.6v-flash', 'meta/llama-3.1-8b', 'moonshotai/kimi-k2:free', 'xiaomi/mimo-v2-flash:free', 'openai/gpt-oss-120b:free', 'mistralai/devstral-2512:free']
+    model: 'mistral/devstral-2',
+    models: [
+      'mistral/devstral-2',
+      'kwaipilot/kat-coder-pro-v1',
+      'openrouter/mistralai/devstral-2512:free',
+      'openrouter/xiaomi/mimo-v2-flash:free',
+      'openrouter/qwen/qwen3-4b:free'
+    ]
   },
   llms: {
     domain: 'https://docs.mhaibaraai.cn',
