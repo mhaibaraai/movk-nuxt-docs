@@ -1,12 +1,12 @@
 ---
 title: LLMs.txt
-description: 如何让 Cursor、Windsurf、GitHub Copilot、ChatGPT 和 Claude 等 AI 工具理解内容文件。
+description: 为 AI 工具（Cursor、Windsurf、GitHub Copilot 等）生成优化的文档内容。
 category: ai
 ---
 
 ## 什么是 LLMs.txt？
 
-Movk Nuxt Docs 默认集成 `nuxt-llms`，为大型语言模型(LLMs)预处理您的内容。所有文档页面均被注入，系统会自动生成并预渲染 `/llms.txt` 和 `/llms-full.txt` 文件。
+默认集成 `nuxt-llms`，为大型语言模型预处理文档内容。系统自动生成并预渲染 `/llms.txt` 和 `/llms-full.txt` 文件。
 
 ::note{to="https://docs.mhaibaraai.cn/llms.txt"}
 请查看为 Movk Nuxt Docs 文档本身生成的 `/llms.txt` 文件。

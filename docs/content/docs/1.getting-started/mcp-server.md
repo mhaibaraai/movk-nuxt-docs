@@ -1,17 +1,17 @@
 ---
 title: MCP Server
-description: 通过内置的 Model Context Protocol 服务器将文档连接到 AI 工具。
+description: 内置 Model Context Protocol 服务器，将文档连接到 AI 工具。
 category: ai
 ---
 
-## 关于 MCP 服务器
+## 关于 MCP Server
 
-每个 Movk Nuxt Docs 实例都包含一个内置的 Model Context Protocol (MCP) 服务器，使其能够接入更广泛的 AI 生态系统——任何 MCP 客户端（如 Claude、Cursor、VS Code 等）均可连接至您的文档。
+每个 Movk Nuxt Docs 实例内置 Model Context Protocol (MCP) 服务器，任何 MCP 客户端（Claude、Cursor、VS Code 等）均可连接。
 
 ::note
-**MCP 是什么？**
+**什么是 MCP？**
 
-MCP (Model Context Protocol) 是一个开放协议，支持 AI 应用与外部服务（如文档）之间的标准化连接。通过 MCP，AI 助手可以在生成响应时主动搜索文档，而不仅仅是在明确要求时才查询。
+Model Context Protocol 是开放协议，支持 AI 应用与外部服务的标准化连接。通过 MCP，AI 助手可根据上下文主动搜索文档。
 ::
 
 当连接到 AI 工具时，LLM 能够根据对话上下文智能地判断何时需要访问文档工具，从而在开发过程中为您提供更准确的文档引用和技术支持。
@@ -50,28 +50,28 @@ export default defineNuxtConfig({
 
 ## 内置工具
 
-MOVK Docs MCP 提供两种开箱即用的工具，可让任何大型语言模型发现并阅读您的文档：
+MOVK Docs MCP 提供两个开箱即用的工具：
 
 ### `list-pages`
 
-列出所有可用的文档页面及其分类和基本信息。
+列出所有可用的文档页面及分类信息。
 
 **使用场景：**
-- 探索或搜索某个主题的文档但不知道确切的页面路径
+- 搜索某个主题的文档但不知道确切路径
 - 了解整体文档结构
 - 查找特定类别的所有页面
 
 ### `get-page`
 
-检索特定文档页面的完整内容和详细信息。
+检索特定文档页面的完整内容。
 
 **参数：**
-- `path` *(必需)* - 页面路径，例如 `/docs/getting-started/installation`
+- `path` *（必需）* - 页面路径，例如 `/docs/getting-started/installation`
 
 **使用场景：**
-- 知道确切的文档页面路径时获取完整内容
-- 需要引用特定页面的详细信息
-- 获取完整的 markdown 源代码
+- 获取确切路径页面的完整内容
+- 引用特定页面的详细信息
+- 获取完整 Markdown 源代码
 
 ## 设置指南
 
