@@ -3,8 +3,8 @@ import { camelCase, kebabCase } from 'scule'
 
 const props = defineProps<{
   /**
-   * The slug of the component to fetch slots for.
-   * @defaultValue route path's last segment
+   * 获取组件插槽的 slug 标识
+   * @defaultValue 路由路径的最后一段
    */
   slug?: string
 }>()

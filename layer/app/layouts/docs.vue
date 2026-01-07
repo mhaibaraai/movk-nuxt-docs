@@ -1,13 +1,3 @@
-<script setup lang="ts">
-import type { ContentNavigationItem } from '@nuxt/content'
-
-const route = useRoute()
-
-const navigation = inject<Ref<ContentNavigationItem[]>>('navigation')
-
-const { navigationByCategory } = useNavigation(navigation!)
-</script>
-
 <template>
   <UMain class="relative">
     <HeroBackground />
@@ -16,11 +6,8 @@ const { navigationByCategory } = useNavigation(navigation!)
       <UPage>
         <template #left>
           <UPageAside>
-            <UContentNavigation
-              :key="route.path"
-              :navigation="navigationByCategory"
-              highlight
-            />
+            <DocsAsideLeftTop />
+            <DocsAsideLeftBody />
           </UPageAside>
         </template>
 

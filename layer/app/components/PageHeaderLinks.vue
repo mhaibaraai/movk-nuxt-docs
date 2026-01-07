@@ -3,7 +3,7 @@ const route = useRoute()
 const toast = useToast()
 const { copy, copied } = useClipboard()
 const site = useSiteConfig()
-const { vercelAnalytics } = useAppConfig()
+const { vercelAnalytics, ui } = useAppConfig()
 const { track } = useAnalytics()
 
 const appBaseURL = useRuntimeConfig().app?.baseURL || '/'
@@ -80,7 +80,7 @@ async function copyPage() {
   <UFieldGroup size="sm">
     <UButton
       label="Copy page"
-      :icon="copied ? 'i-lucide-copy-check' : 'i-lucide-copy'"
+      :icon="copied ? ui.icons.copyCheck : ui.icons.copy"
       color="neutral"
       variant="outline"
       :ui="{
@@ -100,7 +100,7 @@ async function copyPage() {
         content: 'w-48'
       }"
     >
-      <UButton icon="i-lucide-chevron-down" color="neutral" variant="outline" />
+      <UButton :icon="ui.icons.chevronDown" color="neutral" variant="outline" />
     </UDropdownMenu>
   </UFieldGroup>
 </template>

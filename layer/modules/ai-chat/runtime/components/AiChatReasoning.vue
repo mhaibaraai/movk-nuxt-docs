@@ -1,10 +1,18 @@
 <script setup lang="ts">
 const { isStreaming = false } = defineProps<{
+  /**
+   * 思考过程的文本内容
+   */
   text: string
+  /**
+   * 是否正在流式接收思考内容
+   * @defaultValue false
+   */
   isStreaming?: boolean
 }>()
 
 const open = ref(false)
+const { ui } = useAppConfig()
 
 watch(() => isStreaming, () => {
   open.value = isStreaming
@@ -25,7 +33,7 @@ function cleanMarkdown(text: string): string {
       class="p-0 group"
       color="neutral"
       variant="link"
-      trailing-icon="i-lucide-chevron-down"
+      :trailing-icon="ui.icons.chevronDown"
       :ui="{
         trailingIcon: text.length > 0 ? 'group-data-[state=open]:rotate-180 transition-transform duration-200' : 'hidden'
       }"

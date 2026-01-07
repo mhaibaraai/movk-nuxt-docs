@@ -1,7 +1,7 @@
 import type { UIMessage } from 'ai'
 
 export function useAIChat() {
-  const isOpen = useState('ai-chat-open', () => true)
+  const isOpen = useState('ai-chat-open', () => false)
   const messages = useState<UIMessage[]>('ai-chat-messages', () => [])
   const pendingMessage = useState<string | undefined>('ai-chat-pending', () => undefined)
 

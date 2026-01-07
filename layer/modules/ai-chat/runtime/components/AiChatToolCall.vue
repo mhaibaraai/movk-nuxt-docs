@@ -2,7 +2,14 @@
 import { motion } from 'motion-v'
 
 defineProps<{
+  /**
+   * 工具调用的标签文本
+   */
   text: string
+  /**
+   * 为 true 时显示加载旋转圈
+   * @defaultValue false
+   */
   isLoading?: boolean
 }>()
 </script>

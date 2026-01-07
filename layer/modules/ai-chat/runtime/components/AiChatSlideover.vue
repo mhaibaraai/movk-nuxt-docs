@@ -8,12 +8,29 @@ import type { FaqCategory } from './AiChatSlideoverFaq.vue'
 
 const {
   title = 'AI 助手',
-  description = '向 AI 提问',
-  placeholder = '输入你的问题...'
+  description = ' ',
+  placeholder = '输入你的问题...',
+  faqQuestions = []
 } = defineProps<{
+  /**
+   * 标题栏显示的标题
+   * @defaultValue AI 助手
+   */
   title?: string
+  /**
+   * 标题栏显示的描述
+   * @defaultValue ' '
+   */
   description?: string
+  /**
+   * 输入框占位符文本
+   * @defaultValue 输入你的问题...
+   */
   placeholder?: string
+  /**
+   * 聊天为空时显示的常见问题分类
+   * @defaultValue []
+   */
   faqQuestions?: FaqCategory[]
 }>()
 
@@ -48,13 +65,6 @@ watch(messages, (newMessages) => {
 }, { deep: true })
 
 const toast = useToast()
-const lastMessage = computed(() => chat.messages.at(-1))
-const showThinking = computed(() =>
-  chat.status === 'streaming'
-  && lastMessage.value?.role === 'assistant'
-  && lastMessage.value?.parts?.length === 0
-)
-
 const chat = new Chat({
   id: getRandomUUID(),
   messages: messages.value,
@@ -120,7 +130,7 @@ onMounted(() => {
     :description="description"
     :close="{ size: 'sm' }"
     :ui="{
-      body: 'flex',
+      body: 'flex p-4!',
       title: 'flex w-100 pr-6',
       overlay: 'bg-default/60 backdrop-blur-sm',
       content: 'w-full sm:max-w-md bg-default/95 backdrop-blur-xl shadow-2xl'
@@ -149,20 +159,18 @@ onMounted(() => {
           v-if="chat.messages.length > 0"
           should-auto-scroll
           :messages="chat.messages"
+          compact
           :status="chat.status"
-          :user="{ ui: { content: 'text-sm' } }"
+          :user="{ ui: { container: 'pb-2', content: 'text-sm' } }"
           :ui="{ indicator: '*:bg-accented' }"
         >
           <template #content="{ message }">
             <div class="flex flex-col gap-2">
-              <div v-if="showThinking && message.role === 'assistant'">
-                <TextShimmer text="思考中..." />
-              </div>
               <template
                 v-for="(part, index) in message.parts"
                 :key="`${message.id}-${part.type}-${index}${'state' in part ? `-${part.state}` : ''}`"
               >
-                <Reasoning v-if="part.type === 'reasoning'" :text="part.text" :is-streaming="part.state !== 'done'" />
+                <AiChatReasoning v-if="part.type === 'reasoning'" :text="part.text" :is-streaming="part.state !== 'done'" />
                 <MDCCached
                   v-else-if="part.type === 'text'"
                   :value="part.text"
@@ -180,6 +188,17 @@ onMounted(() => {
                   />
                 </template>
               </template>
+              <div v-if="chat.status === 'streaming' && message.role==='assistant'">
+                <UButton
+                  class="px-0"
+                  color="neutral"
+                  size="sm"
+                  variant="link"
+                  loading
+                  loading-icon="i-lucide-loader"
+                  label="Thinking..."
+                />
+              </div>
             </div>
           </template>
         </UChatMessages>
@@ -201,7 +220,7 @@ onMounted(() => {
           >
             <template #footer>
               <div class="flex items-center gap-1">
-                <ModelSelect v-model="model" />
+                <AiChatModelSelect v-model="model" />
                 <div class="flex gap-1 justify-between items-center px-1 text-xs text-dimmed">
                   换行
                   <UKbd value="shift" />

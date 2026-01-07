@@ -2,6 +2,11 @@ import { addComponentsDir, addImportsDir, addServerHandler, createResolver, defi
 
 export interface AiChatModuleOptions {
   /**
+   * 是否启用 AI 聊天功能
+   * @default import.meta.env.AI_GATEWAY_API_KEY || import.meta.env.OPENROUTER_API_KEY
+   */
+  enable?: boolean
+  /**
    * 聊天 API 端点路径
    * @default '/api/ai-chat'
    */
@@ -28,31 +33,30 @@ export default defineNuxtModule<AiChatModuleOptions>({
     configKey: 'aiChat'
   },
   defaults: {
+    enable: !!(
+      import.meta.env.AI_GATEWAY_API_KEY
+        || import.meta.env.OPENROUTER_API_KEY
+    ),
     apiPath: '/api/ai-chat',
     mcpPath: '/mcp',
     model: '',
     models: []
   },
   setup(options, nuxt) {
-    const hasApiKey = !!(
-      process.env.AI_GATEWAY_API_KEY
-      || process.env.OPENROUTER_API_KEY
-    )
-
-    if (!hasApiKey) {
-      console.info('[ai-chat] Module disabled: no AI_GATEWAY_API_KEY or OPENROUTER_API_KEY found')
-      return
-    }
-
     const { resolve } = createResolver(import.meta.url)
 
     nuxt.options.runtimeConfig.public.aiChat = {
+      enable: options.enable!,
       apiPath: options.apiPath!,
       model: options.model!,
       models: options.models!
     }
     nuxt.options.runtimeConfig.aiChat = {
       mcpPath: options.mcpPath!
+    }
+
+    if (!options.enable) {
+      console.info('[ai-chat] Module disabled: no AI_GATEWAY_API_KEY or OPENROUTER_API_KEY found')
     }
 
     addComponentsDir({
@@ -72,6 +76,7 @@ export default defineNuxtModule<AiChatModuleOptions>({
 declare module 'nuxt/schema' {
   interface PublicRuntimeConfig {
     aiChat: {
+      enable: boolean
       apiPath: string
       model: string
       models: string[]

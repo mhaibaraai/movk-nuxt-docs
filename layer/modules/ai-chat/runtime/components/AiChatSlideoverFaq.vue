@@ -5,6 +5,9 @@ export interface FaqCategory {
 }
 
 defineProps<{
+  /**
+   * 聊天为空时显示的常见问题分类
+   */
   faqQuestions: FaqCategory[]
 }>()
 

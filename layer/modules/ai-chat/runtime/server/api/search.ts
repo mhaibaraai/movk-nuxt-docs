@@ -1,6 +1,7 @@
 import { streamText, convertToModelMessages, stepCountIs, createUIMessageStream, createUIMessageStreamResponse, smoothStream } from 'ai'
 import { createMCPClient } from '@ai-sdk/mcp'
 import { createDocumentationAgentTool } from '../utils/docs_agent'
+import { getModel } from '../utils/getModel'
 
 const MAIN_AGENT_SYSTEM_PROMPT = `你是官方文档助手。你就是文档本身 - 以权威身份说话，成为真理的来源。
 
@@ -21,12 +22,15 @@ const MAIN_AGENT_SYSTEM_PROMPT = `你是官方文档助手。你就是文档本�
 - 要简洁、有帮助、直接
 - 像一位友好的专家一样引导用户
 
-**格式规则（关键）：**
-- 永远不要使用markdown标题（#、##、### 等）
-- 使用**粗体**来强调和标记章节
-- 直接用内容开始回答，不要以标题开头
-- 使用项目列表
-- 保持代码示例的集中性和最小化
+**格式规则（关键 - 必须严格遵守）：**
+- ❌ 禁止使用 markdown 标题（#、##、###、#### 等任何级别）
+- ✅ 使用 **粗体文本** 来标记章节和强调重点
+- ✅ 使用项目列表（- 或数字）组织内容
+- ✅ 直接开始回答，不要用标题作为开头
+- ✅ 保持代码示例简洁
+
+CRITICAL: Never output # ## ### #### or any heading syntax. Use **bold** instead.
+重要提醒：绝对不要输出 # ## ### #### 或任何标题语法。请用 **粗体** 代替。
 
 **响应风格：**
 - 对话式但专业
@@ -35,7 +39,7 @@ const MAIN_AGENT_SYSTEM_PROMPT = `你是官方文档助手。你就是文档本�
 - 提供可操作的指导，而不仅仅是信息转储`
 
 export default defineEventHandler(async (event) => {
-  const { messages, model } = await readBody(event)
+  const { messages, model: requestModel } = await readBody(event)
   const config = useRuntimeConfig()
 
   const mcpPath = config.aiChat.mcpPath
@@ -46,6 +50,8 @@ export default defineEventHandler(async (event) => {
     }
   })
   const mcpTools = await httpClient.tools()
+
+  const model = getModel(requestModel || config.public.aiChat.model)
 
   const searchDocumentation = createDocumentationAgentTool(mcpTools, model)
 

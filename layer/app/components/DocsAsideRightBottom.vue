@@ -1,47 +1,22 @@
 <script setup lang="ts">
+const { aiChat } = useRuntimeConfig().public
 const route = useRoute()
 
 const pageUrl = route.path
 const { open } = useAIChat()
-
-const faqQuestions = [
-  {
-    category: 'Getting Started',
-    items: [
-      'What is Nuxt MCP Toolkit?',
-      'How do I install the module?',
-      'How do I use the DevTools?'
-    ]
-  },
-  {
-    category: 'Core Features',
-    items: [
-      'How do I create a new MCP Tool?',
-      'How do I add an MCP Resource?',
-      'How do I configure Prompts?'
-    ]
-  },
-  {
-    category: 'Advanced',
-    items: [
-      'Can I expose my API routes as MCP Tools?',
-      'Does it support TypeScript?',
-      'How do I add a custom MCP server?'
-    ]
-  }
-]
+const { faqQuestions } = useFaq()
 </script>
 
 <template>
-  <div>
+  <div v-if="aiChat.enable">
     <UButton
       icon="i-lucide-brain"
       target="_blank"
-      label="Explain with AI"
+      label="用 AI 解释此页面"
       size="sm"
       variant="ghost"
       color="neutral"
-      @click="open(`Explain the page ${pageUrl}`, true)"
+      @click="open(`解释此页面 ${pageUrl}`, true)"
     />
     <AiChatSlideover :faq-questions="faqQuestions" />
 

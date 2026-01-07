@@ -4,14 +4,28 @@ import { ShikiCachedRenderer } from 'shiki-stream/vue'
 const colorMode = useColorMode()
 const highlighter = await useHighlighter()
 const props = defineProps<{
+  /**
+   * 要高亮显示的代码内容
+   */
   code: string
+  /**
+   * 代码语言（如 'vue'、'javascript'、'typescript'）
+   */
   language: string
+  /**
+   * 自定义 CSS 类名
+   */
   class?: string
+  /**
+   * 代码块元数据
+   */
   meta?: string
 }>()
+
 const trimmedCode = computed(() => {
   return props.code.trim().replace(/`+$/, '')
 })
+
 const lang = computed(() => {
   switch (props.language) {
     case 'vue':

@@ -2,7 +2,6 @@
 import type { ButtonProps } from '@nuxt/ui'
 
 const route = useRoute()
-const { desktopLinks } = useHeader()
 const { header, github } = useAppConfig()
 
 const links = computed<ButtonProps[]>(() => github && github.url
@@ -24,7 +23,7 @@ const links = computed<ButtonProps[]>(() => github && github.url
       <HeaderLogo />
     </template>
 
-    <UNavigationMenu :items="desktopLinks" variant="link" />
+    <HeaderCenter />
 
     <template #right>
       <HeaderCTA />

@@ -1,5 +1,9 @@
 <script setup lang="ts">
 const { tooltipText = '向 AI 提问' } = defineProps<{
+  /**
+   * 鼠标悬停时的提示文本
+   * @defaultValue 向 AI 提问
+   */
   tooltipText?: string
 }>()
 

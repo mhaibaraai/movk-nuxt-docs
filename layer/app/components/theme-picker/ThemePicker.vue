@@ -1,12 +1,8 @@
 <script setup lang="ts">
-import { omit } from '@movk/core'
-import colors from 'tailwindcss/colors'
 import { useClipboard } from '@vueuse/core'
-import { themeIcons } from '../../utils/theme'
 
 const appConfig = useAppConfig()
 const colorMode = useColorMode()
-const site = useSiteConfig()
 
 const { track } = useAnalytics()
 
@@ -21,199 +17,26 @@ watch(open, (isOpen) => {
 const { copy: copyCSS, copied: copiedCSS } = useClipboard()
 const { copy: copyAppConfig, copied: copiedAppConfig } = useClipboard()
 
-const neutralColors = ['slate', 'gray', 'zinc', 'neutral', 'stone']
-const neutral = computed({
-  get() {
-    return appConfig.ui.colors.neutral
-  },
-  set(option) {
-    appConfig.ui.colors.neutral = option
-    window.localStorage.setItem(`${site.name}-ui-neutral`, appConfig.ui.colors.neutral)
-    if (appConfig.vercelAnalytics?.debug) track('Theme Changed', { setting: 'neutral', value: option })
-  }
-})
-
-const colorsToOmit = ['inherit', 'current', 'transparent', 'black', 'white', ...neutralColors]
-const primaryColors = Object.keys(omit(colors, colorsToOmit as any))
-const primary = computed({
-  get() {
-    return appConfig.ui.colors.primary
-  },
-  set(option) {
-    appConfig.ui.colors.primary = option
-    window.localStorage.setItem(`${site.name}-ui-primary`, appConfig.ui.colors.primary)
-    setBlackAsPrimary(false)
-    if (appConfig.vercelAnalytics?.debug) track('Theme Changed', { setting: 'primary', value: option })
-  }
-})
-
-const radiuses = [0, 0.125, 0.25, 0.375, 0.5]
-const radius = computed({
-  get() {
-    return appConfig.theme.radius
-  },
-  set(option) {
-    appConfig.theme.radius = option
-    window.localStorage.setItem(`${site.name}-ui-radius`, String(appConfig.theme.radius))
-    if (appConfig.vercelAnalytics?.debug) track('Theme Changed', { setting: 'radius', value: option })
-  }
-})
-
-const modes = [
-  { label: 'light', icon: 'i-lucide-sun' },
-  { label: 'dark', icon: 'i-lucide-moon' },
-  { label: 'system', icon: 'i-lucide-monitor' }
-]
-const mode = computed({
-  get() {
-    return colorMode.value
-  },
-  set(option) {
-    colorMode.preference = option
-    if (appConfig.vercelAnalytics?.debug) track('Theme Changed', { setting: 'color mode', value: option })
-  }
-})
-
-function setBlackAsPrimary(value: boolean) {
-  appConfig.theme.blackAsPrimary = value
-  window.localStorage.setItem(`${site.name}-ui-black-as-primary`, String(value))
-  if (appConfig.vercelAnalytics?.debug) track('Theme Changed', { setting: 'black as primary', value })
-}
-
-const fonts = ['Public Sans', 'DM Sans', 'Geist', 'Inter', 'Poppins', 'Outfit', 'Raleway']
-const font = computed({
-  get() {
-    return appConfig.theme.font
-  },
-  set(option) {
-    appConfig.theme.font = option
-    window.localStorage.setItem(`${site.name}-ui-font`, appConfig.theme.font)
-    if (appConfig.vercelAnalytics?.debug) track('Theme Changed', { setting: 'font', value: option })
-  }
-})
-
-const icons = [{
-  label: 'Lucide',
-  icon: 'i-lucide-feather',
-  value: 'lucide'
-}, {
-  label: 'Phosphor',
-  icon: 'i-ph-phosphor-logo',
-  value: 'phosphor'
-}, {
-  label: 'Tabler',
-  icon: 'i-tabler-brand-tabler',
-  value: 'tabler'
-}]
-const icon = computed({
-  get() {
-    return appConfig.theme.icons
-  },
-  set(option) {
-    appConfig.theme.icons = option
-    appConfig.ui.icons = themeIcons[option as keyof typeof themeIcons] as any
-    window.localStorage.setItem(`${site.name}-ui-icons`, appConfig.theme.icons)
-    if (appConfig.vercelAnalytics?.debug) track('Theme Changed', { setting: 'icons', value: option })
-  }
-})
-
-const hasCSSChanges = computed(() => {
-  return appConfig.theme.radius !== 0.25
-    || appConfig.theme.blackAsPrimary
-    || appConfig.theme.font !== 'Public Sans'
-})
-
-const hasAppConfigChanges = computed(() => {
-  return appConfig.ui.colors.primary !== 'green'
-    || appConfig.ui.colors.neutral !== 'slate'
-    || appConfig.theme.icons !== 'lucide'
-})
-
-function exportCSS() {
-  if (appConfig.vercelAnalytics?.debug) track('Theme Exported', { type: 'css' })
-
-  const lines = [
-    '@import "tailwindcss";',
-    '@import "@nuxt/ui";'
-  ]
-
-  if (appConfig.theme.font !== 'Public Sans') {
-    lines.push('', '@theme {', `  --font-sans: '${appConfig.theme.font}', sans-serif;`, '}')
-  }
-
-  const rootLines: string[] = []
-  if (appConfig.theme.radius !== 0.25) {
-    rootLines.push(`  --ui-radius: ${appConfig.theme.radius}rem;`)
-  }
-  if (appConfig.theme.blackAsPrimary) {
-    rootLines.push('  --ui-primary: black;')
-  }
-
-  if (rootLines.length) {
-    lines.push('', ':root {', ...rootLines, '}')
-  }
-
-  if (appConfig.theme.blackAsPrimary) {
-    lines.push('', '.dark {', '  --ui-primary: white;', '}')
-  }
-
-  copyCSS(lines.join('\n'))
-}
-
-function exportAppConfig() {
-  if (appConfig.vercelAnalytics?.debug) track('Theme Exported', { type: 'appConfig' })
-
-  const config: Record<string, any> = {}
-
-  if (appConfig.ui.colors.primary !== 'green' || appConfig.ui.colors.neutral !== 'slate') {
-    config.ui = { colors: {} }
-    if (appConfig.ui.colors.primary !== 'green') {
-      config.ui.colors.primary = appConfig.ui.colors.primary
-    }
-    if (appConfig.ui.colors.neutral !== 'slate') {
-      config.ui.colors.neutral = appConfig.ui.colors.neutral
-    }
-  }
-
-  if (appConfig.theme.icons !== 'lucide') {
-    const iconSet = appConfig.theme.icons
-    const icons = themeIcons[iconSet as keyof typeof themeIcons]
-    config.ui = config.ui || {}
-    config.ui.icons = icons
-  }
-
-  const configString = JSON.stringify(config, null, 2)
-    .replace(/"([^"]+)":/g, '$1:')
-    .replace(/"/g, '\'')
-
-  const output = `export default defineAppConfig(${configString})`
-
-  copyAppConfig(output)
-}
-
-function resetTheme() {
-  if (appConfig.vercelAnalytics?.debug) track('Theme Reset')
-
-  // Reset without triggering individual tracking events
-  appConfig.ui.colors.primary = 'green'
-  window.localStorage.removeItem(`${site.name}-ui-primary`)
-
-  appConfig.ui.colors.neutral = 'slate'
-  window.localStorage.removeItem(`${site.name}-ui-neutral`)
-
-  appConfig.theme.radius = 0.25
-  window.localStorage.removeItem(`${site.name}-ui-radius`)
-
-  appConfig.theme.font = 'Public Sans'
-  window.localStorage.removeItem(`${site.name}-ui-font`)
-
-  appConfig.theme.icons = 'lucide'
-  appConfig.ui.icons = themeIcons.lucide as any
-  window.localStorage.removeItem(`${site.name}-ui-icons`)
-
-  appConfig.theme.blackAsPrimary = false
-  window.localStorage.removeItem(`${site.name}-ui-black-as-primary`)
-}
+const {
+  neutralColors,
+  neutral,
+  primaryColors,
+  primary,
+  setBlackAsPrimary,
+  radiuses,
+  radius,
+  fonts,
+  font,
+  icon,
+  icons,
+  modes,
+  mode,
+  hasCSSChanges,
+  hasAppConfigChanges,
+  exportCSS,
+  exportAppConfig,
+  resetTheme
+} = useTheme()
 </script>
 
 <template>
@@ -418,8 +241,8 @@ function resetTheme() {
             size="sm"
             label="main.css"
             class="flex-1 text-[11px]"
-            :icon="copiedCSS ? 'i-lucide-copy-check' : 'i-lucide-copy'"
-            @click="exportCSS"
+            :icon="copiedCSS ? appConfig.ui.icons.copyCheck : appConfig.ui.icons.copy"
+            @click="copyCSS(exportCSS())"
           />
           <UButton
             v-if="hasAppConfigChanges"
@@ -427,9 +250,9 @@ function resetTheme() {
             variant="soft"
             size="sm"
             label="app.config.ts"
-            :icon="copiedAppConfig ? 'i-lucide-copy-check' : 'i-lucide-copy'"
+            :icon="copiedAppConfig ? appConfig.ui.icons.copyCheck : appConfig.ui.icons.copy"
             class="flex-1 text-[11px]"
-            @click="exportAppConfig"
+            @click="copyAppConfig(exportAppConfig())"
           />
           <UTooltip text="Reset theme">
             <UButton

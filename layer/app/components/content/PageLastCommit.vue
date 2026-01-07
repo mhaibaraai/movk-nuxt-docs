@@ -20,10 +20,12 @@ const {
 } = defineProps<{
   /**
    * 文件路径（不含扩展名），通常由页面自动传入
+   * @defaultValue ''
    */
   stem: string
   /**
    * 文件扩展名，通常由页面自动传入
+   * @defaultValue 'md'
    */
   extension: string
   /**
