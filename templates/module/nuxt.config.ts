@@ -7,6 +7,13 @@ export default defineNuxtConfig({
     '/docs': { redirect: '/docs/getting-started', prerender: false }
   },
   compatibilityDate: 'latest',
+  aiChat: {
+    model: 'mistral/devstral-2',
+    models: [
+      'mistral/devstral-2',
+      'openrouter/mistralai/devstral-2512:free'
+    ]
+  },
   eslint: {
     config: {
       stylistic: {
@@ -14,5 +21,8 @@ export default defineNuxtConfig({
         braceStyle: '1tbs'
       }
     }
+  },
+  mcp: {
+    name: 'Movk Nuxt Docs'
   }
 })
