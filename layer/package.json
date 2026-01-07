@@ -3,7 +3,7 @@
   "type": "module",
   "version": "1.5.2",
   "private": false,
-  "description": "An elegant documentation theme for Nuxt, powered by Nuxt UI and Nuxt Content.",
+  "description": "Modern Nuxt 4 documentation theme with auto-generated component docs, AI chat assistant, MCP server, and complete developer experience optimization.",
   "author": "YiXuan <mhaibaraai@gmail.com>",
   "license": "MIT",
   "homepage": "https://docs.mhaibaraai.cn",

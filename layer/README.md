@@ -1,13 +1,13 @@
-[![Movk Nuxt Docs](https://docs.mhaibaraai.cn/__og-image__/static/og.png)](https://docs.mhaibaraai.cn/)
+[![Movk Nuxt Docs](https://docs.mhaibaraai.cn/og-image.png)](https://docs.mhaibaraai.cn/)
 
-> 一款由 Nuxt UI 和 Nuxt Content 强力驱动的优雅文档主题
+> 基于 Nuxt 4 的现代文档主题，集成组件自动化文档、AI 聊天助手、MCP Server 和完整的开发者体验优化
 
 [![npm version][npm-version-src]][npm-version-href]
 [![npm downloads][npm-downloads-src]][npm-downloads-href]
 [![License][license-src]][license-href]
 [![Nuxt][nuxt-src]][nuxt-href]
 
-使用此主题可以快速构建美观、专业的文档网站，内置内容管理、SEO、暗黑模式、全文搜索等功能。
+使用此主题可以快速构建美观、专业、智能的文档网站，内置组件文档自动生成、AI 聊天助手、MCP Server 支持、SEO 优化、暗黑模式、全文搜索等功能。
 
 - 📖 [在线文档](https://docs.mhaibaraai.cn/)
 
@@ -15,18 +15,30 @@
 
 此主题集成了一系列旨在优化文档管理体验的强大功能：
 
+### 🤖 AI 增强体验
+
+- **AI 聊天助手** - 内置智能文档助手，基于 Vercel AI SDK 支持多种 LLM 模型（Mistral、Qwen、OpenRouter）
+- **MCP Server 支持** - 集成 Model Context Protocol 服务器，为 AI 助手提供结构化的文档访问能力
+- **LLM 优化** - 通过 `nuxt-llms` 模块自动生成 `llms.txt` 和 `llms-full.txt`，为 AI 工具提供优化的文档索引
+- **流式响应** - 支持 AI 响应流式输出和代码高亮，配合 `shiki-stream` 实现实时语法高亮渲染
+
+### 🧩 自动化文档生成
+
+- **组件元数据自动提取** - 基于 `nuxt-component-meta` 自动提取 Vue 组件的 Props、Slots、Emits 定义
+- **交互式示例展示** - 通过 `ComponentExample` 组件自动加载和渲染组件示例，支持代码高亮和实时预览
+- **Git 提交历史集成** - 使用 `CommitChangelog` 和 `PageLastCommit` 组件自动展示文件的提交历史记录
+- **类型定义高亮** - 智能解析 TypeScript 类型定义，支持内联类型高亮和类型导航
+
+### 🎨 开发者体验
+
 - ⚡ **基于 Nuxt 4** - 充分利用最新的 Nuxt 框架，实现卓越性能
 - 🎨 **采用 Nuxt UI** - 集成全面的 UI 组件库，开箱即用
-- 📝 **MDC 语法增强** - 支持 Markdown 与 Vue 组件的无缝集成，实现动态内容
-- 🧩 **组件文档自动生成** - 自动生成 Props、Slots、Emits 文档及交互式示例
-- 📦 **Git 提交历史集成** - 通过 CommitChangelog 组件自动展示文件的提交历史记录
-- 📚 **智能侧边栏导航** - 根据内容结构自动生成导航
-- 🔍 **全文搜索** - 内置强大的全文搜索功能
+- 📝 **MDC 语法增强** - 支持 Markdown 与 Vue 组件的无缝集成
+- 🔍 **全文搜索** - 基于 Nuxt Content 的 `ContentSearch` 组件，支持键盘快捷键（⌘K）
 - 🌙 **暗黑模式** - 支持亮色/暗色主题切换
 - 📱 **响应式设计** - 移动优先的响应式布局
 - 🚀 **SEO 优化** - 内置 SEO 优化功能
 - 🎯 **TypeScript 支持** - 完整的 TypeScript 类型支持
-- 🤖 **AI 助手优化** - 为 LLM 优化，提供更好的 AI 辅助文档体验
 
 ## 🚀 快速开始
 
@@ -80,10 +92,19 @@ pnpm add @movk/nuxt-docs better-sqlite3
 export default defineNuxtConfig({
   extends: ['@movk/nuxt-docs'],
   css: ['~/assets/css/main.css'],
+  aiChat: {
+    model: 'mistral/devstral-2',
+    models: ['mistral/devstral-2', 'openrouter/qwen/qwen3-4b:free']
+  },
+  mcp: {
+    name: 'My Docs',
+    browserRedirect: '/docs'
+  },
   llms: {
-    domain: 'https://docs.mhaibaraai.cn',
-    title: 'Movk Nuxt Docs',
-    description: '一款优雅的 Nuxt 文档主题'
+    domain: 'https://your-domain.com',
+    title: 'My Docs',
+    description: '基于 Movk Nuxt Docs 构建的智能文档站点',
+    notes: ['Nuxt 4', '文档主题', 'TypeScript']
   }
 })
 ```
@@ -129,7 +150,7 @@ movk-nuxt-docs/
 
 ### 基础 Markdown
 
-```md
+```md [md]
 ---
 title: 页面标题
 description: 页面描述
@@ -147,7 +168,7 @@ description: 页面描述
 
 ### MDC 语法
 
-```md
+```md [md]
 ::card
 ---
 title: 卡片标题
@@ -158,14 +179,6 @@ icon: i-lucide-rocket
 ```
 
 了解更多关于 MDC 语法，请查看 [Nuxt Content 文档](https://content.nuxt.com/docs/files/markdown#mdc-syntax)。
-
-### 其他工具
-
-- **Google Analytics** - [@nuxtjs/google-analytics](https://google-analytics.nuxtjs.org/)
-- **Plausible** - [vue-plausible](https://github.com/moritzsternemann/vue-plausible)
-- **Umami** - [nuxt-umami](https://github.com/ijkml/nuxt-umami)
-
-按照各工具的 Nuxt 集成文档在 `plugins` 目录中创建插件即可。
 
 ## 🛠️ 开发
 
@@ -206,13 +219,27 @@ pnpm release
 
 本项目基于以下优秀的开源项目构建：
 
+### 核心框架
+
 - [Nuxt 4](https://nuxt.com/) - Web 框架
 - [Nuxt Content](https://content.nuxt.com/) - 基于文件的 CMS
 - [Nuxt UI](https://ui.nuxt.com/) - UI 组件库
-- [Nuxt Image](https://image.nuxt.com/) - 图片优化
 - [Tailwind CSS 4](https://tailwindcss.com/) - CSS 框架
+
+### AI 集成
+
+- [Vercel AI SDK](https://sdk.vercel.ai/) - AI 集成框架
+- [Nuxt LLMs](https://github.com/nuxt-content/nuxt-llms) - LLM 优化
+- [@nuxtjs/mcp-toolkit](https://github.com/nuxt-modules/mcp-toolkit) - MCP Server 支持
+- [Shiki](https://shiki.style/) - 代码语法高亮
+- [Shiki Stream](https://github.com/antfu/shiki-stream) - 流式代码高亮
+
+### 功能增强
+
+- [Nuxt Component Meta](https://github.com/nuxt-content/nuxt-component-meta) - 组件元数据提取
+- [Nuxt Image](https://image.nuxt.com/) - 图片优化
 - [Nuxt SEO](https://nuxtseo.com/) - SEO 优化
-- [Nuxt LLMs](https://github.com/nuxt/llms) - AI 助手优化
+- [Octokit](https://github.com/octokit/rest.js) - GitHub API 集成
 
 ## 📖 文档
 

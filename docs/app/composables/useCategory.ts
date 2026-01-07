@@ -11,18 +11,6 @@ export function useCategory() {
         title: 'AI 集成',
         icon: 'i-lucide-bot'
       }
-    ],
-    'components': [
-      {
-        id: 'components',
-        title: 'Components',
-        icon: 'i-lucide-layout-dashboard'
-      },
-      {
-        id: 'example',
-        title: 'Example',
-        icon: 'i-lucide-box'
-      }
     ]
   }
   return {
