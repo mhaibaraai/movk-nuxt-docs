@@ -1,7 +1,7 @@
 {
   "name": "@movk/nuxt-docs",
   "type": "module",
-  "version": "1.5.2",
+  "version": "1.6.0",
   "private": false,
   "description": "Modern Nuxt 4 documentation theme with auto-generated component docs, AI chat assistant, MCP server, and complete developer experience optimization.",
   "author": "YiXuan <mhaibaraai@gmail.com>",

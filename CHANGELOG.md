@@ -1,5 +1,38 @@
 # 📋 Changelog
 
+## [1.6.0](https://github.com/mhaibaraai/movk-nuxt-docs/compare/v1.5.2...v1.6.0) (2026-01-08)
+
+### ✨ Features
+
+* 集成 MCP 服务器和工具包支持 ([5cd707c](https://github.com/mhaibaraai/movk-nuxt-docs/commit/5cd707c))
+* 新增 AI 聊天功能支持多模型选择 ([8618dde](https://github.com/mhaibaraai/movk-nuxt-docs/commit/8618dde))
+* 新增工具函数和 Composables ([42ba073](https://github.com/mhaibaraai/movk-nuxt-docs/commit/42ba073))
+* 添加 MCP 安装徽章和 VSCode 支持 ([c94c482](https://github.com/mhaibaraai/movk-nuxt-docs/commit/c94c482))
+* 新增文档站点专属 FAQ 配置 ([03bba24](https://github.com/mhaibaraai/movk-nuxt-docs/commit/03bba24))
+
+### 🐛 Bug Fixes
+
+* 修正文件名从 CLAUDE.md 为 AGENTS.md ([88b79e7](https://github.com/mhaibaraai/movk-nuxt-docs/commit/88b79e7))
+* 修正图标名称格式 ([bd9fc0b](https://github.com/mhaibaraai/movk-nuxt-docs/commit/bd9fc0b))
+
+### 📝 Documentation
+
+* 重构文档目录结构和内容 ([171752a](https://github.com/mhaibaraai/movk-nuxt-docs/commit/171752a))
+* 优化 README 布局和 OG 图片 ([efddd5f](https://github.com/mhaibaraai/movk-nuxt-docs/commit/efddd5f))
+
+### ♻️ Code Refactoring
+
+* 重构组件结构并优化代码组织 ([4e45d02](https://github.com/mhaibaraai/movk-nuxt-docs/commit/4e45d02))
+* 优化组件使用 Vue 3 组合式 API 最佳实践 ([073a9d7](https://github.com/mhaibaraai/movk-nuxt-docs/commit/073a9d7))
+* 移除自定义 llms 模块 ([f908c2d](https://github.com/mhaibaraai/movk-nuxt-docs/commit/f908c2d))
+
+### 🔧 Chores
+
+* **deps:** lock file maintenance ([459d809](https://github.com/mhaibaraai/movk-nuxt-docs/commit/459d809))
+* **deps:** update all non-major dependencies ([52efe6b](https://github.com/mhaibaraai/movk-nuxt-docs/commit/52efe6b))
+* 优化 Vite 和 Nuxt 配置项 ([7ef5355](https://github.com/mhaibaraai/movk-nuxt-docs/commit/7ef5355))
+* 清理旧文档和废弃组件 ([7183d49](https://github.com/mhaibaraai/movk-nuxt-docs/commit/7183d49))
+
 ## [1.5.2](https://github.com/mhaibaraai/movk-nuxt-docs/compare/v1.5.1...v1.5.2) (2025-12-31)
 
 ### ✨ Features
