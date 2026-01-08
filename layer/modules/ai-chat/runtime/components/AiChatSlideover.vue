@@ -196,7 +196,7 @@ onMounted(() => {
                 color="neutral"
                 variant="link"
                 size="sm"
-                label="Thinking..."
+                label="Loading..."
                 loading
                 loading-icon="i-lucide-loader"
               />
