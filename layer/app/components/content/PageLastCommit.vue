@@ -12,13 +12,20 @@ interface LastCommit {
   }
 }
 
-const props = withDefaults(defineProps<{
+const {
+  showAvatar = true,
+  showMessage = true,
+  stem,
+  extension
+} = defineProps<{
   /**
    * 文件路径（不含扩展名），通常由页面自动传入
+   * @defaultValue ''
    */
   stem: string
   /**
    * 文件扩展名，通常由页面自动传入
+   * @defaultValue 'md'
    */
   extension: string
   /**
@@ -31,23 +38,20 @@ const props = withDefaults(defineProps<{
    * @defaultValue true
    */
   showAvatar?: boolean
-}>(), {
-  showMessage: true,
-  showAvatar: true
-})
+}>()
 
 const { github } = useAppConfig()
 
 const filePath = computed(() => {
-  if (!props.stem || !props.extension) return ''
+  if (!stem || !extension) return ''
 
   const rootDir = github && typeof github === 'object' ? github.rootDir : ''
-  return [rootDir, 'content', `${props.stem}.${props.extension}`].filter(Boolean).join('/')
+  return [rootDir, 'content', `${stem}.${extension}`].filter(Boolean).join('/')
 })
 
 const { data: commit } = await useFetch<LastCommit | null>('/api/github/last-commit', {
   key: `last-commit-${filePath.value}`,
-  query: { path: filePath },
+  query: { path: filePath.value },
   default: () => null,
   lazy: true,
   server: false

@@ -9,10 +9,12 @@ export default defineNuxtConfig({
     resolve('./modules/config'),
     resolve('./modules/css'),
     resolve('./modules/component-example'),
+    resolve('./modules/ai-chat'),
     '@nuxt/ui',
     '@nuxt/content',
     '@nuxt/image',
     '@vueuse/nuxt',
+    '@nuxtjs/mcp-toolkit',
     '@nuxtjs/seo',
     'nuxt-component-meta',
     'motion-v/nuxt',
@@ -72,7 +74,6 @@ export default defineNuxtConfig({
   compatibilityDate: 'latest',
   nitro: {
     prerender: {
-      routes: ['/sitemap.xml', '/robots.txt', '/404.html'],
       crawlLinks: true,
       autoSubfolderIndex: false
     }
@@ -106,12 +107,7 @@ export default defineNuxtConfig({
     provider: 'ipx'
   },
   linkChecker: {
-    report: {
-      publish: true,
-      html: true,
-      markdown: true,
-      json: true
-    }
+    enabled: false
   },
   ogImage: {
     zeroRuntime: true,

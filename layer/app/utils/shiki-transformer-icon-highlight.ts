@@ -76,7 +76,7 @@ export function transformerIconHighlight(options: TransformerIconHighlightOption
             tagName: 'i',
             properties: {
               class: 'shiki-icon-highlight',
-              style: `--shiki-icon-url: url('${iconUrl}')`
+              style: `--shiki-icon-url: url(${iconUrl})`
             },
             children: []
           }

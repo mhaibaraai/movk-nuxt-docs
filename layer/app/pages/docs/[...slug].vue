@@ -151,7 +151,7 @@ defineOgImageComponent('Nuxt', {
 
             <USeparator v-if="communityLinks?.length" type="dashed" />
 
-            <AdsCarbon />
+            <DocsAsideRightBottom />
           </div>
         </template>
       </UContentToc>

@@ -3,17 +3,19 @@ const route = useRoute()
 const toast = useToast()
 const { copy, copied } = useClipboard()
 const site = useSiteConfig()
-const { vercelAnalytics } = useAppConfig()
+const { vercelAnalytics, ui } = useAppConfig()
 const { track } = useAnalytics()
+
+const appBaseURL = useRuntimeConfig().app?.baseURL || '/'
 
 const mdPath = computed(() => `${site.url}/raw${route.path}.md`)
 
-const items = [
+const items = [[
   {
     label: 'Copy Markdown link',
     icon: 'i-lucide-link',
     onSelect() {
-      if (vercelAnalytics?.debug) track ('Page Action', { action: 'Copy Markdown Link' })
+      if (vercelAnalytics?.debug) track('Page Action', { action: 'Copy Markdown Link' })
       copy(mdPath.value)
       toast.add({
         title: 'Copied to clipboard',
@@ -48,7 +50,25 @@ const items = [
       if (vercelAnalytics?.debug) track('Page Action', { action: 'Open in Claude' })
     }
   }
-]
+], [
+  {
+    label: 'Copy MCP Server URL',
+    icon: 'i-lucide-cpu',
+    onSelect() {
+      copy(`${window?.location?.origin}${appBaseURL}mcp`)
+      toast.add({
+        title: 'Copied to clipboard',
+        icon: 'i-lucide-circle-check'
+      })
+    }
+  },
+  {
+    label: 'Add MCP Server',
+    icon: 'i-simple-icons-cursor',
+    target: '_blank',
+    to: `/mcp/deeplink`
+  }
+]]
 
 async function copyPage() {
   if (vercelAnalytics?.debug) track('Page Action', { action: 'Copy Page Content' })
@@ -60,7 +80,7 @@ async function copyPage() {
   <UFieldGroup size="sm">
     <UButton
       label="Copy page"
-      :icon="copied ? 'i-lucide-copy-check' : 'i-lucide-copy'"
+      :icon="copied ? ui.icons.copyCheck : ui.icons.copy"
       color="neutral"
       variant="outline"
       :ui="{
@@ -80,7 +100,7 @@ async function copyPage() {
         content: 'w-48'
       }"
     >
-      <UButton icon="i-lucide-chevron-down" color="neutral" variant="outline" />
+      <UButton :icon="ui.icons.chevronDown" color="neutral" variant="outline" />
     </UDropdownMenu>
   </UFieldGroup>
 </template>

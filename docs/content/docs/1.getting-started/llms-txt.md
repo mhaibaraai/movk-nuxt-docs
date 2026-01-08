@@ -1,0 +1,93 @@
+---
+title: LLMs.txt
+description: 为 AI 工具（Cursor、Windsurf、GitHub Copilot 等）生成优化的文档内容。
+category: ai
+---
+
+## 什么是 LLMs.txt？
+
+默认集成 `nuxt-llms`，为大型语言模型预处理文档内容。系统自动生成并预渲染 `/llms.txt` 和 `/llms-full.txt` 文件。
+
+::note{to="https://docs.mhaibaraai.cn/llms.txt"}
+请查看为 Movk Nuxt Docs 文档本身生成的 `/llms.txt` 文件。
+
+- `/llms.txt` - 包含所有内容的结构化概览及其文档链接（约 5K tokens）
+- `/llms-full.txt` - 提供完整文档，包括实现细节、示例、类型定义和最佳实践（100K+ tokens）
+::
+
+## 默认端点
+
+以下是生成 `/llms.txt` 文件时使用的默认值：
+
+- `domain`： 根据您的部署平台计算得出（或通过使用 `NUXT_SITE_URL` 环境变量）
+- `title`：提取自您的 `package.json` 文件
+- `description`：提取自您的 `package.json` 文件
+- `full.title`：提取自您的 `package.json` 文件
+- `full.description`：提取自您的 `package.json` 文件
+
+## 自定义 LLMs.txt 生成
+
+您可以通过在 `nuxt.config.ts` 中配置 `llms` 选项来自定义 LLMs.txt 文件的生成：
+
+```ts [nuxt.config.ts]
+export default defineNuxtConfig({
+  llms: {
+    domain: 'https://your-site.com',
+    title: 'Your Site Name',
+    description: 'A brief description of your site',
+    full: {
+      title: 'Your Site Name',
+      description: 'A brief description of your site',
+    },
+  },
+})
+```
+
+## 选择正确的文件
+
+::note
+**大多数用户应该从 /llms.txt 开始** - 它包含所有基本信息，适用于标准 LLM 上下文窗口。仅当您需要完整的实现示例且 AI 工具支持大型上下文（200K+ tokens）时，才使用 `/llms-full.txt`。
+::
+
+## 重要使用说明
+
+::warning
+**@ 符号必须手动输入** - 使用 Cursor 或 Windsurf 等工具时，必须在聊天界面中手动输入 `@` 符号。复制粘贴会破坏工具识别它作为上下文引用的能力。
+::
+
+## AI 工具使用方法
+
+### Cursor
+
+您可以在 Cursor 中引用 LLMs.txt 文件，以获得更好的 AI 辅助。
+
+#### 使用方法
+
+1. **直接引用**：在提问时提及 LLMs.txt URL
+2. 使用 `@docs` 将这些特定 URL 添加到项目上下文中
+
+::note{to="https://docs.cursor.com/en/context/@-symbols/@-docs"}
+了解更多关于 Cursor Web 和文档搜索
+::
+
+### Windsurf
+
+Windsurf 可以直接访问 LLMs.txt 文件以了解函数使用和最佳实践。
+
+#### 在 Windsurf 中使用 LLMs.txt
+
+- 使用 `@docs` 引用特定的 LLMs.txt URL
+- 在工作区中创建引用这些 URL 的持久规则
+
+::note{to="https://docs.windsurf.com/windsurf/cascade/web-search"}
+了解更多关于 Windsurf Web 和文档搜索
+::
+
+### 其他 AI 工具
+
+任何支持 LLMs.txt 的 AI 工具都可以使用这些端点来更好地理解您的文档。
+
+#### ChatGPT、Claude 或其他 LLM 的示例
+
+- "使用文档 [https://docs.mhaibaraai.cn/llms.txt](https://docs.mhaibaraai.cn/llms.txt)"
+- "遵循完整指南 [https://docs.mhaibaraai.cn/llms-full.txt](https://docs.mhaibaraai.cn/llms-full.txt)"

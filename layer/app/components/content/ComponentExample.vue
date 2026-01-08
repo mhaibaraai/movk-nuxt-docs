@@ -9,23 +9,23 @@ const { preview = true, source = true, prettier = false, ...props } = defineProp
   name: string
   class?: any
   /**
-   * Whether to render the component in an iframe
+   * 是否在 iframe 中渲染组件
    * @defaultValue false
    */
   iframe?: boolean | { [key: string]: any }
   /**
-   * Whether to display the component in a mobile-sized iframe viewport
+   * 是否在移动端尺寸的 iframe 视口中显示组件
    * @defaultValue false
    */
   iframeMobile?: boolean
   props?: { [key: string]: any }
   /**
-   * Whether to format the code with Prettier
+   * 是否使用 Prettier 格式化代码
    * @defaultValue false
    */
   prettier?: boolean
   /**
-   * Whether to collapse the code block
+   * 是否折叠代码块
    * @defaultValue false
    */
   collapse?: boolean | {
@@ -36,18 +36,18 @@ const { preview = true, source = true, prettier = false, ...props } = defineProp
     open?: boolean
   }
   /**
-   * Whether to show the preview
-   * When `false`, the filename will be shown instead
+   * 是否显示预览
+   * 当设置为 `false` 时，将显示文件名
    * @defaultValue true
    */
   preview?: boolean
   /**
-   * Whether to show the source code
+   * 是否显示源代码
    * @defaultValue true
    */
   source?: boolean
   /**
-   * A list of variable props to link to the component.
+   * 链接到组件的可变属性列表
    */
   options?: Array<{
     alias?: string
@@ -58,11 +58,11 @@ const { preview = true, source = true, prettier = false, ...props } = defineProp
     multiple?: boolean
   }>
   /**
-   * A list of line numbers to highlight in the code block
+   * 代码块中需要高亮的行号列表
    */
   highlights?: number[]
   /**
-   * Whether to add overflow-hidden to wrapper
+   * 是否在包装器上添加 overflow-hidden
    */
   overflowHidden?: boolean
 }>()

@@ -2,7 +2,6 @@
 import type { ButtonProps } from '@nuxt/ui'
 
 const route = useRoute()
-const { desktopLinks } = useHeader()
 const { header, github } = useAppConfig()
 
 const links = computed<ButtonProps[]>(() => github && github.url
@@ -24,9 +23,11 @@ const links = computed<ButtonProps[]>(() => github && github.url
       <HeaderLogo />
     </template>
 
-    <UNavigationMenu :items="desktopLinks" variant="link" />
+    <HeaderCenter />
 
     <template #right>
+      <HeaderCTA />
+
       <ThemePicker />
 
       <UTooltip text="Search" :kbds="['meta', 'K']">
@@ -50,11 +51,7 @@ const links = computed<ButtonProps[]>(() => github && github.url
     </template>
 
     <template #toggle="{ open, toggle, ui }">
-      <HeaderToggleButton
-        :open="open"
-        :class="ui.toggle({ toggleSide: 'right' })"
-        @click="toggle"
-      />
+      <HeaderToggleButton :open="open" :class="ui.toggle({ toggleSide: 'right' })" @click="toggle" />
     </template>
 
     <template #body>

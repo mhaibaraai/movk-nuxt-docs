@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import type { ComponentMeta } from 'vue-component-meta'
 import { camelCase, kebabCase, upperFirst } from 'scule'
+import { decodeUnicodeEscapes } from '../../utils/unicode'
 
 const { ignore = [
   'activeClass',
@@ -30,12 +31,12 @@ const { ignore = [
   'formtarget'
 ], slug, prose } = defineProps<{
   /**
-   * The slug of the component to fetch props for.
-   * @defaultValue route path's last segment
+   * 获取组件属性的 slug 标识
+   * @defaultValue 路由路径的最后一段
    */
   slug?: string
   /**
-   * An array of prop names to ignore.
+   * 需要忽略的属性名数组
    */
   ignore?: string[]
   prose?: boolean
@@ -56,6 +57,7 @@ const metaProps: ComputedRef<ComponentMeta['props']> = computed(() => {
   }).map((prop) => {
     if (prop.default) {
       prop.default = prop.default.replace(' as never', '').replace(/^"(.*)"$/, '\'$1\'')
+      prop.default = decodeUnicodeEscapes(prop.default)
     } else {
       const tag = prop.tags?.find(tag => tag.name === 'defaultValue')?.text
       if (tag) {

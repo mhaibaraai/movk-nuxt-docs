@@ -11,18 +11,18 @@ export function useHeader() {
   }])
 
   const mobileLinks = computed(() => [{
-    label: '快速开始',
+    label: 'Getting Started',
     icon: 'i-lucide-square-play',
     to: '/docs/getting-started',
     active: route.path.startsWith('/docs/getting-started')
   }, {
-    label: '基础',
-    icon: 'i-lucide-book-open',
-    to: '/docs/essentials',
-    active: route.path.startsWith('/docs/essentials')
+    label: 'Typography',
+    icon: 'i-lucide-square-pilcrow',
+    to: '/docs/typography',
+    active: route.path.startsWith('/docs/typography')
   }, {
     label: 'Components',
-    icon: 'i-lucide-square-function',
+    icon: 'i-lucide-component',
     to: '/docs/components',
     active: route.path.startsWith('/docs/components')
   }, {

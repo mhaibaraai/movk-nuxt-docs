@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import { kebabCase } from 'scule'
 import type { PropertyMeta } from 'vue-component-meta'
+import { decodeUnicodeEscapes } from '../../utils/unicode'
 
 const props = defineProps<{
   prop: PropertyMeta
@@ -24,7 +25,10 @@ function getSchemaProps(schema: PropertyMeta['schema']): any {
 const schemaProps = computed(() => {
   const propsObject = getSchemaProps(props.prop.schema).reduce((acc: any, prop: any) => {
     if (!acc[prop.name]) {
-      const defaultValue = prop.default ?? prop.tags?.find((tag: any) => tag.name === 'defaultValue')?.text
+      let defaultValue = prop.default ?? prop.tags?.find((tag: any) => tag.name === 'defaultValue')?.text
+      if (defaultValue && typeof defaultValue === 'string') {
+        defaultValue = decodeUnicodeEscapes(defaultValue)
+      }
       let description = prop.description
       if (defaultValue) {
         description = description ? `${description} Defaults to \`${defaultValue}\`{lang="ts-type"}.` : `Defaults to \`${defaultValue}\`{lang="ts-type"}.`

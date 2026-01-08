@@ -8,33 +8,33 @@ interface Commit {
 
 const props = defineProps<{
   /**
-   * The path to the file in the repository.
+   * 仓库中的文件路径
    * @defaultValue 'src'
    */
   commitPath?: string
   /**
-   * The prefix for the file path.
+   * 文件路径的前缀
    */
   prefix?: string
   /**
-   * The file extension.
+   * 文件扩展名
    * @defaultValue 'vue'
    */
   suffix?: string
   /**
-   * The name of the component or file to get the changelog for.
+   * 要获取更新日志的组件或文件名
    */
   name?: string
   /**
-   * The author to filter commits by.
+   * 按作者筛选提交
    */
   author?: string
   /**
-   * The casing format for the file name.
-   * - 'auto': Vue files use PascalCase, others use camelCase (default)
-   * - 'kebab': Keep kebab-case (e.g., use-user.ts)
-   * - 'camel': Convert to camelCase (e.g., useUser.ts)
-   * - 'pascal': Convert to PascalCase (e.g., UseUser.ts)
+   * 文件名的命名格式
+   * - 'auto': Vue 文件使用 PascalCase，其他使用 camelCase（默认）
+   * - 'kebab': 保持 kebab-case（如 use-user.ts）
+   * - 'camel': 转换为 camelCase（如 useUser.ts）
+   * - 'pascal': 转换为 PascalCase（如 UseUser.ts）
    * @defaultValue 'auto'
    */
   casing?: 'auto' | 'kebab' | 'camel' | 'pascal'

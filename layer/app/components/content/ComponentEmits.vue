@@ -3,8 +3,8 @@ import { camelCase } from 'scule'
 
 const props = defineProps<{
   /**
-   * The slug of the component to fetch emits for.
-   * @defaultValue route path's last segment
+   * 获取组件事件的 slug 标识
+   * @defaultValue 路由路径的最后一段
    */
   slug?: string
 }>()
