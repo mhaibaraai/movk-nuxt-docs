@@ -29,13 +29,8 @@ export default defineNuxtConfig({
       'mistral/devstral-2',
       'kwaipilot/kat-coder-pro-v1',
       'openrouter/mistralai/devstral-2512:free',
-      'openrouter/xiaomi/mimo-v2-flash:free',
-      'openrouter/qwen/qwen3-4b:free'
+      'openrouter/xiaomi/mimo-v2-flash:free'
     ]
-  },
-  image: {
-    format: ['webp', 'jpeg', 'jpg', 'png', 'svg'],
-    provider: 'vercel'
   },
   llms: {
     domain: 'https://docs.mhaibaraai.cn',
