@@ -1,4 +1,4 @@
-import { createResolver } from '@nuxt/kit'
+import { createResolver, extendViteConfig } from '@nuxt/kit'
 import { defineNuxtConfig } from 'nuxt/config'
 import pkg from './package.json'
 
@@ -18,7 +18,20 @@ export default defineNuxtConfig({
     '@nuxtjs/seo',
     'nuxt-component-meta',
     'motion-v/nuxt',
-    'nuxt-llms'
+    'nuxt-llms',
+    () => {
+      extendViteConfig((config) => {
+        config.optimizeDeps ||= {}
+        config.optimizeDeps.include ||= []
+        config.optimizeDeps.include.push(
+          '@nuxt/content > slugify',
+          'extend',
+          '@ai-sdk/gateway > @vercel/oidc'
+        )
+        config.optimizeDeps.include = config.optimizeDeps.include
+          .map(id => id.replace(/^@nuxt\/content > /, '@movk/nuxt-docs > @nuxt/content > '))
+      })
+    }
   ],
   app: {
     rootAttrs: {
@@ -48,11 +61,6 @@ export default defineNuxtConfig({
       noApiRoute: false
     }
   },
-  ui: {
-    experimental: {
-      componentDetection: true
-    }
-  },
   runtimeConfig: {
     public: {
       version: pkg.version
@@ -78,16 +86,6 @@ export default defineNuxtConfig({
       autoSubfolderIndex: false
     }
   },
-  vite: {
-    optimizeDeps: {
-      // See: https://cn.vite.dev/config/dep-optimization-options.html
-      include: [
-        '@nuxt/content > slugify',
-        'tailwind-variants',
-        'tailwindcss/colors'
-      ]
-    }
-  },
   fonts: {
     families: [
       { name: 'Public Sans', provider: 'google', global: true },
@@ -101,9 +99,6 @@ export default defineNuxtConfig({
   },
   icon: {
     provider: 'iconify'
-  },
-  linkChecker: {
-    enabled: true
   },
   ogImage: {
     zeroRuntime: true,
