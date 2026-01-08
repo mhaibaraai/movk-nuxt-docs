@@ -1,9 +1,9 @@
 [![Movk Nuxt Docs](https://docs.mhaibaraai.cn/og-image.png)](https://docs.mhaibaraai.cn/)
 
+> 基于 Nuxt 4 的现代文档主题，集成组件自动化文档、AI 聊天助手、MCP Server 和完整的开发者体验优化
+
 [![Install MCP in Cursor](https://docs.mhaibaraai.cn/mcp/badge.svg)](https://docs.mhaibaraai.cn/mcp/deeplink)
 [![Install MCP in VS Code](https://docs.mhaibaraai.cn/mcp/badge.svg?ide=vscode)](https://docs.mhaibaraai.cn/mcp/deeplink?ide=vscode)
-
-> 基于 Nuxt 4 的现代文档主题，集成组件自动化文档、AI 聊天助手、MCP Server 和完整的开发者体验优化
 
 [![npm version][npm-version-src]][npm-version-href]
 [![npm downloads][npm-downloads-src]][npm-downloads-href]
