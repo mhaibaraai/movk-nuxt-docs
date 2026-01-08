@@ -2,7 +2,6 @@
 import type { DefineComponent } from 'vue'
 import { Chat } from '@ai-sdk/vue'
 import { DefaultChatTransport } from 'ai'
-import { getRandomUUID } from '@movk/core'
 import AiChatPreStream from './AiChatPreStream.vue'
 import type { FaqCategory } from './AiChatSlideoverFaq.vue'
 
@@ -65,8 +64,9 @@ watch(messages, (newMessages) => {
 }, { deep: true })
 
 const toast = useToast()
+const lastMessage = computed(() => chat.messages.at(-1))
+
 const chat = new Chat({
-  id: getRandomUUID(),
   messages: messages.value,
   transport: new DefaultChatTransport({
     api: apiPath,
@@ -142,15 +142,17 @@ onMounted(() => {
         <span class="font-medium text-highlighted">{{ title }}</span>
       </div>
 
-      <UTooltip v-if="chat.messages.length > 0" text="清空聊天">
-        <UButton
-          icon="i-lucide-trash-2"
-          color="neutral"
-          variant="ghost"
-          size="sm"
-          @click="resetChat"
-        />
-      </UTooltip>
+      <div class="flex items-center gap-2">
+        <UTooltip v-if="chat.messages.length > 0" text="清空聊天">
+          <UButton
+            icon="i-lucide-trash-2"
+            color="neutral"
+            variant="ghost"
+            size="sm"
+            @click="resetChat"
+          />
+        </UTooltip>
+      </div>
     </template>
 
     <template #body>
@@ -188,17 +190,16 @@ onMounted(() => {
                   />
                 </template>
               </template>
-              <div v-if="chat.status === 'streaming' && message.role==='assistant'">
-                <UButton
-                  class="px-0"
-                  color="neutral"
-                  size="sm"
-                  variant="link"
-                  loading
-                  loading-icon="i-lucide-loader"
-                  label="Thinking..."
-                />
-              </div>
+              <UButton
+                v-if="chat.status === 'streaming' && message.id === lastMessage?.id"
+                class="px-0"
+                color="neutral"
+                variant="link"
+                size="sm"
+                label="Thinking..."
+                loading
+                loading-icon="i-lucide-loader"
+              />
             </div>
           </template>
         </UChatMessages>
