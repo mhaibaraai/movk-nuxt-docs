@@ -102,12 +102,8 @@ export default defineNuxtConfig({
   icon: {
     provider: 'iconify'
   },
-  image: {
-    format: ['webp', 'jpeg', 'jpg', 'png', 'svg'],
-    provider: 'ipx'
-  },
   linkChecker: {
-    enabled: false
+    enabled: true
   },
   ogImage: {
     zeroRuntime: true,

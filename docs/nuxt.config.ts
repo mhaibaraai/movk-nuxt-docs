@@ -33,6 +33,10 @@ export default defineNuxtConfig({
       'openrouter/qwen/qwen3-4b:free'
     ]
   },
+  image: {
+    format: ['webp', 'jpeg', 'jpg', 'png', 'svg'],
+    provider: 'vercel'
+  },
   llms: {
     domain: 'https://docs.mhaibaraai.cn',
     title: 'Movk Nuxt Docs',
@@ -58,6 +62,6 @@ export default defineNuxtConfig({
   },
   mcp: {
     name: 'Movk Nuxt Docs',
-    browserRedirect: '/docs/getting-started/mcp'
+    browserRedirect: '/docs/getting-started/mcp-server'
   }
 })

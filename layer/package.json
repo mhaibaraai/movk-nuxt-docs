@@ -50,7 +50,7 @@
     "defu": "^6.1.4",
     "exsolve": "^1.0.8",
     "git-url-parse": "^16.1.0",
-    "motion-v": "1.7.6",
+    "motion-v": "^1.7.6",
     "nuxt": "^4.2.2",
     "nuxt-component-meta": "^0.16.0",
     "nuxt-llms": "^0.1.3",

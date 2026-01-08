@@ -63,7 +63,13 @@ const items = [[
     }
   },
   {
-    label: 'Add MCP Server',
+    label: 'Add MCP Server to VSCode',
+    icon: 'i-simple-icons-visualstudiocode',
+    target: '_blank',
+    to: `/mcp/deeplink?ide=vscode`
+  },
+  {
+    label: 'Add MCP Server to Cursor',
     icon: 'i-simple-icons-cursor',
     target: '_blank',
     to: `/mcp/deeplink`
