@@ -123,7 +123,7 @@ importers:
         specifier: ^16.1.0
         version: 16.1.0
       motion-v:
-        specifier: 1.7.6
+        specifier: ^1.7.6
         version: 1.7.6(@vueuse/core@14.1.0(vue@3.5.26(typescript@5.9.3)))(vue@3.5.26(typescript@5.9.3))
       nuxt:
         specifier: ^4.2.2
