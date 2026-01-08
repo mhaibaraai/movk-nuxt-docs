@@ -25,7 +25,7 @@ const items = [[
   },
   {
     label: 'View as Markdown',
-    icon: 'i-simple-icons:markdown',
+    icon: 'i-simple-icons-markdown',
     target: '_blank',
     to: `/raw${route.path}.md`,
     onSelect() {
@@ -34,7 +34,7 @@ const items = [[
   },
   {
     label: 'Open in ChatGPT',
-    icon: 'i-simple-icons:openai',
+    icon: 'i-simple-icons-openai',
     target: '_blank',
     to: `https://chatgpt.com/?hints=search&q=${encodeURIComponent(`Read ${mdPath.value} so I can ask questions about it.`)}`,
     onSelect() {
@@ -43,7 +43,7 @@ const items = [[
   },
   {
     label: 'Open in Claude',
-    icon: 'i-simple-icons:anthropic',
+    icon: 'i-simple-icons-anthropic',
     target: '_blank',
     to: `https://claude.ai/new?q=${encodeURIComponent(`Read ${mdPath.value} so I can ask questions about it.`)}`,
     onSelect() {
