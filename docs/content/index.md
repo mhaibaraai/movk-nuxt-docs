@@ -69,8 +69,7 @@ transition: { duration: 0.6, delay: 0.1 }
         models: ['mistral/devstral-2', 'openrouter/qwen/qwen3-4b:free']
       },
       mcp: {
-        name: 'My Docs',
-        browserRedirect: '/docs'
+        name: 'My Docs'
       }
     })
   filename: nuxt.config.ts
@@ -85,8 +84,7 @@ transition: { duration: 0.6, delay: 0.1 }
       models: ['mistral/devstral-2', 'openrouter/qwen/qwen3-4b:free']
     },
     mcp: {
-      name: 'My Docs',
-      browserRedirect: '/docs'
+      name: 'My Docs'
     }
   })
   ```
