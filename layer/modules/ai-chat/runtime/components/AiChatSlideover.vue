@@ -40,7 +40,17 @@ const components = {
 const { messages, isOpen, pendingMessage, clearPending } = useAIChat()
 const { apiPath } = useRuntimeConfig().public.aiChat
 
-const { getToolLabel } = useTools()
+const { tools } = useToolCall()
+function getToolLabel(toolName: string, args?: any): string {
+  const label = tools[toolName]
+
+  if (!label) {
+    return toolName
+  }
+
+  return typeof label === 'function' ? label(args) : label
+}
+
 const { model } = useModels()
 
 const input = ref('')
