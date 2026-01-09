@@ -445,14 +445,14 @@ const html = highlighter.codeToHtml(code, {
 
 ### 系统提示词
 
-要自定义 AI 的行为，请编辑以下文件中的系统提示词：
-`server/api/search.ts`
+要自定义 AI 的行为，请创建编辑以下文件中的系统提示词：
+`server/api/ai-chat.ts`
 
 ::u-button
 ---
 color: neutral
 icon: i-lucide-code-xml
-to: https://github.com/mhaibaraai/movk-nuxt-docs/blob/main/layer/modules/ai-chat/runtime/server/api/search.ts
+to: https://github.com/mhaibaraai/movk-nuxt-docs/blob/main/layer/modules/ai-chat/runtime/server/api/ai-chat.ts
 target: _blank
 variant: link
 ---

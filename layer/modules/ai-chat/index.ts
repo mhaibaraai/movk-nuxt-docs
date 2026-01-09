@@ -84,7 +84,7 @@ export default defineNuxtModule<AiChatModuleOptions>({
     if (!hasCustomHandler) {
       addServerHandler({
         route: options.apiPath!,
-        handler: resolve('./runtime/server/api/search')
+        handler: resolve('./runtime/server/api/ai-chat')
       })
     } else {
       console.info(`[ai-chat] Using custom handler, skipping default handler registration`)
