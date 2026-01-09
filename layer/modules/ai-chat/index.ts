@@ -1,3 +1,5 @@
+import { existsSync } from 'node:fs'
+import { join } from 'node:path'
 import { addComponentsDir, addImportsDir, addServerHandler, createResolver, defineNuxtModule } from '@nuxt/kit'
 
 export interface AiChatModuleOptions {
@@ -65,11 +67,28 @@ export default defineNuxtModule<AiChatModuleOptions>({
 
     addImportsDir(resolve('runtime/composables'))
 
+    /**
+     * 检查用户项目中是否存在自定义 handler
+     * '/api/ai-chat' -> 'api/ai-chat'，'/custom' -> 'custom'
+     */
     const routePath = options.apiPath!.replace(/^\//, '')
-    addServerHandler({
-      route: `/${routePath}`,
-      handler: resolve('./runtime/server/api/search')
-    })
+    const extensions = ['ts', 'js', 'mjs']
+
+    const possibleHandlerPaths = extensions.flatMap(ext => [
+      join(nuxt.options.serverDir, `${routePath}.${ext}`),
+      join(nuxt.options.serverDir, routePath, `index.${ext}`)
+    ])
+
+    const hasCustomHandler = possibleHandlerPaths.some(path => existsSync(path))
+
+    if (!hasCustomHandler) {
+      addServerHandler({
+        route: options.apiPath!,
+        handler: resolve('./runtime/server/api/search')
+      })
+    } else {
+      console.info(`[ai-chat] Using custom handler, skipping default handler registration`)
+    }
   }
 })
 
