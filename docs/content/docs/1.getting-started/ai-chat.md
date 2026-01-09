@@ -211,6 +211,10 @@ variant: link
 
 在聊天中显示 MCP 工具调用。
 
+::tip{to="/docs/composables/use-tool-call"}
+您可以通过创建 `composables/useToolCall.ts` 文件来覆盖默认的问题列表。
+::
+
 :component-props{slug="AiChatToolCall"}
 
 ::u-button
@@ -409,41 +413,6 @@ variant: link
     ::
   :::
   :::
-::
-
-### `useTools()`{lang="ts-type"}
-
-工具和模型获取，提供 MCP 工具标签生成和模型实例化功能。
-
-#### 返回值
-
-::field-group
-
-  :::field{name="getToolLabel" type="(toolName: string, args?: any) => string"}
-  根据工具名称和参数生成用户友好的显示标签。
-  :::collapsible
-    ::field-group
-      ::field{name="toolName" type="string" required}
-      MCP 工具名称。
-      ::
-
-      ::field{name="args" type="any"}
-      工具调用的参数对象。
-      ::
-    ::
-  :::
-  :::
-
-  ::field{name="getModel" type="(modelId: string) => LanguageModel"}
-  根据模型 ID 获取 AI SDK 的 `LanguageModel` 实例。
-  :::collapsible
-    ::field-group
-      ::field{name="modelId" type="string" required}
-      模型 ID，支持 AI Gateway 和 OpenRouter 格式。
-      ::
-    ::
-  :::
-  ::
 ::
 
 ### `useHighlighter()`{lang="ts-type"}
