@@ -1,5 +1,12 @@
 # 📋 Changelog
 
+## [1.6.2](https://github.com/mhaibaraai/movk-nuxt-docs/compare/v1.6.1...v1.6.2) (2026-01-09)
+
+### ✨ Features
+
+* **ai-chat:** 支持自定义 handler 覆盖 ([e932af2](https://github.com/mhaibaraai/movk-nuxt-docs/commit/e932af2c6c508e45053f8222bd81c300a822d383))
+* **ai-chat:** 重命名 API 处理器文件以提高语义清晰度 ([280218f](https://github.com/mhaibaraai/movk-nuxt-docs/commit/280218f6f2ec22ac26d38cde44b53aa03d3ca9be))
+
 ## [1.6.1](https://github.com/mhaibaraai/movk-nuxt-docs/compare/v1.6.0...v1.6.1) (2026-01-09)
 
 ### 🐛 Bug Fixes
