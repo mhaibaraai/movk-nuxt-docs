@@ -1,5 +1,19 @@
 # 📋 Changelog
 
+## [1.6.1](https://github.com/mhaibaraai/movk-nuxt-docs/compare/v1.6.0...v1.6.1) (2026-01-09)
+
+### 🐛 Bug Fixes
+
+* **app:** 修正 LLMs 链接图标类名格式 ([ac2f6da](https://github.com/mhaibaraai/movk-nuxt-docs/commit/ac2f6dadc86be20c773623bc9e464dc6ea882b5d))
+
+### 📝 Documentation
+
+* **composables:** 补充 useToolCall 使用文档 ([fb9d8f7](https://github.com/mhaibaraai/movk-nuxt-docs/commit/fb9d8f724f58b7a204c0813f368cf14d89971bc4))
+
+### ♻️ Code Refactoring
+
+* **ai-chat:** 重构 useTools 为 useToolCall 并简化 API ([2c361bb](https://github.com/mhaibaraai/movk-nuxt-docs/commit/2c361bb943dcb601d295fe2fa536b9e2f8211456))
+
 ## [1.6.0](https://github.com/mhaibaraai/movk-nuxt-docs/compare/v1.5.2...v1.6.0) (2026-01-08)
 
 ### ✨ Features
