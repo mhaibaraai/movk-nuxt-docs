@@ -12,7 +12,7 @@ const { isStreaming = false } = defineProps<{
 }>()
 
 const open = ref(false)
-const { ui } = useAppConfig()
+const { ui, aiChat } = useAppConfig()
 
 watch(() => isStreaming, () => {
   open.value = isStreaming
@@ -33,11 +33,11 @@ function cleanMarkdown(text: string): string {
       class="p-0 group"
       color="neutral"
       variant="link"
-      :trailing-icon="ui.icons.chevronDown"
+      :trailing-icon="aiChat.icons.streaming || ui.icons.chevronDown"
       :ui="{
         trailingIcon: text.length > 0 ? 'group-data-[state=open]:rotate-180 transition-transform duration-200' : 'hidden'
       }"
-      :label="isStreaming ? '思考中...' : '思考过程'"
+      :label="isStreaming ? aiChat.texts.streaming : aiChat.texts.streamed"
     />
 
     <template #content>

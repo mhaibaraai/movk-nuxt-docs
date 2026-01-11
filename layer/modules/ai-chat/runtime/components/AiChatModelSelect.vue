@@ -1,4 +1,6 @@
 <script setup lang="ts">
+import { useModels } from '../composables/useModels'
+
 const { model, models, formatModelName, getModelIcon } = useModels()
 
 const items = computed(() => models.map(model => ({

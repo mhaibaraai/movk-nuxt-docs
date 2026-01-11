@@ -2,15 +2,12 @@ export function useModels() {
   const config = useRuntimeConfig()
   const model = useCookie<string>('model', { default: () => config.public.aiChat.model })
 
-  const providerIcons: Record<string, string> = {
-    mistral: 'i-simple-icons-mistralai',
-    kwaipilot: 'i-lucide-wand',
-    zai: 'i-lucide-wand'
-  }
+  const { aiChat } = useAppConfig()
+  const providerIcons = computed(() => aiChat.icons.providers || {})
 
   function getModelIcon(modelId: string): string {
     const provider = modelId.split('/')[0] || ''
-    return providerIcons[provider] || `i-simple-icons-${modelId.split('/')[0]}`
+    return providerIcons.value[provider] || `i-simple-icons-${modelId.split('/')[0]}`
   }
 
   function formatModelName(modelId: string): string {
