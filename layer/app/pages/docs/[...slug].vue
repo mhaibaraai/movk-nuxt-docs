@@ -17,6 +17,7 @@ if (!page.value) {
 }
 
 const navigation = inject<Ref<ContentNavigationItem[]>>('navigation')
+const { shouldPushContent: shouldHideToc } = useAIChat()
 
 const { data: surround } = await useAsyncData(`surround-${(kebabCase(route.path))}`, () => {
   return queryCollectionItemSurroundings('docs', route.path, {
@@ -93,7 +94,7 @@ defineOgImageComponent('Nuxt', {
 </script>
 
 <template>
-  <UPage v-if="page">
+  <UPage v-if="page" :key="`page-${shouldHideToc}`">
     <UPageHeader :title="title">
       <template #headline>
         <UBreadcrumb :items="breadcrumb" />
@@ -136,7 +137,7 @@ defineOgImageComponent('Nuxt', {
       <UContentSurround :surround="surround" />
     </UPageBody>
 
-    <template v-if="page?.body?.toc?.links?.length" #right>
+    <template v-if="page?.body?.toc?.links?.length && !shouldHideToc" #right>
       <UContentToc
         :title="toc?.title"
         :links="page.body?.toc?.links"

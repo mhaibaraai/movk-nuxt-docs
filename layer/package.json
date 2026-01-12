@@ -21,6 +21,7 @@
     "content.config.ts",
     "modules",
     "nuxt.config.ts",
+    "nuxt.schema.ts",
     "server",
     "utils",
     "pnpm-workspace.yaml",

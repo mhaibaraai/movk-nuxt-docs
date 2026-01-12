@@ -1,8 +1,5 @@
 <script lang="ts" setup>
-export interface FaqCategory {
-  category: string
-  items: string[]
-}
+import type { FaqCategory } from '../types'
 
 defineProps<{
   /**

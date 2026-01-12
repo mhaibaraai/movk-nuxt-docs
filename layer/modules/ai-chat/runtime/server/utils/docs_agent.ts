@@ -1,23 +1,25 @@
 import { tool, stepCountIs, generateText } from 'ai'
 import { z } from 'zod/v4'
 
-const SUB_AGENT_SYSTEM_PROMPT = `你是文档搜索代理。你的工作是从文档中查找并检索相关信息。
+function getSubAgentSystemPrompt(siteName: string) {
+  return `You are a documentation search agent for ${siteName}. Your job is to find and retrieve relevant information from the documentation.
 
-**你的任务：**
-- 使用可用工具搜索和阅读文档页面
-- 首先使用 list-pages 发现可用的文档
-- 然后使用 get-page 阅读相关页面
-- 如果提到了特定路径，可以直接调用 get-page
+**Your task:**
+- Use the available tools to search and read documentation pages
+- Start with list-pages to discover what documentation exists
+- Then use get-page to read the relevant page(s)
+- If a specific path is mentioned, you can call get-page directly
 
-**指导原则：**
-- 要彻底，在回答前阅读所有相关页面
-- 返回你找到的原始信息，让主代理格式化响应
-- 如果找不到信息，请明确说明
+**Guidelines:**
+- Be thorough - read all relevant pages before answering
+- Return the raw information you find, let the main agent format the response
+- If you can't find information, say so clearly
 
-**输出：**
-返回你找到的相关文档内容，如果有代码示例也一并包含。`
+**Output:**
+Return the relevant documentation content you found, including code examples if present.`
+}
 
-export function createDocumentationAgentTool(mcpTools: Record<string, any>, model: any) {
+export function createDocumentationAgentTool(mcpTools: Record<string, any>, model: any, siteName: string) {
   return tool({
     description: '从文档中搜索并检索信息。使用此工具回答有关文档的任何问题。将用户的问题作为查询参数传递。',
     inputSchema: z.object({
@@ -29,14 +31,20 @@ export function createDocumentationAgentTool(mcpTools: Record<string, any>, mode
       const result = await generateText({
         model,
         tools: mcpTools,
-        system: SUB_AGENT_SYSTEM_PROMPT,
+        system: getSubAgentSystemPrompt(siteName),
         stopWhen: stepCountIs(5),
         onStepFinish: ({ toolCalls }) => {
+          if (toolCalls.length === 0) return
+
           writer?.write({
             id: toolCalls[0]?.toolCallId,
             type: 'data-tool-calls',
             data: {
-              tools: toolCalls.map(toolCall => ({ toolName: toolCall.toolName, toolCallId: toolCall.toolCallId, input: toolCall.input }))
+              tools: toolCalls.map((toolCall: any) => ({
+                toolName: toolCall.toolName,
+                toolCallId: toolCall.toolCallId,
+                args: toolCall.args || toolCall.input || {}
+              }))
             }
           })
         },

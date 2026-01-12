@@ -70,5 +70,42 @@ export default defineAppConfig({
         timeZone: 'Asia/Shanghai'
       }
     }
+  },
+  aiChat: {
+    floatingInput: true,
+    explainWithAi: true,
+    shortcuts: {
+      focusInput: 'meta_i'
+    },
+    texts: {
+      title: 'AI 助手',
+      collapse: '折叠',
+      expand: '展开',
+      clearChat: '清除聊天记录',
+      close: '关闭',
+      loading: 'Loading...',
+      askAnything: '问我任何事情...',
+      askMeAnythingDescription: '我可以帮助您浏览文档、解释概念并回答您的问题。',
+      faq: 'FAQ 建议',
+      placeholder: '输入你的问题...',
+      lineBreak: '换行',
+      trigger: '与 AI 聊天',
+      streaming: '思考中...',
+      streamed: '思考过程',
+      explainWithAi: '用 AI 解释此页面'
+    },
+    icons: {
+      loading: 'i-lucide-loader',
+      trigger: 'i-lucide-sparkles',
+      explain: 'i-lucide-brain',
+      close: 'i-lucide-x',
+      clearChat: 'i-lucide-trash-2',
+      streaming: 'i-lucide-chevron-down',
+      providers: {
+        mistral: 'i-simple-icons-mistralai',
+        kwaipilot: 'i-lucide-wand',
+        zai: 'i-lucide-wand'
+      }
+    }
   }
 })
