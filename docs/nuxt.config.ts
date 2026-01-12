@@ -28,7 +28,6 @@ export default defineNuxtConfig({
     models: [
       'mistral/devstral-2',
       'kwaipilot/kat-coder-pro-v1',
-      'zai/glm-4.6v-flash',
       'openrouter/mistralai/devstral-2512:free',
       'openrouter/xiaomi/mimo-v2-flash:free',
       'openrouter/z-ai/glm-4.5-air:free'
