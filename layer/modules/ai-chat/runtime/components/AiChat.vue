@@ -9,6 +9,7 @@ const { toggle } = useAIChat()
       :icon="aiChat.icons.trigger"
       variant="ghost"
       class="rounded-full"
+      aria-label="AI Chat Trigger"
       @click="toggle"
     />
   </UTooltip>

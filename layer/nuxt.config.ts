@@ -14,6 +14,7 @@ export default defineNuxtConfig({
     '@nuxt/ui',
     '@nuxt/content',
     '@nuxt/image',
+    '@nuxt/a11y',
     '@vueuse/nuxt',
     '@nuxtjs/mcp-toolkit',
     '@nuxtjs/seo',
