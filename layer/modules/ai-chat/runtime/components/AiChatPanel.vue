@@ -265,7 +265,7 @@ onMounted(() => {
           <template #footer>
             <div class="hidden items-center divide-x divide-muted/50 sm:flex">
               <AiChatModelSelect v-model="model" />
-              <div class="flex gap-1 justify-between items-center px-1 text-xs text-dimmed">
+              <div class="flex gap-1 justify-between items-center px-1 text-xs text-muted">
                 <span>{{ aiChat.texts.lineBreak }}</span>
                 <UKbd value="shift" />
                 <UKbd value="enter" />

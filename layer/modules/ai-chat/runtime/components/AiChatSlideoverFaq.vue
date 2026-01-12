@@ -20,7 +20,7 @@ defineEmits<{
       :key="category.category"
       class="flex flex-col gap-1.5"
     >
-      <h4 class="text-xs font-medium text-dimmed uppercase tracking-wide">
+      <h4 class="text-xs font-medium text-muted uppercase tracking-wide">
         {{ category.category }}
       </h4>
       <div class="flex flex-col">
