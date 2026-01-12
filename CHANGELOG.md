@@ -1,5 +1,38 @@
 # 📋 Changelog
 
+## [1.7.0](https://github.com/mhaibaraai/movk-nuxt-docs/compare/v1.6.2...v1.7.0) (2026-01-12)
+
+### ⚠ BREAKING CHANGES
+
+* **ai-chat:** 将配置从 runtimeConfig 迁移到 appConfig。原 `runtimeConfig.public.aiChat.enable` 改为通过环境变量自动判断,FAQ 配置从 `useFaq` composable 迁移到 `app.config.ts` 的 `aiChat.faqQuestions`。详见迁移指南:[删除项目中的 composables/useFaq.ts,在 app.config.ts 中添加 aiChat.faqQuestions 配置] ([4f73657](https://github.com/mhaibaraai/movk-nuxt-docs/commit/4f73657))
+
+### ✨ Features
+
+* 添加无障碍支持并改进语义化标签 ([90b8f44](https://github.com/mhaibaraai/movk-nuxt-docs/commit/90b8f44))
+* 改进 AI Chat 配置和文档体验 ([83942ea](https://github.com/mhaibaraai/movk-nuxt-docs/commit/83942ea))
+
+### 🐛 Bug Fixes
+
+* **ai-chat:** 优化侧边栏面板标题显示和加载状态位置 ([3d90163](https://github.com/mhaibaraai/movk-nuxt-docs/commit/3d90163))
+
+### ♻️ Code Refactoring
+
+* **ai-chat:** 重构组件架构为侧边栏面板模式 ([0ddd574](https://github.com/mhaibaraai/movk-nuxt-docs/commit/0ddd574))
+* **ai-chat:** 精简 FAQ 配置 ([851ae12](https://github.com/mhaibaraai/movk-nuxt-docs/commit/851ae12))
+* **config:** 移除不可用的 AI 模型 ([a1eab47](https://github.com/mhaibaraai/movk-nuxt-docs/commit/a1eab47))
+* **config:** 移除冗余配置项 ([7010803](https://github.com/mhaibaraai/movk-nuxt-docs/commit/7010803))
+* 将路由配置迁移到 routing 模块并统一内容集合 ([dbb25a5](https://github.com/mhaibaraai/movk-nuxt-docs/commit/dbb25a5))
+
+### 💄 Styles
+
+* **ai-chat:** 统一文本样式类名 ([244fbdd](https://github.com/mhaibaraai/movk-nuxt-docs/commit/244fbdd))
+* 修复 nuxt.config.ts 代码格式 ([b2f56b3](https://github.com/mhaibaraai/movk-nuxt-docs/commit/b2f56b3))
+
+### 🔧 Chores
+
+* **deps:** lock file maintenance ([1791020](https://github.com/mhaibaraai/movk-nuxt-docs/commit/1791020), [b259f0d](https://github.com/mhaibaraai/movk-nuxt-docs/commit/b259f0d))
+* **deps:** update all non-major dependencies ([f80c398](https://github.com/mhaibaraai/movk-nuxt-docs/commit/f80c398), [041b567](https://github.com/mhaibaraai/movk-nuxt-docs/commit/041b567))
+
 ## [1.6.2](https://github.com/mhaibaraai/movk-nuxt-docs/compare/v1.6.1...v1.6.2) (2026-01-09)
 
 ### ✨ Features
