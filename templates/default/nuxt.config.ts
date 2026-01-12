@@ -11,8 +11,8 @@ export default defineNuxtConfig({
     model: 'openai/gpt-5-nano',
     models: [
       'openai/gpt-5-nano',
-      'openrouter/anthropic/claude-haiku-4.5',
-    ],
+      'openrouter/anthropic/claude-haiku-4.5'
+    ]
   },
   eslint: {
     config: {
