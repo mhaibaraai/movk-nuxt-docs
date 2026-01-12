@@ -7,6 +7,7 @@ const site = useSiteConfig()
 const appConfig = useAppConfig()
 const colorMode = useColorMode()
 const route = useRoute()
+const { isEnabled: isAiChatEnabled, panelWidth: aiChatPanelWidth, shouldPushContent } = useAIChat()
 
 const { data: navigation } = await useAsyncData('navigation', () => queryCollectionNavigation('docs', ['category', 'description']))
 const { data: files } = useLazyAsyncData('search', () => queryCollectionSearchSections('docs'), {
@@ -48,9 +49,9 @@ provide('navigation', rootNavigation)
     <Analytics v-if="appConfig.vercelAnalytics" :debug="appConfig.vercelAnalytics?.debug" />
     <SpeedInsights v-if="appConfig.vercelAnalytics" :debug="appConfig.vercelAnalytics?.debug" />
 
-    <div :class="{ root: route.path.startsWith('/docs/') }">
+    <div :class="{ root: route.path.startsWith('/docs/') }" :style="{ marginRight: shouldPushContent ? `${aiChatPanelWidth}px` : '0' }">
       <template v-if="!route.path.startsWith('/examples')">
-        <Header />
+        <Header v-if="$route.meta.header !== false" />
       </template>
 
       <NuxtLayout>
@@ -58,10 +59,14 @@ provide('navigation', rootNavigation)
       </NuxtLayout>
 
       <template v-if="!route.path.startsWith('/examples')">
-        <Footer />
+        <Footer v-if="$route.meta.footer !== false" />
 
         <ClientOnly>
           <LazyUContentSearch :files="files" :navigation="rootNavigation" :fuse="{ resultLimit: 1000 }" />
+          <template v-if="isAiChatEnabled">
+            <LazyAiChatFloatingInput />
+            <LazyAiChatPanel />
+          </template>
         </ClientOnly>
       </template>
     </div>

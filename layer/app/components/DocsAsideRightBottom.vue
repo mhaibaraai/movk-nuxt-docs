@@ -1,29 +1,24 @@
 <script setup lang="ts">
-const { aiChat } = useRuntimeConfig().public
 const route = useRoute()
-
 const pageUrl = route.path
-const { open } = useAIChat()
-const { faqQuestions } = useFaq()
+
+const { aiChat } = useAppConfig()
+const { isEnabled, open } = useAIChat()
+
+const showExplainWithAi = computed(() => {
+  return isEnabled.value && aiChat.explainWithAi !== false
+})
 </script>
 
 <template>
-  <div v-if="aiChat.enable">
-    <UButton
-      icon="i-lucide-brain"
-      target="_blank"
-      label="用 AI 解释此页面"
-      size="sm"
-      variant="ghost"
-      color="neutral"
-      @click="open(`解释此页面 ${pageUrl}`, true)"
-    />
-    <AiChatSlideover :faq-questions="faqQuestions" />
-
-    <Teleport to="body">
-      <ClientOnly>
-        <LazyAiChatFloatingInput />
-      </ClientOnly>
-    </Teleport>
-  </div>
+  <UButton
+    v-if="showExplainWithAi"
+    :icon="aiChat.icons.explain"
+    target="_blank"
+    :label="aiChat.texts.explainWithAi"
+    size="sm"
+    variant="ghost"
+    color="neutral"
+    @click="open(`解释此页面 ${pageUrl}`, true)"
+  />
 </template>

@@ -1,9 +1,46 @@
 import type { UIMessage } from 'ai'
+import { useMediaQuery } from '@vueuse/core'
+import type { FaqCategory, FaqQuestions } from '../types'
+
+function normalizeFaqQuestions(questions: FaqQuestions): FaqCategory[] {
+  if (!questions || (Array.isArray(questions) && questions.length === 0)) {
+    return []
+  }
+
+  if (typeof questions[0] === 'string') {
+    return [{
+      category: '问题',
+      items: questions as string[]
+    }]
+  }
+
+  return questions as FaqCategory[]
+}
+
+const PANEL_WIDTH_COMPACT = 360
+const PANEL_WIDTH_EXPANDED = 520
 
 export function useAIChat() {
+  const config = useRuntimeConfig()
+  const appConfig = useAppConfig()
+  const isEnabled = computed(() => config.public.aiChat?.enabled ?? false)
+
   const isOpen = useState('ai-chat-open', () => false)
+  const isExpanded = useState('ai-chat-expanded', () => false)
   const messages = useState<UIMessage[]>('ai-chat-messages', () => [])
   const pendingMessage = useState<string | undefined>('ai-chat-pending', () => undefined)
+
+  const isMobile = useMediaQuery('(max-width: 767px)')
+  const panelWidth = computed(() => isExpanded.value ? PANEL_WIDTH_EXPANDED : PANEL_WIDTH_COMPACT)
+  const shouldPushContent = computed(() => !isMobile.value && isOpen.value)
+
+  const faqQuestions = computed<FaqCategory[]>(() => {
+    const aiChatConfig = appConfig.aiChat
+    const faqConfig = aiChatConfig?.faqQuestions
+    if (!faqConfig) return []
+
+    return normalizeFaqQuestions(faqConfig)
+  })
 
   function open(initialMessage?: string, clearPrevious = false) {
     if (clearPrevious) {
@@ -32,14 +69,25 @@ export function useAIChat() {
     messages.value = []
   }
 
+  function toggleExpanded() {
+    isExpanded.value = !isExpanded.value
+  }
+
   return {
+    isEnabled,
     isOpen,
+    isExpanded,
+    isMobile,
+    panelWidth,
+    shouldPushContent,
     messages,
     pendingMessage,
+    faqQuestions,
     open,
     clearPending,
     close,
     toggle,
+    toggleExpanded,
     clearMessages
   }
 }

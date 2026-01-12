@@ -1,13 +1,16 @@
 import { existsSync } from 'node:fs'
 import { join } from 'node:path'
-import { addComponentsDir, addImportsDir, addServerHandler, createResolver, defineNuxtModule } from '@nuxt/kit'
+import {
+  addComponent,
+  addComponentsDir,
+  addImports,
+  addServerHandler,
+  createResolver,
+  defineNuxtModule,
+  logger
+} from '@nuxt/kit'
 
 export interface AiChatModuleOptions {
-  /**
-   * 是否启用 AI 聊天功能
-   * @default import.meta.env.AI_GATEWAY_API_KEY || import.meta.env.OPENROUTER_API_KEY
-   */
-  enable?: boolean
   /**
    * 聊天 API 端点路径
    * @default '/api/ai-chat'
@@ -29,43 +32,72 @@ export interface AiChatModuleOptions {
   models?: string[]
 }
 
+const log = logger.withTag('docus:ai-assistant')
+
 export default defineNuxtModule<AiChatModuleOptions>({
   meta: {
     name: 'ai-chat',
     configKey: 'aiChat'
   },
   defaults: {
-    enable: !!(
-      import.meta.env.AI_GATEWAY_API_KEY
-        || import.meta.env.OPENROUTER_API_KEY
-    ),
     apiPath: '/api/ai-chat',
     mcpPath: '/mcp',
     model: '',
     models: []
   },
   setup(options, nuxt) {
+    const hasApiKey = !!(process.env.AI_GATEWAY_API_KEY || process.env.OPENROUTER_API_KEY)
+
     const { resolve } = createResolver(import.meta.url)
 
     nuxt.options.runtimeConfig.public.aiChat = {
-      enable: options.enable!,
+      enabled: hasApiKey,
       apiPath: options.apiPath!,
       model: options.model!,
       models: options.models!
     }
+
+    addImports([
+      {
+        name: 'useAIChat',
+        from: resolve('./runtime/composables/useAIChat')
+      }
+    ])
+
+    if (hasApiKey) {
+      addComponentsDir({
+        path: resolve('./runtime/components'),
+        ignore: ['AiChatDisabled']
+      })
+    } else {
+      addComponent({
+        name: 'AiChatDisabled',
+        filePath: resolve('./runtime/components/AiChatDisabled.vue')
+      })
+    }
+
+    if (!hasApiKey) {
+      log.warn('[ai-chat] Module disabled: no AI_GATEWAY_API_KEY or OPENROUTER_API_KEY found')
+      return
+    }
+
     nuxt.options.runtimeConfig.aiChat = {
       mcpPath: options.mcpPath!
     }
 
-    if (!options.enable) {
-      console.info('[ai-chat] Module disabled: no AI_GATEWAY_API_KEY or OPENROUTER_API_KEY found')
-    }
+    addImports([
+      {
+        name: 'useHighlighter',
+        from: resolve('./runtime/composables/useHighlighter')
+      }
+    ])
 
-    addComponentsDir({
-      path: resolve('runtime/components')
-    })
-
-    addImportsDir(resolve('runtime/composables'))
+    addImports([
+      {
+        name: 'useModels',
+        from: resolve('./runtime/composables/useModels')
+      }
+    ])
 
     /**
      * 检查用户项目中是否存在自定义 handler
@@ -87,7 +119,7 @@ export default defineNuxtModule<AiChatModuleOptions>({
         handler: resolve('./runtime/server/api/ai-chat')
       })
     } else {
-      console.info(`[ai-chat] Using custom handler, skipping default handler registration`)
+      log.info(`[ai-chat] Using custom handler, skipping default handler registration`)
     }
   }
 })
@@ -95,7 +127,7 @@ export default defineNuxtModule<AiChatModuleOptions>({
 declare module 'nuxt/schema' {
   interface PublicRuntimeConfig {
     aiChat: {
-      enable: boolean
+      enabled: boolean
       apiPath: string
       model: string
       models: string[]
