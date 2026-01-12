@@ -67,9 +67,9 @@ const authorUrl = computed(() => {
 
 <template>
   <div v-if="commit" class="flex items-center flex-wrap gap-1.5 text-sm text-muted mt-2">
-    <span class="text-dimmed">最后更新于</span>
+    <span class="text-muted">最后更新于</span>
     <time class="font-medium text-default" :datetime="commit.date">{{ commit.dateFormatted }}</time>
-    <span class="text-dimmed">由</span>
+    <span class="text-muted">由</span>
     <ULink
       v-if="authorUrl"
       :to="authorUrl"
@@ -79,7 +79,7 @@ const authorUrl = computed(() => {
       <UAvatar
         v-if="showAvatar && commit.author.avatar"
         :src="commit.author.avatar"
-        :alt="commit.author.name"
+        alt="Author Avatar"
         size="2xs"
       />
       <UBadge color="neutral" variant="outline" size="sm">
@@ -90,7 +90,7 @@ const authorUrl = computed(() => {
       <UAvatar
         v-if="showAvatar && commit.author.avatar"
         :src="commit.author.avatar"
-        :alt="commit.author.name"
+        alt="Author Avatar"
         size="2xs"
       />
       <UBadge color="neutral" variant="outline" size="sm">
@@ -98,7 +98,7 @@ const authorUrl = computed(() => {
       </UBadge>
     </span>
     <template v-if="showMessage && commit.message">
-      <span class="text-dimmed">提交</span>
+      <span class="text-muted">提交</span>
       <ULink
         v-if="commitUrl"
         :to="commitUrl"

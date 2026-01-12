@@ -19,24 +19,20 @@ category: ai
 - 支持键盘快捷键
 - 支持可用模型列表选取
 
-::div{class="flex justify-center bg-muted py-5"}
-  ::nuxt-img{src="/ai/AiChat.png" alt="AiChat" height="600"}
-  ::
-::
+![AiChat]( /ai/AiChat.png )
 
 ## 快速开始
 
-Movk Nuxt Docs 已内置 AI Chat 模块。要启用该模块，请在 `nuxt.config.ts` 中进行配置：
+Movk Nuxt Docs 已内置 AI Chat 模块。要启用该模块，请进行以下配置：
 
 ::steps
 
-### 在 `nuxt.config.ts` 中添加模块：
+### 在 `nuxt.config.ts` 中添加模块配置：
 
 ```ts [nuxt.config.ts]
 export default defineNuxtConfig({
+  extends: ['@movk/nuxt-docs'],
   aiChat: {
-    apiPath: '/api/ai-chat',
-    mcpPath: '/mcp',
     model: 'openai/gpt-5-nano',
     models: [
       'openai/gpt-5-nano',
@@ -58,6 +54,39 @@ export default defineNuxtConfig({
 | `model` | `string`{lang="ts-type"} | `-` | AI SDK Gateway、OpenRouter 的模型标识符 |
 | `models` | `string[]`{lang="ts-type"} | `[]` | 可用模型列表（格式为 "provider/model" 或 "model"） |
 
+### 在 `app.config.ts` 中配置 AI Chat 功能：
+
+```ts [app.config.ts]
+export default defineAppConfig({
+  aiChat: {
+    floatingInput: true,
+    explainWithAi: true,
+    faqQuestions: [
+      {
+        category: '快速开始',
+        items: ['如何安装？', '如何配置？'],
+      },
+      {
+        category: '进阶使用',
+        items: ['如何自定义？'],
+      },
+    ],
+    shortcuts: {
+      focusInput: 'meta_i'
+    },
+    texts: {
+      title: 'AI 助手',
+      placeholder: '输入你的问题...',
+      // ... 更多文本配置
+    }
+  }
+})
+```
+
+::tip{to="/docs/getting-started/configuration#ai-chat"}
+查看完整的 AI Chat 配置选项
+::
+
 ### 将您的 API 密钥设置为环境变量：
 
 ```bash [.env]
@@ -69,7 +98,7 @@ OPENROUTER_API_KEY=your-openrouter-key
 ```
 
 ::warning
-仅当检测到以下 API 密钥之一时，该模块才会启用。如果未找到密钥，模块将被禁用，并在控制台中记录一条消息。
+仅当检测到以上 API 密钥之一时，该模块才会启用。如果未找到密钥，模块将被禁用，并在控制台中记录一条消息。
 ::
 
 ::
@@ -87,44 +116,39 @@ pnpm add @ai-sdk/mcp @ai-sdk/vue @ai-sdk/gateway @openrouter/ai-sdk-provider ai 
 
 ## 使用方法
 
-将组件添加到你的应用中：
+AI Chat 功能已内置在 Movk Nuxt Docs 中，无需手动添加组件。
+
+### 自动集成
+
+默认情况下，以下功能会自动启用：
+
+- **AI Chat 触发按钮**：在页面右侧显示，点击打开 AI 助手面板
+- **浮动输入框**：在文档页面底部显示（可通过 `appConfig.aiChat.floatingInput` 控制）
+- **AI 解释按钮**：在文档侧边栏显示（可通过 `appConfig.aiChat.explainWithAi` 控制）
+
+### 手动集成（可选）
+
+如果需要在自定义页面中使用 AI Chat 组件：
 
 ```vue
 <template>
   <div>
     <!-- 打开聊天的按钮 -->
-    <AiChat tooltip-text="向 AI 提问" />
+    <AiChat />
 
-    <!-- 聊天侧滑面板（在应用或布局中放置一次即可） -->
-    <AiChatSlideover
-      title="AI 助手"
-      placeholder="输入你的问题..."
-      :faq-questions="faqQuestions"
-    />
+    <!-- AI Chat 面板（在应用或布局中放置一次即可） -->
+    <AiChatPanel />
   </div>
 </template>
-
-<script setup>
-const faqQuestions = [
-  {
-    category: '快速开始',
-    items: ['如何安装？', '如何配置？'],
-  },
-  {
-    category: '进阶使用',
-    items: ['如何自定义？'],
-  },
-]
-</script>
 ```
 
-### Floating Input
-
-使用 `AiChatFloatingInput` 在页面底部显示一个浮动输入框。
-
-::tip
-使用 `Teleport` 将浮动输入渲染到 body 级别，确保它无论在组件层次结构中如何变化都能固定在底部
+::note
+FAQ 问题现在在 `app.config.ts` 中配置，无需在组件中传递 props。
 ::
+
+### 浮动输入框
+
+浮动输入框默认已集成在文档页面底部。如需在自定义页面中使用：
 
 ```vue
 <template>
@@ -136,11 +160,15 @@ const faqQuestions = [
       </ClientOnly>
     </Teleport>
 
-    <!-- Chat slideover (required to display responses) -->
-    <AiChatSlideover title="AI 助手" />
+    <!-- Chat panel (required to display responses) -->
+    <AiChatPanel />
   </div>
 </template>
 ```
+
+::tip
+使用 `Teleport` 将浮动输入渲染到 body 级别，确保它无论在组件层次结构中如何变化都能固定在底部
+::
 
 ### 编程式控制
 
@@ -148,7 +176,17 @@ const faqQuestions = [
 
 ```vue
 <script setup>
-const { open, close, toggle, isOpen, messages, clearMessages } = useAIChat()
+const {
+  open,
+  close,
+  toggle,
+  toggleExpanded,
+  isOpen,
+  isExpanded,
+  messages,
+  clearMessages,
+  panelWidth
+} = useAIChat()
 
 // 打开聊天并发送初始消息
 open('如何安装这个模块？')
@@ -159,8 +197,14 @@ open('新问题', true)
 // 切换聊天可见性
 toggle()
 
+// 切换面板展开状态
+toggleExpanded()
+
 // 清除所有消息
 clearMessages()
+
+// 访问面板宽度（响应式）
+console.log(panelWidth.value) // '400px' or '800px'
 </script>
 ```
 
@@ -169,8 +213,6 @@ clearMessages()
 ### AiChat
 
 最简单的集成方式，展示助手按钮。
-
-:component-props{slug="AiChat"}
 
 ::u-button
 ---
@@ -268,8 +310,8 @@ variant: link
 
 显示聊天为空时的常见问题分类。
 
-::tip{to="/docs/composables/use-faq"}
-您可以通过创建 `composables/useFaq.ts` 文件来覆盖默认的问题列表。
+::tip{to="/docs/getting-started/configuration#ai-chat"}
+FAQ 问题现在在 `app.config.ts` 的 `aiChat.faqQuestions` 中配置。
 ::
 
 :component-props{slug="AiChatSlideoverFaq"}
@@ -292,17 +334,37 @@ variant: link
 查看源代码
 ::
 
-### AiChatSlideover
+### AiChatPanel
 
-完整的侧边栏对话界面。
+完整的 AI 聊天面板界面，支持侧边栏模式和可调整宽度。
 
-:component-props{slug="AiChatSlideover"}
+**特性：**
+- 可展开/折叠的侧边栏面板
+- 响应式宽度调整（400px/800px）
+- 自动推动主内容区域
+- 内置消息历史和流式响应
+- 支持代码高亮和 Markdown 渲染
 
 ::u-button
 ---
 color: neutral
 icon: i-lucide-code-xml
-to: https://github.com/mhaibaraai/movk-nuxt-docs/blob/main/layer/modules/ai-chat/runtime/components/AiChatSlideover.vue
+to: https://github.com/mhaibaraai/movk-nuxt-docs/blob/main/layer/modules/ai-chat/runtime/components/AiChatPanel.vue
+target: _blank
+variant: link
+---
+查看源代码
+::
+
+### AiChatDisabled
+
+当 AI Chat 功能未启用时显示的禁用状态组件。
+
+::u-button
+---
+color: neutral
+icon: i-lucide-code-xml
+to: https://github.com/mhaibaraai/movk-nuxt-docs/blob/main/layer/modules/ai-chat/runtime/components/AiChatDisabled.vue
 target: _blank
 variant: link
 ---
@@ -347,6 +409,18 @@ variant: link
   对话框是否打开的响应式状态。
   ::
 
+  ::field{name="isExpanded" type="Ref<boolean>"}
+  面板是否展开的响应式状态（展开为 800px，折叠为 400px）。
+  ::
+
+  ::field{name="isMobile" type="Ref<boolean>"}
+  是否为移动设备的响应式状态。
+  ::
+
+  ::field{name="panelWidth" type="Ref<string>"}
+  面板宽度的响应式状态（'400px' 或 '800px'）。
+  ::
+
   ::field{name="messages" type="Ref<UIMessage[]>"}
   消息列表，包含所有历史对话记录。
   ::
@@ -355,9 +429,13 @@ variant: link
   待发送的消息内容，用于在打开对话框前预设问题。
   ::
 
+  ::field{name="faqQuestions" type="Ref<FaqQuestions>"}
+  从 `app.config.ts` 读取的 FAQ 问题列表。
+  ::
+
   :::field{name="open" type="(message?: string, clearHistory?: boolean) => void"}
   打开对话框并可选地发送初始消息。
-  
+
   :::collapsible
     ::field-group
       ::field{name="message" type="string"}
@@ -377,6 +455,10 @@ variant: link
 
   ::field{name="toggle" type="() => void"}
   切换对话框的打开/关闭状态。
+  ::
+
+  ::field{name="toggleExpanded" type="() => void"}
+  切换面板展开/折叠状态。
   ::
 
   ::field{name="clearMessages" type="() => void"}
@@ -467,13 +549,13 @@ variant: link
 
 ```json [package.json]
 {
-  "@ai-sdk/gateway": "^3.0.5",
-  "@ai-sdk/mcp": "^1.0.2",
-  "@ai-sdk/vue": "^3.0.6",
+  "@ai-sdk/gateway": "^3.0.11",
+  "@ai-sdk/mcp": "^1.0.5",
+  "@ai-sdk/vue": "^3.0.27",
   "@openrouter/ai-sdk-provider": "^1.5.4",
-  "ai": "^6.0.6",
-  "motion-v": "^1.7.4",
-  "shiki": "^3.20.0",
-  "shiki-stream": "^0.1.2"
+  "ai": "^6.0.27",
+  "motion-v": "^1.8.1",
+  "shiki": "^3.21.0",
+  "shiki-stream": "^0.1.4"
 }
 ```

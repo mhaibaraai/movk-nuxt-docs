@@ -39,57 +39,30 @@ export default defineAppConfig({
   aiChat: {
     faqQuestions: [
       {
-        category: '入门指南',
+        category: '基础使用',
         items: [
-          'Movk Nuxt Docs 是什么？',
-          '如何快速创建文档站点？',
-          '完整模板和模块模板有什么区别？',
-          '如何作为 Layer 集成到现有项目？'
+          '什么是 Movk Nuxt Docs？',
+          '如何安装并创建文档站点？',
+          '如何作为 Layer 集成到现有项目？',
+          '如何自定义主题和导航？'
         ]
       },
       {
-        category: '内容编写',
+        category: '文档编写',
         items: [
           '如何使用 MDC 语法？',
-          '支持哪些 Markdown 扩展功能？',
-          '如何在文档中嵌入 Vue 组件？',
-          '代码块如何添加高亮和行号？'
-        ]
-      },
-      {
-        category: '配置定制',
-        items: [
-          '如何配置站点 SEO？',
-          '如何自定义头部和页脚？',
-          '如何集成 GitHub 仓库？',
-          '如何配置侧边栏导航？'
-        ]
-      },
-      {
-        category: '组件文档',
-        items: [
           '如何自动生成组件文档？',
-          '如何展示组件交互示例？',
-          '如何显示 Git 提交历史？',
-          'CommitChangelog 组件如何使用？'
+          '如何展示 Git 提交历史？',
+          '如何配置 SEO 和 OG 图片？'
         ]
       },
       {
-        category: 'AI 功能',
+        category: 'AI 集成',
         items: [
-          '什么是 LLMs.txt？',
+          '什么是 LLMs.txt？有什么作用？',
+          '如何启用 AI Chat 助手？',
           '如何配置 MCP Server？',
-          'AI Chat 功能如何启用？',
-          '如何自定义 AI 助手行为？'
-        ]
-      },
-      {
-        category: '高级功能',
-        items: [
-          '如何部署文档站点？',
-          '支持哪些静态托管平台？',
-          '如何集成分析工具？',
-          '如何自定义主题样式？'
+          '支持哪些 AI 模型？'
         ]
       }
     ]

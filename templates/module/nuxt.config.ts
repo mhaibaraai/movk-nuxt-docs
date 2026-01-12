@@ -8,10 +8,10 @@ export default defineNuxtConfig({
   },
   compatibilityDate: 'latest',
   aiChat: {
-    model: 'mistral/devstral-2',
+    model: 'openai/gpt-5-nano',
     models: [
-      'mistral/devstral-2',
-      'openrouter/mistralai/devstral-2512:free'
+      'openai/gpt-5-nano',
+      'openrouter/anthropic/claude-haiku-4.5'
     ]
   },
   eslint: {

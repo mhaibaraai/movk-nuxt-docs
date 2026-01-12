@@ -3,5 +3,5 @@ const { desktopLinks } = useHeader()
 </script>
 
 <template>
-  <UNavigationMenu :items="desktopLinks" variant="link" />
+  <UNavigationMenu :items="desktopLinks" variant="link" aria-label="Main Navigation" />
 </template>
