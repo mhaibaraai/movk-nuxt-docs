@@ -1,5 +1,11 @@
 # 📋 Changelog
 
+## [1.7.1](https://github.com/mhaibaraai/movk-nuxt-docs/compare/v1.7.0...v1.7.1) (2026-01-12)
+
+### ♻️ Code Refactoring
+
+* 将 StarsBg 组件移动到 layer 目录 ([b22cbb3](https://github.com/mhaibaraai/movk-nuxt-docs/commit/b22cbb3ca5b71ba3b18751167054bcf5db8a49be))
+
 ## [1.7.0](https://github.com/mhaibaraai/movk-nuxt-docs/compare/v1.6.2...v1.7.0) (2026-01-12)
 
 ### ⚠ BREAKING CHANGES
