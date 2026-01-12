@@ -7,6 +7,7 @@ const { resolve } = createResolver(import.meta.url)
 export default defineNuxtConfig({
   modules: [
     resolve('./modules/config'),
+    resolve('./modules/routing'),
     resolve('./modules/css'),
     resolve('./modules/component-example'),
     resolve('./modules/ai-chat'),

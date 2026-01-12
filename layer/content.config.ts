@@ -1,3 +1,4 @@
+import { existsSync } from 'node:fs'
 import { defineCollection, defineContentConfig } from '@nuxt/content'
 import { useNuxt } from '@nuxt/kit'
 import { asSeoCollection } from '@nuxtjs/seo/content'
@@ -6,6 +7,8 @@ import { z } from 'zod/v4'
 
 const { options } = useNuxt()
 const cwd = joinURL(options.rootDir, 'content')
+
+const hasReleasesMd = existsSync(joinURL(cwd, 'releases.md'))
 
 const Avatar = z.object({
   src: z.string(),
@@ -27,6 +30,12 @@ const Button = z.object({
   class: z.string().optional()
 })
 
+const PageHero = z.object({
+  title: z.string(),
+  description: z.string(),
+  links: z.array(Button).optional()
+})
+
 export default defineContentConfig({
   collections: {
     landing: defineCollection(asSeoCollection({
@@ -38,16 +47,29 @@ export default defineContentConfig({
     })),
     docs: defineCollection(asSeoCollection({
       type: 'page',
-      source: [{
+      source: {
         cwd,
         include: 'docs/**/*'
-      }],
+      },
       schema: z.object({
         links: z.array(Button),
         category: z.string().optional(),
         navigation: z.object({
           title: z.string().optional()
         })
+      })
+    })),
+    releases: defineCollection(asSeoCollection({
+      type: 'page',
+      source: {
+        cwd,
+        include: hasReleasesMd ? 'releases.md' : 'releases.yml'
+      },
+      schema: z.object({
+        title: z.string(),
+        description: z.string(),
+        releases: z.string(),
+        hero: PageHero
       })
     }))
   }
