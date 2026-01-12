@@ -199,18 +199,17 @@ onMounted(() => {
                     :is-loading="false"
                   />
                 </template>
-
-                <UButton
-                  v-if="chat.status === 'streaming' && message.id === lastMessage?.id"
-                  class="px-0"
-                  color="neutral"
-                  variant="link"
-                  size="sm"
-                  :label="aiChat.texts.loading"
-                  loading
-                  :loading-icon="aiChat.icons.loading"
-                />
               </template>
+              <UButton
+                v-if="chat.status === 'streaming' && message.id === lastMessage?.id"
+                class="px-0"
+                color="neutral"
+                variant="link"
+                size="sm"
+                :label="aiChat.texts.loading"
+                loading
+                :loading-icon="aiChat.icons.loading"
+              />
             </div>
           </template>
         </UChatMessages>
@@ -301,6 +300,8 @@ onMounted(() => {
   <USlideover
     v-else
     v-model:open="isOpen"
+    title=" "
+    description=" "
     side="right"
     :ui="{
       content: 'ring-0 bg-default'
