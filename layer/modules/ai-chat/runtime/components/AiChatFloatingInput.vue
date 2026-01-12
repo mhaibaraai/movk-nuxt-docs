@@ -55,7 +55,7 @@ defineShortcuts(shortcuts)
 <template>
   <AnimatePresence>
     <motion.div
-      v-if="isVisible && !isOpen"
+      v-if="isFloatingInputEnabled && isDocsRoute && isVisible && !isOpen"
       key="floating-input"
       :initial="{ y: 20, opacity: 0 }"
       :animate="{ y: 0, opacity: 1 }"
@@ -84,12 +84,12 @@ defineShortcuts(shortcuts)
               </div>
 
               <UButton
+                aria-label="Send Message"
                 type="submit"
                 icon="i-lucide-arrow-up"
                 color="primary"
                 size="xs"
                 :disabled="!input.trim()"
-                aria-label="Send Message"
               />
             </div>
           </template>
