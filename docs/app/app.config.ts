@@ -37,8 +37,6 @@ export default defineAppConfig({
     ]
   },
   aiChat: {
-    explainWithAi: false,
-    floatingInput: false,
     faqQuestions: [
       {
         category: '入门指南',
