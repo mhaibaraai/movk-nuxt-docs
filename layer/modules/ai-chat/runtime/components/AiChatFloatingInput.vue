@@ -89,6 +89,7 @@ defineShortcuts(shortcuts)
                 color="primary"
                 size="xs"
                 :disabled="!input.trim()"
+                aria-label="Send Message"
               />
             </div>
           </template>

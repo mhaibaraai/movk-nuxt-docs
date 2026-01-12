@@ -1,5 +1,5 @@
 <template>
-  <UMain class="relative">
+  <UMain class="relative" as="main">
     <HeroBackground />
 
     <UContainer>

@@ -106,7 +106,12 @@ async function copyPage() {
         content: 'w-48'
       }"
     >
-      <UButton :icon="ui.icons.chevronDown" color="neutral" variant="outline" />
+      <UButton
+        :icon="ui.icons.chevronDown"
+        color="neutral"
+        variant="outline"
+        aria-label="Toggle Dropdown"
+      />
     </UDropdownMenu>
   </UFieldGroup>
 </template>

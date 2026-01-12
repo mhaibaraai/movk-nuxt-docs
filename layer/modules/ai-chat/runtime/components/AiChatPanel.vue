@@ -134,6 +134,7 @@ onMounted(() => {
               variant="ghost"
               size="sm"
               class="text-muted hover:text-highlighted"
+              aria-label="Toggle Expand Chat Panel"
               @click="toggleExpanded"
             />
           </UTooltip>
@@ -147,6 +148,7 @@ onMounted(() => {
               variant="ghost"
               size="sm"
               class="text-muted hover:text-highlighted"
+              aria-label="Clear Chat"
               @click="resetChat"
             />
           </UTooltip>
@@ -157,6 +159,7 @@ onMounted(() => {
               variant="ghost"
               size="sm"
               class="text-muted hover:text-highlighted"
+              aria-label="Close Chat Panel"
               @click="isOpen = false"
             />
           </UTooltip>
@@ -251,6 +254,7 @@ onMounted(() => {
           v-model="input"
           :rows="2"
           class="text-sm"
+          variant="subtle"
           :placeholder="aiChat.texts.placeholder"
           :ui="{
             root: 'shadow-none!',

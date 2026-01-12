@@ -42,7 +42,7 @@ const { data: versions } = await useFetch(page.value.releases || '', {
 </script>
 
 <template>
-  <div v-if="page">
+  <main v-if="page">
     <UPageHero
       :title="page.hero.title"
       :description="page.hero.description"
@@ -94,5 +94,5 @@ const { data: versions } = await useFetch(page.value.releases || '', {
         </UContainer>
       </div>
     </UPageSection>
-  </div>
+  </main>
 </template>
