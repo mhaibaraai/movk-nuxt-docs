@@ -4,6 +4,6 @@ const { header } = useAppConfig()
 
 <template>
   <NuxtLink :to="header.to">
-    <UUser :avatar="{ src: header.avatar }" :name="header.title" />
+    <UUser :avatar="{ src: header.avatar, alt: 'Site Logo' }" :name="header.title" />
   </NuxtLink>
 </template>

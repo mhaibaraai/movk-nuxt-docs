@@ -9,11 +9,21 @@ const { navigationByCategory } = useNavigation(navigation!)
 </script>
 
 <template>
-  <UNavigationMenu orientation="vertical" :items="mobileLinks" class="-mx-2.5" />
+  <UNavigationMenu
+    orientation="vertical"
+    :items="mobileLinks"
+    class="-mx-2.5"
+    aria-label="Mobile Navigation"
+  />
 
   <template v-if="route.path.startsWith('/docs/')">
     <USeparator type="dashed" class="mt-4 mb-6" />
 
-    <UContentNavigation :navigation="navigationByCategory" highlight :ui="{ linkTrailingBadge: 'font-semibold uppercase' }" />
+    <UContentNavigation
+      :navigation="navigationByCategory"
+      highlight
+      :ui="{ linkTrailingBadge: 'font-semibold uppercase' }"
+      aria-label="Documentation Navigation"
+    />
   </template>
 </template>

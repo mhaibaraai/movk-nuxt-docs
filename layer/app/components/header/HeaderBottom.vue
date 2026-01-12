@@ -21,6 +21,7 @@ const items = computed(() => mapContentNavigation(navigation?.value?.map(item =>
       variant="pill"
       highlight
       class="-mx-2.5 -mb-px"
+      aria-label="Category Navigation"
     />
   </UContainer>
 </template>

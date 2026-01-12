@@ -18,7 +18,7 @@ const links = computed<ButtonProps[]>(() => github && github.url
 </script>
 
 <template>
-  <UHeader :ui="{ left: 'min-w-0' }" class="flex flex-col">
+  <UHeader :ui="{ left: 'min-w-0' }" class="flex flex-col" aria-label="Site Header">
     <template #left>
       <HeaderLogo />
     </template>
