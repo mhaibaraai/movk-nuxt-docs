@@ -2,6 +2,42 @@ import { field, group } from '@nuxt/content/preview'
 
 export default defineNuxtSchema({
   appConfig: {
+    theme: group({
+      title: '主题',
+      description: '主题相关配置',
+      icon: 'i-lucide-palette',
+      fields: {
+        radius: field({
+          type: 'number',
+          title: '圆角',
+          description: '全局圆角值，单位 rem',
+          icon: 'i-lucide-corner-up-left',
+          default: 0.25
+        }),
+        blackAsPrimary: field({
+          type: 'boolean',
+          title: '黑色主色调',
+          description: '是否将黑色设置为主色调',
+          icon: 'i-lucide-moon',
+          default: false
+        }),
+        icons: field({
+          type: 'string',
+          title: '图标集',
+          description: '全局图标集名称',
+          icon: 'i-lucide-icon',
+          default: 'lucide'
+        }),
+        font: field({
+          type: 'string',
+          title: '字体',
+          description: '全局字体名称',
+          icon: 'i-lucide-type',
+          default: 'Public Sans'
+        })
+      }
+    }),
+
     vercelAnalytics: group({
       title: 'Vercel Analytics',
       description: 'Vercel Analytics 配置',
