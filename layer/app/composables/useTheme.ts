@@ -53,7 +53,9 @@ export function useTheme() {
     },
     set(option) {
       appConfig.theme.font = option
-      window.localStorage.setItem(`${site.name}-ui-font`, appConfig.theme.font)
+      if (appConfig.theme.font) {
+        window.localStorage.setItem(`${site.name}-ui-font`, appConfig.theme.font)
+      }
       if (appConfig.vercelAnalytics?.debug) track('Theme Changed', { setting: 'font', value: option })
     }
   })
@@ -78,7 +80,9 @@ export function useTheme() {
     set(option) {
       appConfig.theme.icons = option
       appConfig.ui.icons = themeIcons[option as keyof typeof themeIcons] as any
-      window.localStorage.setItem(`${site.name}-ui-icons`, appConfig.theme.icons)
+      if (appConfig.theme.icons) {
+        window.localStorage.setItem(`${site.name}-ui-icons`, appConfig.theme.icons)
+      }
       if (appConfig.vercelAnalytics?.debug) track('Theme Changed', { setting: 'icons', value: option })
     }
   })

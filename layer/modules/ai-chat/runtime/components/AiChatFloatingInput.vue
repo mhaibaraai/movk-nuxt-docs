@@ -64,7 +64,7 @@ defineShortcuts(shortcuts)
       class="fixed bottom-6 left-1/2 -translate-x-1/2 z-50 px-4"
       style="will-change: transform"
     >
-      <UForm @submit.prevent="handleSubmit">
+      <form @submit.prevent="handleSubmit">
         <UInput
           ref="inputRef"
           v-model="input"
@@ -94,7 +94,7 @@ defineShortcuts(shortcuts)
             </div>
           </template>
         </UInput>
-      </UForm>
+      </form>
     </motion.div>
   </AnimatePresence>
 </template>
