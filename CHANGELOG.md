@@ -1,5 +1,23 @@
 # 📋 Changelog
 
+## [1.7.2](https://github.com/mhaibaraai/movk-nuxt-docs/compare/v1.7.1...v1.7.2) (2026-01-14)
+
+### ✨ Features
+
+* **theme:** 添加主题配置 schema 并改进布局语义化 ([815c303](https://github.com/mhaibaraai/movk-nuxt-docs/commit/815c3039c59fd79294d1fb308d37485b0efc2e1b))
+
+### 🐛 Bug Fixes
+
+* **useTheme:** 修复 localStorage.setItem 类型错误 ([f39ae40](https://github.com/mhaibaraai/movk-nuxt-docs/commit/f39ae40e3d196a6d92f2f9aaf2ee3b0e5b022f3a))
+
+### ♻️ Code Refactoring
+
+* **ai-chat:** 使用原生 form 替代 UForm 组件 ([34b799d](https://github.com/mhaibaraai/movk-nuxt-docs/commit/34b799d740b258017bc67fd2d87c4deafbaeb64e))
+
+### 🔧 Chores
+
+* **deps:** update all non-major dependencies ([8487006](https://github.com/mhaibaraai/movk-nuxt-docs/commit/8487006f18f33ca9b08639d24423825c54767bca))
+
 ## [1.7.1](https://github.com/mhaibaraai/movk-nuxt-docs/compare/v1.7.0...v1.7.1) (2026-01-12)
 
 ### ♻️ Code Refactoring
