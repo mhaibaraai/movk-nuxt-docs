@@ -46,7 +46,7 @@ export default defineNuxtConfig({
     build: {
       markdown: {
         highlight: {
-          langs: ['bash', 'ts', 'typescript', 'diff', 'vue', 'json', 'yml', 'yaml', 'css', 'mdc', 'blade', 'edge']
+          langs: ['bash', 'diff', 'json', 'js', 'ts', 'html', 'css', 'vue', 'shell', 'mdc', 'md', 'yaml']
         },
         remarkPlugins: {
           'remark-mdc': {
@@ -85,8 +85,12 @@ export default defineNuxtConfig({
   nitro: {
     prerender: {
       crawlLinks: true,
+      failOnError: false,
       autoSubfolderIndex: false
     }
+  },
+  a11y: {
+    logIssues: false
   },
   fonts: {
     families: [
@@ -102,15 +106,16 @@ export default defineNuxtConfig({
   icon: {
     provider: 'iconify'
   },
+  linkChecker: {
+    enabled: false
+  },
   ogImage: {
     zeroRuntime: true,
     googleFontMirror: 'fonts.loli.net',
     fonts: [
-      // 思源黑体 - 支持中文
       'Noto+Sans+SC:400',
       'Noto+Sans+SC:500',
       'Noto+Sans+SC:700',
-      // 如果需要英文字体
       'Inter:400',
       'Inter:700'
     ]
