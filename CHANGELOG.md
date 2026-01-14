@@ -1,5 +1,11 @@
 # 📋 Changelog
 
+## [1.7.3](https://github.com/mhaibaraai/movk-nuxt-docs/compare/v1.7.2...v1.7.3) (2026-01-14)
+
+### ⚡ Performance Improvements
+
+* **config:** 优化构建配置减少内存消耗 ([85a8b88](https://github.com/mhaibaraai/movk-nuxt-docs/commit/85a8b88b04036262b82dfe6faa7d6fe7cf107d61))
+
 ## [1.7.2](https://github.com/mhaibaraai/movk-nuxt-docs/compare/v1.7.1...v1.7.2) (2026-01-14)
 
 ### ✨ Features
