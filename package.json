@@ -1,7 +1,7 @@
 {
   "name": "nuxt-docs-workspace",
   "type": "module",
-  "version": "1.7.3",
+  "version": "1.7.4",
   "private": true,
   "packageManager": "pnpm@10.28.0",
   "license": "MIT",

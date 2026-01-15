@@ -1,5 +1,21 @@
 # 📋 Changelog
 
+## [1.7.4](https://github.com/mhaibaraai/movk-nuxt-docs/compare/v1.7.3...v1.7.4) (2026-01-15)
+
+### ✨ Features
+
+* 添加 Markdown 原始文件访问支持 ([36b848e](https://github.com/mhaibaraai/movk-nuxt-docs/commit/36b848e335a96f085cbd513ea66c080792e479e7))
+
+### ♻️ Code Refactoring
+
+* **config:** 优化组件元数据配置和条件渲染 ([24173e6](https://github.com/mhaibaraai/movk-nuxt-docs/commit/24173e6e570671e16bc24fb46fdfcbaddce4f648))
+* **config:** 优化配置模块加载和路径解析 ([c1ca327](https://github.com/mhaibaraai/movk-nuxt-docs/commit/c1ca32796bf321104918b5db850b392339f36501))
+
+### 🔧 Chores
+
+* **deps:** 升级 Prettier 至 3.7.4 ([e72cedb](https://github.com/mhaibaraai/movk-nuxt-docs/commit/e72cedb24e034270e5ddd4c833e143b82ae4df24))
+* 移除测试用示例组件 ([d67dcc1](https://github.com/mhaibaraai/movk-nuxt-docs/commit/d67dcc1677c366bda5088d5c1ce4d20b39322d8e))
+
 ## [1.7.3](https://github.com/mhaibaraai/movk-nuxt-docs/compare/v1.7.2...v1.7.3) (2026-01-14)
 
 ### ⚡ Performance Improvements
