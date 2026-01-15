@@ -47,11 +47,11 @@ provide('navigation', rootNavigation)
     <NuxtLoadingIndicator color="var(--ui-primary)" :height="2" />
 
     <div :class="{ root: route.path.startsWith('/docs/') }">
-      <Header />
+      <Header v-if="$route.meta.header !== false" />
 
       <UError :error="error" />
 
-      <Footer />
+      <Footer v-if="$route.meta.footer !== false" />
 
       <ClientOnly>
         <LazyUContentSearch :files="files" :navigation="navigation" />

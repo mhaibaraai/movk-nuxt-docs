@@ -1,4 +1,5 @@
 import { createResolver, defineNuxtModule } from '@nuxt/kit'
+import { join } from 'pathe'
 import { defu } from 'defu'
 import { getGitBranch, getGitEnv, getLocalGitInfo } from '../utils/git'
 import { getPackageJsonMetadata, inferSiteURL } from '../utils/meta'
@@ -57,40 +58,35 @@ export default defineNuxtModule({
       until: new Date().toISOString()
     })
 
-    const componentsPath = resolve('../app/components')
+    const layerPath = resolve('..')
+    const allowedComponents = [
+      resolve('../app/components/content/CommitChangelog.vue'),
+      resolve('../app/components/content/ComponentEmits.vue'),
+      resolve('../app/components/content/ComponentExample.vue'),
+      resolve('../app/components/content/ComponentProps.vue'),
+      resolve('../app/components/content/ComponentSlots.vue'),
+      resolve('../app/components/content/PageLastCommit.vue'),
+      resolve('./ai-chat/runtime/components/AiChatToolCall.vue'),
+      resolve('./ai-chat/runtime/components/AiChatReasoning.vue'),
+      resolve('./ai-chat/runtime/components/AiChatSlideoverFaq.vue'),
+      resolve('./ai-chat/runtime/components/AiChatPreStream.vue')
+    ]
+    const userComponentPaths = [
+      join(dir, 'app/components'),
+      join(dir, 'components'),
+      join(dir, 'docs/app/components'),
+      join(dir, 'templates/*/app/components')
+    ]
 
-    nuxt.options.componentMeta = defu(nuxt.options.componentMeta, {
-      exclude: [
-        '@nuxt/content',
-        '@nuxt/icon',
-        '@nuxt/image',
-        '@nuxtjs/color-mode',
-        '@nuxtjs/mdc',
-        'nuxt/dist',
-        'nuxt-og-image',
-        '@nuxtjs/plausible',
-        '@nuxt/ui',
-        (component: { filePath: string }) => {
-          const allowedComponents = [
-            'CommitChangelog.vue',
-            'ComponentEmits.vue',
-            'ComponentExample.vue',
-            'ComponentProps.vue',
-            'ComponentSlots.vue',
-            'PageLastCommit.vue',
-            'Motion.vue'
-          ]
-          return component.filePath.startsWith(componentsPath)
-            && !allowedComponents.some(name => component.filePath.endsWith(`/content/${name}`))
-        }
-      ],
-      metaFields: {
-        type: false,
-        props: true,
-        slots: 'no-schema' as const,
-        events: 'no-schema' as const,
-        exposed: false
-      }
+    // @ts-ignore - component-meta 的类型定义在运行时才能正确解析
+    nuxt.hook('component-meta:extend', (options: any) => {
+      options.exclude = [
+        ...(options.exclude || []),
+        ({ filePath }: { filePath: string }) =>
+          filePath.startsWith(layerPath) && !allowedComponents.includes(filePath),
+        ({ filePath }: { filePath: string }) =>
+          userComponentPaths.some(path => filePath.startsWith(path))
+      ]
     })
   }
 })

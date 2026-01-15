@@ -1,16 +1,5 @@
-import { createResolver } from '@nuxt/kit'
-
-const { resolve } = createResolver(import.meta.url)
-
 export default defineNuxtConfig({
   extends: ['@movk/nuxt-docs'],
-  modules: [
-    (_, nuxt) => {
-      nuxt.hook('components:dirs', (dirs) => {
-        dirs.unshift({ path: resolve('./app/components/content/examples'), pathPrefix: false, prefix: '', global: true })
-      })
-    }
-  ],
   css: ['~/assets/css/main.css'],
   site: {
     name: 'Movk Nuxt Docs',

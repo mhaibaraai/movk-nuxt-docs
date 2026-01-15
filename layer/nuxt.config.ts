@@ -1,16 +1,9 @@
-import { createResolver, extendViteConfig } from '@nuxt/kit'
+import { extendViteConfig } from '@nuxt/kit'
 import { defineNuxtConfig } from 'nuxt/config'
 import pkg from './package.json'
 
-const { resolve } = createResolver(import.meta.url)
-
 export default defineNuxtConfig({
   modules: [
-    resolve('./modules/config'),
-    resolve('./modules/routing'),
-    resolve('./modules/css'),
-    resolve('./modules/component-example'),
-    resolve('./modules/ai-chat'),
     '@nuxt/ui',
     '@nuxt/content',
     '@nuxt/image',
@@ -91,6 +84,26 @@ export default defineNuxtConfig({
   },
   a11y: {
     logIssues: false
+  },
+  componentMeta: {
+    metaFields: {
+      type: false,
+      props: true,
+      slots: 'no-schema' as const,
+      events: 'no-schema' as const,
+      exposed: false
+    },
+    exclude: [
+      '@nuxt/ui',
+      '@nuxt/content',
+      '@nuxt/icon',
+      '@nuxt/image',
+      '@nuxtjs/color-mode',
+      '@nuxtjs/mdc',
+      '@nuxtjs/plausible',
+      'nuxt/dist',
+      'nuxt-og-image'
+    ]
   },
   fonts: {
     families: [
