@@ -1,19 +1,22 @@
-import { extendViteConfig } from '@nuxt/kit'
+import { createResolver, extendViteConfig } from '@nuxt/kit'
 import { defineNuxtConfig } from 'nuxt/config'
 import pkg from './package.json'
 
+const { resolve } = createResolver(import.meta.url)
+
 export default defineNuxtConfig({
   modules: [
+    resolve('./modules/config'),
     '@nuxt/ui',
     '@nuxt/content',
     '@nuxt/image',
     '@nuxt/a11y',
-    '@vueuse/nuxt',
     '@nuxtjs/mcp-toolkit',
     '@nuxtjs/seo',
+    '@vueuse/nuxt',
     'nuxt-component-meta',
-    'motion-v/nuxt',
     'nuxt-llms',
+    'motion-v/nuxt',
     () => {
       extendViteConfig((config) => {
         config.optimizeDeps ||= {}
