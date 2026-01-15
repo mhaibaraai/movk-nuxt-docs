@@ -7,20 +7,16 @@ const { resolve } = createResolver(import.meta.url)
 export default defineNuxtConfig({
   modules: [
     resolve('./modules/config'),
-    resolve('./modules/routing'),
-    resolve('./modules/css'),
-    resolve('./modules/component-example'),
-    resolve('./modules/ai-chat'),
     '@nuxt/ui',
     '@nuxt/content',
     '@nuxt/image',
     '@nuxt/a11y',
-    '@vueuse/nuxt',
     '@nuxtjs/mcp-toolkit',
     '@nuxtjs/seo',
+    '@vueuse/nuxt',
     'nuxt-component-meta',
-    'motion-v/nuxt',
     'nuxt-llms',
+    'motion-v/nuxt',
     () => {
       extendViteConfig((config) => {
         config.optimizeDeps ||= {}
@@ -91,6 +87,26 @@ export default defineNuxtConfig({
   },
   a11y: {
     logIssues: false
+  },
+  componentMeta: {
+    metaFields: {
+      type: false,
+      props: true,
+      slots: 'no-schema' as const,
+      events: 'no-schema' as const,
+      exposed: false
+    },
+    exclude: [
+      '@nuxt/ui',
+      '@nuxt/content',
+      '@nuxt/icon',
+      '@nuxt/image',
+      '@nuxtjs/color-mode',
+      '@nuxtjs/mdc',
+      '@nuxtjs/plausible',
+      'nuxt/dist',
+      'nuxt-og-image'
+    ]
   },
   fonts: {
     families: [

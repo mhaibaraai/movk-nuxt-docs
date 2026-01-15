@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import type { ContentNavigationItem } from '@nuxt/content'
 import { kebabCase } from 'scule'
+import { joinURL } from 'ufo'
 
 definePageMeta({
   layout: 'docs',
@@ -78,6 +79,20 @@ const communityLinks = computed(() => {
   }
 
   return filterValidLinks([...links, ...(toc?.bottom?.links || [])])
+})
+
+// Pre-render the markdown path + add it to alternate links
+const site = useSiteConfig()
+const path = computed(() => route.path.replace(/\/$/, ''))
+prerenderRoutes([joinURL('/raw', `${path.value}.md`)])
+useHead({
+  link: [
+    {
+      rel: 'alternate',
+      href: joinURL(site.url, 'raw', `${path.value}.md`),
+      type: 'text/markdown'
+    }
+  ]
 })
 
 useSeoMeta({
