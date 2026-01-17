@@ -122,9 +122,6 @@ export default defineNuxtConfig({
   icon: {
     provider: 'iconify'
   },
-  linkChecker: {
-    enabled: false
-  },
   ogImage: {
     zeroRuntime: true,
     googleFontMirror: 'fonts.loli.net',
@@ -135,5 +132,8 @@ export default defineNuxtConfig({
       'Inter:400',
       'Inter:700'
     ]
+  },
+  sitemap: {
+    zeroRuntime: true
   }
 })
