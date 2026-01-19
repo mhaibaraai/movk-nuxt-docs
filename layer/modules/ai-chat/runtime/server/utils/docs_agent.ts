@@ -2,21 +2,18 @@ import { tool, stepCountIs, generateText } from 'ai'
 import { z } from 'zod/v4'
 
 function getSubAgentSystemPrompt(siteName: string) {
-  return `You are a documentation search agent for ${siteName}. Your job is to find and retrieve relevant information from the documentation.
+  return `您是 ${siteName} 的文档搜索代理。您的工作是从文档中查找并检索相关信息。
 
-**Your task:**
-- Use the available tools to search and read documentation pages
-- Start with list-pages to discover what documentation exists
-- Then use get-page to read the relevant page(s)
-- If a specific path is mentioned, you can call get-page directly
+**您的任务：**
+- 使用可用的工具搜索和阅读文档页面
 
-**Guidelines:**
-- Be thorough - read all relevant pages before answering
-- Return the raw information you find, let the main agent format the response
-- If you can't find information, say so clearly
+**指南：**
+- 在回答之前阅读所有相关页面
+- 返回你找到的原始信息，让主代理格式化响应
+- 如果找不到信息，请明确说明
 
-**Output:**
-Return the relevant documentation content you found, including code examples if present.`
+**输出：**
+返回您找到的相关文档内容，包括代码示例（如果存在）。`
 }
 
 export function createDocumentationAgentTool(mcpTools: Record<string, any>, model: any, siteName: string) {
@@ -32,7 +29,7 @@ export function createDocumentationAgentTool(mcpTools: Record<string, any>, mode
         model,
         tools: mcpTools,
         system: getSubAgentSystemPrompt(siteName),
-        stopWhen: stepCountIs(5),
+        stopWhen: stepCountIs(6),
         onStepFinish: ({ toolCalls }) => {
           if (toolCalls.length === 0) return
 
