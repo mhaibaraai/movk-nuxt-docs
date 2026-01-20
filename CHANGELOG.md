@@ -1,5 +1,18 @@
 # 📋 Changelog
 
+## [1.7.5](https://github.com/mhaibaraai/movk-nuxt-docs/compare/v1.7.4...v1.7.5) (2026-01-20)
+
+### ✨ Features
+
+* **ai-chat:** 优化系统提示并调整工具调用限制 ([8d4d627](https://github.com/mhaibaraai/movk-nuxt-docs/commit/8d4d627d00013102ec4648377abcb9180e9dedff))
+* 添加 Phosphor 和 Tabler 图标库支持 ([7b87bff](https://github.com/mhaibaraai/movk-nuxt-docs/commit/7b87bffa3e032e5dd6bd6727c2389b1961a1b588))
+
+### 🔧 Chores
+
+* **ai-chat:** 更新日志标签名称为项目名称 ([8f966e0](https://github.com/mhaibaraai/movk-nuxt-docs/commit/8f966e07830cd08537fdfa3fe89e1bb0a800c834))
+* **config:** 优化 Nuxt 配置项 ([b9a1586](https://github.com/mhaibaraai/movk-nuxt-docs/commit/b9a1586c466bfec2e4a518e8d7c535f3013ebd34))
+* **deps:** update all non-major dependencies ([8374288](https://github.com/mhaibaraai/movk-nuxt-docs/commit/83742886338764e88fd6c805e237efd54aab37e5))
+
 ## [1.7.4](https://github.com/mhaibaraai/movk-nuxt-docs/compare/v1.7.3...v1.7.4) (2026-01-15)
 
 ### ✨ Features
