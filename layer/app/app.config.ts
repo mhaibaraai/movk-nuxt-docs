@@ -14,6 +14,11 @@ export default defineAppConfig({
     font: 'Public Sans'
   },
   ui: {
+    prose: {
+      codeIcon: {
+        mmd: 'i-vscode-icons-file-type-mermaid'
+      }
+    },
     colors: {
       primary: 'green',
       neutral: 'slate'

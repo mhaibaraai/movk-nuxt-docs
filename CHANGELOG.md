@@ -117,6 +117,8 @@
 
 ### ✨ Features
 
+![ AI Chat 功能集成 ](https://docs.mhaibaraai.cn/_vercel/image?url=%2Fai%2FAiChat.png&w=1536&q=100)
+
 * 集成 MCP 服务器和工具包支持 ([5cd707c](https://github.com/mhaibaraai/movk-nuxt-docs/commit/5cd707c))
 * 新增 AI 聊天功能支持多模型选择 ([8618dde](https://github.com/mhaibaraai/movk-nuxt-docs/commit/8618dde))
 * 新增工具函数和 Composables ([42ba073](https://github.com/mhaibaraai/movk-nuxt-docs/commit/42ba073))
@@ -266,11 +268,6 @@
 
 ### 🔧 Chores
 
-* **deps:** lock file maintenance ([91b876d](https://github.com/mhaibaraai/movk-nuxt-docs/commit/91b876d7cc47617a62f35144fb9a5c204cd04624))
-* **deps:** update all non-major dependencies ([1701cc0](https://github.com/mhaibaraai/movk-nuxt-docs/commit/1701cc01bba444fa76b70d9e06a147c284bdec88))
-* **deps:** update all non-major dependencies ([bdc9674](https://github.com/mhaibaraai/movk-nuxt-docs/commit/bdc9674a844280aa00e193419b3f2fbde43b20ef))
-* **deps:** update devdependency @antfu/ni to v28 ([6863b16](https://github.com/mhaibaraai/movk-nuxt-docs/commit/6863b160fc9a59f047fd84ffd8a03b41d2cc5a2d))
-* **deps:** update nuxt framework to ^4.2.2 ([249c4eb](https://github.com/mhaibaraai/movk-nuxt-docs/commit/249c4eb35aac969c553c4a848e601499fe023916))
 * **deps:** 降级 @release-it/conventional-changelog 到 10.0.1 版本 ([efca7c1](https://github.com/mhaibaraai/movk-nuxt-docs/commit/efca7c1b51b53159f9f74111621a6fee13836ccc))
 
 ## [1.3.11](https://github.com/mhaibaraai/movk-nuxt-docs/compare/v1.3.10...v1.3.11) (2025-12-02)
@@ -402,15 +399,7 @@
 
 ### 🔧 Chores
 
-* **deps:** lock file maintenance ([ba61a0d](https://github.com/mhaibaraai/movk-nuxt-docs/commit/ba61a0d8c9250dc6d8f7340dcdf3aead3e3c61b7))
 * **deps:** update all non-major dependencies ([9073e6d](https://github.com/mhaibaraai/movk-nuxt-docs/commit/9073e6dc8a7847234e8f838f226caeabde9b7150))
-* **deps:** update all non-major dependencies ([a8976ef](https://github.com/mhaibaraai/movk-nuxt-docs/commit/a8976ef93f5b53914db26f427cb02039842677ef))
-* **deps:** update all non-major dependencies ([8c6831f](https://github.com/mhaibaraai/movk-nuxt-docs/commit/8c6831fc649e34b6c743d33589c209f25df9e516))
-* **deps:** update dependency @nuxt/image to v2 ([9225ab6](https://github.com/mhaibaraai/movk-nuxt-docs/commit/9225ab66ba833473074e1d696c5b88d3d1bebee8))
-* **deps:** update dependency exsolve to ^1.0.8 ([ea1b983](https://github.com/mhaibaraai/movk-nuxt-docs/commit/ea1b983acaddab24a29eede691ebbed2a9d36011))
-* **deps:** update devdependency @nuxt/devtools to ^3.0.1 ([e879bb2](https://github.com/mhaibaraai/movk-nuxt-docs/commit/e879bb24229263247dfdf105bd0af4b3d891b40e))
-* **deps:** update devdependency eslint to ^9.39.0 ([fc2d0ba](https://github.com/mhaibaraai/movk-nuxt-docs/commit/fc2d0bae7bf03b74a476c24c966d3a4728c5a31a))
-* **deps:** update nuxt framework to ^4.2.1 ([564d8ac](https://github.com/mhaibaraai/movk-nuxt-docs/commit/564d8ace5d1766b32a52ecbc675bee1c37c08996))
 * 关闭 TypeScript unified-signatures ESLint 规则 ([8fea873](https://github.com/mhaibaraai/movk-nuxt-docs/commit/8fea873ef8d5e618aa6913458dd726ff1a8b4d31))
 
 ## [1.3.0](https://github.com/mhaibaraai/movk-nuxt-docs/compare/v1.2.1...v1.3.0) (2025-10-31)
@@ -447,9 +436,6 @@
 
 ### 🔧 Chores
 
-* **deps:** lock file maintenance ([60ea10b](https://github.com/mhaibaraai/movk-nuxt-docs/commit/60ea10b8f575c0126800694c57da4290dfdf6008))
-* **deps:** lock file maintenance ([ee605bc](https://github.com/mhaibaraai/movk-nuxt-docs/commit/ee605bc03d2e96c8aeb2669bc247c50614bfa764))
-* **deps:** update all non-major dependencies ([5480a38](https://github.com/mhaibaraai/movk-nuxt-docs/commit/5480a387e494952cffce5bb5f3a536553acf8b2b))
 * **deps:** update all non-major dependencies ([f635ab9](https://github.com/mhaibaraai/movk-nuxt-docs/commit/f635ab9a370fc3ac42d47bba20853fd0a5a73f62))
 * 优化 Vite 依赖预打包配置 ([348ee6d](https://github.com/mhaibaraai/movk-nuxt-docs/commit/348ee6d116e41f35fa839f018a74672b056983c1))
 
@@ -473,15 +459,6 @@
 
 ### 🔧 Chores
 
-* **deps:** lock file maintenance ([98b5650](https://github.com/mhaibaraai/movk-nuxt-docs/commit/98b56507b6a5403de81cf94d8fa59f0d15e05dc6))
-* **deps:** update all non-major dependencies ([258342a](https://github.com/mhaibaraai/movk-nuxt-docs/commit/258342af6fcaa199748e4a97cdf728349fa81ba9))
-* **deps:** update all non-major dependencies ([f4bd3cb](https://github.com/mhaibaraai/movk-nuxt-docs/commit/f4bd3cbe18c1aed1b0de02cd3dd621d7304d36d8))
-* **deps:** update dependency @iconify-json/simple-icons to ^1.2.56 ([bfe906b](https://github.com/mhaibaraai/movk-nuxt-docs/commit/bfe906b79276578fe234c82a1c4f31b0daefff5f))
-* **deps:** update dependency @iconify-json/simple-icons to ^1.2.56 ([dbe244f](https://github.com/mhaibaraai/movk-nuxt-docs/commit/dbe244f69e96012f867c656ad0191ea9f7a49500))
-* **deps:** update devdependency @nuxt/devtools to v3 ([37b6024](https://github.com/mhaibaraai/movk-nuxt-docs/commit/37b60248017fe9977f65b3598e3e57ba79a56471))
-* **deps:** update devdependency @nuxt/devtools to v3 ([71e9812](https://github.com/mhaibaraai/movk-nuxt-docs/commit/71e9812bcf011be59e2a5ce35bb7fc2834f4cc11))
-* **deps:** update nuxt framework to ^4.2.0 ([edd1789](https://github.com/mhaibaraai/movk-nuxt-docs/commit/edd1789b60440487631ce35239847781d4d57d4a))
-* **deps:** update vueuse monorepo to v14 ([f9f47dc](https://github.com/mhaibaraai/movk-nuxt-docs/commit/f9f47dc89ae3e5de4f69665a2899bf23b077d05c))
 * 优化 VSCode 编辑器自动格式化和代码修复配置 ([853cfa9](https://github.com/mhaibaraai/movk-nuxt-docs/commit/853cfa9f1c22420cac66ad5b8c7e29f47e257ae4))
 * 更新 TypeScript 配置使用新的引用结构 ([9b1e099](https://github.com/mhaibaraai/movk-nuxt-docs/commit/9b1e099c4241f99fbca7dc2658e8109e5a154be8))
 * 清理未使用的 composables 和更新清理脚本 ([a992455](https://github.com/mhaibaraai/movk-nuxt-docs/commit/a992455090cb3bfb313d2cb0274de1a5dfc18820))

@@ -24,7 +24,9 @@ export default defineNuxtConfig({
         config.optimizeDeps.include.push(
           '@nuxt/content > slugify',
           'extend',
-          '@ai-sdk/gateway > @vercel/oidc'
+          '@ai-sdk/gateway > @vercel/oidc',
+          'mermaid',
+          'dompurify'
         )
         config.optimizeDeps.include = config.optimizeDeps.include
           .map(id => id.replace(/^@nuxt\/content > /, '@movk/nuxt-docs > @nuxt/content > '))
@@ -42,7 +44,7 @@ export default defineNuxtConfig({
     build: {
       markdown: {
         highlight: {
-          langs: ['bash', 'diff', 'json', 'js', 'ts', 'html', 'css', 'vue', 'shell', 'mdc', 'md', 'yaml']
+          langs: ['bash', 'diff', 'json', 'js', 'ts', 'html', 'css', 'vue', 'shell', 'mdc', 'md', 'yaml', 'mermaid']
         },
         remarkPlugins: {
           'remark-mdc': {
