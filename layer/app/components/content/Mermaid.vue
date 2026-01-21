@@ -2,7 +2,6 @@
 import { hash } from 'ohash'
 import type { IconProps } from '@nuxt/ui'
 import type { ClassNameValue } from 'tailwind-merge'
-import DOMPurify from 'isomorphic-dompurify'
 import {
   useClipboard,
   useElementVisibility,
@@ -91,7 +90,11 @@ async function renderMermaid() {
   if (!props.code || isRendered.value || !diagramRef.value) return
 
   try {
-    const mermaid = await import('mermaid').then(m => m.default)
+    // 动态导入 mermaid 和 dompurify，仅在客户端执行
+    const [mermaid, DOMPurify] = await Promise.all([
+      import('mermaid').then(m => m.default),
+      import('dompurify').then(m => m.default)
+    ])
     mermaid.initialize({
       startOnLoad: false,
       theme: mermaidTheme.value,

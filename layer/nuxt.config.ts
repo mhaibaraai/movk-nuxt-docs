@@ -26,7 +26,7 @@ export default defineNuxtConfig({
           'extend',
           '@ai-sdk/gateway > @vercel/oidc',
           'mermaid',
-          'isomorphic-dompurify'
+          'dompurify'
         )
         config.optimizeDeps.include = config.optimizeDeps.include
           .map(id => id.replace(/^@nuxt\/content > /, '@movk/nuxt-docs > @nuxt/content > '))
