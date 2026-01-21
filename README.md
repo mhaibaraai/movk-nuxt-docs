@@ -37,6 +37,7 @@
 - ⚡ **基于 Nuxt 4** - 充分利用最新的 Nuxt 框架，实现卓越性能
 - 🎨 **采用 Nuxt UI** - 集成全面的 UI 组件库，开箱即用
 - 📝 **MDC 语法增强** - 支持 Markdown 与 Vue 组件的无缝集成
+- 📊 **Mermaid 图表** - 内置 Mermaid 支持，渲染流程图、时序图、类图等可视化图表，支持自动主题切换和全屏查看
 - 🔍 **全文搜索** - 基于 Nuxt Content 的 `ContentSearch` 组件，支持键盘快捷键（⌘K）
 - 🌙 **暗黑模式** - 支持亮色/暗色主题切换
 - 📱 **响应式设计** - 移动优先的响应式布局
@@ -182,6 +183,55 @@ icon: i-lucide-rocket
 ```
 
 了解更多关于 MDC 语法，请查看 [Nuxt Content 文档](https://content.nuxt.com/docs/files/markdown#mdc-syntax)。
+
+### Mermaid 图表
+
+使用 ` ```mermaid ` 代码块渲染可视化图表，支持流程图、时序图、类图等多种图表类型：
+
+````md [md]
+```mermaid
+graph TD
+    A[开始] --> B{是否有效?}
+    B -->|是| C[处理数据]
+    B -->|否| D[显示错误]
+    C --> E[完成]
+    D --> E
+```
+````
+
+**主要特性：**
+- 🎨 自动主题切换（深色/浅色模式）
+- 🔄 懒加载（仅在可见时渲染）
+- 📋 一键复制图表代码
+- 🖼️ 全屏查看功能
+- 🔒 安全渲染（DOMPurify 清理）
+
+**支持的图表类型：**
+- **流程图**（`flowchart`/`graph`）：用于展示流程和决策
+  ![Mermaid 流程图示例](https://docs.mhaibaraai.cn/mermaid/mermaid-flowchart.png)
+- **时序图**（`sequenceDiagram`）：用于展示交互时序
+  ![Mermaid 时序图示例](https://docs.mhaibaraai.cn/mermaid/mermaid-sequence.png)
+- **类图**（`classDiagram`）：用于展示类关系
+- **状态图**（`stateDiagram`）：用于展示状态转换
+- **甘特图**（`gantt`）：用于展示项目时间线
+- **饼图**（`pie`）：用于展示数据占比
+- **Git 图**（`gitGraph`）：用于展示分支历史
+- 以及更多 [Mermaid 支持的图表类型](https://mermaid.js.org/intro/)
+
+**带文件名的图表：**
+
+````md [md]
+```mermaid [auth-flow.mmd]
+sequenceDiagram
+    participant U as 用户
+    participant A as 认证服务
+    participant D as 数据库
+    U->>A: 登录请求
+    A->>D: 验证凭证
+    D-->>A: 返回用户信息
+    A-->>U: 返回 Token
+```
+````
 
 ## 🛠️ 开发
 
