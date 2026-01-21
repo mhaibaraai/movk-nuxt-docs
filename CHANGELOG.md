@@ -1,5 +1,62 @@
 # 📋 Changelog
 
+## [1.8.0](https://github.com/mhaibaraai/movk-nuxt-docs/compare/v1.7.5...v1.8.0) (2026-01-21)
+
+### ✨ Features
+
+* **图表渲染：** 添加 Mermaid 图表支持 ([bc8c35a](https://github.com/mhaibaraai/movk-nuxt-docs/commit/bc8c35a), [文档](/docs/typography/mermaid))
+  - 支持流程图、时序图、类图、状态图、饼图、甘特图、实体关系图等 8 种图表、以及更多 [Mermaid 支持的图表类型](https://mermaid.js.org/intro/)
+  - 自动主题切换（深色/浅色模式）和懒加载优化
+  - 支持复制代码、全屏查看功能
+
+  #### 流程图：
+
+  ![Mermaid 流程图示例](https://docs.mhaibaraai.cn/mermaid/mermaid-flowchart.png)
+
+  ```mermaid
+  graph TD
+      A[开始] --> B{是否支持?}
+      B -->|是| C[渲染图表]
+      B -->|否| D[显示代码]
+      C --> E[完成]
+      D --> E
+  ```
+
+  #### 时序图：
+
+  ![Mermaid 时序图示例](https://docs.mhaibaraai.cn/mermaid/mermaid-sequence.png)
+
+  ```mermaid
+  sequenceDiagram
+      用户->>Nuxt: 编写 Markdown
+      Nuxt->>Mermaid: 解析图表语法
+      Mermaid->>浏览器: 渲染 SVG
+      浏览器-->>用户: 显示图表
+  ```
+
+### ⚡ Performance Improvements
+
+* 优化 Mermaid 组件依赖和导入方式 ([7eca16c](https://github.com/mhaibaraai/movk-nuxt-docs/commit/7eca16ce1e8fc9cd47b00080b5e5d2daae7189f8))
+
+### 📝 Documentation
+
+* 📝 添加 Mermaid 图表功能文档 ([36de010](https://github.com/mhaibaraai/movk-nuxt-docs/commit/36de0102ba13fd79cbbbe084c8be6a721742bb9e))
+* 优化 CHANGELOG 格式并移除冗余条目 ([acaea1d](https://github.com/mhaibaraai/movk-nuxt-docs/commit/acaea1de1c3fa4ce60614b5b1193a370479cc896))
+* 补充 Mermaid 图表功能说明 ([3214708](https://github.com/mhaibaraai/movk-nuxt-docs/commit/3214708674c1963bdfaa76a120ebc9bb625a8968))
+
+### ♻️ Code Refactoring
+
+* 优化 TypeScript 注释指令 ([a6dda46](https://github.com/mhaibaraai/movk-nuxt-docs/commit/a6dda462b4d923015bf5ad148ceff07006532ef2))
+
+### 📦 Build System
+
+* 添加 mermaid 依赖 ([bc8c35a](https://github.com/mhaibaraai/movk-nuxt-docs/commit/bc8c35a8795c405b7653bb820536ebc4c1d267e8))
+
+### 🔧 Chores
+
+* **deps:** update all non-major dependencies ([a864a76](https://github.com/mhaibaraai/movk-nuxt-docs/commit/a864a76b4742a241fc7f1a3ca57db85ac67bebbf))
+* **deps:** update dependency @openrouter/ai-sdk-provider to v2 ([e761d9a](https://github.com/mhaibaraai/movk-nuxt-docs/commit/e761d9ab9d6bd858d7c51dbfd8a0ba3a3254ca1b))
+
 ## [1.7.5](https://github.com/mhaibaraai/movk-nuxt-docs/compare/v1.7.4...v1.7.5) (2026-01-20)
 
 ### ✨ Features
