@@ -4,7 +4,7 @@
 
 ### ✨ Features
 
-* **图表渲染：** 添加 Mermaid 图表支持 ([bc8c35a](https://github.com/mhaibaraai/movk-nuxt-docs/commit/bc8c35a), [文档](/docs/typography/mermaid))
+* **图表渲染：** 添加 Mermaid 图表支持 ([bc8c35a](https://github.com/mhaibaraai/movk-nuxt-docs/commit/bc8c35a), [文档](https://docs.mhaibaraai.cn/docs/typography/mermaid))
   - 支持流程图、时序图、类图、状态图、饼图、甘特图、实体关系图等 8 种图表、以及更多 [Mermaid 支持的图表类型](https://mermaid.js.org/intro/)
   - 自动主题切换（深色/浅色模式）和懒加载优化
   - 支持复制代码、全屏查看功能
@@ -13,6 +13,7 @@
 
   ![Mermaid 流程图示例](https://docs.mhaibaraai.cn/mermaid/mermaid-flowchart.png)
 
+  ````md
   ```mermaid
   graph TD
       A[开始] --> B{是否支持?}
@@ -21,11 +22,13 @@
       C --> E[完成]
       D --> E
   ```
+  ````
 
   #### 时序图：
 
   ![Mermaid 时序图示例](https://docs.mhaibaraai.cn/mermaid/mermaid-sequence.png)
 
+  ````md
   ```mermaid
   sequenceDiagram
       用户->>Nuxt: 编写 Markdown
@@ -33,6 +36,7 @@
       Mermaid->>浏览器: 渲染 SVG
       浏览器-->>用户: 显示图表
   ```
+  ````
 
 ### ⚡ Performance Improvements
 
