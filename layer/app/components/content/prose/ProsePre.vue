@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import type { ProsePreProps } from '@nuxt/ui'
-// @ts-expect-error Vue SFC import
+// @ts-ignore
 import NuxtUIProsePre from '@nuxt/ui/components/prose/Pre.vue'
 import Mermaid from '../Mermaid.vue'
 
