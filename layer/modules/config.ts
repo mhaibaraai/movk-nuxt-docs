@@ -66,6 +66,7 @@ export default defineNuxtModule({
       resolve('../app/components/content/ComponentProps.vue'),
       resolve('../app/components/content/ComponentSlots.vue'),
       resolve('../app/components/content/PageLastCommit.vue'),
+      resolve('../app/components/content/Mermaid.vue'),
       resolve('./ai-chat/runtime/components/AiChatToolCall.vue'),
       resolve('./ai-chat/runtime/components/AiChatReasoning.vue'),
       resolve('./ai-chat/runtime/components/AiChatSlideoverFaq.vue'),
@@ -78,7 +79,7 @@ export default defineNuxtModule({
       join(dir, 'templates/*/app/components')
     ]
 
-    // @ts-ignore - component-meta 的类型定义在运行时才能正确解析
+    // @ts-ignore - component-meta is not typed
     nuxt.hook('component-meta:extend', (options: any) => {
       options.exclude = [
         ...(options.exclude || []),
