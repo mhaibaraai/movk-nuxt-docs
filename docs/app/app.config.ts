@@ -57,6 +57,14 @@ export default defineAppConfig({
         ]
       },
       {
+        category: '图表与可视化',
+        items: [
+          '如何在文档中使用 Mermaid 图表？',
+          '支持哪些类型的 Mermaid 图表？',
+          '如何自定义图表样式和主题？'
+        ]
+      },
+      {
         category: 'AI 集成',
         items: [
           '什么是 LLMs.txt？有什么作用？',
