@@ -10,6 +10,9 @@ export default defineNuxtModule({
   },
   async setup(_options, nuxt) {
     const { resolve } = createResolver(import.meta.url)
+
+    nuxt.options.alias['#ai-chat'] = resolve('./ai-chat/runtime')
+
     const dir = nuxt.options.rootDir
     const url = inferSiteURL()
     const meta = await getPackageJsonMetadata(dir)
