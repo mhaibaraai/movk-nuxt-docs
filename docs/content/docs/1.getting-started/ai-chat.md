@@ -8,17 +8,6 @@ category: ai
 
 一个提供基于 MCP（模型上下文协议）工具的 AI 聊天界面的 Nuxt 模块。
 
-**主要功能：**
-- 支持多种 AI 模型（通过 **AI SDK Gateway** 或 **OpenRouter**）
-- 带有流式响应的 AI 聊天侧滑组件
-- 用于快速提问的浮动输入组件
-- MCP 工具调用（文档检索）
-- 代码高亮和 Markdown 渲染
-- 思考过程展示（Extended Thinking）
-- 持久化聊天状态
-- 支持键盘快捷键
-- 支持可用模型列表选取
-
 ![AiChat]( /ai/AiChat.png )
 
 ## 快速开始
@@ -51,7 +40,7 @@ export default defineNuxtConfig({
 |--------|------|---------|-------------|
 | `apiPath` | `string`{lang="ts-type"} | `/api/ai-chat` | 聊天 API 端点路径 |
 | `mcpPath` | `string`{lang="ts-type"} | `/mcp` | MCP 服务器连接路径 |
-| `model` | `string`{lang="ts-type"} | `-` | AI SDK Gateway、OpenRouter 的模型标识符 |
+| `model` | `string`{lang="ts-type"} | `-` | 模型标识符 |
 | `models` | `string[]`{lang="ts-type"} | `[]` | 可用模型列表（格式为 "provider/model" 或 "model"） |
 
 ### 在 `app.config.ts` 中配置 AI Chat 功能：
@@ -114,11 +103,11 @@ OPENROUTER_API_KEY=your-openrouter-key
 pnpm add @ai-sdk/mcp @ai-sdk/vue @ai-sdk/gateway @openrouter/ai-sdk-provider ai motion-v shiki shiki-stream
 ```
 
-## 使用方法
+## 自动集成
 
+::tip
 AI Chat 功能已内置在 Movk Nuxt Docs 中，无需手动添加组件。
-
-### 自动集成
+::
 
 默认情况下，以下功能会自动启用：
 
@@ -208,9 +197,67 @@ console.log(panelWidth.value) // '400px' or '800px'
 </script>
 ```
 
-## 组件 API
 
-### AiChat
+## 自定义
+
+### 自定义模型提供商
+
+::note{to="https://ai-sdk.dev/providers/ai-sdk-providers/"}
+查看 AI SDK 支持的提供商列表
+::
+
+```ts [server/plugins/modelProviders.ts]
+import { modelProviderRegistry } from '#ai-chat/server/utils/modelProviders'
+import { createAnthropic } from '@ai-sdk/anthropic'
+
+export default defineNitroPlugin(() => {
+  // 覆盖默认提供商配置
+  modelProviderRegistry.register('anthropic', ({ config, modelId }) => {
+    const anthropic = createAnthropic({
+      apiKey: config.anthropicApiKey,
+      // 自定义配置...
+    })
+    return anthropic(modelId)
+  })
+})
+```
+
+配置环境变量：
+
+```bash [.env]
+ANTHROPIC_API_KEY=your_api_key
+```
+
+#### 内置提供商
+
+| 提供商 | 前缀 | 环境变量 |
+|--------|------|----------|
+| AI Gateway | 无（默认） | `AI_GATEWAY_API_KEY` |
+| OpenRouter | `openrouter/` | `OPENROUTER_API_KEY` |
+
+### 系统提示词
+
+要自定义 AI 的行为，请创建编辑以下文件中的系统提示词：
+`server/api/ai-chat.ts`
+
+::u-button
+---
+color: neutral
+icon: i-lucide-code-xml
+to: https://github.com/mhaibaraai/movk-nuxt-docs/blob/main/layer/modules/ai-chat/runtime/server/api/ai-chat.ts
+target: _blank
+variant: link
+---
+默认系统提示词
+::
+
+### 样式
+
+组件使用 Nuxt UI 和 Tailwind CSS 设计令牌。你可以通过修改组件文件或覆盖 UI 属性来自定义外观。
+
+## API
+
+### `AiChat`
 
 最简单的集成方式，展示助手按钮。
 
@@ -225,7 +272,7 @@ variant: link
 查看源代码
 ::
 
-### AiChatFloatingInput
+### `AiChatFloatingInput`
 
 浮动输入框，位于视口下方。无需任何属性。
 
@@ -249,7 +296,7 @@ variant: link
 查看源代码
 ::
 
-### AiChatToolCall
+### `AiChatToolCall`
 
 在聊天中显示 MCP 工具调用。
 
@@ -270,7 +317,7 @@ variant: link
 查看源代码
 ::
 
-### AiChatModelSelect
+### `AiChatModelSelect`
 
 模型选择下拉菜单，用于切换 AI 模型。无需任何属性。
 
@@ -289,7 +336,7 @@ variant: link
 查看源代码
 ::
 
-### AiChatReasoning
+### `AiChatReasoning`
 
 显示 AI 思考过程的可折叠组件。
 
@@ -306,7 +353,7 @@ variant: link
 查看源代码
 ::
 
-### AiChatSlideoverFaq
+### `AiChatSlideoverFaq`
 
 显示聊天为空时的常见问题分类。
 
@@ -334,7 +381,7 @@ variant: link
 查看源代码
 ::
 
-### AiChatPanel
+### `AiChatPanel`
 
 完整的 AI 聊天面板界面，支持侧边栏模式和可调整宽度。
 
@@ -356,7 +403,7 @@ variant: link
 查看源代码
 ::
 
-### AiChatDisabled
+### `AiChatDisabled`
 
 当 AI Chat 功能未启用时显示的禁用状态组件。
 
@@ -371,7 +418,7 @@ variant: link
 查看源代码
 ::
 
-### AiChatPreStream
+### `AiChatPreStream`
 
 用于流式渲染代码块的组件，集成 Shiki 语法高亮。
 
@@ -521,41 +568,4 @@ const html = highlighter.codeToHtml(code, {
   lang: 'typescript',
   theme: 'material-theme-palenight'
 })
-```
-
-## 自定义
-
-### 系统提示词
-
-要自定义 AI 的行为，请创建编辑以下文件中的系统提示词：
-`server/api/ai-chat.ts`
-
-::u-button
----
-color: neutral
-icon: i-lucide-code-xml
-to: https://github.com/mhaibaraai/movk-nuxt-docs/blob/main/layer/modules/ai-chat/runtime/server/api/ai-chat.ts
-target: _blank
-variant: link
----
-默认系统提示词
-::
-
-### 样式
-
-组件使用 Nuxt UI 和 Tailwind CSS 设计令牌。你可以通过修改组件文件或覆盖 UI 属性来自定义外观。
-
-## 版本依赖
-
-```json [package.json]
-{
-  "@ai-sdk/gateway": "^3.0.11",
-  "@ai-sdk/mcp": "^1.0.5",
-  "@ai-sdk/vue": "^3.0.27",
-  "@openrouter/ai-sdk-provider": "^1.5.4",
-  "ai": "^6.0.27",
-  "motion-v": "^1.8.1",
-  "shiki": "^3.21.0",
-  "shiki-stream": "^0.1.4"
-}
 ```
