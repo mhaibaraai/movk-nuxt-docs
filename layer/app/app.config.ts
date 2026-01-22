@@ -108,8 +108,7 @@ export default defineAppConfig({
       streaming: 'i-lucide-chevron-down',
       providers: {
         mistral: 'i-simple-icons-mistralai',
-        kwaipilot: 'i-lucide-wand',
-        zai: 'i-lucide-wand'
+        kwaipilot: 'i-lucide-wand'
       }
     }
   }
