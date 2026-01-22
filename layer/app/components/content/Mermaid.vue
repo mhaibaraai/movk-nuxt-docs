@@ -81,10 +81,11 @@ const diagramRef = ref<HTMLElement | null>(null)
 const isRendered = ref(false)
 const hasError = ref(false)
 const errorMessage = ref('')
+const hasBeenVisible = ref(false)
 
 const [isFullscreen, toggleFullscreen] = useToggle(false)
 const { copy, copied } = useClipboard({ source: () => props.code })
-const isVisible = useElementVisibility(containerRef)
+const isVisible = useElementVisibility(containerRef, { threshold: 0.1 })
 
 async function renderMermaid() {
   if (!props.code || isRendered.value || !diagramRef.value) return
@@ -127,7 +128,11 @@ async function reRender() {
 watch(
   [isVisible, diagramRef],
   ([visible, el]) => {
-    if (visible && el && !isRendered.value) {
+    // 记录曾经可见状态，避免快速滚动时错过渲染
+    if (visible) {
+      hasBeenVisible.value = true
+    }
+    if (hasBeenVisible.value && el && !isRendered.value) {
       renderMermaid()
     }
   },

@@ -13,13 +13,12 @@ export default defineNuxtConfig({
   },
   compatibilityDate: 'latest',
   aiChat: {
-    model: 'mistral/devstral-2',
+    model: 'mistral/devstral-3b',
     models: [
       'mistral/devstral-2',
-      'kwaipilot/kat-coder-pro-v1',
-      'openrouter/mistralai/devstral-2512:free',
       'openrouter/xiaomi/mimo-v2-flash:free',
-      'openrouter/z-ai/glm-4.5-air:free'
+      'openrouter/z-ai/glm-4.5-air:free',
+      'mistral/ministral-3b'
     ]
   },
   llms: {

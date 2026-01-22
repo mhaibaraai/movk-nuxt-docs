@@ -22,7 +22,7 @@ export interface AiChatModuleOptions {
    */
   mcpPath?: string
   /**
-   * 通过 AI SDK Gateway 、OpenRouter 使用的 AI 模型
+   * 使用的 AI 模型
    */
   model?: string
   /**
@@ -46,7 +46,7 @@ export default defineNuxtModule<AiChatModuleOptions>({
     models: []
   },
   setup(options, nuxt) {
-    const hasApiKey = !!(process.env.AI_GATEWAY_API_KEY || process.env.OPENROUTER_API_KEY)
+    const hasApiKey = !!(process.env.AI_GATEWAY_API_KEY || process.env.OPENROUTER_API_KEY || process.env.ZHIPU_API_KEY)
 
     const { resolve } = createResolver(import.meta.url)
 
@@ -77,7 +77,7 @@ export default defineNuxtModule<AiChatModuleOptions>({
     }
 
     if (!hasApiKey) {
-      log.warn('[ai-chat] Module disabled: no AI_GATEWAY_API_KEY or OPENROUTER_API_KEY found')
+      log.warn('[ai-chat] Module disabled: no API key found in environment variables.')
       return
     }
 
