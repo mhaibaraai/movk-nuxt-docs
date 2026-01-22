@@ -1,5 +1,24 @@
 # 📋 Changelog
 
+## [1.8.1](https://github.com/mhaibaraai/movk-nuxt-docs/compare/v1.8.0...v1.8.1) (2026-01-22)
+
+### ✨ Features
+
+* 添加模型提供商注册系统 ([3a104e4](https://github.com/mhaibaraai/movk-nuxt-docs/commit/3a104e47910d8c8a76503c04885ee67090a476a5)), closes [#ai-chat](https://github.com/mhaibaraai/movk-nuxt-docs/issues/ai-chat)
+
+### 🐛 Bug Fixes
+
+* 优化 Mermaid 图表渲染可见性检测 ([33192cd](https://github.com/mhaibaraai/movk-nuxt-docs/commit/33192cd62dfa26e9fd2a8b67e45edb30b0fd13a3))
+
+### 📝 Documentation
+
+* 优化 AI Chat 文档结构和描述 ([689c08a](https://github.com/mhaibaraai/movk-nuxt-docs/commit/689c08aaef1801f89bc36fbfd10d3393517f793f))
+
+### 🔧 Chores
+
+* **deps:** update all non-major dependencies ([2888522](https://github.com/mhaibaraai/movk-nuxt-docs/commit/2888522d732f0859f6df5bc708fe245567f384bf))
+* 更新模型配置和依赖项 ([e8c8afa](https://github.com/mhaibaraai/movk-nuxt-docs/commit/e8c8afab635af3f8e85942063ee47471233c44f6))
+
 ## [1.8.0](https://github.com/mhaibaraai/movk-nuxt-docs/compare/v1.7.5...v1.8.0) (2026-01-21)
 
 ### ✨ Features
