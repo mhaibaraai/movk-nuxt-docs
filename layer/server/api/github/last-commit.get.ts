@@ -8,8 +8,8 @@ export default defineCachedEventHandler(async (event) => {
   const { path } = getQuery(event) as { path: string }
   if (!path) {
     throw createError({
-      statusCode: 400,
-      statusMessage: 'Path is required'
+      status: 400,
+      statusText: 'Path is required'
     })
   }
 
@@ -17,8 +17,8 @@ export default defineCachedEventHandler(async (event) => {
 
   if (!github || typeof github === 'boolean') {
     throw createError({
-      statusCode: 500,
-      statusMessage: 'GitHub configuration is not available'
+      status: 500,
+      statusText: 'GitHub configuration is not available'
     })
   }
 
