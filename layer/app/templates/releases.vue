@@ -3,7 +3,7 @@ import type { ButtonProps } from '@nuxt/ui'
 
 const { data: page } = await useAsyncData('releases', () => queryCollection('releases').first())
 if (!page.value) {
-  throw createError({ statusCode: 404, statusMessage: 'Page not found', fatal: true })
+  throw createError({ status: 404, statusText: 'Page not found', fatal: true })
 }
 
 const title = page.value.seo?.title || page.value.title

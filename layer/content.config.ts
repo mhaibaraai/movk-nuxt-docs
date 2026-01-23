@@ -1,9 +1,8 @@
 import { existsSync } from 'node:fs'
 import { defineCollection, defineContentConfig } from '@nuxt/content'
 import { useNuxt } from '@nuxt/kit'
-import { asSeoCollection } from '@nuxtjs/seo/content'
 import { joinURL } from 'ufo'
-import { z } from 'zod/v4'
+import { z } from 'zod'
 
 const { options } = useNuxt()
 const cwd = joinURL(options.rootDir, 'content')
@@ -38,14 +37,14 @@ const PageHero = z.object({
 
 export default defineContentConfig({
   collections: {
-    landing: defineCollection(asSeoCollection({
+    landing: defineCollection({
       type: 'page',
       source: {
         cwd,
         include: 'index.md'
       }
-    })),
-    docs: defineCollection(asSeoCollection({
+    }),
+    docs: defineCollection({
       type: 'page',
       source: {
         cwd,
@@ -58,8 +57,8 @@ export default defineContentConfig({
           title: z.string().optional()
         })
       })
-    })),
-    releases: defineCollection(asSeoCollection({
+    }),
+    releases: defineCollection({
       type: 'page',
       source: {
         cwd,
@@ -71,6 +70,6 @@ export default defineContentConfig({
         releases: z.string(),
         hero: PageHero
       })
-    }))
+    })
   }
 })
