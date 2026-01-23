@@ -50,16 +50,11 @@ export default defineNuxtConfig({
 
 ## 内置工具
 
-MOVK Docs MCP 提供两个开箱即用的工具：
+MOVK Docs MCP 提供一些开箱即用的工具：
 
 ### `list-pages`
 
 列出所有可用的文档页面及分类信息。
-
-**使用场景：**
-- 搜索某个主题的文档但不知道确切路径
-- 了解整体文档结构
-- 查找特定类别的所有页面
 
 ### `get-page`
 
@@ -68,10 +63,16 @@ MOVK Docs MCP 提供两个开箱即用的工具：
 **参数：**
 - `path` *（必需）* - 页面路径，例如 `/docs/getting-started/installation`
 
-**使用场景：**
-- 获取确切路径页面的完整内容
-- 引用特定页面的详细信息
-- 获取完整 Markdown 源代码
+### `list-examples`
+
+列出所有可用的 UI 示例和代码演示。
+
+### `get-example`
+
+检索特定的 UI 示例实现代码和详细信息。
+
+**参数：**
+- `exampleName` *（必需）* - 示例名称，例如 `MyCustomButton`。
 
 ## 设置指南
 
@@ -215,7 +216,7 @@ AI 助手将在生成响应时主动搜索文档，根据对话上下文智能�
 在 `server/mcp/tools/` 目录中创建自定义工具文件：
 
 ```ts [server/mcp/tools/my-tool.ts]
-import { z } from 'zod/v4'
+import { z } from 'zod'
 
 export default defineMcpTool({
   description: '工具的详细描述，帮助 AI 理解何时使用此工具',
@@ -278,7 +279,7 @@ export default defineMcpPrompt({
 可以在 `server/mcp/` 目录下创建自定义处理器：
 
 ```ts [server/mcp/migration.ts]
-import { z } from 'zod/v4'
+import { z } from 'zod'
 
 const migrationTool = defineMcpTool({
   name: 'migrate-v3-to-v4',
@@ -309,10 +310,10 @@ export default defineMcpHandler({
 
 ### 覆盖默认工具
 
-要覆盖内置的 `list-pages` 或 `get-page` 工具，只需在 `server/mcp/tools/` 目录中创建同名文件即可。
+要覆盖内置的工具，只需在 `server/mcp/tools/` 目录中创建同名文件即可。
 
 ```ts [server/mcp/tools/list-pages.ts]
-import { z } from 'zod/v4'
+import { z } from 'zod'
 export default defineMcpTool({
   description: '自定义列表页实现',
   inputSchema: {

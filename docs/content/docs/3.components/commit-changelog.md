@@ -11,23 +11,6 @@ links:
 
 根据指定文件路径，从 GitHub 仓库获取提交历史，以时间线形式展示。
 
-::callout
-::collapsible{name="工作原理"}
-1. **路径推断**：根据 `name` 属性或当前路由推断文件名
-2. **命名转换**：支持多种文件命名格式（通过 `casing` 参数控制）
-   - `auto`（默认）：Vue 组件使用 PascalCase，其他文件使用 camelCase
-   - `kebab`：保持 kebab-case（如 `use-user` → `use-user.ts`）
-   - `camel`：转换为 camelCase（如 `use-user` → `useUser.ts`）
-   - `pascal`：转换为 PascalCase（如 `use-user` → `UseUser.ts`）
-3. **获取提交**：调用 GitHub API 获取指定文件的提交历史
-4. **格式化显示**：将提交信息格式化为 Markdown，包含：
-   - 提交 SHA（前 5 位）和链接
-   - 提交信息（移除范围标注）
-   - Issue 引用链接（如 `#123`）
-   - 内联代码高亮
-::
-::
-
 ## 前置要求
 
 - **GitHub 配置**：在 `app.config.ts` 中配置 GitHub 相关信息。详见 [GitHub 集成配置](/docs/getting-started/configuration#github-集成)。
