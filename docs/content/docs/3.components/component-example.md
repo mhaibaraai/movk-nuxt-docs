@@ -23,11 +23,11 @@ export default defineNuxtConfig({
   modules: [
     (_, nuxt) => {
       nuxt.hook('components:dirs', (dirs) => {
-        dirs.unshift({ 
-          path: resolve('./app/components/content/examples'), 
-          pathPrefix: false, 
-          prefix: '', 
-          global: true 
+        dirs.unshift({
+          path: resolve('./app/components/content/examples'),
+          pathPrefix: false,
+          prefix: '',
+          global: true
         })
       })
     }
@@ -40,11 +40,16 @@ export default defineNuxtConfig({
 
 ### 基本用法
 
-在您的 Markdown 文档中使用 `::component-example` 指令：
+在您的 Markdown 文档中使用 `:component-example` 指令：
 
-```md [md]
-:component-example{name="ButtonExample"}
+::code-preview
+:component-example{name="AccordionExample"}
+
+#code
+```mdc
+:component-example{name="AccordionExample"}
 ```
+::
 
 ### 高级配置
 

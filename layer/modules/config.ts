@@ -1,8 +1,8 @@
 import { createResolver, defineNuxtModule } from '@nuxt/kit'
-import { join } from 'pathe'
 import { defu } from 'defu'
 import { getGitBranch, getGitEnv, getLocalGitInfo } from '../utils/git'
 import { getPackageJsonMetadata, inferSiteURL } from '../utils/meta'
+import { createComponentMetaExcludeFilters } from '../utils/component-meta'
 
 export default defineNuxtModule({
   meta: {
@@ -17,17 +17,7 @@ export default defineNuxtModule({
     const url = inferSiteURL()
     const meta = await getPackageJsonMetadata(dir)
     const gitInfo = await getLocalGitInfo(dir) || getGitEnv()
-    const siteName = nuxt.options?.site?.name || meta.name || gitInfo?.name || ''
-
-    nuxt.options.llms = defu(nuxt.options.llms, {
-      domain: url || 'https://example.com',
-      title: siteName,
-      description: meta.description || '',
-      full: {
-        title: siteName,
-        description: meta.description || ''
-      }
-    })
+    const siteName = meta.name || gitInfo?.name || ''
 
     nuxt.options.site = defu(nuxt.options.site, {
       url,
@@ -35,8 +25,15 @@ export default defineNuxtModule({
       debug: false
     })
 
-    nuxt.options.robots = defu(nuxt.options.robots, {
-      sitemap: url ? `${url.replace(/\/$/, '')}/sitemap.xml` : undefined
+    nuxt.options.llms = defu(nuxt.options.llms, {
+      domain: url || 'https://example.com',
+      title: siteName,
+      description: meta.description || '',
+      contentRawMarkdown: false as const,
+      full: {
+        title: siteName,
+        description: meta.description || ''
+      }
     })
 
     nuxt.options.appConfig.header = defu(nuxt.options.appConfig.header, {
@@ -62,34 +59,16 @@ export default defineNuxtModule({
     })
 
     const layerPath = resolve('..')
-    const allowedComponents = [
-      resolve('../app/components/content/CommitChangelog.vue'),
-      resolve('../app/components/content/ComponentEmits.vue'),
-      resolve('../app/components/content/ComponentExample.vue'),
-      resolve('../app/components/content/ComponentProps.vue'),
-      resolve('../app/components/content/ComponentSlots.vue'),
-      resolve('../app/components/content/PageLastCommit.vue'),
-      resolve('../app/components/content/Mermaid.vue'),
-      resolve('./ai-chat/runtime/components/AiChatToolCall.vue'),
-      resolve('./ai-chat/runtime/components/AiChatReasoning.vue'),
-      resolve('./ai-chat/runtime/components/AiChatSlideoverFaq.vue'),
-      resolve('./ai-chat/runtime/components/AiChatPreStream.vue')
-    ]
-    const userComponentPaths = [
-      join(dir, 'app/components'),
-      join(dir, 'components'),
-      join(dir, 'docs/app/components'),
-      join(dir, 'templates/*/app/components')
-    ]
 
     // @ts-ignore - component-meta is not typed
     nuxt.hook('component-meta:extend', (options: any) => {
+      const userInclude = (nuxt.options.componentMeta && typeof nuxt.options.componentMeta === 'object')
+        ? nuxt.options.componentMeta.include || []
+        : []
+
       options.exclude = [
         ...(options.exclude || []),
-        ({ filePath }: { filePath: string }) =>
-          filePath.startsWith(layerPath) && !allowedComponents.includes(filePath),
-        ({ filePath }: { filePath: string }) =>
-          userComponentPaths.some(path => filePath.startsWith(path))
+        ...createComponentMetaExcludeFilters(resolve, dir, layerPath, userInclude)
       ]
     })
   }

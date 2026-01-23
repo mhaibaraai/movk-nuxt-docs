@@ -1,5 +1,5 @@
 import { tool, stepCountIs, generateText } from 'ai'
-import { z } from 'zod/v4'
+import { z } from 'zod'
 
 function getSubAgentSystemPrompt(siteName: string) {
   return `您是 ${siteName} 的文档搜索代理。您的工作是从文档中查找并检索相关信息。

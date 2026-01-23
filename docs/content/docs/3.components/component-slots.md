@@ -9,11 +9,16 @@ links:
 
 ## 用法
 
-在您的 Markdown 文档中使用以下语法：
+在您的 Markdown 文档中使用 `:component-slots` 语法：
 
-```md [md]
-:component-slots{slug="你的组件名称"}
+::code-preview
+:component-slots{slug="TestApi"}
+
+#code
+```mdc
+:component-slots{slug="TestApi"}
 ```
+::
 
 ## API
 

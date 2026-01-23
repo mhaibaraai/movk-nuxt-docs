@@ -12,10 +12,10 @@ export default defineNuxtConfig({
     '@nuxt/image',
     '@nuxt/a11y',
     '@nuxtjs/mcp-toolkit',
-    '@nuxtjs/seo',
     '@vueuse/nuxt',
     'nuxt-component-meta',
     'nuxt-llms',
+    'nuxt-og-image',
     'motion-v/nuxt',
     () => {
       extendViteConfig((config) => {
@@ -94,8 +94,8 @@ export default defineNuxtConfig({
     metaFields: {
       type: false,
       props: true,
-      slots: 'no-schema' as const,
-      events: 'no-schema' as const,
+      slots: 'no-schema',
+      events: 'no-schema',
       exposed: false
     },
     exclude: [
@@ -134,8 +134,5 @@ export default defineNuxtConfig({
       'Inter:400',
       'Inter:700'
     ]
-  },
-  sitemap: {
-    zeroRuntime: true
   }
 })

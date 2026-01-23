@@ -9,11 +9,16 @@ links:
 
 ## 用法
 
-在您的 Markdown 文档中使用以下语法：
+在您的 Markdown 文档中使用 `:component-emits` 语法：
 
-```md [md]
-:component-emits{slug="你的组件名称"}
+::code-preview
+:component-emits{slug="TestApi"}
+
+#code
+```mdc
+:component-emits{slug="TestApi"}
 ```
+::
 
 ## API
 

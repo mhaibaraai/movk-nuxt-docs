@@ -14,7 +14,7 @@ const { toc, github } = useAppConfig()
 const { data: page } = await useAsyncData(`docs-${kebabCase(route.path)}`, () => queryCollection('docs').path(route.path).first())
 
 if (!page.value) {
-  throw createError({ statusCode: 404, statusMessage: 'Page not found', fatal: true })
+  throw createError({ status: 404, statusText: 'Page not found', fatal: true })
 }
 
 const navigation = inject<Ref<ContentNavigationItem[]>>('navigation')

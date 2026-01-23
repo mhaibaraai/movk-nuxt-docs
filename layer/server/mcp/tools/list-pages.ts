@@ -19,7 +19,7 @@ export default defineMcpTool({
 - path：用于 get-page 的确切路径
 - description：页面内容的简要摘要
 - url：完整 URL 供参考`,
-  cache: '1h',
+  cache: '30m',
   handler: async () => {
     const event = useEvent()
     const siteUrl = import.meta.dev ? 'http://localhost:3000' : getRequestURL(event).origin

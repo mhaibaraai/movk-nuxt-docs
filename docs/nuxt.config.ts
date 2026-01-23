@@ -1,10 +1,30 @@
+import { createResolver } from '@nuxt/kit'
+
+const { resolve } = createResolver(import.meta.url)
+
 export default defineNuxtConfig({
   extends: ['@movk/nuxt-docs'],
-  css: ['~/assets/css/main.css'],
-  site: {
-    name: 'Movk Nuxt Docs',
-    url: 'https://docs.mhaibaraai.cn'
+  modules: [
+    (_, nuxt) => {
+      nuxt.hook('components:dirs', (dirs) => {
+        dirs.unshift({ path: resolve('./app/components/content/examples'), pathPrefix: false, prefix: '', global: true })
+      })
+    }
+  ],
+
+  $development: {
+    site: {
+      url: 'http://localhost:3000'
+    }
   },
+
+  $production: {
+    site: {
+      url: 'https://docs.mhaibaraai.cn'
+    }
+  },
+
+  css: ['~/assets/css/main.css'],
   routeRules: {
     '/docs': { redirect: '/docs/getting-started', prerender: false },
     '/docs/typography': { redirect: '/docs/typography/markdown-syntax', prerender: false },
@@ -20,6 +40,9 @@ export default defineNuxtConfig({
       'openrouter/z-ai/glm-4.5-air:free',
       'mistral/ministral-3b'
     ]
+  },
+  componentMeta: {
+    include: ['app/components/TestApi.vue']
   },
   llms: {
     domain: 'https://docs.mhaibaraai.cn',
@@ -46,6 +69,6 @@ export default defineNuxtConfig({
   },
   mcp: {
     name: 'Movk Nuxt Docs',
-    browserRedirect: '/docs/getting-started/mcp-server'
+    browserRedirect: '/docs/getting-started/mcp'
   }
 })
