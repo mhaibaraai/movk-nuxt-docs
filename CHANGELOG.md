@@ -8,9 +8,6 @@
 
 ### 📝 Documentation
 
-* 在 README 中添加 AI 聊天界面截图 ([53f8caf](https://github.com/mhaibaraai/movk-nuxt-docs/commit/53f8cafac212e3c5e023e1d2a25119b8d4332754))
-* 更新 AI 聊天界面截图的展示方式 ([df36926](https://github.com/mhaibaraai/movk-nuxt-docs/commit/df36926d5a8f99b4f036668c96869c95d396f9f7))
-* 更新 AI 聊天界面截图的展示方式 ([75578b8](https://github.com/mhaibaraai/movk-nuxt-docs/commit/75578b8ea8c7ef42fda6a97fed4451c6d21426a5))
 * 更新和重组 MCP 与组件文档 ([8679828](https://github.com/mhaibaraai/movk-nuxt-docs/commit/8679828ab7a717502f35c598e066b6c35ecbc139))
 
 ### ♻️ Code Refactoring
@@ -20,7 +17,6 @@
 
 ### 🔧 Chores
 
-* **deps:** lock file maintenance ([8c2a356](https://github.com/mhaibaraai/movk-nuxt-docs/commit/8c2a356d38954e5ac2cb55484901990f5e92eaed))
 * **deps:** update all non-major dependencies ([f334d6f](https://github.com/mhaibaraai/movk-nuxt-docs/commit/f334d6f5c2b40c02761bb49b31c5d15ccd2efee5))
 * **deps:** update nuxt framework to ^4.3.0 ([f2f05b2](https://github.com/mhaibaraai/movk-nuxt-docs/commit/f2f05b28b8da56844daf411f4fa136bfe0065a0a))
 * 更新依赖和文档站点配置 ([d5b7c03](https://github.com/mhaibaraai/movk-nuxt-docs/commit/d5b7c036d53c1bdbba0b9c8317640677b0adc03c))
