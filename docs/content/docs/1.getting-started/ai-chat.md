@@ -8,7 +8,10 @@ category: ai
 
 一个提供基于 MCP（模型上下文协议）工具的 AI 聊天界面的 Nuxt 模块。
 
-![AiChat]( /ai/AiChat.png )
+::div{class="flex justify-center bg-muted py-5"}
+  ::nuxt-img{src="/ai/AiChat.png" alt="AiChat" height="600"}
+  ::
+::
 
 ## 快速开始
 
