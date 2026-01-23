@@ -9,6 +9,6 @@
   "dependencies": {
     "@movk/nuxt-docs": "workspace:*",
     "better-sqlite3": "^12.6.2",
-    "nuxt": "^4.2.2"
+    "nuxt": "^4.3.0"
   }
 }
