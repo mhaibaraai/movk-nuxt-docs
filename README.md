@@ -20,6 +20,8 @@
 
 ### 🤖 AI 增强体验
 
+![AI Chat](https://docs.mhaibaraai.cn/ai/AiChat.png)
+
 - **AI 聊天助手** - 内置智能文档助手，基于 Vercel AI SDK 支持多种 LLM 模型（Mistral、Qwen、OpenRouter）
 - **MCP Server 支持** - 集成 Model Context Protocol 服务器，为 AI 助手提供结构化的文档访问能力
 - **LLM 优化** - 通过 `nuxt-llms` 模块自动生成 `llms.txt` 和 `llms-full.txt`，为 AI 工具提供优化的文档索引
