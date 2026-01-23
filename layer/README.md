@@ -20,7 +20,9 @@
 
 ### 🤖 AI 增强体验
 
-![AI Chat](https://docs.mhaibaraai.cn/ai/AiChat.png)
+<div style="padding: 40px 0; display: flex; justify-content: center;">
+  <img src="https://docs.mhaibaraai.cn/ai/AiChat.png" alt="AiChat" width="400">
+</div>
 
 - **AI 聊天助手** - 内置智能文档助手，基于 Vercel AI SDK 支持多种 LLM 模型（Mistral、Qwen、OpenRouter）
 - **MCP Server 支持** - 集成 Model Context Protocol 服务器，为 AI 助手提供结构化的文档访问能力
