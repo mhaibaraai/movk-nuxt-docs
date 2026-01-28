@@ -3,7 +3,7 @@
   "type": "module",
   "version": "1.9.0",
   "private": true,
-  "packageManager": "pnpm@10.28.1",
+  "packageManager": "pnpm@10.28.2",
   "license": "MIT",
   "homepage": "https://docs.mhaibaraai.cn",
   "repository": {
@@ -25,13 +25,13 @@
   },
   "devDependencies": {
     "@nuxt/devtools": "^3.1.1",
-    "@nuxt/eslint": "^1.12.1",
+    "@nuxt/eslint": "^1.13.0",
     "@release-it/bumper": "^7.0.5",
     "@release-it/conventional-changelog": "^10.0.4",
     "eslint": "^9.39.2",
     "nuxt": "^4.3.0",
     "release-it": "^19.2.4",
     "typescript": "^5.9.3",
-    "vue-tsc": "^3.2.3"
+    "vue-tsc": "^3.2.4"
   }
 }
