@@ -62,8 +62,12 @@ const { data: versions } = await useFetch(page.value.releases || '', {
     </UPageHero>
 
     <UContainer v-else class="py-10 sm:py-16 lg:py-24 text-center">
-      <h1 class="text-3xl font-bold tracking-tight text-gray-900 sm:text-4xl lg:text-5xl dark:text-white">{{ page.title }}</h1>
-      <p class="mt-4 text-lg text-gray-500 dark:text-gray-400">{{ page.description }}</p>
+      <h1 class="text-3xl font-bold tracking-tight text-gray-900 sm:text-4xl lg:text-5xl dark:text-white">
+        {{ page.title }}
+      </h1>
+      <p class="mt-4 text-lg text-gray-500 dark:text-gray-400">
+        {{ page.description }}
+      </p>
     </UContainer>
 
     <UPageSection :ui="{ container: 'py-0!' }">
