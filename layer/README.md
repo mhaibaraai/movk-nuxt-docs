@@ -88,7 +88,7 @@ pnpm add @movk/nuxt-docs better-sqlite3 tailwindcss
 
 在 `nuxt.config.ts` 中配置：
 
-```diff [nuxt.config.ts]
+```ts [nuxt.config.ts]
 export default defineNuxtConfig({
 +  extends: ['@movk/nuxt-docs']
 })
