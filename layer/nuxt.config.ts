@@ -41,7 +41,8 @@ export default defineNuxtConfig({
 
   mdc: {
     highlight: {
-      noApiRoute: false
+      noApiRoute: false,
+      shikiEngine: 'javascript'
     }
   },
 
@@ -80,7 +81,7 @@ export default defineNuxtConfig({
     'vite:extendConfig': (config) => {
       if (!config.optimizeDeps) return
 
-      const { include, exclude } = config.optimizeDeps
+      const { include } = config.optimizeDeps
       if (!include) return
 
       const layerPkgs = /^(?:@nuxt\/content|@nuxtjs\/mdc|@nuxt\/a11y) > /
@@ -93,11 +94,6 @@ export default defineNuxtConfig({
         '@movk/nuxt-docs > @nuxt/content > slugify',
         '@movk/nuxt-docs > @ai-sdk/gateway > @vercel/oidc'
       )
-
-      // Exclude Shiki from optimization to avoid WASM loading issues
-      if (exclude && !exclude.includes('shiki')) {
-        exclude.push('shiki')
-      }
     }
   },
 
