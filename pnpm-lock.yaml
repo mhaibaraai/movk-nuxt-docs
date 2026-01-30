@@ -200,6 +200,9 @@ importers:
       ufo:
         specifier: ^1.6.3
         version: 1.6.3
+      unist-util-visit:
+        specifier: ^5.1.0
+        version: 5.1.0
       vue-component-meta:
         specifier: ^3.2.4
         version: 3.2.4(typescript@5.9.3)

@@ -74,6 +74,7 @@
     "tailwindcss": "^4.1.18",
     "tailwind-merge": "^3.4.0",
     "ufo": "^1.6.3",
+    "unist-util-visit": "^5.1.0",
     "zod": "^4.3.6",
     "vue-component-meta": "^3.2.4"
   }
