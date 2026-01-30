@@ -1,5 +1,16 @@
 # 📋 Changelog
 
+## [1.10.0](https://github.com/mhaibaraai/movk-nuxt-docs/compare/v1.9.0...v1.10.0) (2026-01-30)
+
+### ♻️ Code Refactoring
+
+* 重构样式系统并清理项目配置 ([9841833](https://github.com/mhaibaraai/movk-nuxt-docs/commit/9841833685d1e8603a7b477bd6dc8b7c84afa602))
+
+### 🔧 Chores
+
+* **deps:** update all non-major dependencies ([e0f4956](https://github.com/mhaibaraai/movk-nuxt-docs/commit/e0f4956eb203b2de7952deeb750c440e5a939187))
+* 使用语义化版本范围更新 @nuxtjs/mdc 依赖 ([36e14ca](https://github.com/mhaibaraai/movk-nuxt-docs/commit/36e14caba39c671e8a973b4ef278676c7496534e))
+
 ## [1.9.0](https://github.com/mhaibaraai/movk-nuxt-docs/compare/v1.8.1...v1.9.0) (2026-01-23)
 
 ### ✨ Features
