@@ -91,6 +91,13 @@ export default defineNuxtConfig({
         '@movk/nuxt-docs > @nuxt/content > slugify',
         '@movk/nuxt-docs > @ai-sdk/gateway > @vercel/oidc'
       )
+    },
+    'nitro:config'(nitroConfig) {
+      const routes: string[] = ['/', '/docs']
+
+      nitroConfig.prerender = nitroConfig.prerender || {}
+      nitroConfig.prerender.routes = nitroConfig.prerender.routes || []
+      nitroConfig.prerender.routes.push(...(routes || []))
     }
   },
 
@@ -137,13 +144,9 @@ export default defineNuxtConfig({
 
   ogImage: {
     zeroRuntime: true,
-    googleFontMirror: 'fonts.loli.net',
     fonts: [
       'Noto+Sans+SC:400',
-      'Noto+Sans+SC:500',
-      'Noto+Sans+SC:700',
-      'Inter:400',
-      'Inter:700'
+      'Inter:400'
     ]
   }
 })
