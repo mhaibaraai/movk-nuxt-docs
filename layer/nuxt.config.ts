@@ -41,8 +41,7 @@ export default defineNuxtConfig({
 
   mdc: {
     highlight: {
-      noApiRoute: false,
-      shikiEngine: 'javascript'
+      noApiRoute: false
     }
   },
 
@@ -50,11 +49,6 @@ export default defineNuxtConfig({
     public: {
       version: pkg.version
     }
-  },
-
-  routeRules: {
-    '/llms.txt': { isr: true },
-    '/llms-full.txt': { isr: true }
   },
 
   experimental: {
@@ -77,11 +71,9 @@ export default defineNuxtConfig({
   },
 
   hooks: {
-    // Rewrite optimizeDeps paths for layer architecture
-    'vite:extendConfig': (config) => {
-      if (!config.optimizeDeps) return
-
-      const { include } = config.optimizeDeps
+    'vite:extendConfig': async (config) => {
+      // Rewrite optimizeDeps paths for layer architecture
+      const include = config.optimizeDeps?.include
       if (!include) return
 
       const layerPkgs = /^(?:@nuxt\/content|@nuxtjs\/mdc|@nuxt\/a11y) > /
@@ -94,6 +86,11 @@ export default defineNuxtConfig({
         '@movk/nuxt-docs > @nuxt/content > slugify',
         '@movk/nuxt-docs > @ai-sdk/gateway > @vercel/oidc'
       )
+
+      // Add WASM plugin support for Shiki
+      const wasm = await import('vite-plugin-wasm')
+      const topLevelAwait = await import('vite-plugin-top-level-await')
+      config.plugins!.push(wasm.default(), topLevelAwait.default())
     }
   },
 
