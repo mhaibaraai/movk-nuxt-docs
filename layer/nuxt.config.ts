@@ -78,7 +78,9 @@ export default defineNuxtConfig({
   hooks: {
     // Rewrite optimizeDeps paths for layer architecture
     'vite:extendConfig': (config) => {
-      const include = config.optimizeDeps?.include
+      if (!config.optimizeDeps) return
+
+      const { include, exclude } = config.optimizeDeps
       if (!include) return
 
       const layerPkgs = /^(?:@nuxt\/content|@nuxtjs\/mdc|@nuxt\/a11y) > /
@@ -91,13 +93,11 @@ export default defineNuxtConfig({
         '@movk/nuxt-docs > @nuxt/content > slugify',
         '@movk/nuxt-docs > @ai-sdk/gateway > @vercel/oidc'
       )
-    },
-    'nitro:config'(nitroConfig) {
-      const routes: string[] = ['/', '/docs']
 
-      nitroConfig.prerender = nitroConfig.prerender || {}
-      nitroConfig.prerender.routes = nitroConfig.prerender.routes || []
-      nitroConfig.prerender.routes.push(...(routes || []))
+      // Exclude Shiki from optimization to avoid WASM loading issues
+      if (exclude && !exclude.includes('shiki')) {
+        exclude.push('shiki')
+      }
     }
   },
 
