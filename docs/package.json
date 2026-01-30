@@ -8,7 +8,9 @@
   },
   "dependencies": {
     "@movk/nuxt-docs": "workspace:*",
+    "@nuxt/kit": "^4.3.0",
     "better-sqlite3": "^12.6.2",
-    "nuxt": "^4.3.0"
+    "nuxt": "^4.3.0",
+    "tailwindcss": "^4.1.18"
   }
 }

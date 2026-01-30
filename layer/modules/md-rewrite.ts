@@ -1,4 +1,4 @@
-import { defineNuxtModule } from 'nuxt/kit'
+import { defineNuxtModule } from '@nuxt/kit'
 
 export default defineNuxtModule((_options, nuxt) => {
   nuxt.hooks.hook('nitro:init', (nitro) => {

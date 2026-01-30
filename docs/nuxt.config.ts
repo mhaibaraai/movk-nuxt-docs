@@ -4,6 +4,7 @@ const { resolve } = createResolver(import.meta.url)
 
 export default defineNuxtConfig({
   extends: ['@movk/nuxt-docs'],
+
   modules: [
     (_, nuxt) => {
       nuxt.hook('components:dirs', (dirs) => {
@@ -24,14 +25,15 @@ export default defineNuxtConfig({
     }
   },
 
-  css: ['~/assets/css/main.css'],
   routeRules: {
     '/docs': { redirect: '/docs/getting-started', prerender: false },
     '/docs/typography': { redirect: '/docs/typography/markdown-syntax', prerender: false },
     '/docs/components': { redirect: '/docs/components/commit-changelog', prerender: false },
     '/docs/composables': { redirect: '/docs/composables/fetch-component-example', prerender: false }
   },
+
   compatibilityDate: 'latest',
+
   aiChat: {
     model: 'mistral/devstral-3b',
     models: [
@@ -41,9 +43,11 @@ export default defineNuxtConfig({
       'mistral/ministral-3b'
     ]
   },
+
   componentMeta: {
     include: ['app/components/TestApi.vue']
   },
+
   llms: {
     domain: 'https://docs.mhaibaraai.cn',
     title: 'Movk Nuxt Docs',
@@ -67,6 +71,7 @@ export default defineNuxtConfig({
       description: '一款由 Nuxt UI 和 Nuxt Content 强力驱动的 Nuxt 优雅文档主题，内置组件文档自动生成、AI 聊天助手、MCP Server 支持、SEO 优化、暗黑模式、全文搜索等功能，助您轻松构建美观、专业、智能的文档网站。'
     }
   },
+
   mcp: {
     name: 'Movk Nuxt Docs',
     browserRedirect: '/docs/getting-started/mcp'

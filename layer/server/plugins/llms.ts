@@ -6,9 +6,10 @@ export default defineNitroPlugin((nitroApp) => {
     await transformMDC(event, doc as any)
   })
 
+  // @ts-expect-error - no types available
   nitroApp.hooks.hook('llms:generate', (_, { sections }) => {
     // Move "Documentation Sets" to the end
-    const docSetIdx = sections.findIndex(s => s.title === 'Documentation Sets')
+    const docSetIdx = sections.findIndex((s: any) => s.title === 'Documentation Sets')
     if (docSetIdx !== -1) {
       const [docSet] = sections.splice(docSetIdx, 1)
       if (docSet) {

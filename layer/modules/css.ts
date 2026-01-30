@@ -1,51 +1,36 @@
-import { addTemplate, createResolver, defineNuxtModule } from '@nuxt/kit'
+import { addTemplate, defineNuxtModule } from '@nuxt/kit'
+import { fileURLToPath } from 'node:url'
+import { dirname, join } from 'node:path'
 import { joinURL } from 'ufo'
+import { resolveModulePath } from 'exsolve'
 
 export default defineNuxtModule({
   meta: {
     name: 'css'
   },
-  async setup(_options, nuxt) {
-    const dir = nuxt.options.rootDir
-    const { resolve } = createResolver(import.meta.url)
+  setup(_options, nuxt) {
+    const currentDir = dirname(fileURLToPath(import.meta.url))
+    const mainCssPath = join(currentDir, '../app/assets/css/main.css')
 
-    const layerDir = resolve('../app')
-    const aiChatDir = resolve('../modules/ai-chat')
+    nuxt.options.css ||= []
+    nuxt.options.css.unshift(mainCssPath)
+
+    const dir = nuxt.options.rootDir
 
     const contentDir = joinURL(dir, 'content')
+    const uiPath = resolveModulePath('@nuxt/ui', { from: import.meta.url, conditions: ['style'] })
+    const tailwindPath = resolveModulePath('tailwindcss', { from: import.meta.url, conditions: ['style'] })
 
     const cssTemplate = addTemplate({
       filename: 'movk-nuxt-docs.css',
       getContents: () => {
-        return `@import "tailwindcss";
-@import "tailwindcss/theme.css" layer(theme) theme(static);
-@import "@nuxt/ui";
+        return `@import ${JSON.stringify(tailwindPath)};
+@import ${JSON.stringify(uiPath)};
 
-@source "${contentDir.replace(/\\/g, '/')}/**/*";
-@source "${layerDir.replace(/\\/g, '/')}/**/*";
-@source "${aiChatDir.replace(/\\/g, '/')}/**/*";
-@source "../../app.config.ts";
-
-/* Shiki icon highlight transformer styles */
-.shiki-icon-highlight {
-  display: inline-block;
-  width: 1.25em;
-  height: 1.25em;
-  vertical-align: -0.25em;
-  margin-right: 0.125em;
-  background-color: var(--ui-text-highlighted);
-  -webkit-mask-repeat: no-repeat;
-  mask-repeat: no-repeat;
-  -webkit-mask-size: 100% 100%;
-  mask-size: 100% 100%;
-  -webkit-mask-image: var(--shiki-icon-url);
-  mask-image: var(--shiki-icon-url);
-}`
+@source "${contentDir.replace(/\\/g, '/')}/**/*";`
       }
     })
 
-    if (Array.isArray(nuxt.options.css)) {
-      nuxt.options.css.unshift(cssTemplate.dst)
-    }
+    nuxt.options.css.unshift(cssTemplate.dst)
   }
 })

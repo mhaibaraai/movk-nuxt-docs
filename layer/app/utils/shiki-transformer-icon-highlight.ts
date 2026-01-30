@@ -1,4 +1,3 @@
-/** copy from https://github.com/nuxt/ui/blob/v4/docs/app/utils/shiki-transformer-icon-highlight.ts */
 import type { ShikiTransformer } from 'shiki'
 
 export interface TransformerIconHighlightOptions {
