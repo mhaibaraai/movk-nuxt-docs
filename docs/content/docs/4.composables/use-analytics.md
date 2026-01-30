@@ -11,9 +11,9 @@ links:
 
 ### 启用 Analytics
 
-在 `app.config.ts` 中配置：
+在 `app/app.config.ts` 中配置：
 
-```ts [app.config.ts]
+```ts [app/app.config.ts]
 export default defineAppConfig({
   vercelAnalytics: {
     debug: true  // 开发环境启用日志

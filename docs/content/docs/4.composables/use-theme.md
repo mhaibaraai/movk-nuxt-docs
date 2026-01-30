@@ -213,7 +213,7 @@ setBlackAsPrimary(true)
   :::
 
   :::field{name="exportAppConfig" type="() => string"}
-  导出当前主题的 `app.config.ts` 配置代码。
+  导出当前主题的 `app/app.config.ts` 配置代码。
   :::
 
   :::field{name="resetTheme" type="() => void"}
