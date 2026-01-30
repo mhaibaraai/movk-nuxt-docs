@@ -98,11 +98,11 @@ export default defineNuxtConfig({
       const wasmImports = ['env', 'wasi_snapshot_preview1']
 
       if (Array.isArray(external)) {
-        external.push('env')
+        external.push(...wasmImports)
       } else if (typeof external === 'string') {
         build.rollupOptions.external = [external, ...wasmImports]
       } else if (!external) {
-        build.rollupOptions.external = ['env']
+        build.rollupOptions.external = wasmImports
       }
     }
   },
