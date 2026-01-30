@@ -91,6 +91,18 @@ export default defineNuxtConfig({
       const wasm = await import('vite-plugin-wasm')
       const topLevelAwait = await import('vite-plugin-top-level-await')
       config.plugins!.push(wasm.default(), topLevelAwait.default())
+
+      const build = config.build || ((config as any).build = {})
+      build.rollupOptions = build.rollupOptions || {}
+      const external = build.rollupOptions.external
+
+      if (Array.isArray(external)) {
+        external.push('env')
+      } else if (typeof external === 'string') {
+        build.rollupOptions.external = [external, 'env']
+      } else if (!external) {
+        build.rollupOptions.external = ['env']
+      }
     }
   },
 
