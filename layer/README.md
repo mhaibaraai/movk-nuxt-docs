@@ -83,37 +83,14 @@ pnpm dev
 在现有 Nuxt 项目中使用 Movk Nuxt Docs 作为 layer：
 
 ```bash [Terminal]
-# 安装依赖
-pnpm add @movk/nuxt-docs better-sqlite3
-```
-
-在 CSS 中导入 Tailwind CSS 和 Nuxt UI
-
-```css [app/assets/css/main.css]
-@import 'tailwindcss';
-@import '@nuxt/ui';
+pnpm add @movk/nuxt-docs better-sqlite3 tailwindcss
 ```
 
 在 `nuxt.config.ts` 中配置：
 
-```ts [nuxt.config.ts]
+```diff [nuxt.config.ts]
 export default defineNuxtConfig({
-  extends: ['@movk/nuxt-docs'],
-  css: ['~/assets/css/main.css'],
-  aiChat: {
-    model: 'mistral/devstral-2',
-    models: ['mistral/devstral-2', 'openrouter/qwen/qwen3-4b:free']
-  },
-  mcp: {
-    name: 'My Docs',
-    browserRedirect: '/docs'
-  },
-  llms: {
-    domain: 'https://your-domain.com',
-    title: 'My Docs',
-    description: '基于 Movk Nuxt Docs 构建的智能文档站点',
-    notes: ['Nuxt 4', '文档主题', 'TypeScript']
-  }
++  extends: ['@movk/nuxt-docs']
 })
 ```
 
@@ -126,18 +103,16 @@ export default defineNuxtConfig({
 ```bash
 my-docs/
 ├── app/
-│   ├── assets/css/main.css      # 全局样式
 │   └── composables/             # 自定义 Composables
 ├── content/                     # Markdown 内容
 │   ├── index.md                 # 首页
 │   └── docs/                    # 文档页面
 ├── public/                      # 静态资源
 ├── nuxt.config.ts               # Nuxt 配置
-├── app.config.ts                # 应用配置
-├── content.config.ts            # 内容配置
 ├── tsconfig.json                # TypeScript 配置
 ├── package.json                 # 依赖与脚本
-└── README.md                    # 项目说明
+├── .env.example                # 环境变量示例
+└── pnpm-workspace.yaml          # pnpm 工作区配置
 ```
 
 ### Monorepo 结构
