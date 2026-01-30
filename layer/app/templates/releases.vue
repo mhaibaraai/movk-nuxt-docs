@@ -22,6 +22,7 @@ defineOgImageComponent('Nuxt', {
 })
 
 const { data: versions } = await useFetch(page.value.releases || '', {
+  immediate: !!page.value.releases,
   server: false,
   transform: (data: {
     releases: {
@@ -44,6 +45,7 @@ const { data: versions } = await useFetch(page.value.releases || '', {
 <template>
   <main v-if="page">
     <UPageHero
+      v-if="page.hero"
       :title="page.hero.title"
       :description="page.hero.description"
       :links="(page.hero.links as ButtonProps[]) || []"
@@ -59,10 +61,18 @@ const { data: versions } = await useFetch(page.value.releases || '', {
       <div aria-hidden="true" class="hidden md:block absolute z-[-1] border-x border-default inset-0 mx-4 sm:mx-6 lg:mx-8" />
     </UPageHero>
 
+    <UContainer v-else class="py-10 sm:py-16 lg:py-24 text-center">
+      <h1 class="text-3xl font-bold tracking-tight text-gray-900 sm:text-4xl lg:text-5xl dark:text-white">{{ page.title }}</h1>
+      <p class="mt-4 text-lg text-gray-500 dark:text-gray-400">{{ page.description }}</p>
+    </UContainer>
+
     <UPageSection :ui="{ container: 'py-0!' }">
       <div class="py-4 md:py-8 lg:py-16 md:border-x border-default">
         <UContainer class="max-w-5xl">
+          <ContentRenderer v-if="page.body" :value="page" class="prose dark:prose-invert max-w-none mb-8" />
+
           <UChangelogVersions
+            v-if="versions?.length"
             as="main"
             :indicator-motion="false"
             :ui="{
