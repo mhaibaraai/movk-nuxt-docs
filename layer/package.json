@@ -44,7 +44,7 @@
     "@nuxt/kit": "^4.3.0",
     "@nuxt/ui": "^4.4.0",
     "@nuxtjs/mcp-toolkit": "^0.6.2",
-    "@nuxtjs/mdc": "0.20.0",
+    "@nuxtjs/mdc": "^0.20.0",
     "@octokit/rest": "^22.0.1",
     "@openrouter/ai-sdk-provider": "^2.1.1",
     "@vercel/analytics": "^1.6.1",
