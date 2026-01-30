@@ -14,7 +14,12 @@ links:
 ::warning
 使用 `ComponentExample` 前,需要在 `nuxt.config.ts` 中配置示例组件目录,以确保组件被全局注册:
 
-```ts
+**必须安装 @nuxt/kit**：
+```bash
+pnpm add @nuxt/kit
+```
+
+```ts [nuxt.config.ts]
 import { createResolver } from '@nuxt/kit'
 
 const { resolve } = createResolver(import.meta.url)

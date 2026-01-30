@@ -1,12 +1,8 @@
-import { createResolver, extendViteConfig } from '@nuxt/kit'
 import { defineNuxtConfig } from 'nuxt/config'
 import pkg from './package.json'
 
-const { resolve } = createResolver(import.meta.url)
-
 export default defineNuxtConfig({
   modules: [
-    resolve('./modules/config'),
     '@nuxt/ui',
     '@nuxt/content',
     '@nuxt/image',
@@ -16,30 +12,16 @@ export default defineNuxtConfig({
     'nuxt-component-meta',
     'nuxt-llms',
     'nuxt-og-image',
-    'motion-v/nuxt',
-    () => {
-      extendViteConfig((config) => {
-        config.optimizeDeps ||= {}
-        config.optimizeDeps.include ||= []
-        config.optimizeDeps.include.push(
-          '@nuxt/content > slugify',
-          'extend',
-          '@ai-sdk/gateway > @vercel/oidc',
-          'mermaid',
-          'dompurify'
-        )
-        config.optimizeDeps.include = config.optimizeDeps.include
-          .map(id => id.replace(/^@nuxt\/content > /, '@movk/nuxt-docs > @nuxt/content > '))
-      })
-    }
+    'motion-v/nuxt'
   ],
+
   app: {
     rootAttrs: {
       'data-vaul-drawer-wrapper': '',
       'class': 'bg-default'
     }
   },
-  // @ts-ignore - content 配置的类型定义在运行时才能正确解析
+
   content: {
     build: {
       markdown: {
@@ -56,22 +38,25 @@ export default defineNuxtConfig({
       }
     }
   },
+
   mdc: {
     highlight: {
       noApiRoute: false
     }
   },
+
   runtimeConfig: {
     public: {
       version: pkg.version
     }
   },
+
   routeRules: {
     '/llms.txt': { isr: true },
     '/llms-full.txt': { isr: true }
   },
+
   experimental: {
-    typescriptPlugin: true,
     asyncContext: true,
     defaults: {
       nuxtLink: {
@@ -79,7 +64,9 @@ export default defineNuxtConfig({
       }
     }
   },
+
   compatibilityDate: 'latest',
+
   nitro: {
     prerender: {
       crawlLinks: true,
@@ -87,9 +74,30 @@ export default defineNuxtConfig({
       autoSubfolderIndex: false
     }
   },
+
+  hooks: {
+    // Rewrite optimizeDeps paths for layer architecture
+    'vite:extendConfig': (config) => {
+      const include = config.optimizeDeps?.include
+      if (!include) return
+
+      const layerPkgs = /^(?:@nuxt\/content|@nuxtjs\/mdc|@nuxt\/a11y) > /
+      include.forEach((id, i) => {
+        if (layerPkgs.test(id)) include[i] = `@movk/nuxt-docs > ${id}`
+      })
+
+      // Layer dependencies that need pre-bundling
+      include.push(
+        '@movk/nuxt-docs > @nuxt/content > slugify',
+        '@movk/nuxt-docs > @ai-sdk/gateway > @vercel/oidc'
+      )
+    }
+  },
+
   a11y: {
     logIssues: false
   },
+
   componentMeta: {
     metaFields: {
       type: false,
@@ -110,6 +118,7 @@ export default defineNuxtConfig({
       'nuxt-og-image'
     ]
   },
+
   fonts: {
     families: [
       { name: 'Public Sans', provider: 'google', global: true },
@@ -121,9 +130,11 @@ export default defineNuxtConfig({
       { name: 'Raleway', provider: 'google', global: true }
     ]
   },
+
   icon: {
     provider: 'iconify'
   },
+
   ogImage: {
     zeroRuntime: true,
     googleFontMirror: 'fonts.loli.net',

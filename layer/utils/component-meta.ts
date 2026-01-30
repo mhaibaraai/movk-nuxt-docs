@@ -3,10 +3,6 @@ import { join } from 'pathe'
 
 /**
  * 匹配组件是否符合用户定义的 include 模式
- * @param filePath 组件文件路径
- * @param pascalName 组件 PascalCase 名称
- * @param includePatterns 包含模式数组(字符串 glob、正则表达式或函数)
- * @returns 是否匹配
  */
 function matchesUserInclude(
   filePath: string,
@@ -35,9 +31,6 @@ function matchesUserInclude(
 
 /**
  * 检查组件是否为用户组件
- * @param filePath 组件文件路径
- * @param userComponentPaths 用户组件路径数组
- * @returns 是否为用户组件
  */
 export function isUserComponent(filePath: string, userComponentPaths: string[]): boolean {
   return userComponentPaths.some(path => filePath.startsWith(path))
@@ -45,11 +38,6 @@ export function isUserComponent(filePath: string, userComponentPaths: string[]):
 
 /**
  * 创建 component-meta exclude 过滤器
- * @param layerPath layer 路径
- * @param allowedComponents 允许的组件列表
- * @param userComponentPaths 用户组件路径数组
- * @param userInclude 用户定义的 include 模式
- * @returns exclude 过滤器数组
  */
 export function createComponentMetaExcludeFilters(
   resolve: Resolver['resolve'],

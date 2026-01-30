@@ -63,14 +63,12 @@ transition: { duration: 0.6, delay: 0.1 }
   code: |
     export default defineNuxtConfig({
       extends: ['@movk/nuxt-docs'],
-      css: ['~/assets/css/main.css'],
       aiChat: {
         model: 'mistral/devstral-2',
         models: ['mistral/devstral-2', 'openrouter/qwen/qwen3-4b:free']
       },
       mcp: {
-        name: 'My Docs',
-        browserRedirect: '/docs'
+        name: 'My Docs'
       }
     })
   filename: nuxt.config.ts
@@ -79,14 +77,12 @@ transition: { duration: 0.6, delay: 0.1 }
   ```ts [nuxt.config.ts]
   export default defineNuxtConfig({
     extends: ['@movk/nuxt-docs'],
-    css: ['~/assets/css/main.css'],
     aiChat: {
       model: 'mistral/devstral-2',
       models: ['mistral/devstral-2', 'openrouter/qwen/qwen3-4b:free']
     },
     mcp: {
-      name: 'My Docs',
-      browserRedirect: '/docs'
+      name: 'My Docs'
     }
   })
   ```

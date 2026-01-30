@@ -1,12 +1,15 @@
 export default defineNuxtConfig({
   extends: ['@movk/nuxt-docs'],
+
   modules: ['@nuxt/eslint'],
-  css: ['~/assets/css/main.css'],
+
   routeRules: {
     // redirects - default root pages
     '/docs': { redirect: '/docs/getting-started', prerender: false }
   },
+
   compatibilityDate: 'latest',
+
   aiChat: {
     model: 'openai/gpt-5-nano',
     models: [
@@ -14,6 +17,7 @@ export default defineNuxtConfig({
       'openrouter/anthropic/claude-haiku-4.5'
     ]
   },
+
   eslint: {
     config: {
       stylistic: {
@@ -22,6 +26,7 @@ export default defineNuxtConfig({
       }
     }
   },
+
   mcp: {
     name: 'Movk Nuxt Docs'
   }
