@@ -1,6 +1,15 @@
 import { defineNuxtConfig } from 'nuxt/config'
 import pkg from './package.json'
 
+// WASM runtime imports that Rollup should not attempt to resolve
+const WASM_EXTERNALS = ['env', 'wasi_snapshot_preview1']
+
+function mergeExternals(existing: unknown, additions: string[]): string[] {
+  if (Array.isArray(existing)) return [...existing, ...additions]
+  if (typeof existing === 'string') return [existing, ...additions]
+  return additions
+}
+
 export default defineNuxtConfig({
   modules: [
     '@nuxt/ui',
@@ -81,45 +90,32 @@ export default defineNuxtConfig({
         if (layerPkgs.test(id)) include[i] = `@movk/nuxt-docs > ${id}`
       })
 
-      // Layer dependencies that need pre-bundling
       include.push(
         '@movk/nuxt-docs > @nuxt/content > slugify',
         '@movk/nuxt-docs > @ai-sdk/gateway > @vercel/oidc'
       )
 
-      // Add WASM plugin support for Shiki
-      const wasm = await import('vite-plugin-wasm')
-      const topLevelAwait = await import('vite-plugin-top-level-await')
+      // WASM plugin support for Shiki
+      const [wasm, topLevelAwait] = await Promise.all([
+        import('vite-plugin-wasm'),
+        import('vite-plugin-top-level-await')
+      ])
       config.plugins!.push(wasm.default(), topLevelAwait.default())
 
       const build = config.build || ((config as any).build = {})
-      build.rollupOptions = build.rollupOptions || {}
-      const external = build.rollupOptions.external
-      const wasmImports = ['env', 'wasi_snapshot_preview1']
-
-      if (Array.isArray(external)) {
-        external.push(...wasmImports)
-      } else if (typeof external === 'string') {
-        build.rollupOptions.external = [external, ...wasmImports]
-      } else if (!external) {
-        build.rollupOptions.external = wasmImports
-      }
+      build.rollupOptions ??= {}
+      build.rollupOptions.external = mergeExternals(
+        build.rollupOptions.external,
+        WASM_EXTERNALS
+      )
     },
 
     'nitro:config': (nitroConfig) => {
-      const wasmImports = ['env', 'wasi_snapshot_preview1']
-
-      nitroConfig.rollupConfig = nitroConfig.rollupConfig || {}
-
-      const oldExternal = nitroConfig.rollupConfig.external
-
-      if (Array.isArray(oldExternal)) {
-        nitroConfig.rollupConfig.external = [...oldExternal, ...wasmImports]
-      } else if (typeof oldExternal === 'string') {
-        nitroConfig.rollupConfig.external = [oldExternal, ...wasmImports]
-      } else {
-        nitroConfig.rollupConfig.external = wasmImports
-      }
+      nitroConfig.rollupConfig ??= {}
+      nitroConfig.rollupConfig.external = mergeExternals(
+        nitroConfig.rollupConfig.external,
+        WASM_EXTERNALS
+      )
     }
   },
 

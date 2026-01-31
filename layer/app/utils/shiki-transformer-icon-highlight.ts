@@ -1,11 +1,12 @@
 import type { ShikiTransformer } from 'shiki'
+import type { Element } from 'hast'
 
 export interface TransformerIconHighlightOptions {
   /**
-   * Custom function to render the icon HTML
+   * Custom function to create icon HAST element
    * @default Uses Iconify API with mask mode
    */
-  htmlIcon?: (icon: string) => string
+  createIconElement?: (icon: string, iconUrl: string) => Element
 }
 
 // Common icon collections to validate against (sorted by length descending for proper matching)
@@ -52,26 +53,23 @@ function parseIconName(text: string): { collection: string, name: string, format
 }
 
 export function transformerIconHighlight(options: TransformerIconHighlightOptions = {}): ShikiTransformer {
-  const { htmlIcon } = options
+  const { createIconElement } = options
 
   return {
     name: 'shiki-transformer-icon-highlight',
     span(hast, _line, _col, _lineElement, token) {
       const text = token.content
 
-      // Try to parse as an icon
       const parsed = parseIconName(text)
       if (!parsed) return
 
       const iconIdentifier = `${parsed.collection}:${parsed.name}`
-      // Add color=black for mask-image to work properly (mask uses luminance)
       const iconUrl = `https://api.iconify.design/${iconIdentifier}.svg?color=%23000`
 
-      // Create the icon element as a proper HAST element
-      const iconElement = htmlIcon
-        ? { type: 'raw' as const, value: htmlIcon(iconIdentifier) }
+      const iconElement: Element = createIconElement
+        ? createIconElement(iconIdentifier, iconUrl)
         : {
-            type: 'element' as const,
+            type: 'element',
             tagName: 'i',
             properties: {
               class: 'shiki-icon-highlight',
@@ -80,8 +78,7 @@ export function transformerIconHighlight(options: TransformerIconHighlightOption
             children: []
           }
 
-      // Prepend the icon to the span content
-      if (hast.children) {
+      if (Array.isArray(hast.children)) {
         hast.children.unshift(iconElement)
       }
     }
