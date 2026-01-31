@@ -11,6 +11,6 @@ ignoredBuiltDependencies:
   - vue-demi
 
 onlyBuiltDependencies:
-  - "@swc/core"
+  - '@swc/core'
   - better-sqlite3
   - sharp

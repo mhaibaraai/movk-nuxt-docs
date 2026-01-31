@@ -105,7 +105,7 @@ pnpm approve-builds
 
 ```yaml [pnpm-workspace.yaml]
 onlyBuiltDependencies:
-  - "@swc/core"
+  - '@swc/core'
   - better-sqlite3
   - sharp
 ```
