@@ -83,16 +83,135 @@ pnpm add -D tailwindcss@^4.1.0
 
 ### 构建脚本审批
 
-如果在使用 `pnpm` 时遇到构建或开发错误，特别是与 `better-sqlite3` 依赖相关的问题，可能需要审批某些包的构建脚本。
+从 pnpm v10 开始，默认情况下不会运行依赖的 lifecycle scripts（如 `postinstall`）。本项目需要审批以下包含原生模块的依赖：
 
-运行以下命令审批构建脚本：
+| 依赖包 | 用途 | 是否必需 |
+|--------|------|----------|
+| `@swc/core` | TypeScript/JavaScript 编译器 | 是 |
+| `better-sqlite3` | SQLite 数据库（用于 MCP 服务器） | 是 |
+| `sharp` | 图片处理（用于 @nuxt/image） | 是 |
+
+**方法 1：交互式审批（推荐）**
 
 ```bash
 pnpm approve-builds
 ```
 
-出现提示时，从列表中选择 `better-sqlite3` 和 `sharp` 进行审批。
+从列表中选择上述三个包进行审批。
+
+**方法 2：配置文件方式**
+
+在项目根目录的 `pnpm-workspace.yaml` 中添加：
+
+```yaml [pnpm-workspace.yaml]
+onlyBuiltDependencies:
+  - "@swc/core"
+  - better-sqlite3
+  - sharp
+```
+
+或在 `package.json` 中：
+
+```json [package.json]
+{
+  "pnpm": {
+    "onlyBuiltDependencies": [
+      "@swc/core",
+      "better-sqlite3",
+      "sharp"
+    ]
+  }
+}
+```
+
+::warning
+**说明**：这些配置仅影响开发环境。发布的包不会传递此配置，消费者需要自行配置。
+::
 
 ::warning{to="https://pnpm.io/zh/settings#onlybuiltdependencies"}
 了解更多关于构建脚本审批的信息
 ::
+
+## Vercel 部署问题
+
+### Node 版本支持
+
+本项目同时支持 **Node.js 22 LTS** 和 **Node.js 24**。
+
+| Node 版本 | 状态 | 支持 | 推荐 | 说明 |
+|-----------|------|------|------|------|
+| Node 22 | LTS | ✅ | ✅ | 长期支持版本，稳定可靠 |
+| Node 24 | Current | ✅ | ⚡ | 最新版本，性能更优 |
+
+::callout{icon="lucide:check-circle"}
+**已解决**：通过配置 `vite-plugin-wasm` 和 WASM externals，项目已完全支持 Node 24 环境。
+::
+
+**历史问题**（已修复）：
+
+早期版本在 Node 24 环境下可能遇到以下错误：
+
+```text
+[vite:wasm-fallback] Could not load onig.wasm (imported by shiki):
+"ESM integration proposal for Wasm" is not supported currently
+```
+
+此问题已通过内置的 WASM 配置解决，无需手动处理。
+
+### WASM 和 Shiki 配置
+
+本项目使用 Shiki 进行语法高亮，需要 WASM 支持。相关配置已内置在 `layer/nuxt.config.ts` 中：
+
+```typescript
+// 已内置配置，无需手动添加
+hooks: {
+  'vite:extendConfig': async (config) => {
+    // WASM 插件支持
+    const [wasm, topLevelAwait] = await Promise.all([
+      import('vite-plugin-wasm'),
+      import('vite-plugin-top-level-await')
+    ])
+    config.plugins.push(wasm.default(), topLevelAwait.default())
+
+    // 配置 WASM 运行时导入为外部依赖
+    config.build.rollupOptions.external = [
+      ...existing,
+      'env',
+      'wasi_snapshot_preview1'
+    ]
+  }
+}
+```
+
+::warning
+**注意**：`env` 和 `wasi_snapshot_preview1` 不是 npm 包，而是 WASM 运行时的导入声明。标记为 `external` 告诉 Rollup 不要尝试解析这些模块。
+::
+
+### Output Directory 找不到
+
+**错误信息**：
+
+```text
+Error: No Output Directory named "dist" found after the Build completed.
+Configure the Output Directory in your Project Settings.
+```
+
+**解决方法**：
+
+在 Vercel 项目设置中配置：
+
+1. 进入 **Settings** → **General** → **Build & Development Settings**
+2. 设置 **Output Directory**：
+
+```text
+docs/.output/public
+```
+
+或在 `vercel.json` 中配置：
+
+```json [vercel.json]
+{
+  "buildCommand": "pnpm build",
+  "outputDirectory": "docs/.output/public"
+}
+```

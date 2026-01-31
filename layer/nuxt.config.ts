@@ -1,6 +1,15 @@
 import { defineNuxtConfig } from 'nuxt/config'
 import pkg from './package.json'
 
+// WASM runtime imports that Rollup should not attempt to resolve
+const WASM_EXTERNALS = ['env', 'wasi_snapshot_preview1']
+
+function mergeExternals(existing: unknown, additions: string[]): string[] {
+  if (Array.isArray(existing)) return [...existing, ...additions]
+  if (typeof existing === 'string') return [existing, ...additions]
+  return additions
+}
+
 export default defineNuxtConfig({
   modules: [
     '@nuxt/ui',
@@ -51,11 +60,6 @@ export default defineNuxtConfig({
     }
   },
 
-  routeRules: {
-    '/llms.txt': { isr: true },
-    '/llms-full.txt': { isr: true }
-  },
-
   experimental: {
     asyncContext: true,
     defaults: {
@@ -76,8 +80,8 @@ export default defineNuxtConfig({
   },
 
   hooks: {
-    // Rewrite optimizeDeps paths for layer architecture
-    'vite:extendConfig': (config) => {
+    'vite:extendConfig': async (config) => {
+      // Rewrite optimizeDeps paths for layer architecture
       const include = config.optimizeDeps?.include
       if (!include) return
 
@@ -86,10 +90,31 @@ export default defineNuxtConfig({
         if (layerPkgs.test(id)) include[i] = `@movk/nuxt-docs > ${id}`
       })
 
-      // Layer dependencies that need pre-bundling
       include.push(
         '@movk/nuxt-docs > @nuxt/content > slugify',
         '@movk/nuxt-docs > @ai-sdk/gateway > @vercel/oidc'
+      )
+
+      // WASM plugin support for Shiki
+      const [wasm, topLevelAwait] = await Promise.all([
+        import('vite-plugin-wasm'),
+        import('vite-plugin-top-level-await')
+      ])
+      config.plugins!.push(wasm.default(), topLevelAwait.default())
+
+      const build = config.build || ((config as any).build = {})
+      build.rollupOptions ??= {}
+      build.rollupOptions.external = mergeExternals(
+        build.rollupOptions.external,
+        WASM_EXTERNALS
+      )
+    },
+
+    'nitro:config': (nitroConfig) => {
+      nitroConfig.rollupConfig ??= {}
+      nitroConfig.rollupConfig.external = mergeExternals(
+        nitroConfig.rollupConfig.external,
+        WASM_EXTERNALS
       )
     }
   },
@@ -137,13 +162,9 @@ export default defineNuxtConfig({
 
   ogImage: {
     zeroRuntime: true,
-    googleFontMirror: 'fonts.loli.net',
     fonts: [
       'Noto+Sans+SC:400',
-      'Noto+Sans+SC:500',
-      'Noto+Sans+SC:700',
-      'Inter:400',
-      'Inter:700'
+      'Inter:400'
     ]
   }
 })

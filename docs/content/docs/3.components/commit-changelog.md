@@ -13,7 +13,7 @@ links:
 
 ## 前置要求
 
-- **GitHub 配置**：在 `app.config.ts` 中配置 GitHub 相关信息。详见 [GitHub 集成配置](/docs/getting-started/configuration#github-集成)。
+- **GitHub 配置**：在 `app/app.config.ts` 中配置 GitHub 相关信息。详见 [GitHub 集成配置](/docs/getting-started/configuration#github-集成)。
 - **环境变量**：在 `.env` 文件中配置 GitHub Token：
   ```bash
   NUXT_GITHUB_TOKEN=ghp_your_personal_access_token_here
@@ -78,9 +78,9 @@ GitHub Token 需要具有读取仓库提交历史的权限（`repo` 或 `public_
 这将查找 `composables/use-user.ts` 的提交历史。
 
 ::tip
-如果项目中的文件统一使用 `kebab-case` 命名，建议在 `app.config.ts` 中全局配置 `github.casing: 'kebab'`，这样就不需要在每个组件中重复指定。
+如果项目中的文件统一使用 `kebab-case` 命名，建议在 `app/app.config.ts` 中全局配置 `github.casing: 'kebab'`，这样就不需要在每个组件中重复指定。
 
-```ts [app.config.ts]
+```ts [app/app.config.ts]
 export default defineAppConfig({
   github: {
     casing: 'kebab', // 全局默认使用 kebab-case

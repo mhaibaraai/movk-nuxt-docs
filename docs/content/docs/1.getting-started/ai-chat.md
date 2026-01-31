@@ -46,9 +46,9 @@ export default defineNuxtConfig({
 | `model` | `string`{lang="ts-type"} | `-` | 模型标识符 |
 | `models` | `string[]`{lang="ts-type"} | `[]` | 可用模型列表（格式为 "provider/model" 或 "model"） |
 
-### 在 `app.config.ts` 中配置 AI Chat 功能：
+### 在 `app/app.config.ts` 中配置 AI Chat 功能：
 
-```ts [app.config.ts]
+```ts [app/app.config.ts]
 export default defineAppConfig({
   aiChat: {
     floatingInput: true,
@@ -135,7 +135,7 @@ AI Chat 功能已内置在 Movk Nuxt Docs 中，无需手动添加组件。
 ```
 
 ::note
-FAQ 问题现在在 `app.config.ts` 中配置，无需在组件中传递 props。
+FAQ 问题现在在 `app/app.config.ts` 中配置，无需在组件中传递 props。
 ::
 
 ### 浮动输入框
@@ -361,7 +361,7 @@ variant: link
 显示聊天为空时的常见问题分类。
 
 ::tip{to="/docs/getting-started/configuration#ai-chat"}
-FAQ 问题现在在 `app.config.ts` 的 `aiChat.faqQuestions` 中配置。
+FAQ 问题现在在 `app/app.config.ts` 的 `aiChat.faqQuestions` 中配置。
 ::
 
 :component-props{slug="AiChatSlideoverFaq"}
@@ -480,7 +480,7 @@ variant: link
   ::
 
   ::field{name="faqQuestions" type="Ref<FaqQuestions>"}
-  从 `app.config.ts` 读取的 FAQ 问题列表。
+  从 `app/app.config.ts` 读取的 FAQ 问题列表。
   ::
 
   :::field{name="open" type="(message?: string, clearHistory?: boolean) => void"}

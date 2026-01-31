@@ -39,9 +39,9 @@ GitHub Token 需要具有读取仓库提交历史的权限（`repo` 或 `public_
 
 ### 2. GitHub 配置
 
-确保在 `app.config.ts` 中正确配置了 GitHub 相关信息：
+确保在 `app/app.config.ts` 中正确配置了 GitHub 相关信息：
 
-```ts [app.config.ts]
+```ts [app/app.config.ts]
 export default defineAppConfig({
   github: {
     rootDir: 'docs', // 文档所在目录
@@ -53,7 +53,7 @@ export default defineAppConfig({
 
 通过 `dateFormat` 配置可以自定义日期显示格式：
 
-```ts [app.config.ts]
+```ts [app/app.config.ts]
 export default defineAppConfig({
   github: {
     rootDir: 'docs',
