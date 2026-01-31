@@ -134,26 +134,29 @@ onlyBuiltDependencies:
 
 ## Vercel 部署问题
 
-### Node 版本推荐
+### Node 版本支持
 
-在 Vercel 部署时，推荐使用 **Node.js 22 LTS**。
+本项目同时支持 **Node.js 22 LTS** 和 **Node.js 24**。
 
-| Node 版本 | 状态 | 推荐使用 | 说明 |
-|-----------|------|---------|------|
-| Node 22 | LTS | ✅ 是 | 稳定，WASM 支持成熟 |
-| Node 24 | Current | ❌ 否 | ESM WASM 提案未完全实现 |
+| Node 版本 | 状态 | 支持 | 推荐 | 说明 |
+|-----------|------|------|------|------|
+| Node 22 | LTS | ✅ | ✅ | 长期支持版本，稳定可靠 |
+| Node 24 | Current | ✅ | ⚡ | 最新版本，性能更优 |
 
-**Node 24 可能出现的错误**：
+::callout{icon="lucide:check-circle"}
+**已解决**：通过配置 `vite-plugin-wasm` 和 WASM externals，项目已完全支持 Node 24 环境。
+::
+
+**历史问题**（已修复）：
+
+早期版本在 Node 24 环境下可能遇到以下错误：
 
 ```text
 [vite:wasm-fallback] Could not load onig.wasm (imported by shiki):
 "ESM integration proposal for Wasm" is not supported currently
 ```
 
-**解决方法**：在 Vercel 项目设置中配置：
-
-1. 进入 **Settings** → **General** → **Node.js Version**
-2. 选择 **22.x**（而非 24.x）
+此问题已通过内置的 WASM 配置解决，无需手动处理。
 
 ### WASM 和 Shiki 配置
 
