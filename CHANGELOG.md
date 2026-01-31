@@ -1,5 +1,30 @@
 # 📋 Changelog
 
+## [1.11.0](https://github.com/mhaibaraai/movk-nuxt-docs/compare/v1.10.0...v1.11.0) (2026-01-31)
+
+### ✨ Features
+
+* 添加 Rollup 外部依赖配置以支持 env ([4e3f793](https://github.com/mhaibaraai/movk-nuxt-docs/commit/4e3f793f0d1c45b4618dd6ce40061943a8cdef3a))
+
+### 🐛 Bug Fixes
+
+* 修复 Node 24 环境下 WASM 构建报错及内存溢出 ([8a6380c](https://github.com/mhaibaraai/movk-nuxt-docs/commit/8a6380ca27915548e79db93fdebd7147d7809d8a))
+* 修复构建内存溢出并优化 Shiki 配置 ([775d37f](https://github.com/mhaibaraai/movk-nuxt-docs/commit/775d37f983fad5c6711bf6391e8cd9ccc0bdf7cd))
+
+### 📝 Documentation
+
+* 优化发布日志文档和模板 ([9840171](https://github.com/mhaibaraai/movk-nuxt-docs/commit/98401716dc867f3f4b8d05eff249448895f6c25f))
+* 更新 OG 图片 ([31bd9d8](https://github.com/mhaibaraai/movk-nuxt-docs/commit/31bd9d801862ad730792696498c702895d986727))
+
+### ♻️ Code Refactoring
+
+* 优化 WASM 配置并修复 Shiki transformer 类型问题 ([98545ce](https://github.com/mhaibaraai/movk-nuxt-docs/commit/98545cefb119ffa29412299abd650efd1d676368))
+* 更新文档中对 app.config.ts 的引用为 app/app.config.ts ([00093c6](https://github.com/mhaibaraai/movk-nuxt-docs/commit/00093c6255ee6a0cf789f7598a0e17119461405b))
+
+### 🔧 Chores
+
+* **deps:** update all non-major dependencies ([b6f670e](https://github.com/mhaibaraai/movk-nuxt-docs/commit/b6f670e494e0974f6840596fad1e71a4653064c8))
+
 ## [1.10.0](https://github.com/mhaibaraai/movk-nuxt-docs/compare/v1.9.0...v1.10.0) (2026-01-30)
 
 ### ♻️ Code Refactoring
