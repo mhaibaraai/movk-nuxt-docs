@@ -67,8 +67,8 @@ export default defineContentConfig({
       schema: z.object({
         title: z.string(),
         description: z.string(),
-        releases: z.string(),
-        hero: PageHero
+        releases: z.string().optional(),
+        hero: PageHero.optional()
       })
     })
   }
