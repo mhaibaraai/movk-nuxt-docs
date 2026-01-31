@@ -21,34 +21,32 @@ defineOgImageComponent('Nuxt', {
   description
 })
 
-const { data: versions } = await useFetch(page.value.releases || '', {
-  immediate: !!page.value.releases,
-  server: false,
-  transform: (data: {
-    releases: {
-      name?: string
-      tag: string
-      publishedAt: string
-      markdown: string
-    }[]
-  }) => {
-    return data.releases.map(release => ({
-      tag: release.tag,
-      title: release.name || release.tag,
-      date: release.publishedAt,
-      markdown: release.markdown
-    }))
-  }
-})
+const { data: versions } = page.value.releases
+  ? await useFetch(page.value.releases, {
+      server: false,
+      transform: (data: {
+        releases: {
+          name?: string
+          tag: string
+          publishedAt: string
+          markdown: string
+        }[]
+      }) => data.releases.map(release => ({
+        tag: release.tag,
+        title: release.name || release.tag,
+        date: release.publishedAt,
+        markdown: release.markdown
+      }))
+    })
+  : { data: ref(null) }
 </script>
 
 <template>
   <main v-if="page">
     <UPageHero
-      v-if="page.hero"
-      :title="page.hero.title"
-      :description="page.hero.description"
-      :links="(page.hero.links as ButtonProps[]) || []"
+      :title="page.hero?.title || page.title"
+      :description="page.hero?.description || page.description"
+      :links="(page.hero?.links as ButtonProps[]) || []"
       class="md:border-b border-default"
       :ui="{ container: 'relative py-10 sm:py-16 lg:py-24' }"
     >
@@ -61,19 +59,10 @@ const { data: versions } = await useFetch(page.value.releases || '', {
       <div aria-hidden="true" class="hidden md:block absolute z-[-1] border-x border-default inset-0 mx-4 sm:mx-6 lg:mx-8" />
     </UPageHero>
 
-    <UContainer v-else class="py-10 sm:py-16 lg:py-24 text-center">
-      <h1 class="text-3xl font-bold tracking-tight text-gray-900 sm:text-4xl lg:text-5xl dark:text-white">
-        {{ page.title }}
-      </h1>
-      <p class="mt-4 text-lg text-gray-500 dark:text-gray-400">
-        {{ page.description }}
-      </p>
-    </UContainer>
-
     <UPageSection :ui="{ container: 'py-0!' }">
       <div class="py-4 md:py-8 lg:py-16 md:border-x border-default">
-        <UContainer class="max-w-5xl">
-          <ContentRenderer v-if="page.body" :value="page" class="prose dark:prose-invert max-w-none mb-8" />
+        <UContainer class="flex flex-col max-w-5xl gap-y-8 sm:gap-y-12 lg:gap-y-16">
+          <ContentRenderer v-if="page.body" :value="page" />
 
           <UChangelogVersions
             v-if="versions?.length"
