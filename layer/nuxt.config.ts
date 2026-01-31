@@ -104,6 +104,22 @@ export default defineNuxtConfig({
       } else if (!external) {
         build.rollupOptions.external = wasmImports
       }
+    },
+
+    'nitro:config': (nitroConfig) => {
+      const wasmImports = ['env', 'wasi_snapshot_preview1']
+
+      nitroConfig.rollupConfig = nitroConfig.rollupConfig || {}
+
+      const oldExternal = nitroConfig.rollupConfig.external
+
+      if (Array.isArray(oldExternal)) {
+        nitroConfig.rollupConfig.external = [...oldExternal, ...wasmImports]
+      } else if (typeof oldExternal === 'string') {
+        nitroConfig.rollupConfig.external = [oldExternal, ...wasmImports]
+      } else {
+        nitroConfig.rollupConfig.external = wasmImports
+      }
     }
   },
 
