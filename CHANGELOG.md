@@ -1,5 +1,16 @@
 # 📋 Changelog
 
+## [1.11.1](https://github.com/mhaibaraai/movk-nuxt-docs/compare/v1.11.0...v1.11.1) (2026-02-02)
+
+### 🐛 Bug Fixes
+
+* 修复 mermaid ESM 兼容性问题 ([8d26f69](https://github.com/mhaibaraai/movk-nuxt-docs/commit/8d26f69a2fed2e24c6b5622529d603b5e67be484))
+
+### 🔧 Chores
+
+* **deps:** lock file maintenance ([69d45ce](https://github.com/mhaibaraai/movk-nuxt-docs/commit/69d45ce35181149a5b7b7213060ee30dc85d8ccc))
+* **deps:** update all non-major dependencies ([4cfb1a0](https://github.com/mhaibaraai/movk-nuxt-docs/commit/4cfb1a08cae9e24e657426cce23ea8e64dfc776b))
+
 ## [1.11.0](https://github.com/mhaibaraai/movk-nuxt-docs/compare/v1.10.0...v1.11.0) (2026-01-31)
 
 ### ✨ Features
