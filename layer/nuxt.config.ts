@@ -81,10 +81,13 @@ export default defineNuxtConfig({
 
   hooks: {
     'vite:extendConfig': async (config) => {
-      // Rewrite optimizeDeps paths for layer architecture
-      const include = config.optimizeDeps?.include
-      if (!include) return
+      // Ensure optimizeDeps.include exists
+      const cfg = config as { optimizeDeps?: { include?: string[] } }
+      cfg.optimizeDeps ??= {}
+      cfg.optimizeDeps.include ??= []
+      const include = cfg.optimizeDeps.include
 
+      // Rewrite optimizeDeps paths for layer architecture
       const layerPkgs = /^(?:@nuxt\/content|@nuxtjs\/mdc|@nuxt\/a11y) > /
       include.forEach((id, i) => {
         if (layerPkgs.test(id)) include[i] = `@movk/nuxt-docs > ${id}`
@@ -92,7 +95,13 @@ export default defineNuxtConfig({
 
       include.push(
         '@movk/nuxt-docs > @nuxt/content > slugify',
-        '@movk/nuxt-docs > @ai-sdk/gateway > @vercel/oidc'
+        '@movk/nuxt-docs > @ai-sdk/gateway > @vercel/oidc',
+        // Fix mermaid ESM compatibility issues
+        '@movk/nuxt-docs > mermaid',
+        '@movk/nuxt-docs > mermaid > dayjs',
+        '@movk/nuxt-docs > mermaid > @braintree/sanitize-url',
+        '@movk/nuxt-docs > mermaid > d3',
+        '@movk/nuxt-docs > mermaid > dompurify'
       )
 
       // WASM plugin support for Shiki
