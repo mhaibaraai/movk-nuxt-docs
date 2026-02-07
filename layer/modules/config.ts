@@ -17,7 +17,8 @@ export default defineNuxtModule({
     const url = inferSiteURL()
     const meta = await getPackageJsonMetadata(dir)
     const gitInfo = await getLocalGitInfo(dir) || getGitEnv()
-    const siteName = meta.name || gitInfo?.name || ''
+
+    const siteName = nuxt.options?.site?.name || meta.name || gitInfo?.name || ''
 
     nuxt.options.site = defu(nuxt.options.site, {
       url,
