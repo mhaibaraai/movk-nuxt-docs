@@ -2,13 +2,13 @@ import { defineNuxtConfig } from 'nuxt/config'
 import pkg from './package.json'
 
 // WASM runtime imports that Rollup should not attempt to resolve
-const WASM_EXTERNALS = ['env', 'wasi_snapshot_preview1']
+// const WASM_EXTERNALS = ['env', 'wasi_snapshot_preview1']
 
-function mergeExternals(existing: unknown, additions: string[]): string[] {
-  if (Array.isArray(existing)) return [...existing, ...additions]
-  if (typeof existing === 'string') return [existing, ...additions]
-  return additions
-}
+// function mergeExternals(existing: unknown, additions: string[]): string[] {
+//   if (Array.isArray(existing)) return [...existing, ...additions]
+//   if (typeof existing === 'string') return [existing, ...additions]
+//   return additions
+// }
 
 export default defineNuxtConfig({
   modules: [
@@ -105,27 +105,27 @@ export default defineNuxtConfig({
       )
 
       // WASM plugin support for Shiki
-      const [wasm, topLevelAwait] = await Promise.all([
-        import('vite-plugin-wasm'),
-        import('vite-plugin-top-level-await')
-      ])
-      config.plugins!.push(wasm.default(), topLevelAwait.default() as any)
+      // const [wasm, topLevelAwait] = await Promise.all([
+      //   import('vite-plugin-wasm'),
+      //   import('vite-plugin-top-level-await')
+      // ])
+      // config.plugins!.push(wasm.default(), topLevelAwait.default() as any)
 
-      const build = config.build || ((config as any).build = {})
-      build.rollupOptions ??= {}
-      build.rollupOptions.external = mergeExternals(
-        build.rollupOptions.external,
-        WASM_EXTERNALS
-      )
-    },
-
-    'nitro:config': (nitroConfig) => {
-      nitroConfig.rollupConfig ??= {}
-      nitroConfig.rollupConfig.external = mergeExternals(
-        nitroConfig.rollupConfig.external,
-        WASM_EXTERNALS
-      )
+      // const build = config.build || ((config as any).build = {})
+      // build.rollupOptions ??= {}
+      // build.rollupOptions.external = mergeExternals(
+      //   build.rollupOptions.external,
+      //   WASM_EXTERNALS
+      // )
     }
+
+    // 'nitro:config': (nitroConfig) => {
+    //   nitroConfig.rollupConfig ??= {}
+    //   nitroConfig.rollupConfig.external = mergeExternals(
+    //     nitroConfig.rollupConfig.external,
+    //     WASM_EXTERNALS
+    //   )
+    // }
   },
 
   a11y: {
