@@ -3,7 +3,7 @@
   "type": "module",
   "version": "1.11.1",
   "private": true,
-  "packageManager": "pnpm@10.28.2",
+  "packageManager": "pnpm@10.29.1",
   "license": "MIT",
   "homepage": "https://docs.mhaibaraai.cn",
   "repository": {
@@ -26,10 +26,10 @@
   "devDependencies": {
     "@movk/core": "^1.1.0",
     "@nuxt/devtools": "^3.1.1",
-    "@nuxt/eslint": "^1.13.0",
-    "@nuxt/eslint-config": "^1.13.0",
+    "@nuxt/eslint": "^1.14.0",
+    "@nuxt/eslint-config": "^1.14.0",
     "@release-it/bumper": "^7.0.5",
-    "@release-it/conventional-changelog": "^10.0.4",
+    "@release-it/conventional-changelog": "^10.0.5",
     "eslint": "^9.39.2",
     "nuxt": "^4.3.1",
     "release-it": "^19.2.4",
