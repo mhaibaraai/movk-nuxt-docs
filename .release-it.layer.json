@@ -2,8 +2,7 @@
   "git": false,
   "github": false,
   "hooks": {
-    "before:init": ["node scripts/copy-readme.js", "pnpm lint", "pnpm typecheck"],
-    "after:release": ["node scripts/remove-layer-readme.js"]
+    "before:init": ["pnpm lint", "pnpm typecheck"]
   },
   "npm": {
     "publish": false

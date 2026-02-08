@@ -1,5 +1,27 @@
 # 📋 Changelog
 
+## [1.12.0](https://github.com/mhaibaraai/movk-nuxt-docs/compare/v1.11.1...v1.12.0) (2026-02-08)
+
+### ✨ Features
+
+* 添加 AI Skill 文档并更新 AI 聊天模型配置 ([13eda9c](https://github.com/mhaibaraai/movk-nuxt-docs/commit/13eda9c))
+* 支持通过 nuxt.options.site.name 配置站点名称 ([17934c6](https://github.com/mhaibaraai/movk-nuxt-docs/commit/17934c6))
+
+### 🐛 Bug Fixes
+
+* 修复 Vite 7 插件类型不兼容问题并优化 ESLint 配置 ([e1e1603](https://github.com/mhaibaraai/movk-nuxt-docs/commit/e1e1603))
+
+### 📝 Documentation
+
+* 支持多包管理器安装选项 ([1cfa7a3](https://github.com/mhaibaraai/movk-nuxt-docs/commit/1cfa7a3))
+
+### 🔧 Chores
+
+* **deps:** update @iconify-json/simple-icons to v1.2.70 ([a1a39a0](https://github.com/mhaibaraai/movk-nuxt-docs/commit/a1a39a0))
+* **deps:** update all non-major dependencies ([2b5fa1e](https://github.com/mhaibaraai/movk-nuxt-docs/commit/2b5fa1e))
+* **deps:** update devdependency eslint to v10 ([8b4ec7c](https://github.com/mhaibaraai/movk-nuxt-docs/commit/8b4ec7c))
+* **deps:** update nuxt framework to ^4.3.1 ([b20e31a](https://github.com/mhaibaraai/movk-nuxt-docs/commit/b20e31a))
+
 ## [1.11.1](https://github.com/mhaibaraai/movk-nuxt-docs/compare/v1.11.0...v1.11.1) (2026-02-02)
 
 ### 🐛 Bug Fixes
