@@ -108,7 +108,8 @@ export default defineAppConfig({
       streaming: 'i-lucide-chevron-down',
       providers: {
         deepseek: 'i-ri-deepseek-fill',
-        alibaba: 'i-simple-icons-alibabacloud'
+        alibaba: 'i-simple-icons-alibabacloud',
+        zai: 'i-simple-icons:zig'
       }
     }
   }

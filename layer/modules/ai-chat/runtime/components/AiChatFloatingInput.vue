@@ -61,39 +61,48 @@ defineShortcuts(shortcuts)
       :animate="{ y: 0, opacity: 1 }"
       :exit="{ y: 100, opacity: 0 }"
       :transition="{ duration: 0.2, ease: 'easeOut' }"
-      class="fixed bottom-6 left-1/2 -translate-x-1/2 z-50 px-4"
+      class="fixed inset-x-0 z-10 px-4 sm:px-80 bottom-[max(1.5rem,env(safe-area-inset-bottom))]"
       style="will-change: transform"
     >
-      <form @submit.prevent="handleSubmit">
-        <UInput
-          ref="inputRef"
-          v-model="input"
-          :placeholder="aiChat.texts.placeholder"
-          size="lg"
-          :ui="{
-            root: 'w-72 py-0.5 focus-within:w-96 transition-all duration-300 ease-out',
-            base: 'bg-default/80 backdrop-blur-xl shadow-lg',
-            trailing: 'pe-2'
-          }"
-          @keydown.enter.exact.prevent="handleSubmit"
-        >
-          <template #trailing>
-            <div class="flex items-center gap-2">
-              <div class="hidden sm:!flex items-center gap-1">
-                <UKbd v-for="key in shortcutDisplayKeys" :key="key" :value="key" />
-              </div>
+      <form
+        class="flex w-full justify-center"
+        @submit.prevent="handleSubmit"
+      >
+        <div class="w-full max-w-96">
+          <UInput
+            ref="inputRef"
+            v-model="input"
+            :placeholder="aiChat.texts.placeholder"
+            size="lg"
+            maxlength="1000"
+            :ui="{
+              root: 'group w-full! min-w-0 sm:max-w-96 transition-all duration-300 ease-out [@media(hover:hover)]:hover:scale-105 [@media(hover:hover)]:focus-within:scale-105',
+              base: 'bg-default shadow-lg text-base',
+              trailing: 'pe-2'
+            }"
+            @keydown.enter.exact.prevent="handleSubmit"
+          >
+            <template #trailing>
+              <div class="flex items-center gap-2">
+                <div class="hidden sm:flex group-focus-within:hidden items-center gap-1">
+                  <UKbd
+                    v-for="key in shortcutDisplayKeys"
+                    :key="key"
+                    :value="key"
+                  />
+                </div>
 
-              <UButton
-                aria-label="Send Message"
-                type="submit"
-                icon="i-lucide-arrow-up"
-                color="primary"
-                size="xs"
-                :disabled="!input.trim()"
-              />
-            </div>
-          </template>
-        </UInput>
+                <UButton
+                  type="submit"
+                  icon="i-lucide-arrow-up"
+                  color="primary"
+                  size="xs"
+                  :disabled="!input.trim()"
+                />
+              </div>
+            </template>
+          </UInput>
+        </div>
       </form>
     </motion.div>
   </AnimatePresence>

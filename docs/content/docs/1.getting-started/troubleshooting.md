@@ -87,7 +87,6 @@ pnpm add -D tailwindcss@^4.1.0
 
 | 依赖包 | 用途 | 是否必需 |
 |--------|------|----------|
-| `@swc/core` | TypeScript/JavaScript 编译器 | 是 |
 | `better-sqlite3` | SQLite 数据库（用于 MCP 服务器） | 是 |
 | `sharp` | 图片处理（用于 @nuxt/image） | 是 |
 
@@ -105,7 +104,6 @@ pnpm approve-builds
 
 ```yaml [pnpm-workspace.yaml]
 onlyBuiltDependencies:
-  - '@swc/core'
   - better-sqlite3
   - sharp
 ```
@@ -116,7 +114,6 @@ onlyBuiltDependencies:
 {
   "pnpm": {
     "onlyBuiltDependencies": [
-      "@swc/core",
       "better-sqlite3",
       "sharp"
     ]
@@ -142,50 +139,6 @@ onlyBuiltDependencies:
 |-----------|------|------|------|------|
 | Node 22 | LTS | ✅ | ✅ | 长期支持版本，稳定可靠 |
 | Node 24 | Current | ✅ | ⚡ | 最新版本，性能更优 |
-
-::callout{icon="lucide:check-circle"}
-**已解决**：通过配置 `vite-plugin-wasm` 和 WASM externals，项目已完全支持 Node 24 环境。
-::
-
-**历史问题**（已修复）：
-
-早期版本在 Node 24 环境下可能遇到以下错误：
-
-```text
-[vite:wasm-fallback] Could not load onig.wasm (imported by shiki):
-"ESM integration proposal for Wasm" is not supported currently
-```
-
-此问题已通过内置的 WASM 配置解决，无需手动处理。
-
-### WASM 和 Shiki 配置
-
-本项目使用 Shiki 进行语法高亮，需要 WASM 支持。相关配置已内置在 `layer/nuxt.config.ts` 中：
-
-```typescript
-// 已内置配置，无需手动添加
-hooks: {
-  'vite:extendConfig': async (config) => {
-    // WASM 插件支持
-    const [wasm, topLevelAwait] = await Promise.all([
-      import('vite-plugin-wasm'),
-      import('vite-plugin-top-level-await')
-    ])
-    config.plugins.push(wasm.default(), topLevelAwait.default())
-
-    // 配置 WASM 运行时导入为外部依赖
-    config.build.rollupOptions.external = [
-      ...existing,
-      'env',
-      'wasi_snapshot_preview1'
-    ]
-  }
-}
-```
-
-::warning
-**注意**：`env` 和 `wasi_snapshot_preview1` 不是 npm 包，而是 WASM 运行时的导入声明。标记为 `external` 告诉 Rollup 不要尝试解析这些模块。
-::
 
 ### Output Directory 找不到
 

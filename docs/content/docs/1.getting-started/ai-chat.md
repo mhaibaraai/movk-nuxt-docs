@@ -75,9 +75,9 @@ export default defineAppConfig({
 })
 ```
 
-::tip{to="/docs/getting-started/configuration#ai-chat"}
-查看完整的 AI Chat 配置选项
-::
+  ::tip{to="/docs/getting-started/configuration#ai-chat"}
+  查看完整的 AI Chat 配置选项
+  ::
 
 ### 将您的 API 密钥设置为环境变量：
 
@@ -89,9 +89,9 @@ AI_GATEWAY_API_KEY=your-gateway-key
 OPENROUTER_API_KEY=your-openrouter-key
 ```
 
-::warning
-仅当检测到以上 API 密钥之一时，该模块才会启用。如果未找到密钥，模块将被禁用，并在控制台中记录一条消息。
-::
+  ::warning
+  仅当检测到以上 API 密钥之一时，该模块才会启用。如果未找到密钥，模块将被禁用，并在控制台中记录一条消息。
+  ::
 
 ::
 
@@ -101,9 +101,8 @@ OPENROUTER_API_KEY=your-openrouter-key
 
 - 将 `modules/ai-chat` 文件夹复制到你的 Nuxt 项目中
 - 安装所需依赖：
-
 ```bash
-pnpm add @ai-sdk/mcp @ai-sdk/vue @ai-sdk/gateway @openrouter/ai-sdk-provider ai motion-v shiki shiki-stream
+pnpm add @ai-sdk/mcp @ai-sdk/vue @ai-sdk/gateway @openrouter/ai-sdk-provider @shiki/core @shiki/engine-javascript @shiki/langs @shiki/themes motion-v shiki-stream
 ```
 
 ## 自动集成
@@ -486,17 +485,17 @@ variant: link
   :::field{name="open" type="(message?: string, clearHistory?: boolean) => void"}
   打开对话框并可选地发送初始消息。
 
-  :::collapsible
-    ::field-group
-      ::field{name="message" type="string"}
-      可选的初始消息，打开对话框时自动发送。
-      ::
+    :::collapsible
+      ::field-group
+        ::field{name="message" type="string"}
+        可选的初始消息，打开对话框时自动发送。
+        ::
 
-      ::field{name="clearHistory" type="boolean"}
-      是否清除之前的消息历史，默认为 `false`。
+        ::field{name="clearHistory" type="boolean"}
+        是否清除之前的消息历史，默认为 `false`。
+        ::
       ::
-    ::
-  :::
+    :::
   :::
 
   ::field{name="close" type="() => void"}
@@ -537,13 +536,13 @@ variant: link
 
   :::field{name="formatModelName" type="(modelId: string) => string"}
   格式化模型 ID 为易读的显示名称（去除前缀和后缀）。
-  :::collapsible
-    ::field-group
-      ::field{name="modelId" type="string" required}
-      模型 ID，格式如 `openrouter/mistralai/devstral-2512:free`。
+    :::collapsible
+      ::field-group
+        ::field{name="modelId" type="string" required}
+        模型 ID，格式如 `openrouter/mistralai/devstral-2512:free`。
+        ::
       ::
-    ::
-  :::
+    :::
   :::
 ::
 

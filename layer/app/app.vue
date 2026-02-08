@@ -64,8 +64,8 @@ provide('navigation', rootNavigation)
         <ClientOnly>
           <LazyUContentSearch :files="files" :navigation="rootNavigation" :fuse="{ resultLimit: 1000 }" />
           <template v-if="isAiChatEnabled">
-            <LazyAiChatFloatingInput />
             <LazyAiChatPanel />
+            <LazyAiChatFloatingInput />
           </template>
         </ClientOnly>
       </template>

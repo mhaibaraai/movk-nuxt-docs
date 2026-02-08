@@ -121,13 +121,10 @@ onMounted(() => {
 <template>
   <DefineChatContent v-slot="{ showExpandButton = true }">
     <div class="flex h-full flex-col">
-      <div class="flex h-16 shrink-0 items-center justify-between border-b border-muted/50 px-4">
+      <div class="flex h-16 shrink-0 items-center justify-between border-b border-default px-4">
         <span class="font-medium text-highlighted">{{ aiChat.texts.title }}</span>
         <div class="flex items-center gap-1">
-          <UTooltip
-            v-if="showExpandButton"
-            :text="isExpanded ? aiChat.texts.collapse : aiChat.texts.expand"
-          >
+          <UTooltip v-if="showExpandButton" :text="isExpanded ? aiChat.texts.collapse : aiChat.texts.expand">
             <UButton
               :icon="isExpanded ? 'i-lucide-minimize-2' : 'i-lucide-maximize-2'"
               color="neutral"
@@ -138,10 +135,7 @@ onMounted(() => {
               @click="toggleExpanded"
             />
           </UTooltip>
-          <UTooltip
-            v-if="chat.messages.length > 0"
-            :text="aiChat.texts.clearChat"
-          >
+          <UTooltip v-if="chat.messages.length > 0" :text="aiChat.texts.clearChat">
             <UButton
               :icon="aiChat.icons.clearChat"
               color="neutral"
@@ -183,7 +177,11 @@ onMounted(() => {
                 v-for="(part, index) in message.parts"
                 :key="`${message.id}-${part.type}-${index}${'state' in part ? `-${part.state}` : ''}`"
               >
-                <AiChatReasoning v-if="part.type === 'reasoning'" :text="part.text" :is-streaming="part.state !== 'done'" />
+                <AiChatReasoning
+                  v-if="part.type === 'reasoning'"
+                  :text="part.text"
+                  :is-streaming="part.state !== 'done'"
+                />
 
                 <MDCCached
                   v-else-if="part.type === 'text'"
@@ -217,19 +215,10 @@ onMounted(() => {
           </template>
         </UChatMessages>
 
-        <div
-          v-else
-          class="p-4"
-        >
-          <div
-            v-if="!faqQuestions?.length"
-            class="flex h-full flex-col items-center justify-center py-12 text-center"
-          >
+        <div v-else class="p-4">
+          <div v-if="!faqQuestions?.length" class="flex h-full flex-col items-center justify-center py-12 text-center">
             <div class="mb-4 flex size-12 items-center justify-center rounded-full bg-primary/10">
-              <UIcon
-                name="i-lucide-message-circle-question"
-                class="size-6 text-primary"
-              />
+              <UIcon name="i-lucide-message-circle-question" class="size-6 text-primary" />
             </div>
             <h3 class="mb-2 text-base font-medium text-highlighted">
               {{ aiChat.texts.askAnything }}
@@ -253,17 +242,16 @@ onMounted(() => {
         <UChatPrompt
           v-model="input"
           :rows="2"
-          class="text-sm"
-          variant="subtle"
           :placeholder="aiChat.texts.placeholder"
+          maxlength="1000"
           :ui="{
             root: 'shadow-none!',
-            body: '*:p-0! *:rounded-none!'
+            body: '*:p-0! *:rounded-none! *:text-sm!'
           }"
           @submit="handleSubmit"
         >
           <template #footer>
-            <div class="hidden items-center divide-x divide-muted/50 sm:flex">
+            <div class="flex items-center gap-1 text-xs text-muted">
               <AiChatModelSelect v-model="model" />
               <div class="flex gap-1 justify-between items-center px-1 text-xs text-muted">
                 <span>{{ aiChat.texts.lineBreak }}</span>
@@ -281,22 +269,25 @@ onMounted(() => {
             />
           </template>
         </UChatPrompt>
+        <div class="mt-1 flex text-xs text-dimmed items-center justify-between">
+          <span>刷新时聊天会被清除</span>
+          <span>
+            {{ input.length }}/1000
+          </span>
+        </div>
       </div>
     </div>
   </DefineChatContent>
 
   <aside
     v-if="!isMobile"
-    class="fixed top-0 z-50 h-dvh overflow-hidden border-l border-muted/50 bg-default/95 backdrop-blur-xl transition-[right,width] duration-200 ease-linear will-change-[right,width]"
+    class="left-auto! fixed top-0 z-50 h-dvh overflow-hidden border-l border-default bg-default/95 backdrop-blur-xl transition-[right,width] duration-200 ease-linear will-change-[right,width]"
     :style="{
       width: `${panelWidth}px`,
       right: isOpen ? '0' : `-${panelWidth}px`
     }"
   >
-    <div
-      class="h-full transition-[width] duration-200 ease-linear"
-      :style="{ width: `${panelWidth}px` }"
-    >
+    <div class="h-full transition-[width] duration-200 ease-linear" :style="{ width: `${panelWidth}px` }">
       <ReuseChatContent :show-expand-button="true" />
     </div>
   </aside>
@@ -304,8 +295,6 @@ onMounted(() => {
   <USlideover
     v-else
     v-model:open="isOpen"
-    title=" "
-    description=" "
     side="right"
     :ui="{
       content: 'ring-0 bg-default'

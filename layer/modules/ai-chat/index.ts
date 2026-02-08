@@ -32,7 +32,7 @@ export interface AiChatModuleOptions {
   models?: string[]
 }
 
-const log = logger.withTag('movk-nuxt-docs:ai-assistant')
+const log = logger.withTag('movk-nuxt-docs')
 
 export default defineNuxtModule<AiChatModuleOptions>({
   meta: {
@@ -77,7 +77,7 @@ export default defineNuxtModule<AiChatModuleOptions>({
     }
 
     if (!hasApiKey) {
-      log.warn('[ai-chat] Module disabled: no API key found in environment variables.')
+      log.warn('[movk-nuxt-docs] Ai Chat Module disabled: no API key found in environment variables.')
       return
     }
 
@@ -119,7 +119,7 @@ export default defineNuxtModule<AiChatModuleOptions>({
         handler: resolve('./runtime/server/api/ai-chat')
       })
     } else {
-      log.info(`[ai-chat] Using custom handler, skipping default handler registration`)
+      log.info(`[movk-nuxt-docs] Using custom handler, skipping default handler registration`)
     }
   }
 })
