@@ -109,7 +109,7 @@ export default defineNuxtConfig({
         import('vite-plugin-wasm'),
         import('vite-plugin-top-level-await')
       ])
-      config.plugins!.push(wasm.default(), topLevelAwait.default())
+      config.plugins!.push(wasm.default(), topLevelAwait.default() as any)
 
       const build = config.build || ((config as any).build = {})
       build.rollupOptions ??= {}
