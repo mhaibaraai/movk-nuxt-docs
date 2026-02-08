@@ -75,7 +75,7 @@ importers:
         specifier: ^1.2.89
         version: 1.2.89
       '@iconify-json/simple-icons':
-        specifier: ^1.2.69
+        specifier: ^1.2.70
         version: 1.2.70
       '@iconify-json/vscode-icons':
         specifier: ^1.2.40

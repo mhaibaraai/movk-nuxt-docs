@@ -33,7 +33,7 @@
     "@ai-sdk/mcp": "^1.0.19",
     "@ai-sdk/vue": "^3.0.77",
     "@iconify-json/lucide": "^1.2.89",
-    "@iconify-json/simple-icons": "^1.2.69",
+    "@iconify-json/simple-icons": "^1.2.70",
     "@iconify-json/vscode-icons": "^1.2.40",
     "@movk/core": "^1.1.0",
     "@nuxt/a11y": "^1.0.0-alpha.1",
