@@ -1,5 +1,11 @@
 # 📋 Changelog
 
+## [1.12.1](https://github.com/mhaibaraai/movk-nuxt-docs/compare/v1.12.0...v1.12.1) (2026-02-08)
+
+### 📝 Documentation
+
+* 添加 Layer README 文档 ([e4d1082](https://github.com/mhaibaraai/movk-nuxt-docs/commit/e4d1082d94b1ef46cba1a8079bace6df13585d45))
+
 ## [1.12.0](https://github.com/mhaibaraai/movk-nuxt-docs/compare/v1.11.1...v1.12.0) (2026-02-08)
 
 ### ✨ Features
