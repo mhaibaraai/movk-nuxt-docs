@@ -78,6 +78,21 @@ pnpm dev
 
 访问 `http://localhost:3000` 查看你的文档网站。
 
+### AI 助手 Skill
+
+为你的 AI 助手（Cursor、Claude Code 等）添加 Movk Nuxt Docs 专业知识，加速文档编写：
+
+```bash
+npx skills add mhaibaraai/movk-nuxt-docs
+```
+
+此 Skill 为 AI 助手提供 Movk Nuxt Docs 专业知识，帮助你更高效地编写文档：
+
+- 📝 MDC 组件用法和现成模板
+- 🎨 中文文档写作规范和内容结构模式
+- 🔧 nuxt.config.ts 和 app.config.ts 配置参考
+- 📚 入门页、功能介绍页等常用页面模板
+
 ### 作为 Layer 使用
 
 在现有 Nuxt 项目中使用 Movk Nuxt Docs 作为 layer：

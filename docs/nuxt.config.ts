@@ -35,12 +35,11 @@ export default defineNuxtConfig({
   compatibilityDate: 'latest',
 
   aiChat: {
-    model: 'mistral/devstral-3b',
+    model: 'alibaba/qwen3-coder',
     models: [
-      'mistral/devstral-2',
-      'openrouter/xiaomi/mimo-v2-flash:free',
-      'openrouter/z-ai/glm-4.5-air:free',
-      'mistral/ministral-3b'
+      'deepseek/deepseek-v3.2',
+      'deepseek/deepseek-v3.2-thinking',
+      'alibaba/qwen3-coder'
     ]
   },
 

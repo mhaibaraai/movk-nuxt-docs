@@ -107,8 +107,8 @@ export default defineAppConfig({
       clearChat: 'i-lucide-trash-2',
       streaming: 'i-lucide-chevron-down',
       providers: {
-        mistral: 'i-simple-icons-mistralai',
-        kwaipilot: 'i-lucide-wand'
+        deepseek: 'i-ri-deepseek-fill',
+        alibaba: 'i-simple-icons-alibabacloud'
       }
     }
   }
