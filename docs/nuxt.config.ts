@@ -37,6 +37,7 @@ export default defineNuxtConfig({
   aiChat: {
     model: 'alibaba/qwen3-coder',
     models: [
+      'openai/gpt-4o-mini',
       'alibaba/qwen3-coder',
       'deepseek/deepseek-v3.2',
       'deepseek/deepseek-v3.2-thinking'
