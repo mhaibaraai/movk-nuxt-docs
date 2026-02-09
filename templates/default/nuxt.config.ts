@@ -8,8 +8,6 @@ export default defineNuxtConfig({
     '/docs': { redirect: '/docs/getting-started', prerender: false }
   },
 
-  compatibilityDate: 'latest',
-
   aiChat: {
     model: 'openai/gpt-5-nano',
     models: [
