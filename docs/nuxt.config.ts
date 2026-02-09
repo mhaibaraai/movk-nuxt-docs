@@ -34,10 +34,6 @@ export default defineNuxtConfig({
 
   compatibilityDate: 'latest',
 
-  nitro: {
-    preset: 'vercel'
-  },
-
   aiChat: {
     model: 'alibaba/qwen3-coder',
     models: [
