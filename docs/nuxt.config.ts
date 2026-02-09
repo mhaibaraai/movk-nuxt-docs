@@ -32,6 +32,12 @@ export default defineNuxtConfig({
     '/docs/composables': { redirect: '/docs/composables/fetch-component-example', prerender: false }
   },
 
+  nitro: {
+    output: {
+      dir: 'dist'
+    }
+  },
+
   aiChat: {
     model: 'alibaba/qwen3-coder',
     models: [
