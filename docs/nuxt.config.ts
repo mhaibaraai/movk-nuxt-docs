@@ -40,6 +40,7 @@ export default defineNuxtConfig({
       'openai/gpt-4o-mini',
       'alibaba/qwen3-coder',
       'deepseek/deepseek-v3.2',
+      'anthropic/claude-3-haiku',
       'deepseek/deepseek-v3.2-thinking'
     ]
   },
