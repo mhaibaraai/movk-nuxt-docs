@@ -7,6 +7,7 @@ export default defineNuxtConfig({
     '@nuxt/content',
     '@nuxt/image',
     '@nuxt/a11y',
+    '@nuxtjs/robots',
     '@nuxtjs/mcp-toolkit',
     '@vueuse/nuxt',
     'nuxt-component-meta',
@@ -41,7 +42,8 @@ export default defineNuxtConfig({
 
   mdc: {
     highlight: {
-      noApiRoute: false
+      noApiRoute: false,
+      shikiEngine: 'javascript'
     }
   },
 
@@ -67,6 +69,13 @@ export default defineNuxtConfig({
       crawlLinks: true,
       failOnError: false,
       autoSubfolderIndex: false
+    }
+  },
+
+  vite: {
+    build: {
+      sourcemap: false,
+      chunkSizeWarningLimit: 1024
     }
   },
 
@@ -125,12 +134,12 @@ export default defineNuxtConfig({
   fonts: {
     families: [
       { name: 'Public Sans', provider: 'google', global: true },
-      { name: 'DM Sans', provider: 'google', global: true },
-      { name: 'Geist', provider: 'google', global: true },
-      { name: 'Inter', provider: 'google', global: true },
-      { name: 'Poppins', provider: 'google', global: true },
-      { name: 'Outfit', provider: 'google', global: true },
-      { name: 'Raleway', provider: 'google', global: true }
+      { name: 'DM Sans', provider: 'google' },
+      { name: 'Geist', provider: 'google' },
+      { name: 'Inter', provider: 'google' },
+      { name: 'Poppins', provider: 'google' },
+      { name: 'Outfit', provider: 'google' },
+      { name: 'Raleway', provider: 'google' }
     ]
   },
 

@@ -129,6 +129,45 @@ onlyBuiltDependencies:
 了解更多关于构建脚本审批的信息
 ::
 
+## Nitro 预渲染问题
+
+### unist-util-visit 包找不到
+
+**错误信息**：
+
+```text
+Cannot find package 'unist-util-visit' imported from .../prerender/chunks/nitro/nitro.mjs
+Did you mean to import "unist-util-visit/index.js"?
+```
+
+::warning
+**原因**：
+
+`@nuxt/content` 的 LLMs 集成在 Nitro 预渲染 `/llms-full.txt` 时，通过 `import("unist-util-visit")` 动态导入该包。pnpm 的严格依赖隔离使得 Nitro 输出目录（`docs/node_modules/.cache/`）无法解析到仅存在于 layer 依赖链中的包。
+::
+
+**解决方法**：
+
+在消费方项目的 `package.json` 中显式声明缺失的运行时依赖：
+
+```json [package.json]
+{
+  "dependencies": {
+    "unist-util-visit": "^5.1.0",
+    "@nuxtjs/mdc": "^0.20.1"
+  }
+}
+```
+
+或使用 `.npmrc` 将特定包提升到根目录：
+
+```text [.npmrc]
+public-hoist-pattern[]=unist-util-visit
+public-hoist-pattern[]=@nuxtjs/mdc
+```
+
+添加后运行 `pnpm install` 使配置生效。
+
 ## Vercel 部署问题
 
 ### Node 版本支持
@@ -157,7 +196,7 @@ Configure the Output Directory in your Project Settings.
 2. 设置 **Output Directory**：
 
 ```text
-docs/.output/public
+.output/public
 ```
 
 或在 `vercel.json` 中配置：
@@ -165,6 +204,6 @@ docs/.output/public
 ```json [vercel.json]
 {
   "buildCommand": "pnpm build",
-  "outputDirectory": "docs/.output/public"
+  "outputDirectory": ".output/public"
 }
 ```
