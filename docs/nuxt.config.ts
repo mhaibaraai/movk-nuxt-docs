@@ -25,8 +25,6 @@ export default defineNuxtConfig({
     }
   },
 
-  buildDir: 'dist',
-
   routeRules: {
     '/docs': { redirect: '/docs/getting-started', prerender: false },
     '/docs/typography': { redirect: '/docs/typography/markdown-syntax', prerender: false },
