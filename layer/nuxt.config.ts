@@ -83,6 +83,8 @@ export default defineNuxtConfig({
     }
   },
 
+  telemetry: false,
+
   hooks: {
     'vite:extendConfig': async (config) => {
       // Ensure optimizeDeps.include exists
