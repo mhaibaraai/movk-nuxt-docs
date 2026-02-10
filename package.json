@@ -1,7 +1,7 @@
 {
   "name": "nuxt-docs-workspace",
   "type": "module",
-  "version": "1.12.1",
+  "version": "1.12.2",
   "private": true,
   "packageManager": "pnpm@10.29.2",
   "license": "MIT",
@@ -13,7 +13,7 @@
   "sideEffects": false,
   "scripts": {
     "postinstall": "pnpm dev:prepare",
-    "build": "NODE_OPTIONS='--max-old-space-size=8192' nuxt build docs --extends ../layer",
+    "build": "nuxt build docs --extends ../layer",
     "dev": "nuxt dev docs --extends ../layer",
     "dev:prepare": "nuxt prepare layer && nuxt prepare docs --extends ../layer",
     "release": "pnpm release:layer && release-it",

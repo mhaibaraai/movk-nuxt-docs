@@ -1,5 +1,22 @@
 # 📋 Changelog
 
+## [1.12.2](https://github.com/mhaibaraai/movk-nuxt-docs/compare/v1.12.1...v1.12.2) (2026-02-10)
+
+### 📝 Documentation
+
+* 重构故障排除文档格式并修正 Vercel 部署指南 ([a1d5a84](https://github.com/mhaibaraai/movk-nuxt-docs/commit/a1d5a84bc4e36679091e4d32c4787ba1558d49c5))
+
+### ♻️ Code Refactoring
+
+* 升级 Shiki 至模块化架构 ([cf815d1](https://github.com/mhaibaraai/movk-nuxt-docs/commit/cf815d1f29b923bb827da6d74f0ce76a4ca7a2eb))
+* 禁用 WASM 插件配置 ([0da26b8](https://github.com/mhaibaraai/movk-nuxt-docs/commit/0da26b828d0c125415551abc9fd77df37a21ac86))
+* 重构模块加载方式并优化 LLMs 链接生成 ([553930f](https://github.com/mhaibaraai/movk-nuxt-docs/commit/553930f7adfd4bc0cf7602c665e5a708eba557c0))
+
+### 🔧 Chores
+
+* 禁用 Nuxt telemetry ([e283804](https://github.com/mhaibaraai/movk-nuxt-docs/commit/e2838046b8268e8a2e11aab976cced0fd1e08d5e))
+* 移除 '@swc/core' 依赖项 ([a2cb8ed](https://github.com/mhaibaraai/movk-nuxt-docs/commit/a2cb8ed715d756ee6d912d5957379551f3d51efe))
+
 ## [1.12.1](https://github.com/mhaibaraai/movk-nuxt-docs/compare/v1.12.0...v1.12.1) (2026-02-08)
 
 ### 📝 Documentation
