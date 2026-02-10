@@ -1,3 +1,4 @@
+import { defineNuxtConfig } from 'nuxt/config'
 import pkg from './package.json'
 import { createResolver } from '@nuxt/kit'
 
