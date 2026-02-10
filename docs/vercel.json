@@ -1,5 +1,0 @@
-{
-  "buildCommand": "pnpm run build",
-  "framework": null,
-  "installCommand": "pnpm install --frozen-lockfile"
-}
