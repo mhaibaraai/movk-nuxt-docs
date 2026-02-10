@@ -1,5 +1,12 @@
 # 📋 Changelog
 
+## [1.12.3](https://github.com/mhaibaraai/movk-nuxt-docs/compare/v1.12.2...v1.12.3) (2026-02-10)
+
+### 🔧 Chores
+
+* 添加 @nuxtjs/mdc 和 unist-util-visit 依赖到模板 ([99a5c93](https://github.com/mhaibaraai/movk-nuxt-docs/commit/99a5c93a3f8a79f19d6de6940554e3e78869b55f))
+* 添加 defineNuxtConfig 显式导入 ([b9d7000](https://github.com/mhaibaraai/movk-nuxt-docs/commit/b9d7000225a94ed68f1efcc64c3e2fcf96f6a151))
+
 ## [1.12.2](https://github.com/mhaibaraai/movk-nuxt-docs/compare/v1.12.1...v1.12.2) (2026-02-10)
 
 ### 📝 Documentation
