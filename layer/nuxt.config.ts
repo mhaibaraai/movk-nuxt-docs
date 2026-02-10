@@ -1,8 +1,15 @@
-import { defineNuxtConfig } from 'nuxt/config'
 import pkg from './package.json'
+import { createResolver } from '@nuxt/kit'
+
+const { resolve } = createResolver(import.meta.url)
 
 export default defineNuxtConfig({
   modules: [
+    resolve('./modules/config'),
+    resolve('./modules/routing'),
+    resolve('./modules/md-rewrite'),
+    resolve('./modules/component-example'),
+    resolve('./modules/css'),
     '@nuxt/ui',
     '@nuxt/content',
     '@nuxt/image',
