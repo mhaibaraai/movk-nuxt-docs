@@ -1,5 +1,6 @@
 import type { H3Event } from 'h3'
 import type { PageCollectionItemBase } from '@nuxt/content'
+import type { LLMsSection } from 'nuxt-llms'
 
 export default defineNitroPlugin((nitroApp) => {
   nitroApp.hooks.hook('content:llms:generate:document', async (event: H3Event, doc: PageCollectionItemBase) => {
@@ -8,7 +9,7 @@ export default defineNitroPlugin((nitroApp) => {
 
   nitroApp.hooks.hook('llms:generate', (_, { sections, domain }) => {
     // Transform links except for "Documentation Sets"
-    sections.forEach((section) => {
+    sections.forEach((section: LLMsSection) => {
       if (section.title !== 'Documentation Sets') {
         section.links = section.links?.map(link => ({
           ...link,
