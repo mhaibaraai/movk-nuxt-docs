@@ -1,8 +1,4 @@
 export default defineAppConfig({
-  vercelAnalytics: {
-    enable: true,
-    debug: false
-  },
   github: {
     rootDir: 'docs',
     commitPath: 'layer/app/components/content',
