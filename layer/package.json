@@ -61,7 +61,7 @@
     "git-url-parse": "^16.1.0",
     "mermaid": "^11.12.3",
     "minimark": "^1.0.0",
-    "motion-v": "^1.10.3",
+    "motion-v": "^2.0.0",
     "nuxt": "^4.3.1",
     "nuxt-component-meta": "^0.17.2",
     "nuxt-llms": "^0.2.0",
