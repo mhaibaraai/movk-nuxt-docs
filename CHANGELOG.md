@@ -1,5 +1,22 @@
 # 📋 Changelog
 
+## [1.12.4](https://github.com/mhaibaraai/movk-nuxt-docs/compare/v1.12.3...v1.12.4) (2026-02-25)
+
+### ♻️ Code Refactoring
+
+* remove custom modules from layer config and add LLMsSection type ([0a12973](https://github.com/mhaibaraai/movk-nuxt-docs/commit/0a129736dd051e34c19ae7382bd249cb5a97755d))
+* 提取页面工具函数并重构 landing/releases 路由逻辑 ([1546b56](https://github.com/mhaibaraai/movk-nuxt-docs/commit/1546b563b8461553e6169da91801128e6f772ebc))
+
+### 🔧 Chores
+
+* **deps:** update all non-major dependencies ([729c1e2](https://github.com/mhaibaraai/movk-nuxt-docs/commit/729c1e205c1b8d51b686b0da7244f5015e9963a5))
+* **deps:** update dependency minimark to v1 ([43370fd](https://github.com/mhaibaraai/movk-nuxt-docs/commit/43370fdf000b918586dbb10c3d4cf1667df8b173))
+* **deps:** update dependency motion-v to v2 ([48b190c](https://github.com/mhaibaraai/movk-nuxt-docs/commit/48b190ca78b3fd86b985453db9604e885a96b3ed))
+* **deps:** update pnpm lockfile ([2d8f7e1](https://github.com/mhaibaraai/movk-nuxt-docs/commit/2d8f7e1b3408c755d00c264ebf939132e3c5d63c))
+* **deps:** 更新 fast-npm-meta 至 1.3.0 ([1ee029a](https://github.com/mhaibaraai/movk-nuxt-docs/commit/1ee029afe1f8d7824f27672ed03b2ee0faf0ee64))
+* optimize build config and remove unused analytics ([0d636a9](https://github.com/mhaibaraai/movk-nuxt-docs/commit/0d636a92d17632e683cb7781bf1bd6eb4335bd87))
+* 移除 Docker 相关配置文件 ([0ef673d](https://github.com/mhaibaraai/movk-nuxt-docs/commit/0ef673d2f7195b0278385b5c78d72d8dba789fb3))
+
 ## [1.12.3](https://github.com/mhaibaraai/movk-nuxt-docs/compare/v1.12.2...v1.12.3) (2026-02-10)
 
 ### 🔧 Chores
