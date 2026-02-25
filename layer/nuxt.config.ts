@@ -42,8 +42,7 @@ export default defineNuxtConfig({
 
   mdc: {
     highlight: {
-      noApiRoute: false,
-      shikiEngine: 'javascript'
+      noApiRoute: false
     }
   },
 

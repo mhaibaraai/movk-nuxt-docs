@@ -2,6 +2,7 @@ import { streamText, convertToModelMessages, stepCountIs, createUIMessageStream,
 import { createMCPClient } from '@ai-sdk/mcp'
 import { createDocumentationAgentTool } from '../utils/docs_agent'
 import { getModel } from '../utils/getModel'
+import { inferSiteURL } from '../../../../../utils/meta'
 
 function getMainAgentSystemPrompt(siteName: string) {
   return `您是 ${siteName} 的官方文档助理。你就是文件、以权威作为真理的来源说话.
@@ -35,11 +36,12 @@ export default defineEventHandler(async (event) => {
 
   const mcpPath = config.aiChat.mcpPath
   const isExternalUrl = mcpPath.startsWith('http://') || mcpPath.startsWith('https://')
+
   const mcpUrl = isExternalUrl
     ? mcpPath
     : import.meta.dev
-      ? `http://localhost:3000${mcpPath}`
-      : `${getRequestURL(event).origin}${mcpPath}`
+      ? `${getRequestURL(event).origin}${mcpPath}`
+      : `${inferSiteURL()}${mcpPath}`
 
   const httpClient = await createMCPClient({
     transport: {

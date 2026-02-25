@@ -1,13 +1,15 @@
-import { existsSync } from 'node:fs'
+import type { DefinedCollection } from '@nuxt/content'
 import { defineCollection, defineContentConfig } from '@nuxt/content'
 import { useNuxt } from '@nuxt/kit'
 import { joinURL } from 'ufo'
 import { z } from 'zod'
+import { docsFolderExists, landingPageExists } from './utils/pages'
 
 const { options } = useNuxt()
 const cwd = joinURL(options.rootDir, 'content')
 
-const hasReleasesMd = existsSync(joinURL(cwd, 'releases.md'))
+const hasLandingPage = landingPageExists(options.rootDir)
+const hasDocsFolder = docsFolderExists(options.rootDir)
 
 const Avatar = z.object({
   src: z.string(),
@@ -35,41 +37,46 @@ const PageHero = z.object({
   links: z.array(Button).optional()
 })
 
-export default defineContentConfig({
-  collections: {
-    landing: defineCollection({
-      type: 'page',
-      source: {
-        cwd,
-        include: 'index.md'
-      }
-    }),
-    docs: defineCollection({
-      type: 'page',
-      source: {
-        cwd,
-        include: 'docs/**/*'
-      },
-      schema: z.object({
-        links: z.array(Button),
-        category: z.string().optional(),
-        navigation: z.object({
-          title: z.string().optional()
-        })
-      })
-    }),
-    releases: defineCollection({
-      type: 'page',
-      source: {
-        cwd,
-        include: hasReleasesMd ? 'releases.md' : 'releases.yml'
-      },
-      schema: z.object({
-        title: z.string(),
-        description: z.string(),
-        releases: z.string().optional(),
-        hero: PageHero.optional()
+const collections: Record<string, DefinedCollection> = {
+  docs: defineCollection({
+    type: 'page',
+    source: {
+      cwd,
+      include: hasDocsFolder ? 'docs/**' : '**',
+      prefix: hasDocsFolder ? '/docs' : '/',
+      exclude: ['index.md']
+    },
+    schema: z.object({
+      links: z.array(Button),
+      category: z.string().optional(),
+      navigation: z.object({
+        title: z.string().optional()
       })
     })
-  }
-})
+  }),
+  releases: defineCollection({
+    type: 'page',
+    source: {
+      cwd,
+      include: 'releases.{md,yml}'
+    },
+    schema: z.object({
+      title: z.string(),
+      description: z.string(),
+      releases: z.string().optional(),
+      hero: PageHero.optional()
+    })
+  })
+}
+
+if (!hasLandingPage) {
+  collections.landing = defineCollection({
+    type: 'page',
+    source: {
+      cwd,
+      include: 'index.md'
+    }
+  })
+}
+
+export default defineContentConfig({ collections })

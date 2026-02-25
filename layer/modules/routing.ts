@@ -1,6 +1,5 @@
 import { defineNuxtModule, extendPages, createResolver } from '@nuxt/kit'
-import { joinURL } from 'ufo'
-import { existsSync } from 'node:fs'
+import { landingPageExists, releasesFileExists } from '../utils/pages'
 
 export default defineNuxtModule({
   meta: {
@@ -8,13 +7,21 @@ export default defineNuxtModule({
   },
   async setup(_options, nuxt) {
     const { resolve } = createResolver(import.meta.url)
-    const cwd = joinURL(nuxt.options.rootDir, 'content')
+    const rootDir = nuxt.options.rootDir
 
-    const hasReleases = ['releases.yml', 'releases.md']
-      .some(file => existsSync(joinURL(cwd, file)))
+    const hasReleasesFile = releasesFileExists(rootDir)
+    const hasLandingPage = landingPageExists(rootDir)
 
     extendPages((pages) => {
-      if (hasReleases) {
+      if (!hasLandingPage) {
+        pages.push({
+          name: 'index',
+          path: '/',
+          file: resolve('../app/templates/landing.vue')
+        })
+      }
+
+      if (hasReleasesFile) {
         pages.push({
           name: 'releases',
           path: '/releases',

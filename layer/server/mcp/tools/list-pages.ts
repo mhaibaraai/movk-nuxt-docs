@@ -1,4 +1,5 @@
 import { queryCollection } from '@nuxt/content/server'
+import { inferSiteURL } from '../../../utils/meta'
 
 export default defineMcpTool({
   description: `列出所有可用的文档页面及其分类和基本信息。
@@ -22,7 +23,9 @@ export default defineMcpTool({
   cache: '30m',
   handler: async () => {
     const event = useEvent()
-    const siteUrl = import.meta.dev ? 'http://localhost:3000' : getRequestURL(event).origin
+    const siteUrl = import.meta.dev
+      ? getRequestURL(event).origin
+      : inferSiteURL()
 
     try {
       const pages = await queryCollection(event, 'docs')

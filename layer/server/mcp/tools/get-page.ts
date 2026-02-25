@@ -21,7 +21,9 @@ export default defineMcpTool({
   cache: '30m',
   handler: async ({ path, sections }) => {
     const event = useEvent()
-    const siteUrl = import.meta.dev ? 'http://localhost:3000' : inferSiteURL()
+    const siteUrl = import.meta.dev
+      ? getRequestURL(event).origin
+      : inferSiteURL()
 
     try {
       const page = await queryCollection(event, 'docs')
