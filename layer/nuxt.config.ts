@@ -27,7 +27,7 @@ export default defineNuxtConfig({
     build: {
       markdown: {
         highlight: {
-          langs: ['bash', 'diff', 'json', 'js', 'ts', 'html', 'css', 'vue', 'shell', 'mdc', 'md', 'yaml', 'mermaid']
+          langs: ['bash', 'diff', 'json', 'js', 'ts', 'html', 'css', 'vue', 'shell', 'mdc', 'md', 'yaml']
         },
         remarkPlugins: {
           'remark-mdc': {
@@ -100,13 +100,7 @@ export default defineNuxtConfig({
 
       include.push(
         '@movk/nuxt-docs > @nuxt/content > slugify',
-        '@movk/nuxt-docs > @ai-sdk/gateway > @vercel/oidc',
-        // Fix mermaid ESM compatibility issues
-        '@movk/nuxt-docs > mermaid',
-        '@movk/nuxt-docs > mermaid > dayjs',
-        '@movk/nuxt-docs > mermaid > @braintree/sanitize-url',
-        '@movk/nuxt-docs > mermaid > d3',
-        '@movk/nuxt-docs > mermaid > dompurify'
+        '@movk/nuxt-docs > @ai-sdk/gateway > @vercel/oidc'
       )
     }
   },

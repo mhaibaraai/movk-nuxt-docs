@@ -127,21 +127,21 @@ seo:
 
 所有代码块必须标注语言：
 
-| 内容类型 | 标识符 |
-|----------|--------|
-| Shell 命令 | `bash` |
-| TypeScript | `ts` |
-| JavaScript | `js` |
-| Vue 组件 | `vue` |
-| JSON 配置 | `json` |
-| YAML 配置 | `yaml` |
-| Markdown | `md` |
-| MDC 语法 | `mdc` |
-| Diff 对比 | `diff` |
-| CSS 样式 | `css` |
-| HTML | `html` |
-| 纯文本 | `text` |
-| Mermaid 图表 | `mermaid` |
+| 内容类型 | 标识符 | 备注 |
+|----------|--------|------|
+| Shell 命令 | `bash` | |
+| TypeScript | `ts` | |
+| JavaScript | `js` | |
+| Vue 组件 | `vue` | |
+| JSON 配置 | `json` | |
+| YAML 配置 | `yaml` | |
+| Markdown | `md` | |
+| MDC 语法 | `mdc` | |
+| Diff 对比 | `diff` | |
+| CSS 样式 | `css` | |
+| HTML | `html` | |
+| 纯文本 | `text` | |
+| Mermaid 图表 | `mermaid` | 需启用 `mermaid: { enabled: true }` |
 
 ### 文件名标注
 

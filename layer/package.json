@@ -14,8 +14,18 @@
   "main": "./nuxt.config.ts",
   "peerDependencies": {
     "better-sqlite3": "12.x",
+    "dompurify": "3.x",
+    "mermaid": "11.x",
     "nuxt": "4.x",
     "tailwindcss": "4.x"
+  },
+  "peerDependenciesMeta": {
+    "dompurify": {
+      "optional": true
+    },
+    "mermaid": {
+      "optional": true
+    }
   },
   "files": [
     "app",
@@ -56,10 +66,8 @@
     "@vueuse/nuxt": "^14.2.1",
     "ai": "^6.0.99",
     "defu": "^6.1.4",
-    "dompurify": "^3.3.1",
     "exsolve": "^1.0.8",
     "git-url-parse": "^16.1.0",
-    "mermaid": "^11.12.3",
     "minimark": "^1.0.0",
     "motion-v": "^2.0.0",
     "nuxt": "^4.3.1",

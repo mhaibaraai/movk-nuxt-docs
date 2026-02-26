@@ -41,7 +41,7 @@
 - ⚡ **基于 Nuxt 4** - 充分利用最新的 Nuxt 框架，实现卓越性能
 - 🎨 **采用 Nuxt UI** - 集成全面的 UI 组件库，开箱即用
 - 📝 **MDC 语法增强** - 支持 Markdown 与 Vue 组件的无缝集成
-- 📊 **Mermaid 图表** - 内置 Mermaid 支持，渲染流程图、时序图、类图等可视化图表，支持自动主题切换和全屏查看
+- 📊 **Mermaid 图表** - 可选按需启用，渲染流程图、时序图、类图等可视化图表，支持自动主题切换和全屏查看
 - 🔍 **全文搜索** - 基于 Nuxt Content 的 `ContentSearch` 组件，支持键盘快捷键（⌘K）
 - 🌙 **暗黑模式** - 支持亮色/暗色主题切换
 - 📱 **响应式设计** - 移动优先的响应式布局
@@ -180,7 +180,20 @@ icon: i-lucide-rocket
 
 ### Mermaid 图表
 
-使用 ` ```mermaid ` 代码块渲染可视化图表，支持流程图、时序图、类图等多种图表类型：
+Mermaid 是可选功能，默认不启用。先安装依赖，再开启配置：
+
+```bash
+pnpm add mermaid dompurify
+```
+
+```ts [nuxt.config.ts]
+export default defineNuxtConfig({
+  extends: ['@movk/nuxt-docs'],
+  mermaid: { enabled: true }
+})
+```
+
+启用后，使用 ` ```mermaid ` 代码块渲染可视化图表，支持流程图、时序图、类图等多种图表类型：
 
 ````md [md]
 ```mermaid
@@ -210,22 +223,7 @@ graph TD
 - **甘特图**（`gantt`）：用于展示项目时间线
 - **饼图**（`pie`）：用于展示数据占比
 - **Git 图**（`gitGraph`）：用于展示分支历史
-- 以及更多 [Mermaid 支持的图表类型](https://mermaid.js.org/intro/)
-
-**带文件名的图表：**
-
-````md [md]
-```mermaid [auth-flow.mmd]
-sequenceDiagram
-    participant U as 用户
-    participant A as 认证服务
-    participant D as 数据库
-    U->>A: 登录请求
-    A->>D: 验证凭证
-    D-->>A: 返回用户信息
-    A-->>U: 返回 Token
-```
-````
+- 以及更多 [Mermaid 支持的图表类型](https://mermaid.js.org/intro())
 
 ## 🛠️ 开发
 

@@ -276,6 +276,8 @@ pnpm dev
 
 ### Mermaid 图表
 
+> **前提条件**：需在 `nuxt.config.ts` 中启用 `mermaid: { enabled: true }`，并安装 `mermaid` 和 `dompurify` 依赖。
+
 ````mdc
 ```mermaid
 graph TD

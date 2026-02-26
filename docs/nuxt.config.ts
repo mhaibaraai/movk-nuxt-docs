@@ -76,5 +76,9 @@ export default defineNuxtConfig({
   mcp: {
     name: 'Movk Nuxt Docs',
     browserRedirect: '/docs/getting-started/mcp'
+  },
+
+  mermaid: {
+    enabled: true
   }
 })
