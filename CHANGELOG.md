@@ -1,5 +1,11 @@
 # 📋 Changelog
 
+## [1.13.0](https://github.com/mhaibaraai/movk-nuxt-docs/compare/v1.12.4...v1.13.0) (2026-02-26)
+
+### ✨ Features
+
+* 将 Mermaid 改为可选模块，通过配置项按需启用 ([6117328](https://github.com/mhaibaraai/movk-nuxt-docs/commit/611732812d3a05843824cfdbd399aa20af75a60d))
+
 ## [1.12.4](https://github.com/mhaibaraai/movk-nuxt-docs/compare/v1.12.3...v1.12.4) (2026-02-25)
 
 ### ♻️ Code Refactoring
