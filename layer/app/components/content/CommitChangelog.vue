@@ -1,9 +1,25 @@
 <script setup lang="ts">
-import { camelCase, kebabCase, upperFirst } from '@movk/core'
+import { camelCase, kebabCase, upperFirst } from 'scule'
 
 interface Commit {
   sha: string
+  date: string
   message: string
+}
+
+interface Release {
+  tag_name: string
+  published_at: string
+  html_url: string
+}
+
+interface ReleaseGroup {
+  tag: string
+  url?: string
+  icon?: string
+  title: string
+  commits: Commit[]
+  published_at?: string
 }
 
 const props = defineProps<{
@@ -45,7 +61,6 @@ const SHA_SHORT_LENGTH = 5
 const { github } = useAppConfig()
 const route = useRoute()
 
-// 计算文件路径相关的值
 const routeName = computed(() => route.path.split('/').pop() ?? '')
 const githubUrl = computed(() => (github && typeof github === 'object' ? github.url : ''))
 
@@ -55,7 +70,6 @@ const filePath = computed(() => {
   const fileExtension = props.suffix ?? (github && typeof github === 'object' ? github.suffix : 'vue')
   const fileName = props.name ?? routeName.value
 
-  // 根据 casing 参数转换文件名
   const transformedName = (() => {
     const casing = props.casing ?? (github && typeof github === 'object' ? github.casing : undefined) ?? 'auto'
 
@@ -82,38 +96,101 @@ const { data: commits } = await useLazyFetch<Commit[]>('/api/github/commits', {
   query: { path: [filePath.value], author: props.author }
 })
 
-// 格式化提交消息
-const formattedCommits = computed(() => {
+const { data: releases } = await useLazyFetch<Release[]>('/api/github/releases.json')
+
+const groupedByRelease = computed<ReleaseGroup[]>(() => {
   if (!commits.value?.length) return []
 
-  return commits.value.map((commit) => {
-    const shortSha = commit.sha.slice(0, SHA_SHORT_LENGTH)
-    const commitLink = `[\`${shortSha}\`](${githubUrl.value}/commit/${commit.sha})`
+  const sortedReleases = (releases.value ?? [])
+    .filter(r => r.published_at)
+    .sort((a, b) => new Date(b.published_at).getTime() - new Date(a.published_at).getTime())
 
-    const content = commit.message
-      .replace(/\(.*?\)/, '')
-      .replace(/#(\d+)/g, `<a href='${githubUrl.value}/issues/$1'>#$1</a>`)
-      .replace(/`(.*?)`/g, '<code class="text-xs">$1</code>')
+  const releasesOldestFirst = [...sortedReleases].reverse()
+  const groups: ReleaseGroup[] = []
+  const unreleased: Commit[] = []
 
-    return {
-      sha: commit.sha,
-      formatted: `${commitLink} — ${content}`
+  for (const commit of commits.value) {
+    const commitDate = new Date(commit.date).getTime()
+    const release = releasesOldestFirst.find(r => new Date(r.published_at).getTime() >= commitDate)
+
+    if (release) {
+      const majorTag = release.tag_name.replace(/-(alpha|beta|rc)\.\d+$/, '')
+      let group = groups.find(g => g.tag === majorTag)
+      if (!group) {
+        group = { tag: majorTag, title: majorTag, icon: 'i-lucide-tag', published_at: release.published_at, url: release.html_url, commits: [] }
+        groups.push(group)
+      }
+      if (new Date(release.published_at) > new Date(group.published_at!)) {
+        group.published_at = release.published_at
+        group.url = release.html_url
+      }
+      group.commits.push(commit)
+    } else {
+      unreleased.push(commit)
     }
-  })
+  }
+
+  const result: ReleaseGroup[] = []
+  if (unreleased.length) {
+    result.push({ tag: 'unreleased', title: 'Soon', icon: 'i-lucide-tag', commits: unreleased })
+  }
+
+  const uniqueTags = [...new Set(sortedReleases.map(r => r.tag_name.replace(/-(alpha|beta|rc)\.\d+$/, '')))]
+  groups.sort((a, b) => uniqueTags.indexOf(a.tag) - uniqueTags.indexOf(b.tag))
+  result.push(...groups)
+
+  return result
 })
+
+function normalizeCommitMessage(commit: Commit) {
+  const prefix = `[\`${commit.sha.slice(0, SHA_SHORT_LENGTH)}\`](${githubUrl.value}/commit/${commit.sha})`
+  const content = commit.message
+    .replace(/#(\d+)/g, `<a href='${githubUrl.value}/issues/$1'>#$1</a>`)
+    .replace(/`(.*?)`/g, '<code class="text-xs">$1</code>')
+
+  return `${prefix} — ${content}`
+}
 </script>
 
 <template>
-  <div v-if="!formattedCommits.length">
+  <div v-if="!commits?.length">
     No recent changes
   </div>
 
-  <div v-else class="flex flex-col gap-1.5 relative">
-    <div class="bg-accented w-px h-full absolute left-[11px] z-[-1]" />
+  <UTimeline
+    v-else
+    :items="groupedByRelease"
+    size="xs"
+    :ui="{ root: '', wrapper: 'mt-0 pb-0', title: 'mb-1.5 flex items-center justify-between' }"
+  >
+    <template #title="{ item }">
+      <UBadge
+        v-if="item.tag === 'unreleased'"
+        color="neutral"
+        variant="subtle"
+        :label="item.title"
+        class="w-12.5 justify-center"
+      />
+      <NuxtLink
+        v-else
+        :to="item.url"
+        target="_blank"
+        class="hover:underline"
+      >
+        <UBadge variant="subtle" :label="item.tag" />
+      </NuxtLink>
 
-    <div v-for="commit of formattedCommits" :key="commit.sha" class="flex gap-1.5 items-center">
-      <div class="bg-accented ring-2 ring-bg size-1.5 mx-[8.5px] rounded-full" />
-      <MDC :value="commit.formatted" class="text-sm *:py-0 *:my-0 [&_code]:text-xs" tag="div" />
-    </div>
-  </div>
+      <time v-if="item.published_at" :datetime="item.published_at" class="text-xs text-dimmed font-normal">
+        {{ useTimeAgo(new Date(item.published_at)) }}
+      </time>
+    </template>
+
+    <template #description="{ item }">
+      <ul class="flex flex-col gap-1.5">
+        <li v-for="commit of item.commits" :key="commit.sha">
+          <MDC :value="normalizeCommitMessage(commit)" class="text-sm [&_code]:text-xs" unwrap="p" />
+        </li>
+      </ul>
+    </template>
+  </UTimeline>
 </template>
