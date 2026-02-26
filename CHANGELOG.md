@@ -1,5 +1,12 @@
 # 📋 Changelog
 
+## [1.13.1](https://github.com/mhaibaraai/movk-nuxt-docs/compare/v1.13.0...v1.13.1) (2026-02-26)
+
+### ✨ Features
+
+* 按 Release 版本分组展示 CommitChangelog 提交历史 ([b7449b9](https://github.com/mhaibaraai/movk-nuxt-docs/commit/b7449b90bce8b48aa5c83fd98b18956f9650a20d))
+* 添加 @nuxt/ui 依赖并优化 ESLint 配置 ([68832f0](https://github.com/mhaibaraai/movk-nuxt-docs/commit/68832f0bafd5863e987e58c4f6b904e4c04b77cb))
+
 ## [1.13.0](https://github.com/mhaibaraai/movk-nuxt-docs/compare/v1.12.4...v1.13.0) (2026-02-26)
 
 ### ✨ Features
