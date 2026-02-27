@@ -4,6 +4,7 @@ import pkg from './package.json'
 export default defineNuxtConfig({
   modules: [
     '@nuxt/ui',
+    'nuxt-content-twoslash',
     '@nuxt/content',
     '@nuxt/image',
     '@nuxt/a11y',
@@ -27,15 +28,15 @@ export default defineNuxtConfig({
     build: {
       markdown: {
         highlight: {
-          langs: ['bash', 'diff', 'json', 'js', 'ts', 'html', 'css', 'vue', 'shell', 'mdc', 'md', 'yaml']
-        },
-        remarkPlugins: {
-          'remark-mdc': {
-            options: {
-              autoUnwrap: true
-            }
-          }
+          langs: ['bash', 'diff', 'json', 'js', 'ts', 'html', 'css', 'vue', 'shell', 'mdc', 'md', 'yaml', 'sql', 'ini']
         }
+        // remarkPlugins: {
+        //   'remark-mdc': {
+        //     options: {
+        //       autoUnwrap: true
+        //     }
+        //   }
+        // }
       }
     }
   },
@@ -43,6 +44,15 @@ export default defineNuxtConfig({
   mdc: {
     highlight: {
       noApiRoute: false
+    }
+  },
+
+  ui: {
+    theme: {
+      colors: ['primary', 'secondary', 'info', 'success', 'warning', 'error', 'important']
+    },
+    experimental: {
+      componentDetection: true
     }
   },
 
@@ -152,5 +162,15 @@ export default defineNuxtConfig({
       'Noto+Sans+SC:400',
       'Inter:400'
     ]
+  },
+
+  twoslash: {
+    floatingVueOptions: {
+      classMarkdown: 'prose prose-primary dark:prose-invert'
+    },
+    // Skip Twoslash in dev to improve performance. Turn this on when you want to explicitly test twoslash in dev.
+    enableInDev: false,
+    // Do not throw when twoslash fails, the typecheck should be down in github.com/nuxt/nuxt's CI
+    throws: false
   }
 })
