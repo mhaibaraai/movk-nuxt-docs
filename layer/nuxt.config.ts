@@ -29,14 +29,14 @@ export default defineNuxtConfig({
       markdown: {
         highlight: {
           langs: ['bash', 'diff', 'json', 'js', 'ts', 'html', 'css', 'vue', 'shell', 'mdc', 'md', 'yaml', 'sql', 'ini']
+        },
+        remarkPlugins: {
+          'remark-mdc': {
+            options: {
+              autoUnwrap: true
+            }
+          }
         }
-        // remarkPlugins: {
-        //   'remark-mdc': {
-        //     options: {
-        //       autoUnwrap: true
-        //     }
-        //   }
-        // }
       }
     }
   },
