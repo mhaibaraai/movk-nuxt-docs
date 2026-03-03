@@ -24,7 +24,7 @@
     "clean": "movk-clean"
   },
   "devDependencies": {
-    "@movk/core": "^1.1.0",
+    "@movk/core": "^1.2.0",
     "@nuxt/devtools": "^3.2.2",
     "@nuxt/eslint": "^1.15.2",
     "@nuxt/eslint-config": "^1.15.2",
