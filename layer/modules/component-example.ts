@@ -125,6 +125,12 @@ export default defineNuxtModule({
     })
 
     nuxt.hook('nitro:config', (nitroConfig) => {
+      nitroConfig.serverAssets = nitroConfig.serverAssets || []
+      nitroConfig.serverAssets.push({
+        baseName: 'component-examples',
+        dir: outputDir
+      })
+
       nitroConfig.virtual = nitroConfig.virtual || {}
       nitroConfig.virtual['#component-example/nitro'] = () => {
         const indexPath = join(outputDir, '_index.json')
@@ -132,42 +138,18 @@ export default defineNuxtModule({
           ? JSON.parse(readFileSync(indexPath, 'utf-8'))
           : []
 
-        return `import { readFileSync } from 'node:fs'
+        return `import { useStorage } from '#imports'
 
-const basePath = ${JSON.stringify(outputDir)}
 const names = ${JSON.stringify(names)}
-const _cache = Object.create(null)
+const _storage = () => useStorage('assets:component-examples')
 
-function _load(name) {
-  if (!(name in _cache)) {
-    try {
-      _cache[name] = JSON.parse(readFileSync(basePath + '/' + name + '.json', 'utf-8'))
-    } catch {
-      _cache[name] = null
-    }
-  }
-  return _cache[name]
+export async function getComponentExample(name) {
+  return await _storage().getItem(name + '.json')
 }
 
-export function getComponentExample(name) {
-  return _load(name)
-}
-
-export function listComponentExamples() {
+export async function listComponentExamples() {
   return names
 }
-
-export default new Proxy(Object.create(null), {
-  get(_, prop) {
-    if (typeof prop !== 'string') return undefined
-    return _load(prop)
-  },
-  ownKeys() { return names },
-  getOwnPropertyDescriptor(_, prop) {
-    if (names.includes(prop)) return { configurable: true, enumerable: true }
-    return undefined
-  }
-})
 `
       }
     })
