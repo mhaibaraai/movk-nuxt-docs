@@ -5,12 +5,12 @@ export default defineMcpResource({
   uri: 'resource://docs/examples',
   description: '所有可用示例代码和演示的完整列表',
   cache: '1h',
-  handler(uri: URL) {
+  async handler(uri: URL) {
     return {
       contents: [{
         uri: uri.toString(),
         mimeType: 'application/json',
-        text: JSON.stringify(listComponentExamples(), null, 2)
+        text: JSON.stringify(await listComponentExamples(), null, 2)
       }]
     }
   }

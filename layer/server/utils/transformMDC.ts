@@ -179,14 +179,21 @@ export async function transformMDC(event: H3Event, doc: Document): Promise<Docum
   }
 
   // Transform component-example to code block
+  const exampleNodes: any[][] = []
   visitAndReplace(doc, 'component-example', (node) => {
-    const camelName = camelCase(node[1]['name'])
-    const name = camelName.charAt(0).toUpperCase() + camelName.slice(1)
-    const component = getComponentExample(name)
-    if (component) {
-      replaceNodeWithPre(node, 'vue', component.code, `${name}.vue`)
-    }
+    exampleNodes.push(node)
   })
+
+  if (exampleNodes.length) {
+    await Promise.all(exampleNodes.map(async (node) => {
+      const camelName = camelCase(node[1]['name'])
+      const name = camelName.charAt(0).toUpperCase() + camelName.slice(1)
+      const component = await getComponentExample(name)
+      if (component) {
+        replaceNodeWithPre(node, 'vue', component.code, `${name}.vue`)
+      }
+    }))
+  }
 
   // Transform callout components (tip, note, warning, caution, callout) to blockquotes
   const calloutTypes = ['tip', 'note', 'warning', 'caution', 'callout']
