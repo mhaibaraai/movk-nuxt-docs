@@ -49,12 +49,12 @@ const filePath = computed(() => {
   return [rootDir, 'content', `${stem}.${extension}`].filter(Boolean).join('/')
 })
 
-const { data: commit } = await useFetch<LastCommit | null>('/api/github/last-commit', {
+const { data: commit } = useLazyFetch<LastCommit | null>('/api/github/last-commit.json', {
   key: `last-commit-${filePath.value}`,
   query: { path: filePath.value },
   default: () => null,
-  lazy: true,
-  server: false
+  server: false,
+  getCachedData: (key, nuxtApp) => nuxtApp.payload.data[key]
 })
 
 const commitUrl = computed(() => commit.value?.url ?? '')
@@ -81,6 +81,7 @@ const authorUrl = computed(() => {
         :src="commit.author.avatar"
         alt="Author Avatar"
         size="2xs"
+        loading="lazy"
       />
       <UBadge color="neutral" variant="outline" size="sm">
         {{ commit.author.name || commit.author.login }}
@@ -103,7 +104,7 @@ const authorUrl = computed(() => {
         v-if="commitUrl"
         :to="commitUrl"
         target="_blank"
-        class="hover:opacity-80 transition-opacity max-w-[250px]"
+        class="hover:opacity-80 transition-opacity max-w-62.5"
       >
         <UBadge
           color="neutral"
@@ -119,7 +120,7 @@ const authorUrl = computed(() => {
         color="neutral"
         variant="outline"
         size="sm"
-        class="max-w-[250px] font-mono text-xs"
+        class="max-w-62.5 font-mono text-xs"
       >
         <span class="truncate">{{ commit.message }}</span>
       </UBadge>

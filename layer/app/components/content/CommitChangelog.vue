@@ -91,12 +91,17 @@ const filePath = computed(() => {
   return `${basePath}/${filePrefix}${transformedName}.${fileExtension}`
 })
 
-const { data: commits } = await useLazyFetch<Commit[]>('/api/github/commits', {
+const { data: commits } = useLazyFetch<Commit[]>('/api/github/commits.json', {
   key: `commit-changelog-${props.name ?? routeName.value}-${props.author ?? 'all'}`,
-  query: { path: [filePath.value], author: props.author }
+  query: { path: [filePath.value], author: props.author },
+  server: false,
+  getCachedData: (key, nuxtApp) => nuxtApp.payload.data[key]
 })
 
-const { data: releases } = await useLazyFetch<Release[]>('/api/github/releases.json')
+const { data: releases } = useLazyFetch<Release[]>('/api/github/releases.json', {
+  server: false,
+  getCachedData: (key, nuxtApp) => nuxtApp.payload.data[key]
+})
 
 const groupedByRelease = computed<ReleaseGroup[]>(() => {
   if (!commits.value?.length) return []

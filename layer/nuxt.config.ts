@@ -1,8 +1,27 @@
 import { defineNuxtConfig } from 'nuxt/config'
 import pkg from './package.json'
+import { createResolver, useNuxt } from '@nuxt/kit'
+import { join } from 'pathe'
+
+const { resolve } = createResolver(import.meta.url)
 
 export default defineNuxtConfig({
   modules: [
+    resolve('./modules/config'),
+    resolve('./modules/routing'),
+    resolve('./modules/mermaid'),
+    resolve('./modules/md-rewrite'),
+    resolve('./modules/component-example'),
+    resolve('./modules/css'),
+    () => {
+      const nuxt = useNuxt()
+      nuxt.options.icon ||= {}
+      nuxt.options.icon.customCollections ||= []
+      nuxt.options.icon.customCollections.push({
+        prefix: 'custom',
+        dir: join(nuxt.options.srcDir, 'assets/icons')
+      })
+    },
     '@nuxt/ui',
     '@nuxt/content',
     '@nuxt/image',
@@ -24,6 +43,7 @@ export default defineNuxtConfig({
   },
 
   content: {
+    experimental: { sqliteConnector: 'native' },
     build: {
       markdown: {
         highlight: {
@@ -152,6 +172,16 @@ export default defineNuxtConfig({
   },
 
   icon: {
+    customCollections: [
+      {
+        prefix: 'custom',
+        dir: resolve('./app/assets/icons')
+      }
+    ],
+    clientBundle: {
+      scan: true,
+      includeCustomCollections: true
+    },
     provider: 'iconify'
   },
 

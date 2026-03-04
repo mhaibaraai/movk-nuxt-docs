@@ -1,7 +1,7 @@
 import { z } from 'zod'
 
 export default defineMcpTool({
-  description: '检索特定的 UI 示例实现代码和详细信息',
+  description: '检索特定的示例实现代码和详细信息',
   inputSchema: {
     exampleName: z.string().describe('示例名称（PascalCase）')
   },

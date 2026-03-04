@@ -22,16 +22,19 @@ export default defineCachedEventHandler(async (event) => {
     })
   }
 
-  const octokit = new Octokit({ auth: process.env.NUXT_GITHUB_TOKEN })
+  const octokit = new Octokit({
+    auth: process.env.NUXT_GITHUB_TOKEN,
+    request: { timeout: 10_000 }
+  })
 
   try {
-    const { data: commits } = await octokit.rest.repos.listCommits({
+    const commits = await octokit.rest.repos.listCommits({
       sha: github.branch,
       owner: github.owner,
       repo: github.name,
       path,
       per_page: 1
-    })
+    }).then(res => res.data).catch(() => [])
 
     if (!commits.length) {
       return null
@@ -54,16 +57,16 @@ export default defineCachedEventHandler(async (event) => {
         // 从 squash commit message 中提取 PR 编号 (#166)
         const prMatch = commit.commit.message.match(/#(\d+)/)
         if (prMatch?.[1]) {
-          const { data: prData } = await octokit.rest.pulls.get({
+          const prData = await octokit.rest.pulls.get({
             owner: github.owner,
             repo: github.name,
             pull_number: Number.parseInt(prMatch[1])
-          })
+          }).then(res => res.data).catch(() => null)
 
-          authorLogin = prData.user?.login ?? authorLogin
-          authorAvatar = prData.user?.avatar_url ?? authorAvatar
-          authorName = prData.user?.name || authorLogin
-          commitUrl = prData.html_url
+          authorLogin = prData?.user?.login ?? authorLogin
+          authorAvatar = prData?.user?.avatar_url ?? authorAvatar
+          authorName = prData?.user?.name || authorLogin
+          commitUrl = prData?.html_url ?? commitUrl
         }
       } catch {
         // 获取 PR 信息失败时忽略，使用原始提交者信息

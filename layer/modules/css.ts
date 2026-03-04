@@ -1,6 +1,6 @@
 import { addTemplate, defineNuxtModule } from '@nuxt/kit'
 import { fileURLToPath } from 'node:url'
-import { dirname, join } from 'node:path'
+import { dirname, join } from 'pathe'
 import { joinURL } from 'ufo'
 import { resolveModulePath } from 'exsolve'
 

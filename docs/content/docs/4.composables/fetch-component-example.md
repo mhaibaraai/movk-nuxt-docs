@@ -1,6 +1,6 @@
 ---
-title: fetchComponentExample
-description: 获取组件示例代码的函数。
+title: useFetchComponentExample
+description: 获取组件示例代码的组合式函数。
 links:
   - label: GitHub
     icon: i-simple-icons-github
@@ -9,26 +9,24 @@ links:
 
 ## 概述
 
-获取组件的示例代码。
+获取组件的示例代码。返回 `useAsyncData` 的 ref 对象，客户端导航时自动复用 SSR payload，无重复请求。
 
 ```vue
 <script setup lang="ts">
-const example = await fetchComponentExample('UButton')
+const { data: example } = useFetchComponentExample('MyButton')
 
-console.log(example.code)        // 示例代码
-console.log(example.description) // 示例说明
+console.log(example.value?.code)       // 示例代码
+console.log(example.value?.pascalName) // 组件 PascalCase 名称
 </script>
 ```
 
-### 显示代码示例
+### 在模板中使用
 
 ```vue
 <template>
   <div>
-    <h3>{{ example.title }}</h3>
-    <p>{{ example.description }}</p>
-
     <UCodeBlock
+      v-if="example?.code"
       :code="example.code"
       language="vue"
     />
@@ -36,13 +34,13 @@ console.log(example.description) // 示例说明
 </template>
 
 <script setup lang="ts">
-const example = await fetchComponentExample('UButton')
+const { data: example } = useFetchComponentExample('MyButton')
 </script>
 ```
 
 ## API
 
-### `fetchComponentExample(name)`{lang="ts-type"}
+### `useFetchComponentExample(name)`{lang="ts-type"}
 
 获取组件示例代码。
 
@@ -50,7 +48,17 @@ const example = await fetchComponentExample('UButton')
 
 ::field-group
   ::field{name="name" type="string" required}
-  组件示例名称（PascalCase）。
+  组件示例名称（camelCase）。
+  ::
+::
+
+### 返回值
+
+返回 `useAsyncData` 的结果对象。
+
+::field-group
+  ::field{name="data" type="Ref<{ code: string, pascalName: string, filePath: string } | null>"}
+  组件示例数据的响应式 ref。
   ::
 ::
 

@@ -12,7 +12,7 @@ const props = defineProps<{
 const route = useRoute()
 
 const componentName = camelCase(props.slug ?? route.path.split('/').pop() ?? '')
-const meta = await fetchComponentMeta(componentName as any)
+const { data: meta } = await useFetchComponentMeta(componentName as any)
 </script>
 
 <template>

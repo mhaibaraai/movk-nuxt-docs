@@ -2,7 +2,7 @@ import type { H3Event } from 'h3'
 import { camelCase, kebabCase, upperFirst } from 'scule'
 import { visit } from '@nuxt/content/runtime'
 // @ts-expect-error - no types available
-import components from '#component-example/nitro'
+import { getComponentExample } from '#component-example/nitro'
 
 type Document = {
   title: string
@@ -182,8 +182,10 @@ export async function transformMDC(event: H3Event, doc: Document): Promise<Docum
   visitAndReplace(doc, 'component-example', (node) => {
     const camelName = camelCase(node[1]['name'])
     const name = camelName.charAt(0).toUpperCase() + camelName.slice(1)
-    const code = components[name].code
-    replaceNodeWithPre(node, 'vue', code, `${name}.vue`)
+    const component = getComponentExample(name)
+    if (component) {
+      replaceNodeWithPre(node, 'vue', component.code, `${name}.vue`)
+    }
   })
 
   // Transform callout components (tip, note, warning, caution, callout) to blockquotes

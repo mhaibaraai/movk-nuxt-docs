@@ -104,7 +104,8 @@ useSeoMeta({
 
 defineOgImageComponent('Nuxt', {
   title,
-  description
+  description,
+  headline: breadcrumb.value?.[breadcrumb.value.length - 1]?.label || 'Movk Nuxt Docs'
 })
 </script>
 
@@ -137,7 +138,12 @@ defineOgImageComponent('Nuxt', {
           v-bind="link"
         >
           <template v-if="link.avatar" #leading>
-            <UAvatar v-bind="link.avatar" size="2xs" :alt="`${link.label} avatar`" />
+            <UAvatar
+              v-bind="link.avatar"
+              size="2xs"
+              :alt="`${link.label} avatar`"
+              loading="lazy"
+            />
           </template>
         </UButton>
         <PageHeaderLinks />

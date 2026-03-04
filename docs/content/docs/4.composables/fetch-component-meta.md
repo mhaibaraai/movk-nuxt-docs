@@ -1,6 +1,6 @@
 ---
-title: fetchComponentMeta
-description: 获取 Vue 组件元数据的函数。
+title: useFetchComponentMeta
+description: 获取 Vue 组件元数据的组合式函数。
 links:
   - label: GitHub
     icon: i-simple-icons-github
@@ -9,15 +9,15 @@ links:
 
 ## 概述
 
-获取 Vue 组件的元数据，包括 Props、Emits、Slots 等信息。
+获取 Vue 组件的元数据，包括 Props、Emits、Slots 等信息。返回 `useAsyncData` 的 ref 对象，支持客户端缓存复用。
 
 ```vue
 <script setup lang="ts">
-const { meta } = await fetchComponentMeta('UButton')
+const { data: meta } = useFetchComponentMeta('MyButton')
 
-console.log(meta.props)   // Props 定义
-console.log(meta.emits)   // Events 定义
-console.log(meta.slots)   // Slots 定义
+console.log(meta.value?.meta?.props)  // Props 定义
+console.log(meta.value?.meta?.events) // Events 定义
+console.log(meta.value?.meta?.slots)  // Slots 定义
 </script>
 ```
 
@@ -25,25 +25,21 @@ console.log(meta.slots)   // Slots 定义
 
 ```vue
 <template>
-  <div>
-    <h2>Props</h2>
-    <ul>
-      <li v-for="prop in meta.props" :key="prop.name">
-        <code>{{ prop.name }}</code>: {{ prop.type }}
-        <p v-if="prop.description">{{ prop.description }}</p>
-      </li>
-    </ul>
-  </div>
+  <ul>
+    <li v-for="prop in (meta?.meta?.props || [])" :key="prop.name">
+      <code>{{ prop.name }}</code>: {{ prop.type }}
+    </li>
+  </ul>
 </template>
 
 <script setup lang="ts">
-const { meta } = await fetchComponentMeta('UButton')
+const { data: meta } = useFetchComponentMeta('MyButton')
 </script>
 ```
 
 ## API
 
-### `fetchComponentMeta(name)`{lang="ts-type"}
+### `useFetchComponentMeta(name)`{lang="ts-type"}
 
 获取组件元数据。
 
@@ -52,6 +48,16 @@ const { meta } = await fetchComponentMeta('UButton')
 ::field-group
   ::field{name="name" type="string" required}
   组件名称（PascalCase）。
+  ::
+::
+
+### 返回值
+
+返回 `useAsyncData` 的结果对象。
+
+::field-group
+  ::field{name="data" type="Ref<{ meta: ComponentMeta } | null>"}
+  组件元数据的响应式 ref，包含 `props`、`events`、`slots` 等信息。
   ::
 ::
 
