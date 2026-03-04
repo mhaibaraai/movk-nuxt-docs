@@ -10,8 +10,8 @@ export default defineEventHandler((event) => {
     const component = getComponentExample(pascalCase(componentName))
     if (!component) {
       throw createError({
-        statusText: 'Example not found!',
-        status: 404
+        statusMessage: 'Example not found!',
+        statusCode: 404
       })
     }
     return component

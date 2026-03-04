@@ -84,7 +84,7 @@ export default defineNuxtConfig({
     }
   },
 
-  compatibilityDate: 'latest',
+  compatibilityDate: '2026-01-14',
 
   nitro: {
     prerender: {
@@ -175,8 +175,7 @@ export default defineNuxtConfig({
     clientBundle: {
       scan: true,
       includeCustomCollections: true
-    },
-    provider: 'iconify'
+    }
   },
 
   ogImage: {

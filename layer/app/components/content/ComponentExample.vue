@@ -106,7 +106,6 @@ const code = computed(() => {
   let code = ''
 
   if (props.collapse) {
-    // 构建 code-collapse 的属性
     const collapseAttrs = typeof props.collapse === 'object'
       ? Object.entries(props.collapse)
           .map(([key, value]) => {
