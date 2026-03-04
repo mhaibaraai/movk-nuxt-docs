@@ -215,7 +215,7 @@ export default defineAppConfig({
     },
     // 自定义图标
     icons: {
-      trigger: 'i-lucide-sparkles',
+      trigger: 'i-custom-ai',
     },
   },
 })

@@ -96,7 +96,7 @@ export default defineAppConfig({
     },
     icons: {
       loading: 'i-lucide-loader',
-      trigger: 'i-lucide-sparkles',
+      trigger: 'i-custom-ai',
       explain: 'i-lucide-brain',
       close: 'i-lucide-x',
       clearChat: 'i-lucide-trash-2',

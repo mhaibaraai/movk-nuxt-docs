@@ -22,8 +22,10 @@ defineOgImageComponent('Nuxt', {
 })
 
 const { data: versions } = page.value.releases
-  ? await useFetch(page.value.releases, {
+  ? useLazyFetch(page.value.releases, {
+      key: 'releases-markdown',
       server: false,
+      getCachedData: (key, nuxtApp) => nuxtApp.payload.data[key],
       transform: (data: {
         releases: {
           name?: string

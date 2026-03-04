@@ -179,7 +179,7 @@ declare module 'nuxt/schema' {
         loading: string
         /**
          * AI 聊天触发按钮和滑出层头部的图标。
-         * @default 'i-lucide-sparkles'
+         * @default 'i-custom-ai'
          */
         trigger: string
         /**

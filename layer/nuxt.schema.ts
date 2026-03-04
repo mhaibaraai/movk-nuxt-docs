@@ -315,7 +315,7 @@ export default defineNuxtSchema({
     aiChat: group({
       title: 'AI Chat',
       description: 'AI 聊天助手配置',
-      icon: 'i-lucide-sparkles',
+      icon: 'i-custom-ai',
       fields: {
         floatingInput: field({
           type: 'boolean',
@@ -440,7 +440,7 @@ export default defineNuxtSchema({
               type: 'string',
               title: '触发按钮',
               description: 'AI 聊天面板触发按钮的提示文本',
-              icon: 'i-lucide-sparkles',
+              icon: 'i-custom-ai',
               default: '与 AI 聊天'
             }),
             streaming: field({
@@ -483,8 +483,8 @@ export default defineNuxtSchema({
               type: 'string',
               title: '触发图标',
               description: 'AI 聊天触发按钮的图标',
-              icon: 'i-lucide-sparkles',
-              default: 'i-lucide-sparkles'
+              icon: 'i-custom-ai',
+              default: 'i-custom-ai'
             }),
             explain: field({
               type: 'string',

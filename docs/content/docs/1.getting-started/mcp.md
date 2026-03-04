@@ -50,29 +50,76 @@ export default defineNuxtConfig({
 
 ## 内置工具
 
-MOVK Docs MCP 提供一些开箱即用的工具：
+MOVK Docs MCP 提供以下开箱即用的工具：
+
+| 工具 | 用途 | 缓存 |
+|------|------|------|
+| `list-pages` | 列出所有文档页面 | 30 分钟 |
+| `get-page` | 获取指定页面的完整内容 | 30 分钟 |
+| `list-getting-started-guides` | 列出所有入门指南 | 30 分钟 |
+| `list-examples` | 列出所有代码示例 | 1 小时 |
+| `get-example` | 获取指定示例的实现代码 | 30 分钟 |
 
 ### `list-pages`
 
-列出所有可用的文档页面及分类信息。
+列出所有可用的文档页面，包含标题、描述、路径和完整 URL。
+
+**适用场景：**
+- 需要探索文档结构，但不知道确切的页面路径
+- 用户提出一般性问题，未指定具体页面
+- 搜索某一主题（如「查找关于组件的配置文档」）
+
+**不适用场景：** 如果已知具体路径，直接使用 `get-page`。
+
+**工作流程：** 返回页面列表后，使用 `get-page` 检索目标页面的完整内容。
 
 ### `get-page`
 
-检索特定文档页面的完整内容。
+检索特定文档页面的完整内容，支持通过 `sections` 参数只提取指定章节以减少响应体积。
 
 **参数：**
-- `path` *（必需）* - 页面路径，例如 `/docs/getting-started/installation`
+- `path` *（必需）* — 页面路径，例如 `/docs/getting-started/installation`
+- `sections` *（可选）* — 要返回的 h2 章节标题数组，例如 `["Usage", "API"]`。省略时返回完整页面。
+
+**适用场景：**
+- 已知文档页面的确切路径
+- 用户明确请求某个具体页面（如「显示入门指南」）
+- 已通过 `list-pages` 找到相关路径，需获取完整内容
+- 只需要页面中的特定章节，可用 `sections` 缩减响应大小
+
+**不适用场景：** 不知道确切路径时，请先用 `list-pages` 探索。
+
+### `list-getting-started-guides`
+
+列出 `/docs/getting-started/` 路径下的所有入门指南，返回标题、描述、路径、URL 及导航元数据，并按路径排序。
+
+**适用场景：**
+- 用户询问「如何开始」或「安装步骤」
+- 需要快速列出所有入门相关文档，无需获取全部页面
 
 ### `list-examples`
 
-列出所有可用的 UI 示例和代码演示。
+列出所有可用的 UI 示例和代码演示名称。
+
+**适用场景：**
+- 不知道具体示例名称时，先调用此工具
+- 为 `get-example` 提供可用示例列表
 
 ### `get-example`
 
-检索特定的 UI 示例实现代码和详细信息。
+检索特定 UI 示例的完整实现代码和详细信息。
 
 **参数：**
-- `exampleName` *（必需）* - 示例名称，例如 `MyCustomButton`。
+- `exampleName` *（必需）* — 示例名称（PascalCase），例如 `MyCustomButton`。未知名称时，先调用 `list-examples`。
+
+## 内置资源
+
+除工具外，MCP 服务器还暴露了两个可被 AI 客户端直接读取的**资源**（Resource）。资源与工具的区别在于：资源由客户端主动订阅读取，而工具由 AI 按需调用。
+
+| 资源 URI | 描述 | 缓存 |
+|----------|------|------|
+| `resource://docs/documentation-pages` | 所有文档页面的完整列表（JSON） | 1 小时 |
+| `resource://docs/examples` | 所有可用示例的完整列表（JSON） | 1 小时 |
 
 ## 设置指南
 

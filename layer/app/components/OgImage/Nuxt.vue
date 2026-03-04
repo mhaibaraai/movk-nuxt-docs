@@ -3,16 +3,14 @@
  * @credits NuxtLabs <https://nuxtlabs.com/>
  * @see https://github.com/nuxt/nuxt.com/blob/main/components/OgImage/Docs.vue
  */
-import { computed } from 'vue'
-
 const {
   title = 'title',
   description = 'description',
   headline = 'headline'
 } = defineProps<{ title?: string, description?: string, headline?: string }>()
 
-const computedTitle = computed(() => (title || '').slice(0, 60))
-const computedDescription = computed(() => (description || '').slice(0, 200))
+const computedTitle = (title || '').slice(0, 60)
+const computedDescription = (description || '').slice(0, 200)
 </script>
 
 <template>
