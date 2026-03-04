@@ -7,12 +7,6 @@ const { resolve } = createResolver(import.meta.url)
 
 export default defineNuxtConfig({
   modules: [
-    resolve('./modules/config'),
-    resolve('./modules/routing'),
-    resolve('./modules/mermaid'),
-    resolve('./modules/md-rewrite'),
-    resolve('./modules/component-example'),
-    resolve('./modules/css'),
     () => {
       const nuxt = useNuxt()
       nuxt.options.icon ||= {}
