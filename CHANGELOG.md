@@ -1,5 +1,27 @@
 # 📋 Changelog
 
+## [1.14.0](https://github.com/mhaibaraai/movk-nuxt-docs/compare/v1.13.1...v1.14.0) (2026-03-05)
+
+### ✨ Features
+
+* 配置 @nuxt/ui 主题色彩并升级 pnpm 版本 ([6fd2589](https://github.com/mhaibaraai/movk-nuxt-docs/commit/6fd25899849aa3f8d8a023ee54739e2aa01227b6))
+* 集成 shiki-transformer-color-highlight 并优化图标高亮样式 ([ceebb87](https://github.com/mhaibaraai/movk-nuxt-docs/commit/ceebb87f46dcc7dcb25275b55af7fb7ff0908690))
+
+### 🐛 Bug Fixes
+
+* 使用 Nitro serverAssets 替代运行时文件读取修复 Vercel 部署 404 ([0cb2b89](https://github.com/mhaibaraai/movk-nuxt-docs/commit/0cb2b891ebd668178b23b18784e6fa843403d53f))
+
+### ♻️ Code Refactoring
+
+* 重命名组合式函数并优化 MCP 文档与 GitHub API ([8e207c2](https://github.com/mhaibaraai/movk-nuxt-docs/commit/8e207c2d08764a79a4031ea102c16c6393cbe0b0))
+
+### 🔧 Chores
+
+* 升级依赖并修复 llms.contentRawMarkdown 配置位置 ([d0a390a](https://github.com/mhaibaraai/movk-nuxt-docs/commit/d0a390ad1e800acd958a8ede06fc4cb2e2fdb3d0))
+* 更新 AI SDK 依赖并重构模块加载方式 ([b6bcb1e](https://github.com/mhaibaraai/movk-nuxt-docs/commit/b6bcb1e5b16e8cdfa156577876fc68dcc0c1fc5f))
+* 移除 minimark 依赖并实现自定义 stringifyMinimark 工具函数 ([cc3eceb](https://github.com/mhaibaraai/movk-nuxt-docs/commit/cc3eceb73a2869be3ba6b03ce8775c803e9504c9))
+* 移除 Vercel 部署部分的 Node 版本支持说明 ([f3c972a](https://github.com/mhaibaraai/movk-nuxt-docs/commit/f3c972a15ffb7916c44b38a44f358a29b3ed1c61))
+
 ## [1.13.1](https://github.com/mhaibaraai/movk-nuxt-docs/compare/v1.13.0...v1.13.1) (2026-02-26)
 
 ### ✨ Features
