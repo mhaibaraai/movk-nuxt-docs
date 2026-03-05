@@ -102,9 +102,11 @@ export default defineAppConfig({
       clearChat: 'i-lucide-trash-2',
       streaming: 'i-lucide-chevron-down',
       providers: {
-        deepseek: 'i-ri-deepseek-fill',
-        alibaba: 'i-simple-icons-alibabacloud',
-        zai: 'i-simple-icons:zig'
+        deepseek: 'i-hugeicons:deepseek',
+        alibaba: 'i-hugeicons:qwen',
+        zai: 'i-simple-icons:zig',
+        moonshotai: 'i-hugeicons:kimi-ai',
+        xai: 'i-hugeicons:grok-02'
       }
     }
   }
