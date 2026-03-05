@@ -1,10 +1,8 @@
 import { withLeadingSlash } from 'ufo'
-import { stringify } from 'minimark/stringify'
 import { queryCollection } from '@nuxt/content/server'
 import type { Collections, PageCollectionItemBase } from '@nuxt/content'
 import { getRouterParams, eventHandler, createError, setHeader } from 'h3'
 import collections from '#content/manifest'
-import { transformMDC } from '../../utils/transformMDC'
 
 export default eventHandler(async (event) => {
   const slug = getRouterParams(event)['slug.md']
@@ -43,5 +41,5 @@ export default eventHandler(async (event) => {
   }
 
   setHeader(event, 'Content-Type', 'text/markdown; charset=utf-8')
-  return stringify({ ...page.body, type: 'minimark' }, { format: 'markdown/html' })
+  return stringifyMinimark(page.body)
 })

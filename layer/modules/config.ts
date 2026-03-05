@@ -1,8 +1,26 @@
+import { existsSync } from 'node:fs'
 import { createResolver, defineNuxtModule } from '@nuxt/kit'
 import { defu } from 'defu'
+import { join } from 'pathe'
 import { getGitBranch, getGitEnv, getLocalGitInfo } from '../utils/git'
 import { getPackageJsonMetadata, inferSiteURL } from '../utils/meta'
 import { createComponentMetaExcludeFilters } from '../utils/component-meta'
+
+function getMdcConfigSources(nuxt: any): string[] {
+  return nuxt.options._layers.flatMap((layer: any) => {
+    const tsConfigPath = join(layer.config.srcDir, 'mdc.config.ts')
+    if (existsSync(tsConfigPath)) {
+      return [tsConfigPath]
+    }
+
+    const jsConfigPath = join(layer.config.srcDir, 'mdc.config.js')
+    if (existsSync(jsConfigPath)) {
+      return [jsConfigPath]
+    }
+
+    return []
+  })
+}
 
 export default defineNuxtModule({
   meta: {
@@ -72,5 +90,11 @@ export default defineNuxtModule({
         ...createComponentMetaExcludeFilters(resolve, dir, layerPath, userInclude)
       ]
     })
+
+    // Load mdc.config from all layers
+    const mdcConfigSources = getMdcConfigSources(nuxt)
+    if (mdcConfigSources.length > 0) {
+      await nuxt.callHook('mdc:configSources', mdcConfigSources)
+    }
   }
 })
