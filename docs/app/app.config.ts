@@ -69,6 +69,11 @@ export default defineAppConfig({
           '支持哪些 AI 模型？'
         ]
       }
-    ]
+    ],
+    icons: {
+      providers: {
+        xai: 'i-hugeicons:grok-02'
+      }
+    }
   }
 })
