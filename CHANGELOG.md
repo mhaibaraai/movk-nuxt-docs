@@ -1,5 +1,15 @@
 # 📋 Changelog
 
+## [1.14.1](https://github.com/mhaibaraai/movk-nuxt-docs/compare/v1.14.0...v1.14.1) (2026-03-05)
+
+### 🐛 Bug Fixes
+
+* 修复 AI 聊天模型选择器宽度不自适应问题 ([b231613](https://github.com/mhaibaraai/movk-nuxt-docs/commit/b231613ec916c0e3d3b5ccae51de5566d7e31e25))
+
+### 🔧 Chores
+
+* 更新 AI 聊天模型配置，添加 xAI 和智谱 GLM 模型支持 ([9695008](https://github.com/mhaibaraai/movk-nuxt-docs/commit/9695008bab993e312fbe0625e64771cadd10e34d))
+
 ## [1.14.0](https://github.com/mhaibaraai/movk-nuxt-docs/compare/v1.13.1...v1.14.0) (2026-03-05)
 
 ### ✨ Features
