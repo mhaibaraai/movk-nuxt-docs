@@ -31,7 +31,6 @@ export default defineNuxtModule({
       domain: url || 'https://example.com',
       title: siteName,
       description: meta.description || '',
-      contentRawMarkdown: false as const,
       full: {
         title: siteName,
         description: meta.description || ''

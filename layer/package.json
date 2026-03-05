@@ -39,9 +39,9 @@
     "README.md"
   ],
   "dependencies": {
-    "@ai-sdk/gateway": "^3.0.63",
-    "@ai-sdk/mcp": "^1.0.23",
-    "@ai-sdk/vue": "^3.0.111",
+    "@ai-sdk/gateway": "^3.0.66",
+    "@ai-sdk/mcp": "^1.0.25",
+    "@ai-sdk/vue": "^3.0.116",
     "@iconify-json/lucide": "^1.2.95",
     "@iconify-json/simple-icons": "^1.2.72",
     "@iconify-json/vscode-icons": "^1.2.44",
@@ -52,7 +52,7 @@
     "@nuxt/kit": "^4.3.1",
     "@nuxt/ui": "^4.5.1",
     "@nuxtjs/mcp-toolkit": "^0.7.0",
-    "@nuxtjs/mdc": "^0.20.1",
+    "@nuxtjs/mdc": "^0.20.2",
     "@nuxtjs/robots": "^5.7.1",
     "@octokit/rest": "^22.0.1",
     "@openrouter/ai-sdk-provider": "^2.2.3",
