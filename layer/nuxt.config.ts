@@ -7,7 +7,6 @@ const { resolve } = createResolver(import.meta.url)
 
 export default defineNuxtConfig({
   modules: [
-    resolve('./modules/config'),
     () => {
       const nuxt = useNuxt()
       nuxt.options.icon ||= {}
@@ -177,6 +176,12 @@ export default defineNuxtConfig({
       scan: true,
       includeCustomCollections: true
     }
+  },
+
+  llms: {
+    // Must be defined before @nuxt/content setup,
+    // otherwise Content LLMS module will overwrite it in modules:done.
+    contentRawMarkdown: false
   },
 
   ogImage: {
