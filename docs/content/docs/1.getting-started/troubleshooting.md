@@ -195,15 +195,6 @@ Did you mean to import "unist-util-visit/index.js"?
 
 ## Vercel 部署问题
 
-### Node 版本支持
-
-本项目同时支持 **Node.js 22 LTS** 和 **Node.js 24**。
-
-| Node 版本 | 状态 | 支持 | 推荐 | 说明 |
-|-----------|------|------|------|------|
-| Node 22 | LTS | ✅ | ✅ | 长期支持版本，稳定可靠 |
-| Node 24 | Current | ✅ | ⚡ | 最新版本，性能更优 |
-
 ### Output Directory 找不到
 
 ::collapsible{name="错误信息"}
