@@ -3,7 +3,7 @@
   "type": "module",
   "version": "1.14.1",
   "private": true,
-  "packageManager": "pnpm@10.30.3",
+  "packageManager": "pnpm@10.31.0",
   "license": "MIT",
   "homepage": "https://docs.mhaibaraai.cn",
   "repository": {
@@ -30,7 +30,7 @@
     "@nuxt/eslint-config": "^1.15.2",
     "@release-it/bumper": "^7.0.5",
     "@release-it/conventional-changelog": "^10.0.5",
-    "eslint": "^10.0.2",
+    "eslint": "^10.0.3",
     "nuxt": "^4.3.1",
     "release-it": "^19.2.4",
     "typescript": "^5.9.3",
