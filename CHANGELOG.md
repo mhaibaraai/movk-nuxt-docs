@@ -1,5 +1,17 @@
 # 📋 Changelog
 
+## [1.14.2](https://github.com/mhaibaraai/movk-nuxt-docs/compare/v1.14.1...v1.14.2) (2026-03-09)
+
+### 🐛 Bug Fixes
+
+* 修复悬浮输入框遮挡左侧菜单点击事件 ([d8ec0bd](https://github.com/mhaibaraai/movk-nuxt-docs/commit/d8ec0bd01c16088e72404fd6ac5eedfbb787ec68))
+
+### 🔧 Chores
+
+* **deps:** lock file maintenance ([14b91e2](https://github.com/mhaibaraai/movk-nuxt-docs/commit/14b91e291da9e5344711a7e2edcc9b4ca63e387b))
+* **deps:** update all non-major dependencies ([6d3e4c2](https://github.com/mhaibaraai/movk-nuxt-docs/commit/6d3e4c2a9ab9d7a7ea7f578c1fdbe2c44095ca21))
+* **deps:** update devdependency @nuxt/devtools to ^3.2.3 ([cb0ea0c](https://github.com/mhaibaraai/movk-nuxt-docs/commit/cb0ea0cf91972210bea693f0af435ba73bff8eea))
+
 ## [1.14.1](https://github.com/mhaibaraai/movk-nuxt-docs/compare/v1.14.0...v1.14.1) (2026-03-05)
 
 ### 🐛 Bug Fixes
