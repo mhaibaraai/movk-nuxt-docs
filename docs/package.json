@@ -12,7 +12,7 @@
     "@nuxtjs/mdc": "^0.20.2",
     "better-sqlite3": "^12.6.2",
     "dompurify": "^3.3.2",
-    "mermaid": "^11.12.3",
+    "mermaid": "^11.13.0",
     "nuxt": "^4.3.1",
     "tailwindcss": "^4.2.1",
     "unist-util-visit": "^5.1.0"
