@@ -111,20 +111,19 @@ export default defineNuxtConfig({
     'vite:extendConfig': async (config) => {
       // Ensure optimizeDeps.include exists
       const cfg = config as { optimizeDeps?: { include?: string[] } }
-      cfg.optimizeDeps ??= {}
-      cfg.optimizeDeps.include ??= []
-      const include = cfg.optimizeDeps.include
 
-      // Rewrite optimizeDeps paths for layer architecture
-      const layerPkgs = /^(?:@nuxt\/content|@nuxtjs\/mdc|@nuxt\/a11y) > /
-      include.forEach((id, i) => {
-        if (layerPkgs.test(id)) include[i] = `@movk/nuxt-docs > ${id}`
-      })
+      cfg.optimizeDeps ||= {}
+      cfg.optimizeDeps.include ||= []
+      cfg.optimizeDeps.include.push('@nuxt/content > slugify')
+      cfg.optimizeDeps.include = cfg.optimizeDeps.include
+        .map(id => id.replace(/^@nuxt\/content > /, '@movk/nuxt-docs > @nuxt/content > '))
 
-      include.push(
-        '@movk/nuxt-docs > @nuxt/content > slugify',
-        '@movk/nuxt-docs > @ai-sdk/gateway > @vercel/oidc'
-      )
+      // Fix @vercel/oidc ESM export issue (transitive dep of @ai-sdk/gateway)
+      // Only needed when AI Chat is enabled.
+      if (process.env.AI_GATEWAY_API_KEY) {
+        cfg.optimizeDeps.include.push('@vercel/oidc')
+        cfg.optimizeDeps.include.map(id => id.replace(/^@vercel\/oidc$/, '@movk/nuxt-docs > @vercel/oidc'))
+      }
     }
   },
 

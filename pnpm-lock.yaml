@@ -122,9 +122,6 @@ importers:
       '@octokit/rest':
         specifier: ^22.0.1
         version: 22.0.1
-      '@openrouter/ai-sdk-provider':
-        specifier: ^2.2.5
-        version: 2.2.5(ai@6.0.116(zod@4.3.6))(zod@4.3.6)
       '@shikijs/core':
         specifier: ^4.0.2
         version: 4.0.2
@@ -1360,13 +1357,6 @@ packages:
 
   '@octokit/types@16.0.0':
     resolution: {integrity: sha512-sKq+9r1Mm4efXW1FCk7hFSeJo4QKreL/tTbR0rz/qx/r1Oa2VV83LTA/H/MuCOX7uCIJmQVRKBcbmWoySjAnSg==}
-
-  '@openrouter/ai-sdk-provider@2.2.5':
-    resolution: {integrity: sha512-IgM96gPvpxMZYYJQSIuXqvHX0mUXHEvsa/AtIlfb1VK4ek584ydAzc/wf3IuKxNof15o38WZMpCwfsOFHv96Jg==}
-    engines: {node: '>=18'}
-    peerDependencies:
-      ai: ^6.0.0
-      zod: ^3.25.0 || ^4.0.0
 
   '@opentelemetry/api@1.9.0':
     resolution: {integrity: sha512-3giAOQvZiH5F9bMlMiv8+GSPMeqg0dbaeo58/0SlA9sxSqZhnUtxzX9/2FzyhS9sWQf5S0GJE0AKBrFqjpeYcg==}
@@ -9451,11 +9441,6 @@ snapshots:
   '@octokit/types@16.0.0':
     dependencies:
       '@octokit/openapi-types': 27.0.0
-
-  '@openrouter/ai-sdk-provider@2.2.5(ai@6.0.116(zod@4.3.6))(zod@4.3.6)':
-    dependencies:
-      ai: 6.0.116(zod@4.3.6)
-      zod: 4.3.6
 
   '@opentelemetry/api@1.9.0': {}
 

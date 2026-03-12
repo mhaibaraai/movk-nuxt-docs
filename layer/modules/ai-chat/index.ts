@@ -46,7 +46,7 @@ export default defineNuxtModule<AiChatModuleOptions>({
     models: []
   },
   setup(options, nuxt) {
-    const hasApiKey = !!(process.env.AI_GATEWAY_API_KEY || process.env.OPENROUTER_API_KEY || process.env.ZHIPU_API_KEY)
+    const hasApiKey = !!process.env.AI_GATEWAY_API_KEY
 
     const { resolve } = createResolver(import.meta.url)
 
@@ -82,7 +82,8 @@ export default defineNuxtModule<AiChatModuleOptions>({
     }
 
     nuxt.options.runtimeConfig.aiChat = {
-      mcpPath: options.mcpPath!
+      mcpPath: options.mcpPath!,
+      aiGatewayApiKey: process.env.AI_GATEWAY_API_KEY
     }
 
     addImports([
@@ -136,6 +137,7 @@ declare module 'nuxt/schema' {
   interface RuntimeConfig {
     aiChat: {
       mcpPath: string
+      aiGatewayApiKey: string | undefined
     }
   }
 }
