@@ -24,7 +24,7 @@
   <img src="https://docs.mhaibaraai.cn/ai/AiChat.png" alt="AiChat" width="400">
 </div>
 
-- **AI 聊天助手** - 内置智能文档助手，基于 Vercel AI SDK 支持多种 LLM 模型（Mistral、Qwen、OpenRouter）
+- **AI 聊天助手** - 内置智能文档助手，基于 Vercel AI SDK 支持多种 LLM 模型
 - **MCP Server 支持** - 集成 Model Context Protocol 服务器，为 AI 助手提供结构化的文档访问能力
 - **LLM 优化** - 通过 `nuxt-llms` 模块自动生成 `llms.txt` 和 `llms-full.txt`，为 AI 工具提供优化的文档索引
 - **流式响应** - 支持 AI 响应流式输出和代码高亮，配合 `shiki-stream` 实现实时语法高亮渲染

@@ -1,13 +1,5 @@
 import { createGateway } from '@ai-sdk/gateway'
-import { createOpenRouter } from '@openrouter/ai-sdk-provider'
 import { modelProviderRegistry } from './modelProviders'
-
-modelProviderRegistry.register('openrouter', ({ config, modelId }) => {
-  const openRouter = createOpenRouter({
-    apiKey: config.openRouterApiKey as string | undefined
-  })
-  return openRouter.chat(modelId)
-})
 
 /**
  * 获取 AI 模型实例

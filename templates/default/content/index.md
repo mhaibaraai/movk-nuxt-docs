@@ -14,80 +14,80 @@ ui:
 :hero-background
 
 #title
-:::motion
-构建现代智能的[文档]{.text-primary}
-:::
+  :::motion
+  构建现代智能的[文档]{.text-primary}
+  :::
 
 #description
-:::motion
----
-transition: { duration: 0.6, delay: 0.3 }
----
-基于 Nuxt 4 的现代文档主题，集成组件自动化文档、AI 聊天助手、MCP Server 和完整的开发者体验优化，助您轻松构建美观、专业、智能的文档网站。
-:::
+  :::motion
+  ---
+  transition: { duration: 0.6, delay: 0.3 }
+  ---
+  基于 Nuxt 4 的现代文档主题，集成组件自动化文档、AI 聊天助手、MCP Server 和完整的开发者体验优化，助您轻松构建美观、专业、智能的文档网站。
+  :::
 
 #links
-:::motion{class="flex flex-wrap gap-x-6 gap-y-3"}
----
-transition: { duration: 0.6, delay: 0.5 }
----
-  ::::u-button
+  :::motion{class="flex flex-wrap gap-x-6 gap-y-3"}
   ---
-  to: /docs/getting-started
-  size: xl
-  trailing-icon: i-lucide-arrow-right
+  transition: { duration: 0.6, delay: 0.5 }
   ---
-  快速入门
-  ::::
+    ::::u-button
+    ---
+    to: /docs/getting-started
+    size: xl
+    trailing-icon: i-lucide-arrow-right
+    ---
+    快速入门
+    ::::
 
-  ::::u-button
-  ---
-  icon: i-simple-icons-github
-  color: neutral
-  variant: outline
-  size: xl
-  to: https://github.com/mhaibaraai/movk-nuxt-docs
-  target: _blank
-  ---
-  使用模板
-  ::::
-:::
+    ::::u-button
+    ---
+    icon: i-simple-icons-github
+    color: neutral
+    variant: outline
+    size: xl
+    to: https://github.com/mhaibaraai/movk-nuxt-docs
+    target: _blank
+    ---
+    使用模板
+    ::::
+  :::
 
 #default
-:::motion{class="mx-auto"}
----
-transition: { duration: 0.6, delay: 0.1 }
----
-  ::::prose-pre
+  :::motion{class="mx-auto"}
   ---
-  code: |
+  transition: { duration: 0.6, delay: 0.1 }
+  ---
+    ::::prose-pre
+    ---
+    code: |
+      export default defineNuxtConfig({
+        extends: ['@movk/nuxt-docs'],
+        aiChat: {
+          model: 'zai/glm-4.7',
+          models: ['zai/glm-4.7', 'anthropic/claude-sonnet-4.6']
+        },
+        mcp: {
+          name: 'My Docs'
+        }
+      })
+    filename: nuxt.config.ts
+    ---
+
+    ```ts [nuxt.config.ts]
     export default defineNuxtConfig({
       extends: ['@movk/nuxt-docs'],
       aiChat: {
-        model: 'mistral/devstral-2',
-        models: ['mistral/devstral-2', 'openrouter/qwen/qwen3-4b:free']
+        model: 'zai/glm-4.7',
+        models: ['zai/glm-4.7', 'anthropic/claude-sonnet-4.6']
       },
       mcp: {
         name: 'My Docs'
       }
     })
-  filename: nuxt.config.ts
-  ---
-
-  ```ts [nuxt.config.ts]
-  export default defineNuxtConfig({
-    extends: ['@movk/nuxt-docs'],
-    aiChat: {
-      model: 'mistral/devstral-2',
-      models: ['mistral/devstral-2', 'openrouter/qwen/qwen3-4b:free']
-    },
-    mcp: {
-      name: 'My Docs'
-    }
-  })
-  ```
-  ::::
-:::
+    ```
+    ::::
+  :::
 ::
 
 ::u-page-section{class="dark:bg-neutral-950"}
@@ -199,7 +199,7 @@ AI 增强体验
   AI 聊天助手
 
   #description
-  内置智能文档助手，基于 Vercel AI SDK 支持多种 LLM 模型（Mistral、Qwen、OpenRouter），实时解答文档相关问题。
+  内置智能文档助手，基于 Vercel AI SDK 支持多种 LLM 模型，实时解答文档相关问题。
   :::
 
   :::u-page-feature

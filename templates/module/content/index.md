@@ -63,9 +63,9 @@ transition: { duration: 0.6, delay: 0.1 }
   code: |
     export default defineNuxtConfig({
       extends: ['@movk/nuxt-docs'],
-      aiChat: {
-        model: 'mistral/devstral-2',
-        models: ['mistral/devstral-2', 'openrouter/qwen/qwen3-4b:free']
+        aiChat: {
+          model: 'zai/glm-4.7',
+          models: ['zai/glm-4.7', 'anthropic/claude-sonnet-4.6']
       },
       mcp: {
         name: 'My Docs'
@@ -78,8 +78,8 @@ transition: { duration: 0.6, delay: 0.1 }
   export default defineNuxtConfig({
     extends: ['@movk/nuxt-docs'],
     aiChat: {
-      model: 'mistral/devstral-2',
-      models: ['mistral/devstral-2', 'openrouter/qwen/qwen3-4b:free']
+      model: 'zai/glm-4.7',
+      models: ['zai/glm-4.7', 'anthropic/claude-sonnet-4.6']
     },
     mcp: {
       name: 'My Docs'
@@ -199,7 +199,7 @@ AI 增强体验
   AI 聊天助手
 
   #description
-  内置智能文档助手，基于 Vercel AI SDK 支持多种 LLM 模型（Mistral、Qwen、OpenRouter），实时解答文档相关问题。
+  内置智能文档助手，基于 Vercel AI SDK 支持多种 LLM 模型，实时解答文档相关问题。
   :::
 
   :::u-page-feature

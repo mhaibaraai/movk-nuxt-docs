@@ -87,7 +87,7 @@ layer/
 
 **appConfig 配置体系**：所有用户可配置项通过 `nuxt.schema.ts` 定义，分为 `theme`、`header`、`footer`、`toc`、`github`、`aiChat`、`seo`、`vercelAnalytics` 等组。
 
-**AI 聊天模块**：`modules/ai-chat/` 注册后暴露 `aiChat` configKey，通过 `@ai-sdk/gateway` 连接 OpenRouter/AI Gateway，支持多模型切换。环境变量需要 `AI_GATEWAY_API_KEY` 或 `OPENROUTER_API_KEY`。
+**AI 聊天模块**：`modules/ai-chat/` 注册后暴露 `aiChat` configKey，通过 `@ai-sdk/gateway` 连接 AI Gateway，支持多模型切换。环境变量需要 `AI_GATEWAY_API_KEY` 。
 
 **MCP Server**：通过 `@nuxtjs/mcp-toolkit` 集成，Resources 和 Tools 定义在 `server/mcp/` 下，向 AI 工具提供结构化文档访问。
 

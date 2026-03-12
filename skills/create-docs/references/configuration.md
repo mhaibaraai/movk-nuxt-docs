@@ -281,6 +281,4 @@ Movk Nuxt Docs 预定义了三种内容集合：
 NUXT_GITHUB_TOKEN=
 # Used to access AI Gateway services
 AI_GATEWAY_API_KEY=
-# Used to access OpenRouter services (alternative to AI Gateway)
-OPENROUTER_API_KEY=
 ```

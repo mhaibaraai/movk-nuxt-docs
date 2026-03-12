@@ -55,7 +55,6 @@
     "@nuxtjs/mdc": "^0.20.2",
     "@nuxtjs/robots": "^5.7.1",
     "@octokit/rest": "^22.0.1",
-    "@openrouter/ai-sdk-provider": "^2.2.5",
     "@shikijs/core": "^4.0.2",
     "@shikijs/engine-javascript": "^4.0.2",
     "@shikijs/langs": "^4.0.2",
