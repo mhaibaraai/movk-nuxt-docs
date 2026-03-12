@@ -20,17 +20,17 @@ const shortcutDisplayKeys = computed(() => {
   return parts.map(part => part === 'meta' ? 'meta' : part.toUpperCase())
 })
 
-function handleSubmit() {
+async function handleSubmit() {
   if (!input.value.trim()) return
 
   const message = input.value
   isVisible.value = false
 
-  sleep(200).then(() => {
-    open(message, true)
-    input.value = ''
-    isVisible.value = true
-  })
+  await sleep(200)
+
+  open(message)
+  input.value = ''
+  isVisible.value = true
 }
 
 const shortcuts = computed(() => ({

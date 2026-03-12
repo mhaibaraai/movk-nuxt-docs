@@ -23,12 +23,14 @@ export default defineNuxtConfig({
   compatibilityDate: 'latest',
 
   aiChat: {
-    model: 'zai/glm-4.7',
+    model: 'anthropic/claude-sonnet-4.6',
     models: [
-      'zai/glm-4.7',
-      'openai/gpt-4.1-mini',
+      'zai/glm-5',
+      'openai/gpt-5-mini',
       'alibaba/qwen3-coder',
-      'moonshotai/kimi-k2',
+      'google/gemini-2.5-flash',
+      'moonshotai/kimi-k2-thinking',
+      'anthropic/claude-sonnet-4.6',
       'deepseek/deepseek-v3.2-thinking'
     ]
   },

@@ -6,9 +6,7 @@ export default defineMcpTool({
   cache: '30m',
   async handler() {
     const event = useEvent()
-    const siteUrl = import.meta.dev
-      ? getRequestURL(event).origin
-      : inferSiteURL()
+    const siteUrl = import.meta.dev ? getRequestURL(event).origin : inferSiteURL()
 
     const pages = await queryCollection(event, 'docs')
       .where('path', 'LIKE', '/docs/getting-started/%')

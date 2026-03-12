@@ -1,93 +1,43 @@
 import type { UIMessage } from 'ai'
-import { useMediaQuery } from '@vueuse/core'
-import type { FaqCategory, FaqQuestions } from '../types'
+import { createSharedComposable, useLocalStorage } from '@vueuse/core'
 
-function normalizeFaqQuestions(questions: FaqQuestions): FaqCategory[] {
-  if (!questions || (Array.isArray(questions) && questions.length === 0)) {
-    return []
-  }
-
-  if (typeof questions[0] === 'string') {
-    return [{
-      category: '问题',
-      items: questions as string[]
-    }]
-  }
-
-  return questions as FaqCategory[]
-}
-
-const PANEL_WIDTH_COMPACT = 360
-const PANEL_WIDTH_EXPANDED = 520
-
-export function useAIChat() {
+export const useAIChat = createSharedComposable(() => {
   const config = useRuntimeConfig()
-  const appConfig = useAppConfig()
   const isEnabled = computed(() => config.public.aiChat?.enabled ?? false)
 
-  const isOpen = useState('ai-chat-open', () => false)
-  const isExpanded = useState('ai-chat-expanded', () => false)
-  const messages = useState<UIMessage[]>('ai-chat-messages', () => [])
-  const pendingMessage = useState<string | undefined>('ai-chat-pending', () => undefined)
+  const storageOpen = useLocalStorage('ai-chat-open', false)
+  const messages = useLocalStorage<UIMessage[]>('ai-chat-messages', [])
 
-  const isMobile = useMediaQuery('(max-width: 767px)')
-  const panelWidth = computed(() => isExpanded.value ? PANEL_WIDTH_EXPANDED : PANEL_WIDTH_COMPACT)
-  const shouldPushContent = computed(() => !isMobile.value && isOpen.value)
+  const isOpen = ref(false)
 
-  const faqQuestions = computed<FaqCategory[]>(() => {
-    const aiChatConfig = appConfig.aiChat
-    const faqConfig = aiChatConfig?.faqQuestions
-    if (!faqConfig) return []
-
-    return normalizeFaqQuestions(faqConfig)
+  onNuxtReady(() => {
+    nextTick(() => {
+      isOpen.value = storageOpen.value
+    })
   })
 
-  function open(initialMessage?: string, clearPrevious = false) {
-    if (clearPrevious) {
-      messages.value = []
-    }
+  watch(isOpen, (value) => {
+    storageOpen.value = value
+  })
 
-    if (initialMessage) {
-      pendingMessage.value = initialMessage
-    }
-    isOpen.value = true
-  }
-
-  function clearPending() {
-    pendingMessage.value = undefined
-  }
-
-  function close() {
-    isOpen.value = false
-  }
-
-  function toggle() {
+  function toggleChat() {
     isOpen.value = !isOpen.value
   }
 
-  function clearMessages() {
-    messages.value = []
-  }
-
-  function toggleExpanded() {
-    isExpanded.value = !isExpanded.value
+  function open(text: string) {
+    messages.value = [...messages.value, {
+      id: String(Date.now()),
+      role: 'user',
+      parts: [{ type: 'text', text: text }]
+    }]
+    isOpen.value = true
   }
 
   return {
     isEnabled,
     isOpen,
-    isExpanded,
-    isMobile,
-    panelWidth,
-    shouldPushContent,
     messages,
-    pendingMessage,
-    faqQuestions,
-    open,
-    clearPending,
-    close,
-    toggle,
-    toggleExpanded,
-    clearMessages
+    toggleChat,
+    open
   }
-}
+})

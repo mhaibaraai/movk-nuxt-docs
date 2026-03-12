@@ -98,16 +98,6 @@ declare module 'nuxt/schema' {
          */
         title: string
         /**
-         * 折叠按钮的文本。
-         * @default '折叠‘
-         */
-        collapse: string
-        /**
-         * 展开按钮的文本。
-         * @default '展开'
-         */
-        expand: string
-        /**
          * 清除聊天记录按钮的文本。
          * @default '清除聊天记录'
          */
@@ -117,26 +107,6 @@ declare module 'nuxt/schema' {
          * @default '关闭'
          */
         close: string
-        /**
-         * 加载时的提示文本。
-         * @default 'Loading...'
-         */
-        loading: string
-        /**
-         * 询问任何事情文本
-         * @default '问我任何事情...'
-         */
-        askAnything: string
-        /**
-         * 询问任何事情描述文本
-         * @default '我可以帮助您浏览文档、解释概念并回答您的问题。'
-         */
-        askMeAnythingDescription: string
-        /**
-         * FAQ 建议标题文本。
-         * @default 'FAQ 建议'
-         */
-        faq: string
         /**
          * 浮动输入框的占位符文本。
          * @default '输入你的问题...'
@@ -153,16 +123,6 @@ declare module 'nuxt/schema' {
          */
         trigger: string
         /**
-         * 思考时的提示文本。
-         * @default '思考中...'
-         */
-        streaming: string
-        /**
-         * 思考后的提示文本。
-         * @default '思考过程'
-         */
-        streamed: string
-        /**
          * 使用 AI 进行解释按钮的文本。
          * @default '用 AI 解释此页面
          */
@@ -173,33 +133,28 @@ declare module 'nuxt/schema' {
        */
       icons: {
         /**
-         * 加载时的图标。
-         * @default i-lucide-loader
-         */
-        loading: string
-        /**
          * AI 聊天触发按钮和滑出层头部的图标。
          * @default 'i-custom-ai'
          */
         trigger: string
         /**
          * "使用 AI 进行解释" 按钮的图标。
-         * @default 'i-lucide-brain'
+         * @default 'i-lucide-bot-message-square'
          */
         explain: string
         /**
          * 思考时的图标。
-         * @default ui.icons.chevronDown
+         * @default 'i-lucide-brain'
          */
-        streaming: string
+        reasoning: string
         /**
          * 清除聊天记录按钮的图标。
-         * @default 'i-lucide-trash-2'
+         * @default 'i-lucide-list-x'
          */
         clearChat: string
         /**
          * 关闭按钮的图标。
-         * @default 'i-lucide-x'
+         * @default 'i-lucide-panel-right-close'
          */
         close: string
         /**

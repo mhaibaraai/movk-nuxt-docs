@@ -13,3 +13,6 @@ ignoredBuiltDependencies:
 onlyBuiltDependencies:
   - better-sqlite3
   - sharp
+
+overrides:
+  '@nuxt/ui': 'https://pkg.pr.new/@nuxt/ui@6db594e'

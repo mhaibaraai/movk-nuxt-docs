@@ -1,25 +1,28 @@
 <script setup lang="ts">
 import type { DefineComponent } from 'vue'
-import type { UIMessage } from 'ai'
+import type { FaqCategory, FaqQuestions, ToolPart, ToolState } from '../types'
 import { Chat } from '@ai-sdk/vue'
-import { DefaultChatTransport } from 'ai'
-import { createReusableTemplate } from '@vueuse/core'
-import AiChatPreStream from './AiChatPreStream.vue'
+import { DefaultChatTransport, getToolName, isReasoningUIPart, isTextUIPart, isToolUIPart } from 'ai'
+import { computed } from 'vue'
+import { isStreamingPart } from '@nuxt/ui/utils/ai'
 import { useModels } from '../composables/useModels'
+import { splitByCase, upperFirst } from 'scule'
+import AiChatPreStream from './AiChatPreStream.vue'
 
 const components = {
   pre: AiChatPreStream as unknown as DefineComponent
 }
 
-const [DefineChatContent, ReuseChatContent] = createReusableTemplate<{ showExpandButton?: boolean }>()
-
-const { isOpen, isExpanded, isMobile, panelWidth, toggleExpanded, messages, pendingMessage, clearPending, faqQuestions } = useAIChat()
+const { isOpen, messages } = useAIChat()
+const toast = useToast()
 const config = useRuntimeConfig()
 const { aiChat } = useAppConfig()
-const toast = useToast()
 const { model } = useModels()
 
+const canClear = computed(() => messages.value.length > 0)
+
 const input = ref('')
+let _skipSync = false
 
 const chat = new Chat({
   messages: messages.value,
@@ -28,14 +31,14 @@ const chat = new Chat({
     body: () => ({ model: model.value })
   }),
   onError: (error: Error) => {
-    const message = (() => {
+    let message = error.message
+    if (typeof message === 'string' && message[0] === '{') {
       try {
-        const parsed = JSON.parse(error.message)
-        return parsed?.message || error.message
+        message = JSON.parse(message).message || message
       } catch {
-        return error.message
+        // keep original message on malformed JSON
       }
-    })()
+    }
 
     toast.add({
       description: message,
@@ -45,263 +48,244 @@ const chat = new Chat({
     })
   },
   onFinish: () => {
+    _skipSync = true
     messages.value = chat.messages
+    nextTick(() => {
+      _skipSync = false
+    })
   }
 })
 
-watch(pendingMessage, (message: string | undefined) => {
-  if (message) {
-    if (messages.value.length === 0 && chat.messages.length > 0) {
-      chat.messages.length = 0
-    }
-    chat.sendMessage({
-      text: message
-    })
-    clearPending()
+watch(messages, (newMessages) => {
+  if (_skipSync) return
+
+  chat.messages = newMessages
+  if (chat.lastMessage?.role === 'user') {
+    chat.regenerate()
   }
-}, { immediate: true })
+})
 
-watch(messages, (newMessages: UIMessage[]) => {
-  if (newMessages.length === 0 && chat.messages.length > 0) {
-    chat.messages.length = 0
-  }
-}, { deep: true })
-
-const lastMessage = computed(() => chat.messages.at(-1))
-
-const { tools } = useToolCall()
-function getToolLabel(toolName: string, args?: any): string {
-  const label = tools[toolName]
-
-  if (!label) {
-    return toolName
-  }
-
-  return typeof label === 'function' ? label(args) : label
+function upperName(name: string) {
+  return splitByCase(name).map(p => upperFirst(p)).join('')
 }
 
-function handleSubmit(event?: Event) {
-  event?.preventDefault()
+function getToolMessage(state: ToolState, toolName: string, input: Record<string, string | undefined>) {
+  const { toolMessage } = useToolCall(state, toolName, input)
+  const searchVerb = state === 'output-available' ? '已搜索' : '搜索中'
+  const readVerb = state === 'output-available' ? '已读取' : '读取中'
 
+  return {
+    'list-getting-started-guides': `${searchVerb} 入门指南`,
+    'list-pages': `${searchVerb} 所有文档页面`,
+    'list-examples': `${searchVerb} 所有示例`,
+    'get-page': `${readVerb} ${input.path || ''} 页面`,
+    'get-example': `${readVerb} ${upperName(input.exampleName || '')} 示例`,
+    ...toolMessage
+  }[toolName] || `${searchVerb} ${toolName}`
+}
+
+const getCachedToolMessage = useMemoize((state: ToolState, toolName: string, input: string) =>
+  getToolMessage(state, toolName, JSON.parse(input))
+)
+
+function getToolText(part: ToolPart) {
+  return getCachedToolMessage(part.state, getToolName(part), JSON.stringify(part.input || {}))
+}
+
+function getToolIcon(part: ToolPart): string {
+  const toolName = getToolName(part)
+  const { toolIcon } = useToolCall(part.state, toolName, part.input || {} as any)
+
+  const iconMap: Record<string, string> = {
+    'get-page': 'i-lucide-file-text',
+    'get-example': 'i-lucide-file-text',
+    ...toolIcon
+  }
+
+  return iconMap[toolName] || 'i-lucide-search'
+}
+
+function onSubmit() {
   if (!input.value.trim()) {
     return
   }
 
-  chat.sendMessage({
-    text: input.value
-  })
+  chat.sendMessage({ text: input.value })
 
   input.value = ''
 }
 
 function askQuestion(question: string) {
-  chat.sendMessage({
-    text: question
-  })
+  input.value = question
+  onSubmit()
 }
 
-function resetChat() {
-  chat.stop()
-  messages.value = []
-  chat.messages.length = 0
-}
-
-onMounted(() => {
-  if (pendingMessage.value) {
-    chat.sendMessage({
-      text: pendingMessage.value
-    })
-    clearPending()
-  } else if (chat.lastMessage?.role === 'user') {
-    chat.regenerate()
+function clearMessages() {
+  if (chat.status === 'streaming') {
+    chat.stop()
   }
+  messages.value = []
+  chat.messages = []
+}
+
+function normalizeFaqQuestions(questions: FaqQuestions): FaqCategory[] {
+  if (!questions || (Array.isArray(questions) && questions.length === 0)) {
+    return []
+  }
+
+  if (typeof questions[0] === 'string') {
+    return [{
+      category: '问题',
+      items: questions as string[]
+    }]
+  }
+
+  return questions as FaqCategory[]
+}
+
+const faqQuestions = computed<FaqCategory[]>(() => {
+  const faqConfig = aiChat?.faqQuestions
+  if (!faqConfig) return []
+
+  return normalizeFaqQuestions(faqConfig)
 })
 </script>
 
 <template>
-  <DefineChatContent v-slot="{ showExpandButton = true }">
-    <div class="flex h-full flex-col">
-      <div class="flex h-16 shrink-0 items-center justify-between border-b border-default px-4">
-        <span class="font-medium text-highlighted">{{ aiChat.texts.title }}</span>
-        <div class="flex items-center gap-1">
-          <UTooltip v-if="showExpandButton" :text="isExpanded ? aiChat.texts.collapse : aiChat.texts.expand">
-            <UButton
-              :icon="isExpanded ? 'i-lucide-minimize-2' : 'i-lucide-maximize-2'"
-              color="neutral"
-              variant="ghost"
-              size="sm"
-              class="text-muted hover:text-highlighted"
-              aria-label="Toggle Expand Chat Panel"
-              @click="toggleExpanded"
-            />
-          </UTooltip>
-          <UTooltip v-if="chat.messages.length > 0" :text="aiChat.texts.clearChat">
-            <UButton
-              :icon="aiChat.icons.clearChat"
-              color="neutral"
-              variant="ghost"
-              size="sm"
-              class="text-muted hover:text-highlighted"
-              aria-label="Clear Chat"
-              @click="resetChat"
-            />
-          </UTooltip>
-          <UTooltip :text="aiChat.texts.close">
-            <UButton
-              :icon="aiChat.icons.close"
-              color="neutral"
-              variant="ghost"
-              size="sm"
-              class="text-muted hover:text-highlighted"
-              aria-label="Close Chat Panel"
-              @click="isOpen = false"
-            />
-          </UTooltip>
-        </div>
-      </div>
-
-      <div class="min-h-0 flex-1 overflow-y-auto">
-        <UChatMessages
-          v-if="chat.messages.length > 0"
-          should-auto-scroll
-          :messages="chat.messages"
-          compact
-          :status="chat.status"
-          :user="{ ui: { container: 'pb-2', content: 'text-sm' } }"
-          :ui="{ indicator: '*:bg-accented', root: 'h-auto!' }"
-          class="px-4 py-4"
-        >
-          <template #content="{ message }">
-            <div class="flex flex-col gap-2">
-              <template
-                v-for="(part, index) in message.parts"
-                :key="`${message.id}-${part.type}-${index}${'state' in part ? `-${part.state}` : ''}`"
-              >
-                <AiChatReasoning
-                  v-if="part.type === 'reasoning'"
-                  :text="part.text"
-                  :is-streaming="part.state !== 'done'"
-                />
-
-                <MDCCached
-                  v-else-if="part.type === 'text'"
-                  :value="part.text"
-                  :cache-key="`${message.id}-${index}`"
-                  :components="components"
-                  :parser-options="{ highlight: false }"
-                  class="*:first:mt-0 *:last:mb-0"
-                />
-
-                <template v-else-if="part.type === 'data-tool-calls'">
-                  <AiChatToolCall
-                    v-for="tool in (part as any).data.tools"
-                    :key="`${tool.toolCallId}-${JSON.stringify(tool.args)}`"
-                    :text="getToolLabel(tool.toolName, tool.args)"
-                    :is-loading="false"
-                  />
-                </template>
-              </template>
-              <UButton
-                v-if="chat.status === 'streaming' && message.id === lastMessage?.id"
-                class="px-0"
-                color="neutral"
-                variant="link"
-                size="sm"
-                :label="aiChat.texts.loading"
-                loading
-                :loading-icon="aiChat.icons.loading"
-              />
-            </div>
-          </template>
-        </UChatMessages>
-
-        <div v-else class="p-4">
-          <div v-if="!faqQuestions?.length" class="flex h-full flex-col items-center justify-center py-12 text-center">
-            <div class="mb-4 flex size-12 items-center justify-center rounded-full bg-primary/10">
-              <UIcon name="i-lucide-message-circle-question" class="size-6 text-primary" />
-            </div>
-            <h3 class="mb-2 text-base font-medium text-highlighted">
-              {{ aiChat.texts.askAnything }}
-            </h3>
-            <p class="max-w-xs text-sm text-muted">
-              {{ aiChat.texts.askMeAnythingDescription }}
-            </p>
-          </div>
-
-          <template v-else>
-            <p class="mb-4 text-sm font-medium text-muted">
-              {{ aiChat.texts.faq }}
-            </p>
-
-            <AiChatSlideoverFaq :faq-questions="faqQuestions" @ask-question="askQuestion" />
-          </template>
-        </div>
-      </div>
-
-      <div class="w-full shrink-0 p-3">
-        <UChatPrompt
-          v-model="input"
-          :rows="2"
-          :placeholder="aiChat.texts.placeholder"
-          maxlength="1000"
-          :ui="{
-            root: 'shadow-none!',
-            body: '*:p-0! *:rounded-none! *:text-sm!'
-          }"
-          @submit="handleSubmit"
-        >
-          <template #footer>
-            <div class="flex items-center gap-1 text-xs text-muted">
-              <AiChatModelSelect v-model="model" />
-              <div class="flex gap-1 justify-between items-center px-1 text-xs text-muted">
-                <span>{{ aiChat.texts.lineBreak }}</span>
-                <UKbd value="shift" />
-                <UKbd value="enter" />
-              </div>
-            </div>
-
-            <UChatPromptSubmit
-              class="ml-auto"
-              size="xs"
-              :status="chat.status"
-              @stop="chat.stop()"
-              @reload="chat.regenerate()"
-            />
-          </template>
-        </UChatPrompt>
-        <div class="mt-1 flex text-xs text-dimmed items-center justify-between">
-          <span>刷新时聊天会被清除</span>
-          <span>
-            {{ input.length }}/1000
-          </span>
-        </div>
-      </div>
-    </div>
-  </DefineChatContent>
-
-  <aside
-    v-if="!isMobile"
-    class="left-auto! fixed top-0 z-50 h-dvh overflow-hidden border-l border-default bg-default/95 backdrop-blur-xl transition-[right,width] duration-200 ease-linear will-change-[right,width]"
-    :style="{
-      width: `${panelWidth}px`,
-      right: isOpen ? '0' : `-${panelWidth}px`
-    }"
-  >
-    <div class="h-full transition-[width] duration-200 ease-linear" :style="{ width: `${panelWidth}px` }">
-      <ReuseChatContent :show-expand-button="true" />
-    </div>
-  </aside>
-
-  <USlideover
-    v-else
+  <USidebar
     v-model:open="isOpen"
     side="right"
-    :ui="{
-      content: 'ring-0 bg-default'
-    }"
+    :title="aiChat.texts.title"
+    rail
+    :style="{ '--sidebar-width': '24rem' }"
+    :ui="{ footer: 'p-0', actions: 'gap-0.5' }"
   >
-    <template #content>
-      <ReuseChatContent :show-expand-button="false" />
+    <template #actions>
+      <UTooltip v-if="canClear" :text="aiChat.texts.clearChat">
+        <UButton
+          :icon="aiChat.icons.clearChat"
+          color="neutral"
+          variant="ghost"
+          :aria-label="aiChat.texts.clearChat"
+          @click="clearMessages"
+        />
+      </UTooltip>
     </template>
-  </USlideover>
+
+    <template #close>
+      <UTooltip :text="aiChat.texts.close">
+        <UButton
+          :icon="aiChat.icons.close"
+          color="neutral"
+          variant="ghost"
+          :aria-label="aiChat.texts.close"
+          @click="isOpen = false"
+        />
+      </UTooltip>
+    </template>
+
+    <UTheme
+      :ui="{
+        prose: {
+          p: { base: 'my-2 text-sm/6' },
+          li: { base: 'my-0.5 text-sm/6' },
+          ul: { base: 'my-2' },
+          ol: { base: 'my-2' },
+          h1: { base: 'text-xl mb-4' },
+          h2: { base: 'text-lg mt-6 mb-3' },
+          h3: { base: 'text-base mt-4 mb-2' },
+          h4: { base: 'text-sm mt-3 mb-1.5' },
+          code: { base: 'text-xs' },
+          pre: { root: 'my-2', base: 'text-xs/5' },
+          table: { root: 'my-2' },
+          hr: { base: 'my-4' }
+        }
+      }"
+    >
+      <UChatMessages
+        v-if="chat.messages.length"
+        should-auto-scroll
+        :messages="chat.messages"
+        :status="chat.status"
+        compact
+        class="px-0 gap-2"
+        :user="{ ui: { container: 'max-w-full' } }"
+      >
+        <template #content="{ message }">
+          <template v-for="(part, index) in message.parts" :key="`${message.id}-${part.type}-${index}`">
+            <UChatReasoning
+              v-if="isReasoningUIPart(part)"
+              :text="part.text"
+              :streaming="isStreamingPart(message, index, chat)"
+              :icon="aiChat.icons.reasoning"
+            >
+              <MDCCached
+                :value="part.text"
+                :cache-key="`reasoning-${message.id}-${index}`"
+                :parser-options="{ highlight: false }"
+                class="*:first:mt-0 *:last:mb-0"
+              />
+            </UChatReasoning>
+            <MDCCached
+              v-else-if="isTextUIPart(part) && part.text.length > 0"
+              :value="part.text"
+              :cache-key="`${message.id}-${index}`"
+              :components="components"
+              :parser-options="{ highlight: false }"
+              class="*:first:mt-0 *:last:mb-0"
+            />
+            <AiChatToolCall
+              v-else-if="isToolUIPart(part)"
+              :text="getToolText(part)"
+              :icon="getToolIcon(part)"
+              :streaming="part.state !== 'output-available'"
+            />
+          </template>
+        </template>
+      </UChatMessages>
+
+      <div v-else class="flex flex-col gap-6">
+        <UPageLinks
+          v-for="category in faqQuestions"
+          :key="category.category"
+          :title="category.category"
+          :links="category.items.map(item => ({ label: item, onClick: () => askQuestion(item) }))"
+        />
+      </div>
+    </UTheme>
+
+    <template #footer>
+      <UChatPrompt
+        v-model="input"
+        :error="chat.error"
+        :placeholder="aiChat.texts.placeholder"
+        variant="naked"
+        size="sm"
+        autofocus
+        :ui="{ base: 'px-0' }"
+        class="px-4"
+        @submit="onSubmit"
+      >
+        <template #footer>
+          <div class="flex items-center gap-x-1 text-xs text-muted">
+            <AiChatModelSelect v-model="model" />
+
+            <div class="flex gap-1 justify-between items-center px-1 text-xs text-muted">
+              <span>{{ aiChat.texts.lineBreak }}</span>
+              <UKbd value="shift" />
+              <UKbd value="enter" />
+            </div>
+          </div>
+
+          <UChatPromptSubmit
+            class="ml-auto"
+            size="xs"
+            :status="chat.status"
+            @stop="chat.stop()"
+            @reload="chat.regenerate()"
+          />
+        </template>
+      </UChatPrompt>
+    </template>
+  </USidebar>
 </template>

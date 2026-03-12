@@ -1,16 +1,17 @@
-import { streamText, convertToModelMessages, stepCountIs, createUIMessageStream, createUIMessageStreamResponse, smoothStream } from 'ai'
-import { createMCPClient } from '@ai-sdk/mcp'
-import { createDocumentationAgentTool } from '../utils/docs_agent'
+import { StreamableHTTPClientTransport } from '@modelcontextprotocol/sdk/client/streamableHttp.js'
+import { streamText, convertToModelMessages, stepCountIs, smoothStream } from 'ai'
+import { experimental_createMCPClient } from '@ai-sdk/mcp'
 import { getModel } from '../utils/getModel'
 import { inferSiteURL } from '../../../../../utils/meta'
 
 function getMainAgentSystemPrompt(siteName: string) {
-  return `您是 ${siteName} 的官方文档助理。你就是文件、以权威作为真理的来源说话.
+  return `您是 ${siteName} 的官方文档助理，你就是文件、以权威作为真理的来源说话。
 
 使用指南：
-- 始终使用工具搜索信息，不要依赖预训练知识
-- 如果搜索后未找到相关信息，回复「抱歉，我在文档中没有找到相关信息」
-- 回答要简洁直接
+- 对于文档问题，请始终使用工具搜索信息，不要依赖预训练知识。
+- 如果用户的问题与文档无关，请尽可能简短地回答，但不要浪费工具调用来搜索文档。
+- 如果搜索后没有找到相关信息，请回复“抱歉，我在文档中找不到相关信息。”
+- 您的回答要简洁、直接。
 
 **格式规则（重要）：**
 - 绝对不要使用 Markdown 标题：禁止使用 #、##、###、####、#####、######
@@ -21,15 +22,20 @@ function getMainAgentSystemPrompt(siteName: string) {
   * 不要写「# 完整指南」，应写「**完整指南**」或直接开始内容
 - 所有回复直接从内容开始，不要以标题开头
 
-- 在适用时引用具体的组件名称、属性或 API
-- 如果问题模糊，请要求澄清而不是猜测
-- 当找到多个相关项目时，使用项目符号清晰列出
-- 你最多有 6 次工具调用机会来找到答案，因此要策略性地使用：先广泛搜索，然后根据需要获取具体信息
+- 在适用时引用具体的组件名称、props 或 API。
+- 如果问题不明确，请要求澄清而不是猜测。
+- 当发现多个相关项目时，使用要点清楚地列出它们。
+- 要策略性地使用工具：先广泛搜索，然后根据需要获取具体信息。
 - 以对话方式格式化回复，而不是文档章节形式`
 }
 
 export default defineEventHandler(async (event) => {
   const { messages, model: requestModel } = await readBody(event)
+
+  if (!messages || !Array.isArray(messages)) {
+    throw createError({ statusCode: 400, message: 'Invalid or missing messages array.' })
+  }
+
   const config = useRuntimeConfig()
   const siteConfig = getSiteConfig(event)
   const siteName = siteConfig.name || 'Documentation'
@@ -37,48 +43,59 @@ export default defineEventHandler(async (event) => {
   const mcpPath = config.aiChat.mcpPath
   const isExternalUrl = mcpPath.startsWith('http://') || mcpPath.startsWith('https://')
 
-  const mcpUrl = isExternalUrl
-    ? mcpPath
-    : import.meta.dev
-      ? `${getRequestURL(event).origin}${mcpPath}`
-      : `${inferSiteURL()}${mcpPath}`
+  let httpClient
+  let mcpTools
+  try {
+    const mcpUrl = isExternalUrl
+      ? mcpPath
+      : import.meta.dev
+        ? `${getRequestURL(event).origin}${mcpPath}`
+        : `${inferSiteURL()}${mcpPath}`
 
-  const httpClient = await createMCPClient({
-    transport: {
-      type: 'http',
-      url: mcpUrl
-    }
-  })
-  const mcpTools = await httpClient.tools()
+    const httpTransport = new StreamableHTTPClientTransport(mcpUrl)
+    httpClient = await experimental_createMCPClient({
+      transport: httpTransport
+    })
+    mcpTools = await httpClient.tools()
+  } catch (error) {
+    console.error('MCP client error:', error)
+
+    throw createError({
+      statusCode: 503,
+      message: 'Unable to connect to the documentation service. Please try again later.'
+    })
+  }
 
   const model = getModel(requestModel || config.public.aiChat.model)
 
-  const searchDocumentation = createDocumentationAgentTool(mcpTools, model, siteName)
-
-  const stream = createUIMessageStream({
-    execute: async ({ writer }) => {
-      const modelMessages = await convertToModelMessages(messages)
-      const result = streamText({
-        model,
-        maxOutputTokens: 10000,
-        system: getMainAgentSystemPrompt(siteName),
-        messages: modelMessages,
-        stopWhen: stepCountIs(6),
-        tools: {
-          searchDocumentation
+  return streamText({
+    model,
+    maxOutputTokens: 16000,
+    providerOptions: {
+      anthropic: {
+        thinking: {
+          type: 'adaptive'
         },
-        experimental_context: {
-          writer
-        },
-        experimental_transform: smoothStream({ chunking: 'word' })
-      })
-      writer.merge(result.toUIMessageStream({
-        sendReasoning: true
-      }))
+        effort: 'low'
+      },
+      gateway: {
+        caching: 'auto'
+      }
+    },
+    system: getMainAgentSystemPrompt(siteName),
+    messages: await convertToModelMessages(messages),
+    experimental_transform: smoothStream(),
+    stopWhen: stepCountIs(8),
+    tools: {
+      ...mcpTools
     },
     onFinish: async () => {
-      await httpClient.close()
+      event.waitUntil(httpClient?.close())
+    },
+    onError: (error) => {
+      console.error('streamText error:', error)
+
+      event.waitUntil(httpClient?.close())
     }
-  })
-  return createUIMessageStreamResponse({ stream })
+  }).toUIMessageStreamResponse()
 })

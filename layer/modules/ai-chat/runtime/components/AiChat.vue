@@ -1,6 +1,6 @@
 <script setup lang="ts">
 const { aiChat } = useAppConfig()
-const { toggle } = useAIChat()
+const { toggleChat } = useAIChat()
 </script>
 
 <template>
@@ -9,8 +9,8 @@ const { toggle } = useAIChat()
       :icon="aiChat.icons.trigger"
       variant="ghost"
       class="rounded-full"
-      aria-label="AI Chat Trigger"
-      @click="toggle"
+      :aria-label="aiChat.texts.trigger"
+      @click="toggleChat"
     />
   </UTooltip>
 </template>
