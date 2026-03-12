@@ -8,6 +8,7 @@ import { isStreamingPart } from '@nuxt/ui/utils/ai'
 import { useModels } from '../composables/useModels'
 import { splitByCase, upperFirst } from 'scule'
 import AiChatPreStream from './AiChatPreStream.vue'
+import { track } from '@vercel/analytics/nuxt/runtime'
 
 const components = {
   pre: AiChatPreStream as unknown as DefineComponent
@@ -16,7 +17,7 @@ const components = {
 const { isOpen, messages } = useAIChat()
 const toast = useToast()
 const config = useRuntimeConfig()
-const { aiChat } = useAppConfig()
+const { aiChat, vercelAnalytics } = useAppConfig()
 const { model } = useModels()
 
 const canClear = computed(() => messages.value.length > 0)
@@ -109,6 +110,8 @@ function onSubmit() {
   if (!input.value.trim()) {
     return
   }
+
+  if (vercelAnalytics?.debug) track('AI Chat Message Sent')
 
   chat.sendMessage({ text: input.value })
 

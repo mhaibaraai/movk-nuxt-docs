@@ -54,7 +54,7 @@ provide('navigation', rootNavigation)
       <Footer v-if="$route.meta.footer !== false" />
 
       <ClientOnly>
-        <LazyUContentSearch :files="files" :navigation="navigation" />
+        <UContentSearch :files="files" :navigation="navigation" />
       </ClientOnly>
     </div>
   </UApp>

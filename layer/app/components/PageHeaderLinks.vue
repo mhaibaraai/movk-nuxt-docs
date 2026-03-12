@@ -1,10 +1,11 @@
 <script setup lang="ts">
+import { track } from '@vercel/analytics/nuxt/runtime'
+
 const route = useRoute()
 const toast = useToast()
 const { copy, copied } = useClipboard()
 const site = useSiteConfig()
 const { vercelAnalytics, ui } = useAppConfig()
-const { track } = useAnalytics()
 
 const appBaseURL = useRuntimeConfig().app?.baseURL || '/'
 

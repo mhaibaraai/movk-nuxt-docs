@@ -22,6 +22,8 @@ export default defineNuxtConfig({
     '@nuxt/a11y',
     '@nuxtjs/robots',
     '@nuxtjs/mcp-toolkit',
+    '@vercel/analytics',
+    '@vercel/speed-insights',
     '@vueuse/nuxt',
     'nuxt-component-meta',
     'nuxt-llms',
