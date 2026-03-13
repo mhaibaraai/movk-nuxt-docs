@@ -1,0 +1,32 @@
+# VCS
+.git
+.github
+
+# Dependencies (matched at any depth)
+node_modules
+
+# Build artifacts (matched at any depth)
+dist
+.output
+.nuxt
+
+# Cache & temp
+.cache
+.temp
+.tmp
+.data
+
+# Tests
+test
+coverage
+reports
+*.lcov
+
+# Logs
+*.log
+
+# Root-level markdown (not docs content)
+/*.md
+
+# Config not needed for build
+renovate.json

@@ -1,11 +1,6 @@
 export default defineNuxtConfig({
   extends: ['@movk/nuxt-docs'],
 
-  modules: [
-    '@vercel/analytics',
-    '@vercel/speed-insights'
-  ],
-
   $development: {
     site: {
       url: 'http://localhost:3000'
@@ -32,11 +27,9 @@ export default defineNuxtConfig({
     models: [
       'zai/glm-5',
       'openai/gpt-5-mini',
-      'alibaba/qwen3-coder',
       'google/gemini-2.5-flash',
       'moonshotai/kimi-k2-thinking',
-      'anthropic/claude-sonnet-4.6',
-      'deepseek/deepseek-v3.2-thinking'
+      'anthropic/claude-sonnet-4.6'
     ]
   },
 

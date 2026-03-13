@@ -3,14 +3,12 @@
   "type": "module",
   "description": "An elegant documentation theme for Nuxt, powered by Nuxt UI and Nuxt Content.",
   "scripts": {
-    "build": "nuxt build",
+    "build": "NODE_OPTIONS=--max-old-space-size=6144 nuxt build",
     "dev": "nuxt dev"
   },
   "dependencies": {
     "@movk/nuxt-docs": "workspace:*",
     "@nuxt/ui": "^4.5.1",
-    "@vercel/analytics": "^2.0.0",
-    "@vercel/speed-insights": "^2.0.0",
     "better-sqlite3": "^12.6.2",
     "dompurify": "^3.3.3",
     "mermaid": "^11.13.0",
