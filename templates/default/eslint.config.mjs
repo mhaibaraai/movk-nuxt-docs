@@ -5,7 +5,7 @@ export default withNuxt(
   {
     files: ['**/*.vue'],
     rules: {
-      'vue/max-attributes-per-line': ['error', { singleline: 3, multiline: 1 }]
+      'vue/max-attributes-per-line': ['error', { singleline: 5, multiline: 1 }]
     }
   }
 )

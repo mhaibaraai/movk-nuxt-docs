@@ -4,11 +4,10 @@ import type { FaqCategory, FaqQuestions, ToolPart, ToolState } from '../types'
 import { Chat } from '@ai-sdk/vue'
 import { DefaultChatTransport, getToolName, isReasoningUIPart, isTextUIPart, isToolUIPart } from 'ai'
 import { computed } from 'vue'
-import { isStreamingPart } from '@nuxt/ui/utils/ai'
+import { isReasoningStreaming, isToolStreaming } from '@nuxt/ui/utils/ai'
 import { useModels } from '../composables/useModels'
 import { splitByCase, upperFirst } from 'scule'
 import AiChatPreStream from './AiChatPreStream.vue'
-import { track } from '@vercel/analytics/nuxt/runtime'
 
 const components = {
   pre: AiChatPreStream as unknown as DefineComponent
@@ -17,7 +16,7 @@ const components = {
 const { isOpen, messages } = useAIChat()
 const toast = useToast()
 const config = useRuntimeConfig()
-const { aiChat, vercelAnalytics } = useAppConfig()
+const { aiChat } = useAppConfig()
 const { model } = useModels()
 
 const canClear = computed(() => messages.value.length > 0)
@@ -110,8 +109,6 @@ function onSubmit() {
   if (!input.value.trim()) {
     return
   }
-
-  if (vercelAnalytics?.debug) track('AI Chat Message Sent')
 
   chat.sendMessage({ text: input.value })
 
@@ -219,7 +216,7 @@ const faqQuestions = computed<FaqCategory[]>(() => {
             <UChatReasoning
               v-if="isReasoningUIPart(part)"
               :text="part.text"
-              :streaming="isStreamingPart(message, index, chat)"
+              :streaming="isReasoningStreaming(message, index, chat)"
               :icon="aiChat.icons.reasoning"
             >
               <MDCCached
@@ -237,11 +234,11 @@ const faqQuestions = computed<FaqCategory[]>(() => {
               :parser-options="{ highlight: false }"
               class="*:first:mt-0 *:last:mb-0"
             />
-            <AiChatToolCall
+            <UChatTool
               v-else-if="isToolUIPart(part)"
               :text="getToolText(part)"
               :icon="getToolIcon(part)"
-              :streaming="part.state !== 'output-available'"
+              :streaming="isToolStreaming(part)"
             />
           </template>
         </template>

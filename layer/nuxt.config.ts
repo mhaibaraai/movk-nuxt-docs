@@ -22,8 +22,6 @@ export default defineNuxtConfig({
     '@nuxt/a11y',
     '@nuxtjs/robots',
     '@nuxtjs/mcp-toolkit',
-    '@vercel/analytics',
-    '@vercel/speed-insights',
     '@vueuse/nuxt',
     'nuxt-component-meta',
     'nuxt-llms',
@@ -102,8 +100,7 @@ export default defineNuxtConfig({
 
   vite: {
     build: {
-      sourcemap: false,
-      chunkSizeWarningLimit: 1024
+      sourcemap: false
     }
   },
 
@@ -111,21 +108,39 @@ export default defineNuxtConfig({
 
   hooks: {
     'vite:extendConfig': async (config) => {
-      // Ensure optimizeDeps.include exists
       const cfg = config as { optimizeDeps?: { include?: string[] } }
-
       cfg.optimizeDeps ||= {}
       cfg.optimizeDeps.include ||= []
-      cfg.optimizeDeps.include.push('@nuxt/content > slugify')
-      cfg.optimizeDeps.include = cfg.optimizeDeps.include
-        .map(id => id.replace(/^@nuxt\/content > /, '@movk/nuxt-docs > @nuxt/content > '))
 
-      // Fix @vercel/oidc ESM export issue (transitive dep of @ai-sdk/gateway)
-      // Only needed when AI Chat is enabled.
+      // tailwindcss/colors is a peer dep resolved in the consumer project directly.
+      cfg.optimizeDeps.include.push(
+        'tailwindcss/colors',
+        '@movk/nuxt-docs > @movk/core',
+        '@movk/nuxt-docs > prettier',
+        '@movk/nuxt-docs > reka-ui'
+      )
+
+      // AI Chat static deps — only pre-bundle when the feature is actually enabled.
+      // @shikijs/langs/* and @shikijs/themes/* are dynamically imported in useHighlighter.ts
+      // and should remain lazy chunks; adding them here would increase cold start time.
       if (process.env.AI_GATEWAY_API_KEY) {
-        cfg.optimizeDeps.include.push('@vercel/oidc')
-        cfg.optimizeDeps.include.map(id => id.replace(/^@vercel\/oidc$/, '@movk/nuxt-docs > @vercel/oidc'))
+        cfg.optimizeDeps.include.push(
+          '@movk/nuxt-docs > @ai-sdk/vue',
+          '@movk/nuxt-docs > ai',
+          '@movk/nuxt-docs > shiki-stream/vue',
+          '@movk/nuxt-docs > @shikijs/core',
+          '@movk/nuxt-docs > @shikijs/engine-javascript'
+        )
       }
+
+      // Transform all remaining 'pkg > dep' entries added by Nuxt modules
+      // (e.g. @nuxt/a11y > axe-core, @nuxtjs/mdc > remark-gfm) to use the
+      // layer package prefix so Vite resolves them through layer's node_modules.
+      cfg.optimizeDeps.include = cfg.optimizeDeps.include
+        .map(id => (id.startsWith('@movk/nuxt-docs > ') || !id.includes(' > '))
+          ? id
+          : `@movk/nuxt-docs > ${id}`
+        )
     }
   },
 
@@ -176,7 +191,8 @@ export default defineNuxtConfig({
     clientBundle: {
       scan: true,
       includeCustomCollections: true
-    }
+    },
+    provider: 'iconify'
   },
 
   llms: {

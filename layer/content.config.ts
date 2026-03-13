@@ -47,6 +47,7 @@ const collections: Record<string, DefinedCollection> = {
       exclude: ['index.md']
     },
     schema: z.object({
+      index: z.boolean().optional(),
       links: z.array(Button),
       category: z.string().optional(),
       navigation: z.object({

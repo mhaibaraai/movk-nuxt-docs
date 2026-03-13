@@ -6,10 +6,6 @@ export interface ExtendedButtonProps extends ButtonProps {
 
 declare module 'nuxt/schema' {
   interface AppConfig {
-    vercelAnalytics: {
-      enable: boolean
-      debug: boolean
-    }
     seo: {
       titleTemplate: string
       title: string

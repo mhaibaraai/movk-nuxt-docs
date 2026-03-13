@@ -2,106 +2,86 @@
 
 This file provides guidance to Claude Code (claude.ai/code) when working with code in this repository.
 
-## Common Commands
+## 常用命令
 
 ```bash
-# 安装依赖
+# 安装依赖（安装后自动执行 nuxt prepare）
 pnpm install
 
-# 启动开发服务器（docs 站点，使用 layer）
+# 启动文档站开发服务器（http://localhost:3000）
 pnpm dev
 
-# 构建生产版本
+# 构建文档站
 pnpm build
 
-# 预览生产构建
-pnpm preview
-
-# 准备 Nuxt（生成类型等）
-pnpm dev:prepare
-
-# Lint
+# Lint 检查
 pnpm lint
 pnpm lint:fix
 
-# TypeScript 类型检查（仅 layer）
+# TypeScript 类型检查（仅针对 layer）
 pnpm typecheck
 
 # 发布 layer 到 npm
 pnpm release:layer
+
+# 清理构建产物
+pnpm clean
 ```
 
-## Architecture Overview
+`pnpm dev` 实际运行的是 `nuxt dev docs --extends ../layer`，即以 `layer/` 为基础扩展运行 `docs/` 站点。
 
-### Monorepo 结构
+## 项目架构
+
+这是一个 **pnpm monorepo**，包含三个核心部分：
 
 ```
 movk-nuxt-docs/
-├── layer/          # @movk/nuxt-docs 包 —— 核心 Nuxt layer
-├── docs/           # 官方文档站点（extends layer）
-├── templates/      # 用户脚手架模板
+├── layer/          # @movk/nuxt-docs npm 包（Nuxt Layer）
+├── docs/           # 官方文档站点（使用 layer）
+├── templates/      # 用户项目模板
 │   ├── default/    # 完整文档站点模板
-│   └── module/     # 精简模块文档模板
-└── skills/         # AI 助手技能文件
+│   └── module/     # 模块文档站点模板（精简）
+└── skills/         # AI Skill 定义（create-docs、review-docs）
 ```
 
-开发时 `pnpm dev` 运行的是 `docs/` 站点，通过 `--extends ../layer` 直接引用本地 `layer/` 而非 npm 包。
+### Layer 架构（`layer/`）
 
-### Layer 内部结构
+`layer/` 是核心 npm 包 `@movk/nuxt-docs`，主要目录：
 
-```
-layer/
-├── nuxt.config.ts          # Layer 配置（所有模块在此注册）
-├── nuxt.schema.ts          # appConfig 类型定义和 Nuxt Studio 字段配置
-├── content.config.ts       # Nuxt Content 集合定义（docs、releases、landing）
-├── app/
-│   ├── app.config.ts       # 默认 appConfig 值
-│   ├── components/
-│   │   ├── content/        # MDC 可用的内容组件（ComponentExample、CommitChangelog 等）
-│   │   ├── header/         # Header 相关组件
-│   │   ├── footer/         # Footer 相关组件
-│   │   └── theme-picker/   # 主题选择器组件
-│   ├── composables/        # 共享 composables（useNavigation、useTheme 等）
-│   ├── layouts/            # default.vue 和 docs.vue 布局
-│   └── pages/docs/         # docs 路由（[...slug].vue）
-├── modules/                # 内置 Nuxt 模块（直接在 nuxt.config.ts 中加载）
-│   ├── ai-chat/            # AI 聊天助手模块（configKey: 'aiChat'）
-│   ├── component-example/  # 组件示例模块
-│   ├── config/             # 配置相关模块
-│   ├── css/                # CSS 处理模块
-│   ├── md-rewrite/         # Markdown 重写模块
-│   ├── mermaid/            # Mermaid 图表模块（可选，默认关闭）
-│   └── routing/            # 路由模块
-└── server/
-    ├── api/
-    │   ├── component-example.get.ts
-    │   └── github/         # GitHub API 接口（commits、last-commit、releases）
-    └── mcp/
-        ├── resources/      # MCP 资源（documentation-pages、examples）
-        └── tools/          # MCP 工具（get-page、get-example、list-* 等）
-```
+- **`nuxt.config.ts`** - Layer 核心配置，注册所有 Nuxt 模块（@nuxt/ui、@nuxt/content、nuxt-component-meta、nuxt-llms 等）
+- **`nuxt.schema.ts`** - 用 `@nuxt/content/preview` 的 `field`/`group` API 定义所有 `appConfig` 字段的类型和默认值，包括 `theme`、`header`、`footer`、`toc`、`github`、`aiChat` 等配置组
+- **`content.config.ts`** - 定义 Nuxt Content 集合（`docs`、`releases`、`landing`），会检测 `content/docs/` 目录是否存在来动态决定内容路径前缀
+- **`app/app.config.ts`** - 所有 appConfig 字段的默认值
+- **`app/components/`** - 共享 UI 组件（DocsAsideLeftBody、DocsAsideLeftTop、PageHeaderLinks 等）
+- **`app/composables/`** - 共享 Composable（useCategory、useHeader、useNavigation、useTheme、fetchComponentMeta、fetchComponentExample）
+- **`modules/`** - 自定义 Nuxt 模块（ai-chat、component-example、config、css、md-rewrite、mermaid、routing）
 
-### 关键设计
+### AI Chat 模块（`layer/modules/ai-chat/`）
 
-**Layer 作为 npm 包**：`layer/` 被发布为 `@movk/nuxt-docs`，消费者在 `nuxt.config.ts` 中通过 `extends: ['@movk/nuxt-docs']` 引用。`peerDependencies` 中 `mermaid` 和 `dompurify` 为可选依赖。
+AI 聊天功能通过自定义 Nuxt 模块实现：
 
-**appConfig 配置体系**：所有用户可配置项通过 `nuxt.schema.ts` 定义，分为 `theme`、`header`、`footer`、`toc`、`github`、`aiChat`、`seo`、`vercelAnalytics` 等组。
+- **服务端 API**：`runtime/server/api/ai-chat.ts` - 使用 Vercel AI SDK 的 `streamText`，通过 MCP 客户端连接文档 MCP Server 获取工具，再路由到 AI Gateway 调用 LLM
+- **组件**：`AiChatPanel.vue` 使用 `@ai-sdk/vue` 的 `Chat` 类管理对话状态，支持流式输出和推理内容展示
+- **模型路由**：通过 `@ai-sdk/gateway` 统一调用，支持 Anthropic、OpenAI、Google、DeepSeek 等多家模型
+- **环境变量**：需要 `AI_GATEWAY_API_KEY` 才能启用 AI Chat 功能；`layer/nuxt.config.ts` 中通过该变量判断是否预打包 AI 依赖
 
-**AI 聊天模块**：`modules/ai-chat/` 注册后暴露 `aiChat` configKey，通过 `@ai-sdk/gateway` 连接 AI Gateway，支持多模型切换。环境变量需要 `AI_GATEWAY_API_KEY` 。
+### 内容结构（`docs/content/`）
 
-**MCP Server**：通过 `@nuxtjs/mcp-toolkit` 集成，Resources 和 Tools 定义在 `server/mcp/` 下，向 AI 工具提供结构化文档访问。
+文档站使用 Nuxt Content + MDC 语法。内容文件存放在 `content/docs/`，支持：
 
-**组件文档自动化**：`nuxt-component-meta` 自动提取 Vue 组件 Props/Slots/Emits，通过 `ComponentProps`、`ComponentSlots`、`ComponentEmits` 等 MDC 组件在文档中展示。
+- Front-Matter 定义 `title`、`description`、`navigation`、`links`、`category` 等元数据
+- MDC 组件语法（`::ComponentName` 块语法或行内 `:component-name{prop="value"}`）
+- 文件名数字前缀（如 `1.index.md`）控制排序，不影响路由
 
-**内容集合**：`content.config.ts` 动态检测用户项目是否有 `content/docs/` 文件夹和 `content/index.md` 来决定路由前缀，支持带 `docs/` 子目录和不带的两种结构。
+### 配置方式
 
-### 技术栈
+使用此 Layer 的项目通过两处配置自定义行为：
 
-- Nuxt 4 + TypeScript
-- Nuxt UI（UI 组件库）+ Tailwind CSS 4
-- Nuxt Content（基于文件的 CMS，SQLite 存储）
-- Vercel AI SDK（`ai`、`@ai-sdk/gateway`、`@ai-sdk/vue`）
-- `@nuxtjs/mcp-toolkit`（MCP Server）
-- `nuxt-component-meta`（组件元数据提取）
-- `nuxt-llms`（生成 `llms.txt`）
-- VueUse、motion-v、shiki-stream
+1. **`nuxt.config.ts`** - Nuxt 模块级配置（如 `aiChat.model`、`mermaid.enabled`、`mcp` 等顶层字段）
+2. **`app.config.ts`** - 运行时 UI 配置（如 `header.title`、`footer.credits`、`github.owner` 等），可被终端用户覆盖
+
+`nuxt.schema.ts` 是两者的权威来源，定义了所有可配置字段的类型和默认值。
+
+## 技能文件（`skills/`）
+
+`skills/create-docs/` 和 `skills/review-docs/` 包含 AI 编写和审查文档的规范，分别包含 `references/` 子目录存放 MDC 组件模板、配置参考和写作规范。编写或审查文档时应先加载对应技能。

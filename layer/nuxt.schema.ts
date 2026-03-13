@@ -38,28 +38,6 @@ export default defineNuxtSchema({
       }
     }),
 
-    vercelAnalytics: group({
-      title: 'Vercel Analytics',
-      description: 'Vercel Analytics 配置',
-      icon: 'i-lucide-activity',
-      fields: {
-        enable: field({
-          type: 'boolean',
-          title: '启用 Analytics',
-          description: '是否启用 Vercel Analytics',
-          icon: 'i-lucide-toggle-right',
-          default: false
-        }),
-        debug: field({
-          type: 'boolean',
-          title: '调试模式',
-          description: '是否启用调试模式',
-          icon: 'i-lucide-bug',
-          default: false
-        })
-      }
-    }),
-
     seo: group({
       title: 'SEO',
       description: 'SEO 相关配置',

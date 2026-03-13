@@ -1,7 +1,6 @@
 import { themeIcons } from '../utils/theme'
 import { omit } from '@movk/core'
 import colors from 'tailwindcss/colors'
-import { track } from '@vercel/analytics/nuxt/runtime'
 
 export function useTheme() {
   const appConfig = useAppConfig()
@@ -16,7 +15,6 @@ export function useTheme() {
     set(option) {
       appConfig.ui.colors.neutral = option
       window.localStorage.setItem(`${site.name}-ui-neutral`, appConfig.ui.colors.neutral)
-      if (appConfig.vercelAnalytics?.debug) track('Theme Changed', { setting: 'neutral', value: option })
     }
   })
 
@@ -30,7 +28,6 @@ export function useTheme() {
       appConfig.ui.colors.primary = option
       window.localStorage.setItem(`${site.name}-ui-primary`, appConfig.ui.colors.primary)
       setBlackAsPrimary(false)
-      if (appConfig.vercelAnalytics?.debug) track('Theme Changed', { setting: 'primary', value: option })
     }
   })
 
@@ -42,7 +39,6 @@ export function useTheme() {
     set(option) {
       appConfig.theme.radius = option
       window.localStorage.setItem(`${site.name}-ui-radius`, String(appConfig.theme.radius))
-      if (appConfig.vercelAnalytics?.debug) track('Theme Changed', { setting: 'radius', value: option })
     }
   })
 
@@ -56,7 +52,6 @@ export function useTheme() {
       if (appConfig.theme.font) {
         window.localStorage.setItem(`${site.name}-ui-font`, appConfig.theme.font)
       }
-      if (appConfig.vercelAnalytics?.debug) track('Theme Changed', { setting: 'font', value: option })
     }
   })
 
@@ -83,7 +78,6 @@ export function useTheme() {
       if (appConfig.theme.icons) {
         window.localStorage.setItem(`${site.name}-ui-icons`, appConfig.theme.icons)
       }
-      if (appConfig.vercelAnalytics?.debug) track('Theme Changed', { setting: 'icons', value: option })
     }
   })
 
@@ -98,14 +92,12 @@ export function useTheme() {
     },
     set(option) {
       colorMode.preference = option
-      if (appConfig.vercelAnalytics?.debug) track('Theme Changed', { setting: 'color mode', value: option })
     }
   })
 
   function setBlackAsPrimary(value: boolean) {
     appConfig.theme.blackAsPrimary = value
     window.localStorage.setItem(`${site.name}-ui-black-as-primary`, String(value))
-    if (appConfig.vercelAnalytics?.debug && value) track('Theme Changed', { setting: 'black as primary', value })
   }
 
   const hasCSSChanges = computed(() => {
@@ -121,8 +113,6 @@ export function useTheme() {
   })
 
   function exportCSS(): string {
-    if (appConfig.vercelAnalytics?.debug) track('Theme Exported', { type: 'css' })
-
     const lines = [
       '@import "tailwindcss";',
       '@import "@nuxt/ui";'
@@ -152,8 +142,6 @@ export function useTheme() {
   }
 
   function exportAppConfig(): string {
-    if (appConfig.vercelAnalytics?.debug) track('Theme Exported', { type: 'appConfig' })
-
     const config: Record<string, any> = {}
 
     if (appConfig.ui.colors.primary !== 'green' || appConfig.ui.colors.neutral !== 'slate') {
@@ -181,8 +169,6 @@ export function useTheme() {
   }
 
   function resetTheme() {
-    if (appConfig.vercelAnalytics?.debug) track('Theme Reset')
-
     // Reset without triggering individual tracking events
     appConfig.ui.colors.primary = 'green'
     window.localStorage.removeItem(`${site.name}-ui-primary`)
