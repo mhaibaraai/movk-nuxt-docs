@@ -1,17 +1,10 @@
 <script setup lang="ts">
 import { useClipboard } from '@vueuse/core'
-import { track } from '@vercel/analytics/nuxt/runtime'
 
 const appConfig = useAppConfig()
 const colorMode = useColorMode()
 
 const open = ref(false)
-
-watch(open, (isOpen) => {
-  if (isOpen && appConfig.vercelAnalytics?.debug) {
-    track('Theme Picker Opened')
-  }
-})
 
 const { copy: copyCSS, copied: copiedCSS } = useClipboard()
 const { copy: copyAppConfig, copied: copiedAppConfig } = useClipboard()

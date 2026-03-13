@@ -1,6 +1,5 @@
-import { StreamableHTTPClientTransport } from '@modelcontextprotocol/sdk/client/streamableHttp.js'
 import { streamText, convertToModelMessages, stepCountIs, smoothStream } from 'ai'
-import { experimental_createMCPClient } from '@ai-sdk/mcp'
+import { createMCPClient } from '@ai-sdk/mcp'
 import { getModel } from '../utils/getModel'
 import { inferSiteURL } from '../../../../../utils/meta'
 
@@ -52,9 +51,8 @@ export default defineEventHandler(async (event) => {
         ? `${getRequestURL(event).origin}${mcpPath}`
         : `${inferSiteURL()}${mcpPath}`
 
-    const httpTransport = new StreamableHTTPClientTransport(mcpUrl)
-    httpClient = await experimental_createMCPClient({
-      transport: httpTransport
+    httpClient = await createMCPClient({
+      transport: { type: 'http', url: mcpUrl }
     })
     mcpTools = await httpClient.tools()
   } catch (error) {
@@ -80,6 +78,16 @@ export default defineEventHandler(async (event) => {
       },
       gateway: {
         caching: 'auto'
+      },
+      google: {
+        thinkingConfig: {
+          includeThoughts: true,
+          thinkingLevel: 'low'
+        }
+      },
+      openai: {
+        reasoningEffort: 'low',
+        reasoningSummary: 'detailed'
       }
     },
     system: getMainAgentSystemPrompt(siteName),
