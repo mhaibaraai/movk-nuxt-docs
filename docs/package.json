@@ -3,7 +3,7 @@
   "type": "module",
   "description": "An elegant documentation theme for Nuxt, powered by Nuxt UI and Nuxt Content.",
   "scripts": {
-    "build": "NODE_OPTIONS='--max-old-space-size=8192' nuxt build",
+    "build": "NODE_OPTIONS='--max-old-space-size=6144' nuxt build",
     "dev": "nuxt dev"
   },
   "dependencies": {
