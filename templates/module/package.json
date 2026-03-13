@@ -8,7 +8,7 @@
     "@movk/nuxt-docs": "latest",
     "@nuxtjs/mdc": "^0.20.2",
     "better-sqlite3": "^12.6.2",
-    "nuxt": "^4.3.1",
+    "nuxt": "^4.4.2",
     "tailwindcss": "^4.2.1",
     "unist-util-visit": "^5.1.0"
   }
