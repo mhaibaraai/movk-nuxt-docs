@@ -1,12 +1,12 @@
 import { themeIcons } from '../utils/theme'
 import { omit } from '@movk/core'
 import colors from 'tailwindcss/colors'
+import { track } from '@vercel/analytics/nuxt/runtime'
 
 export function useTheme() {
   const appConfig = useAppConfig()
   const colorMode = useColorMode()
   const site = useSiteConfig()
-  const { track } = useAnalytics()
 
   const neutralColors = ['slate', 'gray', 'zinc', 'neutral', 'stone']
   const neutral = computed({

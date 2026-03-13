@@ -391,7 +391,7 @@ export default defineNuxtSchema({
               type: 'string',
               title: '关闭按钮',
               description: '关闭按钮的文本',
-              icon: 'i-lucide-x',
+              icon: 'i-lucide-panel-right-close',
               default: '关闭'
             }),
             loading: field({

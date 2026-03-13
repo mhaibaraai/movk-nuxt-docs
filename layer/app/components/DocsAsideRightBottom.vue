@@ -19,6 +19,6 @@ const showExplainWithAi = computed(() => {
     size="sm"
     variant="ghost"
     color="neutral"
-    @click="open(`解释此页面 ${pageUrl}`, true)"
+    @click="open(`阅读 ${pageUrl} 处的文档页面并对其进行总结，我想问一下相关问题。`)"
   />
 </template>

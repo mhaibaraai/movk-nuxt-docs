@@ -1,10 +1,9 @@
 <script setup lang="ts">
 import { useClipboard } from '@vueuse/core'
+import { track } from '@vercel/analytics/nuxt/runtime'
 
 const appConfig = useAppConfig()
 const colorMode = useColorMode()
-
-const { track } = useAnalytics()
 
 const open = ref(false)
 

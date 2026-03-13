@@ -119,10 +119,7 @@ AI Chat 功能已内置在 Movk Nuxt Docs 中，无需手动添加组件。
 ```vue
 <template>
   <div>
-    <!-- 打开聊天的按钮 -->
     <AiChat />
-
-    <!-- AI Chat 面板（在应用或布局中放置一次即可） -->
     <AiChatPanel />
   </div>
 </template>
@@ -139,15 +136,12 @@ FAQ 问题现在在 `app/app.config.ts` 中配置，无需在组件中传递 pro
 ```vue
 <template>
   <div>
-    <!-- Teleport to body for proper fixed positioning -->
     <Teleport to="body">
       <ClientOnly>
-        <LazyAiChatFloatingInput />
+        <AiChatPanel />
+        <AiChatFloatingInput />
       </ClientOnly>
     </Teleport>
-
-    <!-- Chat panel (required to display responses) -->
-    <AiChatPanel />
   </div>
 </template>
 ```
@@ -163,37 +157,20 @@ FAQ 问题现在在 `app/app.config.ts` 中配置，无需在组件中传递 pro
 ```vue
 <script setup>
 const {
-  open,
-  close,
-  toggle,
-  toggleExpanded,
+  isEnabled,
   isOpen,
-  isExpanded,
   messages,
-  clearMessages,
-  panelWidth
+  toggleChat,
+  open
 } = useAIChat()
 
 // 打开聊天并发送初始消息
 open('如何安装这个模块？')
 
-// 打开聊天并清除之前的消息
-open('新问题', true)
-
 // 切换聊天可见性
 toggle()
-
-// 切换面板展开状态
-toggleExpanded()
-
-// 清除所有消息
-clearMessages()
-
-// 访问面板宽度（响应式）
-console.log(panelWidth.value) // '400px' or '800px'
 </script>
 ```
-
 
 ## 自定义
 
@@ -332,58 +309,12 @@ variant: link
 查看源代码
 ::
 
-### `AiChatReasoning`
-
-显示 AI 思考过程的可折叠组件。
-
-:component-props{slug="AiChatReasoning"}
-
-::u-button
----
-color: neutral
-icon: i-lucide-code-xml
-to: https://github.com/mhaibaraai/movk-nuxt-docs/blob/main/layer/modules/ai-chat/runtime/components/AiChatReasoning.vue
-target: _blank
-variant: link
----
-查看源代码
-::
-
-### `AiChatSlideoverFaq`
-
-显示聊天为空时的常见问题分类。
-
-::tip{to="/docs/getting-started/configuration#ai-chat"}
-FAQ 问题现在在 `app/app.config.ts` 的 `aiChat.faqQuestions` 中配置。
-::
-
-:component-props{slug="AiChatSlideoverFaq"}
-
-```ts
-interface FaqCategory {
-  category: string
-  items: string[]
-}
-```
-
-::u-button
----
-color: neutral
-icon: i-lucide-code-xml
-to: https://github.com/mhaibaraai/movk-nuxt-docs/blob/main/layer/modules/ai-chat/runtime/components/AiChatSlideoverFaq.vue
-target: _blank
-variant: link
----
-查看源代码
-::
-
 ### `AiChatPanel`
 
-完整的 AI 聊天面板界面，支持侧边栏模式和可调整宽度。
+完整的 AI 聊天面板界面。
 
 **特性：**
 - 可展开/折叠的侧边栏面板
-- 响应式宽度调整（400px/800px）
 - 自动推动主内容区域
 - 内置消息历史和流式响应
 - 支持代码高亮和 Markdown 渲染
@@ -414,31 +345,6 @@ variant: link
 查看源代码
 ::
 
-### `AiChatPreStream`
-
-用于流式渲染代码块的组件，集成 Shiki 语法高亮。
-
-::note
-**特性：**
-- 自动根据颜色模式切换主题（亮色/暗色）
-- 支持语言别名映射（如 'javascript' → 'js'）
-- 自动清理代码格式（去除尾随反引号）
-- 集成 `ProsePre` 组件样式
-::
-
-:component-props{slug="AiChatPreStream"}
-
-::u-button
----
-color: neutral
-icon: i-lucide-code-xml
-to: https://github.com/mhaibaraai/movk-nuxt-docs/blob/main/layer/modules/ai-chat/runtime/components/AiChatPreStream.vue
-target: _blank
-variant: link
----
-查看源代码
-::
-
 ## Composables
 
 ### `useAIChat()`{lang="ts-type"}
@@ -452,64 +358,24 @@ variant: link
   对话框是否打开的响应式状态。
   ::
 
-  ::field{name="isExpanded" type="Ref<boolean>"}
-  面板是否展开的响应式状态（展开为 800px，折叠为 400px）。
-  ::
-
-  ::field{name="isMobile" type="Ref<boolean>"}
-  是否为移动设备的响应式状态。
-  ::
-
-  ::field{name="panelWidth" type="Ref<string>"}
-  面板宽度的响应式状态（'400px' 或 '800px'）。
-  ::
-
   ::field{name="messages" type="Ref<UIMessage[]>"}
   消息列表，包含所有历史对话记录。
   ::
 
-  ::field{name="pendingMessage" type="Ref<string | undefined>"}
-  待发送的消息内容，用于在打开对话框前预设问题。
-  ::
-
-  ::field{name="faqQuestions" type="Ref<FaqQuestions>"}
-  从 `app/app.config.ts` 读取的 FAQ 问题列表。
-  ::
-
-  :::field{name="open" type="(message?: string, clearHistory?: boolean) => void"}
-  打开对话框并可选地发送初始消息。
+  :::field{name="open" type="(text: string) => void"}
+  打开对话框并发送初始消息。
 
     :::collapsible
       ::field-group
-        ::field{name="message" type="string"}
-        可选的初始消息，打开对话框时自动发送。
-        ::
-
-        ::field{name="clearHistory" type="boolean"}
-        是否清除之前的消息历史，默认为 `false`。
+        ::field{name="text" type="string"}
+        初始消息，打开对话框时自动发送。
         ::
       ::
     :::
   :::
 
-  ::field{name="close" type="() => void"}
-  关闭对话框。
-  ::
-
-  ::field{name="toggle" type="() => void"}
+  ::field{name="toggleChat" type="() => void"}
   切换对话框的打开/关闭状态。
-  ::
-
-  ::field{name="toggleExpanded" type="() => void"}
-  切换面板展开/折叠状态。
-  ::
-
-  ::field{name="clearMessages" type="() => void"}
-  清除所有历史消息。
-  ::
-
-  ::field{name="clearPending" type="() => void"}
-  清除待发送的消息。
   ::
 ::
 

@@ -1,13 +1,11 @@
 <script setup lang="ts">
 import colors from 'tailwindcss/colors'
-import { Analytics } from '@vercel/analytics/nuxt'
-import { SpeedInsights } from '@vercel/speed-insights/nuxt'
 
 const site = useSiteConfig()
 const appConfig = useAppConfig()
 const colorMode = useColorMode()
 const route = useRoute()
-const { isEnabled: isAiChatEnabled, panelWidth: aiChatPanelWidth, shouldPushContent } = useAIChat()
+const { isEnabled: isAiChatEnabled } = useAIChat()
 
 const { data: navigation } = await useAsyncData('navigation', () => queryCollectionNavigation('docs', ['category', 'description']))
 const { data: files } = useLazyAsyncData('search', () => queryCollectionSearchSections('docs'), {
@@ -46,27 +44,30 @@ provide('navigation', rootNavigation)
 <template>
   <UApp :toaster="appConfig.toaster">
     <NuxtLoadingIndicator color="var(--ui-primary)" :height="2" />
-    <Analytics v-if="appConfig.vercelAnalytics" :debug="appConfig.vercelAnalytics?.debug" />
-    <SpeedInsights v-if="appConfig.vercelAnalytics" :debug="appConfig.vercelAnalytics?.debug" />
 
-    <div :class="{ root: route.path.startsWith('/docs/') }" :style="{ marginRight: shouldPushContent ? `${aiChatPanelWidth}px` : '0' }">
-      <template v-if="!route.path.startsWith('/examples')">
-        <Header v-if="$route.meta.header !== false" />
-      </template>
+    <div class="flex">
+      <div class="flex-1 min-w-0" :class="[route.path.startsWith('/docs/') && 'root']">
+        <template v-if="!route.path.startsWith('/examples')">
+          <Header v-if="$route.meta.header !== false" />
+        </template>
 
-      <NuxtLayout>
-        <NuxtPage />
-      </NuxtLayout>
+        <NuxtLayout>
+          <NuxtPage />
+        </NuxtLayout>
 
-      <template v-if="!route.path.startsWith('/examples')">
-        <Footer v-if="$route.meta.footer !== false" />
+        <template v-if="!route.path.startsWith('/examples')">
+          <Footer v-if="$route.meta.footer !== false" />
 
+          <ClientOnly>
+            <UContentSearch :files="files" :navigation="rootNavigation" :fuse="{ resultLimit: 500 }" />
+          </ClientOnly>
+        </template>
+      </div>
+
+      <template v-if="!route.path.startsWith('/examples') && isAiChatEnabled">
         <ClientOnly>
-          <LazyUContentSearch :files="files" :navigation="rootNavigation" :fuse="{ resultLimit: 1000 }" />
-          <template v-if="isAiChatEnabled">
-            <LazyAiChatPanel />
-            <LazyAiChatFloatingInput />
-          </template>
+          <AiChatPanel />
+          <AiChatFloatingInput />
         </ClientOnly>
       </template>
     </div>
