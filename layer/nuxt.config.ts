@@ -91,6 +91,10 @@ export default defineNuxtConfig({
       crawlLinks: true,
       failOnError: false,
       autoSubfolderIndex: false
+    },
+    compatibilityDate: {
+      // Don't generate observability routes for now
+      vercel: '2025-07-14'
     }
   },
 
