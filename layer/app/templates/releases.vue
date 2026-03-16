@@ -6,6 +6,8 @@ if (!page.value) {
   throw createError({ status: 404, statusText: 'Page not found', fatal: true })
 }
 
+const site = useSiteConfig()
+
 const title = page.value.seo?.title || page.value.title
 const description = page.value.seo?.description || page.value.description
 
@@ -16,9 +18,10 @@ useSeoMeta({
   ogDescription: description
 })
 
-defineOgImageComponent('Nuxt', {
+defineOgImage('CustomDocs.takumi', {
   title,
-  description
+  description,
+  site: site.name
 })
 
 const { data: versions } = page.value.releases

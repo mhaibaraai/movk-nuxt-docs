@@ -9,7 +9,8 @@ definePageMeta({
 })
 
 const route = useRoute()
-const { toc, github } = useAppConfig()
+const appConfig = useAppConfig()
+const { toc, github } = appConfig
 
 const { data: page } = await useAsyncData(`docs-${kebabCase(route.path)}`, () => queryCollection('docs').path(route.path).first())
 
@@ -101,10 +102,10 @@ useSeoMeta({
   ogDescription: description
 })
 
-defineOgImageComponent('Nuxt', {
+defineOgImage('CustomDocs.takumi', {
   title,
   description,
-  headline: breadcrumb.value?.[breadcrumb.value.length - 1]?.label || 'Movk Nuxt Docs'
+  site: site.name
 })
 </script>
 
