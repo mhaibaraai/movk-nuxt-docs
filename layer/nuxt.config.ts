@@ -166,14 +166,16 @@ export default defineNuxtConfig({
   },
 
   fonts: {
+    provider: 'bunny',
     families: [
-      { name: 'Public Sans', provider: 'google', global: true },
-      { name: 'DM Sans', provider: 'google' },
-      { name: 'Geist', provider: 'google' },
-      { name: 'Inter', provider: 'google' },
-      { name: 'Poppins', provider: 'google' },
-      { name: 'Outfit', provider: 'google' },
-      { name: 'Raleway', provider: 'google' }
+      { name: 'Noto Sans SC', global: true },
+      { name: 'Public Sans', global: true },
+      { name: 'DM Sans' },
+      { name: 'Geist' },
+      { name: 'Inter' },
+      { name: 'Poppins' },
+      { name: 'Outfit' },
+      { name: 'Raleway' }
     ]
   },
 
@@ -199,9 +201,6 @@ export default defineNuxtConfig({
 
   ogImage: {
     zeroRuntime: true,
-    fonts: [
-      'Noto+Sans+SC:400',
-      'Inter:400'
-    ]
+    buildCache: true
   }
 })

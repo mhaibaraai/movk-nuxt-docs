@@ -11,7 +11,8 @@ RUN --mount=type=cache,id=pnpm,target=/root/.local/share/pnpm/store \
 
 FROM deps AS build
 WORKDIR /app
-ENV NUXT_TELEMETRY_DISABLED=1
+ENV NUXT_TELEMETRY_DISABLED=1\
+    NODE_OPTIONS=--max-old-space-size=6144
 COPY . .
 RUN pnpm dev:prepare && pnpm build
 
