@@ -63,7 +63,7 @@ AI 聊天功能通过自定义 Nuxt 模块实现：
 - **服务端 API**：`runtime/server/api/ai-chat.ts` - 使用 Vercel AI SDK 的 `streamText`，通过 MCP 客户端连接文档 MCP Server 获取工具，再路由到 AI Gateway 调用 LLM
 - **组件**：`AiChatPanel.vue` 使用 `@ai-sdk/vue` 的 `Chat` 类管理对话状态，支持流式输出和推理内容展示
 - **模型路由**：通过 `@ai-sdk/gateway` 统一调用，支持 Anthropic、OpenAI、Google、DeepSeek 等多家模型
-- **环境变量**：需要 `AI_GATEWAY_API_KEY` 才能启用 AI Chat 功能；`layer/nuxt.config.ts` 中通过该变量判断是否预打包 AI 依赖
+- **环境变量**：需要 `AI_GATEWAY_API_KEY` 或 `NUXT_AI_GATEWAY_API_KEY` 才能启用 AI Chat 功能；`layer/nuxt.config.ts` 中通过该变量判断是否预打包 AI 依赖
 
 ### 内容结构（`docs/content/`）
 

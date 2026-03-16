@@ -47,15 +47,14 @@ export default defineNuxtModule<AiChatModuleOptions>({
     models: []
   },
   setup(options, nuxt) {
-    const config = useRuntimeConfig()
+    const { aiGatewayApiKey } = useRuntimeConfig()
     const { resolve } = createResolver(import.meta.url)
 
     nuxt.options.runtimeConfig.aiChat = {
-      mcpPath: options.mcpPath!,
-      aiGatewayApiKey: ''
+      mcpPath: options.mcpPath!
     }
 
-    const hasApiKey = !!(config.aiChat?.aiGatewayApiKey || process.env.AI_GATEWAY_API_KEY)
+    const hasApiKey = !!(aiGatewayApiKey || process.env.AI_GATEWAY_API_KEY)
 
     nuxt.options.runtimeConfig.public.aiChat = {
       enabled: hasApiKey,
@@ -70,11 +69,6 @@ export default defineNuxtModule<AiChatModuleOptions>({
         from: resolve('./runtime/composables/useAIChat')
       }
     ])
-
-    if (!hasApiKey) {
-      log.warn('[movk-nuxt-docs] Ai Chat Module disabled: no API key found in environment variables.')
-      return
-    }
 
     if (hasApiKey) {
       addComponentsDir({
@@ -96,6 +90,11 @@ export default defineNuxtModule<AiChatModuleOptions>({
         name: 'AiChatDisabled',
         filePath: resolve('./runtime/components/AiChatDisabled.vue')
       })
+    }
+
+    if (!hasApiKey) {
+      log.warn('[movk-nuxt-docs] Ai Chat Module disabled: no API key found in environment variables.')
+      return
     }
 
     /**
@@ -133,9 +132,9 @@ declare module 'nuxt/schema' {
     }
   }
   interface RuntimeConfig {
+    aiGatewayApiKey: string
     aiChat: {
       mcpPath: string
-      aiGatewayApiKey: string
     }
   }
 }

@@ -31,7 +31,7 @@ function getMainAgentSystemPrompt(siteName: string) {
 export default defineEventHandler(async (event) => {
   const config = useRuntimeConfig()
 
-  if (!config.aiChat?.aiGatewayApiKey) {
+  if (!config.aiGatewayApiKey && !process.env.AI_GATEWAY_API_KEY) {
     throw createError({ statusCode: 503, message: 'AI Chat is not configured.' })
   }
 

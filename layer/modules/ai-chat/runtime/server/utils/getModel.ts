@@ -17,7 +17,7 @@ export function getModel(modelId: string) {
   }
 
   const gateway = createGateway({
-    apiKey: config.aiChat.aiGatewayApiKey || undefined
+    apiKey: config.aiGatewayApiKey || process.env.AI_GATEWAY_API_KEY || undefined
   })
   return gateway(modelId)
 }

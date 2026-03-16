@@ -70,6 +70,7 @@ export default defineNuxtConfig({
   },
 
   runtimeConfig: {
+    aiGatewayApiKey: '',
     githubToken: '',
     public: {
       version: pkg.version
