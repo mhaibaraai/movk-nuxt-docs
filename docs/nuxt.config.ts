@@ -13,11 +13,13 @@ export default defineNuxtConfig({
     }
   },
 
+  devtools: { enabled: false },
+
   routeRules: {
     '/docs': { redirect: '/docs/getting-started', prerender: false },
     '/docs/typography': { redirect: '/docs/typography/markdown-syntax', prerender: false },
-    '/docs/components': { redirect: '/docs/components/commit-changelog', prerender: false },
-    '/docs/composables': { redirect: '/docs/composables/fetch-component-example', prerender: false }
+    '/docs/components': { redirect: '/docs/components/component-props', prerender: false },
+    '/docs/composables': { redirect: '/docs/composables/use-header', prerender: false }
   },
 
   compatibilityDate: 'latest',
