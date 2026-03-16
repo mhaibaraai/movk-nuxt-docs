@@ -65,5 +65,6 @@ export default defineCachedEventHandler(async (event) => {
     const { path, author } = getQuery(event)
     const paths = Array.isArray(path) ? path : [path]
     return `commits-${paths.join(',')}${author ? `-${author}` : ''}`
-  }
+  },
+  shouldBypassCache: () => !useRuntimeConfig().githubToken
 })

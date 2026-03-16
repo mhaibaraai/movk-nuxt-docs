@@ -110,5 +110,6 @@ export default defineCachedEventHandler(async (event) => {
   getKey: (event) => {
     const { path } = getQuery(event)
     return `last-commit-${path}`
-  }
+  },
+  shouldBypassCache: () => !useRuntimeConfig().githubToken
 })
