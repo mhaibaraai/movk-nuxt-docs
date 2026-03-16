@@ -1,13 +1,14 @@
 import { existsSync } from 'node:fs'
 import { join } from 'pathe'
 import {
-  addComponent,
   addComponentsDir,
   addImports,
   addServerHandler,
+  addComponent,
   createResolver,
   defineNuxtModule,
-  logger
+  logger,
+  useRuntimeConfig
 } from '@nuxt/kit'
 
 export interface AiChatModuleOptions {
@@ -46,9 +47,15 @@ export default defineNuxtModule<AiChatModuleOptions>({
     models: []
   },
   setup(options, nuxt) {
-    const hasApiKey = !!process.env.AI_GATEWAY_API_KEY
-
+    const config = useRuntimeConfig()
     const { resolve } = createResolver(import.meta.url)
+
+    nuxt.options.runtimeConfig.aiChat = {
+      mcpPath: options.mcpPath!,
+      aiGatewayApiKey: ''
+    }
+
+    const hasApiKey = !!(config.aiChat?.aiGatewayApiKey || process.env.AI_GATEWAY_API_KEY)
 
     nuxt.options.runtimeConfig.public.aiChat = {
       enabled: hasApiKey,
@@ -64,41 +71,32 @@ export default defineNuxtModule<AiChatModuleOptions>({
       }
     ])
 
+    if (!hasApiKey) {
+      log.warn('[movk-nuxt-docs] Ai Chat Module disabled: no API key found in environment variables.')
+      return
+    }
+
     if (hasApiKey) {
       addComponentsDir({
         path: resolve('./runtime/components'),
         ignore: ['AiChatDisabled']
       })
+
+      addImports([
+        {
+          name: 'useHighlighter',
+          from: resolve('./runtime/composables/useHighlighter')
+        }, {
+          name: 'useModels',
+          from: resolve('./runtime/composables/useModels')
+        }
+      ])
     } else {
       addComponent({
         name: 'AiChatDisabled',
         filePath: resolve('./runtime/components/AiChatDisabled.vue')
       })
     }
-
-    if (!hasApiKey) {
-      log.warn('[movk-nuxt-docs] Ai Chat Module disabled: no API key found in environment variables.')
-      return
-    }
-
-    nuxt.options.runtimeConfig.aiChat = {
-      mcpPath: options.mcpPath!,
-      aiGatewayApiKey: process.env.AI_GATEWAY_API_KEY
-    }
-
-    addImports([
-      {
-        name: 'useHighlighter',
-        from: resolve('./runtime/composables/useHighlighter')
-      }
-    ])
-
-    addImports([
-      {
-        name: 'useModels',
-        from: resolve('./runtime/composables/useModels')
-      }
-    ])
 
     /**
      * 检查用户项目中是否存在自定义 handler
@@ -137,7 +135,7 @@ declare module 'nuxt/schema' {
   interface RuntimeConfig {
     aiChat: {
       mcpPath: string
-      aiGatewayApiKey: string | undefined
+      aiGatewayApiKey: string
     }
   }
 }

@@ -29,13 +29,17 @@ function getMainAgentSystemPrompt(siteName: string) {
 }
 
 export default defineEventHandler(async (event) => {
+  const config = useRuntimeConfig()
+
+  if (!config.aiChat?.aiGatewayApiKey) {
+    throw createError({ statusCode: 503, message: 'AI Chat is not configured.' })
+  }
+
   const { messages, model: requestModel } = await readBody(event)
 
   if (!messages || !Array.isArray(messages)) {
     throw createError({ statusCode: 400, message: 'Invalid or missing messages array.' })
   }
-
-  const config = useRuntimeConfig()
   const siteConfig = getSiteConfig(event)
   const siteName = siteConfig.name || 'Documentation'
 

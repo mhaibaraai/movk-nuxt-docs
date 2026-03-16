@@ -70,6 +70,7 @@ export default defineNuxtConfig({
   },
 
   runtimeConfig: {
+    githubToken: '',
     public: {
       version: pkg.version
     }
@@ -116,18 +117,16 @@ export default defineNuxtConfig({
         '@movk/nuxt-docs > reka-ui'
       )
 
-      // AI Chat static deps — only pre-bundle when the feature is actually enabled.
+      // AI Chat static deps — always pre-bundle for dev performance.
       // @shikijs/langs/* and @shikijs/themes/* are dynamically imported in useHighlighter.ts
       // and should remain lazy chunks; adding them here would increase cold start time.
-      if (process.env.AI_GATEWAY_API_KEY) {
-        cfg.optimizeDeps.include.push(
-          '@movk/nuxt-docs > @ai-sdk/vue',
-          '@movk/nuxt-docs > ai',
-          '@movk/nuxt-docs > shiki-stream/vue',
-          '@movk/nuxt-docs > @shikijs/core',
-          '@movk/nuxt-docs > @shikijs/engine-javascript'
-        )
-      }
+      cfg.optimizeDeps.include.push(
+        '@movk/nuxt-docs > @ai-sdk/vue',
+        '@movk/nuxt-docs > ai',
+        '@movk/nuxt-docs > shiki-stream/vue',
+        '@movk/nuxt-docs > @shikijs/core',
+        '@movk/nuxt-docs > @shikijs/engine-javascript'
+      )
 
       // Transform all remaining 'pkg > dep' entries added by Nuxt modules
       // (e.g. @nuxt/a11y > axe-core, @nuxtjs/mdc > remark-gfm) to use the
