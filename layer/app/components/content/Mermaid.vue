@@ -1,7 +1,6 @@
 <script setup lang="ts">
 import { hash } from 'ohash'
 import type { IconProps } from '@nuxt/ui'
-import type { ClassNameValue } from 'tailwind-merge'
 import {
   useClipboard,
   useElementVisibility,
@@ -9,6 +8,9 @@ import {
   useToggle
 } from '@vueuse/core'
 import { tv } from '@nuxt/ui/utils/tv'
+
+type ClassNameValue = ClassNameArray | string | null | undefined | 0 | 0n | false
+type ClassNameArray = ClassNameValue[]
 
 const theme = {
   slots: {

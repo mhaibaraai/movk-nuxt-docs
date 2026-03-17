@@ -8,6 +8,7 @@ import { isReasoningStreaming, isToolStreaming } from '@nuxt/ui/utils/ai'
 import { useModels } from '../composables/useModels'
 import { splitByCase, upperFirst } from 'scule'
 import AiChatPreStream from './AiChatPreStream.vue'
+import { useMemoize } from '@vueuse/core'
 
 const components = {
   pre: AiChatPreStream as unknown as DefineComponent

@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import { camelCase, kebabCase, upperFirst } from 'scule'
+import { useTimeAgo } from '@vueuse/core'
 
 interface Commit {
   sha: string

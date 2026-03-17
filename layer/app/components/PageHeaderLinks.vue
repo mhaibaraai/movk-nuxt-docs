@@ -1,4 +1,6 @@
 <script setup lang="ts">
+import { useClipboard } from '@vueuse/core'
+
 const route = useRoute()
 const toast = useToast()
 const { copy, copied } = useClipboard()

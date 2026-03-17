@@ -3,9 +3,10 @@
   "editor.formatOnSave": false,
   // Auto fix
   "editor.codeActionsOnSave": {
-    "source.fixAll.eslint": "explicit",
-    "source.organizeImports": "never"
+    "source.fixAll": "never",
+    "source.fixAll.eslint": "explicit"
   },
+  "prettier.enable": false,
   "iconify.annotations": true,
   "iconify.inplace": true,
   "files.associations": {

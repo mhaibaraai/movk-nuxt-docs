@@ -17,13 +17,11 @@ export default defineNuxtConfig({
       })
     },
     '@nuxt/ui',
-    'nuxt-content-twoslash',
     '@nuxt/content',
     '@nuxt/image',
     '@nuxt/a11y',
     '@nuxtjs/robots',
     '@nuxtjs/mcp-toolkit',
-    '@vueuse/nuxt',
     'nuxt-component-meta',
     'nuxt-llms',
     'nuxt-og-image',
@@ -88,10 +86,6 @@ export default defineNuxtConfig({
   compatibilityDate: '2026-01-14',
 
   nitro: {
-    externals: {
-      inline: [],
-      external: ['mermaid', 'prettier']
-    },
     prerender: {
       crawlLinks: true,
       failOnError: false,
@@ -205,15 +199,5 @@ export default defineNuxtConfig({
   ogImage: {
     zeroRuntime: true,
     buildCache: true
-  },
-
-  twoslash: {
-    floatingVueOptions: {
-      classMarkdown: 'prose prose-primary dark:prose-invert'
-    },
-    // Skip Twoslash in dev to improve performance. Turn this on when you want to explicitly test twoslash in dev.
-    enableInDev: false,
-    // Do not throw when twoslash fails
-    throws: false
   }
 })
