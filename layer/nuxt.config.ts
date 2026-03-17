@@ -87,6 +87,10 @@ export default defineNuxtConfig({
   compatibilityDate: '2026-01-14',
 
   nitro: {
+    externals: {
+      inline: [],
+      external: ['mermaid', 'prettier']
+    },
     prerender: {
       crawlLinks: true,
       failOnError: false,

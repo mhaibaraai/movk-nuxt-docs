@@ -24,6 +24,5 @@ export default defineCachedEventHandler(async () => {
   return releases
 }, {
   maxAge: 60 * 60,
-  getKey: () => 'releases',
-  shouldBypassCache: () => !useRuntimeConfig().githubToken
+  getKey: () => 'releases'
 })

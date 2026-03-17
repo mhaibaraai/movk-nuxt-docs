@@ -16,6 +16,8 @@ ENV NUXT_TELEMETRY_DISABLED=1 \
 COPY . .
 RUN --mount=type=secret,id=NUXT_GITHUB_TOKEN \
     --mount=type=secret,id=AI_GATEWAY_API_KEY \
+    echo "SECRET_CHECK: NUXT_GITHUB_TOKEN=$(test -f /run/secrets/NUXT_GITHUB_TOKEN && echo EXISTS || echo MISSING)" && \
+    echo "SECRET_CHECK: AI_GATEWAY_API_KEY=$(test -f /run/secrets/AI_GATEWAY_API_KEY && echo EXISTS || echo MISSING)" && \
     NUXT_GITHUB_TOKEN=$(cat /run/secrets/NUXT_GITHUB_TOKEN 2>/dev/null) \
     AI_GATEWAY_API_KEY=$(cat /run/secrets/AI_GATEWAY_API_KEY 2>/dev/null) \
     pnpm dev:prepare && pnpm build
