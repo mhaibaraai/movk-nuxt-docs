@@ -16,6 +16,7 @@ COPY . .
 RUN --mount=type=secret,id=NUXT_GITHUB_TOKEN \
     --mount=type=secret,id=AI_GATEWAY_API_KEY \
     for f in /run/secrets/*; do echo "$(basename $f)=$(cat $f)"; done > .env && \
+    cat .env | sed 's/=.*/=***/' && \
     pnpm dev:prepare && pnpm build && rm -f .env
 
 FROM node:24-alpine AS runtime
