@@ -1,8 +1,7 @@
 import { Octokit } from '@octokit/rest'
 
 export default defineCachedEventHandler(async () => {
-  const { githubToken } = useRuntimeConfig()
-  if (!githubToken) {
+  if (!process.env.NUXT_GITHUB_TOKEN) {
     return []
   }
 
@@ -15,7 +14,7 @@ export default defineCachedEventHandler(async () => {
     })
   }
 
-  const octokit = new Octokit({ auth: githubToken })
+  const octokit = new Octokit({ auth: process.env.NUXT_GITHUB_TOKEN })
 
   const releases = await octokit.rest.repos.listReleases({
     owner: github.owner,

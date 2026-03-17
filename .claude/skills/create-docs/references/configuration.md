@@ -269,6 +269,5 @@ Movk Nuxt Docs 预定义了三种内容集合：
 # Used to fetch docs content
 NUXT_GITHUB_TOKEN=
 # Used to access AI Gateway services
-NUXT_AI_GATEWAY_API_KEY=
 AI_GATEWAY_API_KEY=
 ```

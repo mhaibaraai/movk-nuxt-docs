@@ -1,14 +1,12 @@
 import { existsSync } from 'node:fs'
 import { join } from 'pathe'
 import {
-  addComponentsDir,
   addImports,
   addServerHandler,
   addComponent,
   createResolver,
   defineNuxtModule,
-  logger,
-  useRuntimeConfig
+  logger
 } from '@nuxt/kit'
 
 export interface AiChatModuleOptions {
@@ -47,14 +45,9 @@ export default defineNuxtModule<AiChatModuleOptions>({
     models: []
   },
   setup(options, nuxt) {
-    const { aiGatewayApiKey } = useRuntimeConfig()
+    const hasApiKey = !!process.env.AI_GATEWAY_API_KEY
+
     const { resolve } = createResolver(import.meta.url)
-
-    nuxt.options.runtimeConfig.aiChat = {
-      mcpPath: options.mcpPath!
-    }
-
-    const hasApiKey = !!(aiGatewayApiKey || process.env.AI_GATEWAY_API_KEY)
 
     nuxt.options.runtimeConfig.public.aiChat = {
       enabled: hasApiKey,
@@ -70,31 +63,30 @@ export default defineNuxtModule<AiChatModuleOptions>({
       }
     ])
 
-    if (hasApiKey) {
-      addComponentsDir({
-        path: resolve('./runtime/components'),
-        ignore: ['AiChatDisabled']
-      })
+    const components = [
+      'AiChat',
+      'AiChatFloatingInput',
+      'AiChatModelSelect',
+      'AiChatPanel',
+      'AiChatPreStream'
+    ]
 
-      addImports([
-        {
-          name: 'useHighlighter',
-          from: resolve('./runtime/composables/useHighlighter')
-        }, {
-          name: 'useModels',
-          from: resolve('./runtime/composables/useModels')
-        }
-      ])
-    } else {
+    components.forEach(name =>
       addComponent({
-        name: 'AiChatDisabled',
-        filePath: resolve('./runtime/components/AiChatDisabled.vue')
+        name,
+        filePath: hasApiKey
+          ? resolve(`./runtime/components/${name}.vue`)
+          : resolve('./runtime/components/AiChatDisabled.vue')
       })
-    }
+    )
 
     if (!hasApiKey) {
       log.warn('[movk-nuxt-docs] Ai Chat Module disabled: no API key found in environment variables.')
       return
+    }
+
+    nuxt.options.runtimeConfig.aiChat = {
+      mcpPath: options.mcpPath!
     }
 
     /**
@@ -132,7 +124,6 @@ declare module 'nuxt/schema' {
     }
   }
   interface RuntimeConfig {
-    aiGatewayApiKey: string
     aiChat: {
       mcpPath: string
     }

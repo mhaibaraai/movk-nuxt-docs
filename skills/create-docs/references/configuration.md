@@ -268,8 +268,6 @@ Movk Nuxt Docs 预定义了三种内容集合：
 ```bash [.env]
 # Used to fetch docs content
 NUXT_GITHUB_TOKEN=
-# Or using NUXT_AI_GATEWAY_API_KEY for Nuxt-specific configuration
-NUXT_AI_GATEWAY_API_KEY=your-gateway-key
 # Used to access AI Gateway services
 AI_GATEWAY_API_KEY=
 ```
