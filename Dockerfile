@@ -11,13 +11,20 @@ RUN --mount=type=cache,id=pnpm,target=/root/.local/share/pnpm/store \
 
 FROM deps AS build
 WORKDIR /app
-ENV NODE_OPTIONS=--max-old-space-size=8192
+ARG GITHUB_REPOSITORY_OWNER
+ARG GITHUB_REPOSITORY
+ARG GITHUB_SERVER_URL
+ARG GITHUB_REF_NAME
+ENV NODE_OPTIONS=--max-old-space-size=8192 \
+    GITHUB_REPOSITORY_OWNER=$GITHUB_REPOSITORY_OWNER \
+    GITHUB_REPOSITORY=$GITHUB_REPOSITORY \
+    GITHUB_SERVER_URL=$GITHUB_SERVER_URL \
+    GITHUB_REF_NAME=$GITHUB_REF_NAME
 COPY . .
 RUN --mount=type=secret,id=NUXT_GITHUB_TOKEN \
     --mount=type=secret,id=AI_GATEWAY_API_KEY \
-    for f in /run/secrets/*; do echo "$(basename $f)=$(cat $f)"; done > .env && \
-    cat .env | sed 's/=.*/=***/' && \
-    pnpm dev:prepare && pnpm build && rm -f .env
+    for f in /run/secrets/*; do echo "$(basename $f)=$(cat $f)"; done > docs/.env && \
+    pnpm dev:prepare && pnpm build && rm -f docs/.env
 
 FROM node:24-alpine AS runtime
 WORKDIR /app
