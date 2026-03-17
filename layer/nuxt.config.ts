@@ -70,6 +70,8 @@ export default defineNuxtConfig({
   },
 
   runtimeConfig: {
+    githubToken: process.env.NUXT_GITHUB_TOKEN || '',
+    aiGatewayApiKey: process.env.AI_GATEWAY_API_KEY || '',
     public: {
       version: pkg.version
     }
