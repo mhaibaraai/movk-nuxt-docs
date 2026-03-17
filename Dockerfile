@@ -11,14 +11,14 @@ RUN --mount=type=cache,id=pnpm,target=/root/.local/share/pnpm/store \
 
 FROM deps AS build
 WORKDIR /app
-ARG NUXT_GITHUB_TOKEN
-ARG AI_GATEWAY_API_KEY
 ENV NUXT_TELEMETRY_DISABLED=1 \
-    NODE_OPTIONS=--max-old-space-size=6144 \
-    NUXT_GITHUB_TOKEN=$NUXT_GITHUB_TOKEN \
-    AI_GATEWAY_API_KEY=$AI_GATEWAY_API_KEY
+    NODE_OPTIONS=--max-old-space-size=6144
 COPY . .
-RUN pnpm dev:prepare && pnpm build
+RUN --mount=type=secret,id=NUXT_GITHUB_TOKEN \
+    --mount=type=secret,id=AI_GATEWAY_API_KEY \
+    NUXT_GITHUB_TOKEN=$(cat /run/secrets/NUXT_GITHUB_TOKEN 2>/dev/null) \
+    AI_GATEWAY_API_KEY=$(cat /run/secrets/AI_GATEWAY_API_KEY 2>/dev/null) \
+    pnpm dev:prepare && pnpm build
 
 FROM node:24-alpine AS runtime
 WORKDIR /app
