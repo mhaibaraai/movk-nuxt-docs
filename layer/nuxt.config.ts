@@ -212,7 +212,7 @@ export default defineNuxtConfig({
       classMarkdown: 'prose prose-primary dark:prose-invert'
     },
     // Skip Twoslash in dev to improve performance. Turn this on when you want to explicitly test twoslash in dev.
-    enableInDev: true,
+    enableInDev: false,
     // Do not throw when twoslash fails
     throws: false
   }

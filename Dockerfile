@@ -11,7 +11,7 @@ RUN --mount=type=cache,id=pnpm,target=/root/.local/share/pnpm/store \
 
 FROM deps AS build
 WORKDIR /app
-ENV NODE_OPTIONS="--max-old-space-size=6144 --expose-gc"
+ENV NODE_OPTIONS="--max-old-space-size=6144"
 COPY . .
 RUN --mount=type=secret,id=NUXT_GITHUB_TOKEN \
     --mount=type=secret,id=AI_GATEWAY_API_KEY \
