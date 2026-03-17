@@ -70,8 +70,6 @@ export default defineNuxtConfig({
   },
 
   runtimeConfig: {
-    aiGatewayApiKey: '',
-    githubToken: '',
     public: {
       version: pkg.version
     }
@@ -118,20 +116,20 @@ export default defineNuxtConfig({
         '@movk/nuxt-docs > reka-ui'
       )
 
-      // AI Chat static deps — always pre-bundle for dev performance.
+      // AI Chat static deps — only pre-bundle when the feature is actually enabled.
       // @shikijs/langs/* and @shikijs/themes/* are dynamically imported in useHighlighter.ts
-      // and should remain lazy chunks; adding them here would increase cold start time.
-      cfg.optimizeDeps.include.push(
-        '@movk/nuxt-docs > @ai-sdk/vue',
-        '@movk/nuxt-docs > ai',
-        '@movk/nuxt-docs > shiki-stream/vue',
-        '@movk/nuxt-docs > @shikijs/core',
-        '@movk/nuxt-docs > @shikijs/engine-javascript'
-      )
+      if (process.env.AI_GATEWAY_API_KEY) {
+        cfg.optimizeDeps.include.push(
+          '@movk/nuxt-docs > @ai-sdk/vue',
+          '@movk/nuxt-docs > ai',
+          '@movk/nuxt-docs > shiki-stream/vue',
+          '@movk/nuxt-docs > @shikijs/core',
+          '@movk/nuxt-docs > @shikijs/engine-javascript'
+        )
+      }
 
       // Transform all remaining 'pkg > dep' entries added by Nuxt modules
       // (e.g. @nuxt/a11y > axe-core, @nuxtjs/mdc > remark-gfm) to use the
-      // layer package prefix so Vite resolves them through layer's node_modules.
       cfg.optimizeDeps.include = cfg.optimizeDeps.include
         .map(id => (id.startsWith('@movk/nuxt-docs > ') || !id.includes(' > '))
           ? id

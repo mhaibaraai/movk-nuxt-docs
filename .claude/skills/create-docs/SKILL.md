@@ -157,7 +157,7 @@ pnpm build
 
 ### AI 聊天助手
 
-内置 AI 聊天，通过 AI Gateway 接入多模型。在 `nuxt.config.ts` 配置 `aiChat` 选项，模型格式为 `provider/model-name`（如 `openai/gpt-5-nano`）。需配置 `AI_GATEWAY_API_KEY` 或 `NUXT_AI_GATEWAY_API_KEY` 环境变量。
+内置 AI 聊天，通过 AI Gateway 接入多模型。在 `nuxt.config.ts` 配置 `aiChat` 选项，模型格式为 `provider/model-name`（如 `openai/gpt-5-nano`）。需配置 `AI_GATEWAY_API_KEY` 环境变量。
 
 ### MCP Server
 

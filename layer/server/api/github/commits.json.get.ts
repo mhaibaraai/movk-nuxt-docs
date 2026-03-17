@@ -1,8 +1,7 @@
 import { Octokit } from '@octokit/rest'
 
 export default defineCachedEventHandler(async (event) => {
-  const { githubToken } = useRuntimeConfig()
-  if (!githubToken) {
+  if (!process.env.NUXT_GITHUB_TOKEN) {
     return []
   }
 
@@ -26,7 +25,7 @@ export default defineCachedEventHandler(async (event) => {
   }
 
   const octokit = new Octokit({
-    auth: githubToken,
+    auth: process.env.NUXT_GITHUB_TOKEN,
     request: { timeout: 10_000 }
   })
 
