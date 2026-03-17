@@ -37,11 +37,6 @@ jobs:
           tags: |
             ${{ env.IMAGE }}:latest
             ${{ env.IMAGE }}:${{ github.sha }}
-          build-args: |
-            GITHUB_REPOSITORY_OWNER=${{ github.repository_owner }}
-            GITHUB_REPOSITORY=${{ github.repository }}
-            GITHUB_SERVER_URL=${{ github.server_url }}
-            GITHUB_REF_NAME=${{ github.ref_name }}
           secrets: |
             NUXT_GITHUB_TOKEN=${{ secrets.NUXT_GITHUB_TOKEN }}
             AI_GATEWAY_API_KEY=${{ secrets.AI_GATEWAY_API_KEY }}
