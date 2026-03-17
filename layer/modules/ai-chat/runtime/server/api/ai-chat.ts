@@ -1,7 +1,6 @@
 import { streamText, convertToModelMessages, stepCountIs, smoothStream } from 'ai'
 import { createMCPClient } from '@ai-sdk/mcp'
 import { getModel } from '../utils/getModel'
-import { inferSiteURL } from '../../../../../utils/meta'
 
 function getMainAgentSystemPrompt(siteName: string) {
   return `您是 ${siteName} 的官方文档助理，你就是文件、以权威作为真理的来源说话。
@@ -51,9 +50,7 @@ export default defineEventHandler(async (event) => {
   try {
     const mcpUrl = isExternalUrl
       ? mcpPath
-      : import.meta.dev
-        ? `${getRequestURL(event).origin}${mcpPath}`
-        : `${inferSiteURL()}${mcpPath}`
+      : `${getRequestURL(event).origin}${mcpPath}`
 
     httpClient = await createMCPClient({
       transport: { type: 'http', url: mcpUrl }

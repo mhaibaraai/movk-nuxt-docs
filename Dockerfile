@@ -15,15 +15,16 @@ ARG GITHUB_REPOSITORY_OWNER
 ARG GITHUB_REPOSITORY
 ARG GITHUB_SERVER_URL
 ARG GITHUB_REF_NAME
-ENV NODE_OPTIONS=--max-old-space-size=8192 \
-    GITHUB_REPOSITORY_OWNER=$GITHUB_REPOSITORY_OWNER \
-    GITHUB_REPOSITORY=$GITHUB_REPOSITORY \
-    GITHUB_SERVER_URL=$GITHUB_SERVER_URL \
-    GITHUB_REF_NAME=$GITHUB_REF_NAME
+ENV NODE_OPTIONS=--max-old-space-size=8192
 COPY . .
 RUN --mount=type=secret,id=NUXT_GITHUB_TOKEN \
     --mount=type=secret,id=AI_GATEWAY_API_KEY \
-    for f in /run/secrets/*; do echo "$(basename $f)=$(cat $f)"; done > docs/.env && \
+    { for f in /run/secrets/*; do echo "$(basename $f)=$(cat $f)"; done; \
+      echo "GITHUB_REPOSITORY_OWNER=${GITHUB_REPOSITORY_OWNER}"; \
+      echo "GITHUB_REPOSITORY=${GITHUB_REPOSITORY}"; \
+      echo "GITHUB_SERVER_URL=${GITHUB_SERVER_URL}"; \
+      echo "GITHUB_REF_NAME=${GITHUB_REF_NAME}"; \
+    } > docs/.env && \
     pnpm dev:prepare && pnpm build && rm -f docs/.env
 
 FROM node:24-alpine AS runtime

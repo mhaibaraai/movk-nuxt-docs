@@ -1,108 +1,55 @@
-// copy from https://github.com/nuxt-content/docus/tree/main/layer/utils
 import { execSync } from 'node:child_process'
 import gitUrlParse from 'git-url-parse'
 import { readGitConfig } from 'pkg-types'
 
 export interface GitInfo {
-  // Repository name
   name: string
-  // Repository owner/organization
   owner: string
-  // Repository URL
   url: string
 }
 
-export function getGitBranch() {
-  const envName
-    = process.env.CF_PAGES_BRANCH
-      || process.env.CI_COMMIT_BRANCH
-      || process.env.VERCEL_GIT_COMMIT_REF
-      || process.env.BRANCH
-      || process.env.GITHUB_REF_NAME
+export function getGitBranch(): string {
+  const env = process.env
+  const fromEnv = env.CF_PAGES_BRANCH || env.CI_COMMIT_BRANCH || env.VERCEL_GIT_COMMIT_REF || env.BRANCH || env.GITHUB_REF_NAME
+  if (fromEnv && fromEnv !== 'HEAD') return fromEnv
 
-  if (envName && envName !== 'HEAD') {
-    return envName
-  }
   try {
     const branch = execSync('git rev-parse --abbrev-ref HEAD', { stdio: ['ignore', 'pipe', 'ignore'] }).toString().trim()
-    if (branch && branch !== 'HEAD') {
-      return branch
-    }
-  } catch {
-    // Ignore error
-  }
+    if (branch && branch !== 'HEAD') return branch
+  } catch { console.warn('Failed to get git branch from command line') }
 
   return 'main'
 }
 
 export async function getLocalGitInfo(rootDir: string): Promise<GitInfo | undefined> {
-  const remote = await getLocalGitRemote(rootDir)
-  if (!remote) {
-    return
-  }
-
-  // https://www.npmjs.com/package/git-url-parse#clipboard-example
-  const { name, owner, source } = gitUrlParse(remote)
-  const url = `https://${source}/${owner}/${name}`
-
-  return {
-    name,
-    owner,
-    url
-  }
-}
-
-async function getLocalGitRemote(dir: string): Promise<string | undefined> {
   try {
-    const parsed = await readGitConfig(dir)
-    if (!parsed) {
-      return
-    }
-    return parsed.remote?.origin?.url
-  } catch {
-    // Ignore error
-  }
+    const config = await readGitConfig(rootDir)
+    const remote = config?.remote?.origin?.url
+    if (!remote) return
+
+    const { name, owner, source } = gitUrlParse(remote)
+    return { name, owner, url: `https://${source}/${owner}/${name}` }
+  } catch { console.warn('Failed to get local git info') }
 }
 
 export function getGitEnv(): GitInfo {
-  // https://github.com/unjs/std-env/issues/59
-  const envInfo = {
-    // Provider
-    provider: process.env.VERCEL_GIT_PROVIDER // vercel
-      || (process.env.GITHUB_SERVER_URL ? 'github' : undefined) // github
-      || '',
-    // Owner
-    owner: process.env.VERCEL_GIT_REPO_OWNER // vercel
-      || process.env.GITHUB_REPOSITORY_OWNER // github
-      || process.env.CI_PROJECT_PATH?.split('/').shift() // gitlab
-      || '',
-    // Name
-    name: process.env.VERCEL_GIT_REPO_SLUG
-      || process.env.GITHUB_REPOSITORY?.split('/').pop() // github
-      || process.env.CI_PROJECT_PATH?.split('/').splice(1).join('/') // gitlab
-      || '',
-    // Url
-    url: process.env.REPOSITORY_URL || '' // netlify
+  const env = process.env
+
+  const owner = env.VERCEL_GIT_REPO_OWNER || env.GITHUB_REPOSITORY_OWNER || env.CI_PROJECT_PATH?.split('/').shift() || ''
+  const name = env.VERCEL_GIT_REPO_SLUG || env.GITHUB_REPOSITORY?.split('/').pop() || env.CI_PROJECT_PATH?.split('/').slice(1).join('/') || ''
+  const provider = env.VERCEL_GIT_PROVIDER || (env.GITHUB_SERVER_URL ? 'github' : '')
+  let url = env.REPOSITORY_URL || ''
+
+  if (!url && provider && owner && name) {
+    url = `https://${provider}.com/${owner}/${name}`
   }
 
-  if (!envInfo.url && envInfo.provider && envInfo.owner && envInfo.name) {
-    envInfo.url = `https://${envInfo.provider}.com/${envInfo.owner}/${envInfo.name}`
-  }
-
-  // If only url available (ex: Netlify)
-  if (!envInfo.name && !envInfo.owner && envInfo.url) {
+  if (!name && !owner && url) {
     try {
-      const { name, owner } = gitUrlParse(envInfo.url)
-      envInfo.name = name
-      envInfo.owner = owner
-    } catch {
-      // Ignore error
-    }
+      const parsed = gitUrlParse(url)
+      return { name: parsed.name, owner: parsed.owner, url }
+    } catch { console.warn('Failed to parse git URL') }
   }
 
-  return {
-    name: envInfo.name,
-    owner: envInfo.owner,
-    url: envInfo.url
-  }
+  return { name, owner, url }
 }
