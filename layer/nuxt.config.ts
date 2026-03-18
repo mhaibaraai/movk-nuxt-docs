@@ -23,6 +23,7 @@ export default defineNuxtConfig({
     '@nuxt/a11y',
     '@nuxtjs/robots',
     '@nuxtjs/mcp-toolkit',
+    '@vueuse/nuxt',
     'nuxt-component-meta',
     'nuxt-llms',
     'nuxt-og-image',

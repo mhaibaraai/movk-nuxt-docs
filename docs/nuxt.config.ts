@@ -1,11 +1,6 @@
 export default defineNuxtConfig({
   extends: ['@movk/nuxt-docs'],
 
-  modules: [
-    '@vercel/analytics',
-    '@vercel/speed-insights'
-  ],
-
   $development: {
     site: {
       url: 'http://localhost:3000'
