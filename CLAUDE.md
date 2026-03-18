@@ -21,8 +21,14 @@ pnpm lint:fix
 # TypeScript 类型检查（仅针对 layer）
 pnpm typecheck
 
-# 发布 layer 到 npm
+# 预生成 Nuxt 类型（pnpm install 后自动执行，一般无需手动）
+pnpm dev:prepare
+
+# 发布 layer 到 npm（通过 release-it，前置运行 lint + typecheck）
 pnpm release:layer
+
+# 同时发布 layer 到 npm 并创建 GitHub Release
+pnpm release
 
 # 清理构建产物
 pnpm clean
@@ -56,6 +62,8 @@ movk-nuxt-docs/
 - **`app/composables/`** - 共享 Composable（useCategory、useHeader、useNavigation、useTheme、fetchComponentMeta、fetchComponentExample）
 - **`modules/`** - 自定义 Nuxt 模块（ai-chat、component-example、config、css、md-rewrite、mermaid、routing）
 
+Layer 的 peer dependencies：`nuxt 4.x`、`tailwindcss 4.x`、`better-sqlite3 12.x`（必需）；`mermaid 11.x`、`dompurify 3.x`（可选，启用 Mermaid 图表时需要）。
+
 ### AI Chat 模块（`layer/modules/ai-chat/`）
 
 AI 聊天功能通过自定义 Nuxt 模块实现：
@@ -85,3 +93,25 @@ AI 聊天功能通过自定义 Nuxt 模块实现：
 ## 技能文件（`skills/`）
 
 `skills/create-docs/` 和 `skills/review-docs/` 包含 AI 编写和审查文档的规范，分别包含 `references/` 子目录存放 MDC 组件模板、配置参考和写作规范。编写或审查文档时应先加载对应技能。
+
+## 环境变量
+
+| 变量 | 必需 | 说明 |
+|------|------|------|
+| `NUXT_GITHUB_TOKEN` | 是（生产） | 获取 GitHub Releases、提交历史等数据 |
+| `AI_GATEWAY_API_KEY` | 否 | 启用 AI Chat 功能；缺失时所有 AiChat 组件降级为禁用态，AI 相关依赖不会被打包 |
+
+## CI/CD
+
+- **ci.yml**：push main / PR 时运行 `pnpm lint` + `pnpm typecheck`
+- **deploy.yml**：push main 时 Docker 多阶段构建 → GHCR 镜像（node:24-alpine，PORT=3000）
+- **发布**：`pnpm release` 通过 release-it 运行 lint + typecheck 前置检查，发布 npm 包 + GitHub Release
+
+## 注意事项
+
+- **内容路径自动检测**：`content.config.ts` 检测 `content/docs/` 是否存在来决定路由前缀（存在 → `/docs`，不存在 → `/`）
+- **AI Chat 条件编译**：无 `AI_GATEWAY_API_KEY` 时，AI 相关依赖不会被打包，AiChat 组件全部指向禁用版本
+- **Mermaid 可选依赖**：需要 Mermaid 图表时须手动安装 `mermaid` + `dompurify`
+- **md-rewrite 模块**：仅在 Vercel 部署预设下激活，添加 Markdown 原文路由
+- **@nuxt/ui 使用 PR 版本覆盖**：`pnpm-workspace.yaml` 中 overrides 了 `@nuxt/ui` 指向 pkg.pr.new 的 PR 构建
+- **无测试套件**：项目当前不包含单元、集成或 E2E 测试
