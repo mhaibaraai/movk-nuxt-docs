@@ -75,7 +75,7 @@ withDefaults(defineProps<{
 
       <div class="items-center justify-center w-full">
         <h1
-          class="text-[48px] lg:text-[80px] font-medium m-0 leading-tight max-w-175 lg:max-w-250"
+          class="text-[48px] lg:text-[80px] text-pretty font-bold text-highlighted max-w-175 lg:max-w-250"
           style="display: block; line-clamp: 3; text-overflow: ellipsis; text-wrap: balance;"
         >
           {{ title }}
