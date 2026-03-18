@@ -25,7 +25,7 @@
   },
   "devDependencies": {
     "@movk/core": "^1.2.2",
-    "@nuxt/devtools": "^3.2.4",
+    "@nuxt/devtools": "^4.0.0-alpha.1",
     "@nuxt/eslint": "^1.15.2",
     "@nuxt/eslint-config": "^1.15.2",
     "@release-it/bumper": "^7.0.5",
@@ -34,6 +34,6 @@
     "nuxt": "^4.4.2",
     "release-it": "^19.2.4",
     "typescript": "^5.9.3",
-    "vue-tsc": "^3.2.5"
+    "vue-tsc": "^3.2.6"
   }
 }

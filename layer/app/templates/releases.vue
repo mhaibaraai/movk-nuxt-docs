@@ -18,7 +18,7 @@ useSeoMeta({
   ogDescription: description
 })
 
-defineOgImage('CustomDocs.takumi', {
+defineOgImage('Docs', {
   title,
   description,
   site: site.name

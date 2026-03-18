@@ -1,31 +1,19 @@
 {
   "eslint.useFlatConfig": true,
-  "editor.formatOnSave": false,
-  // Auto fix
+  "editor.quickSuggestions": {
+    "strings": "on"
+  },
   "editor.codeActionsOnSave": {
     "source.fixAll": "never",
     "source.fixAll.eslint": "explicit"
   },
-  "prettier.enable": false,
-  "iconify.annotations": true,
-  "iconify.inplace": true,
   "files.associations": {
     "*.css": "tailwindcss"
   },
-  "editor.quickSuggestions": {
-    "strings": "on"
-  },
-  "tailwindCSS.classAttributes": [
-    "class",
-    "ui",
-    "active-class",
-    "inactive-class"
-  ],
+  "prettier.enable": false,
+  "tailwindCSS.classAttributes": ["class", "ui"],
   "tailwindCSS.experimental.classRegex": [
-    [
-      "ui:\\s*{([^)]*)\\s*}",
-      "(?:'|\"|`)([^']*)(?:'|\"|`)"
-    ]
+    ["['\"`]([^'\"`]*)['\"`]"]
   ],
   // Required for the extension
   "mdc.enableFormatting": true,

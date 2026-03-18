@@ -4,8 +4,7 @@
 @theme static {
   --container-8xl: 90rem;
 
-  --font-sans: 'Public Sans', sans-serif;
-  --font-noto: 'Noto Sans SC', sans-serif;
+  --font-sans: 'Noto Sans SC', sans-serif;
 
   --color-green-50: #EFFDF5;
   --color-green-100: #D9FBE8;

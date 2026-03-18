@@ -1,39 +1,46 @@
 <script setup lang="ts">
 import colors from 'tailwindcss/colors'
+import { withoutTrailingSlash } from 'ufo'
+import { zh_cn } from '@nuxt/ui/locale'
 
 const site = useSiteConfig()
 const appConfig = useAppConfig()
 const colorMode = useColorMode()
 const route = useRoute()
+const { style, link } = useTheme()
 const { isEnabled: isAiChatEnabled } = useAIChat()
 
 const { data: navigation } = await useAsyncData('navigation', () => queryCollectionNavigation('docs', ['category', 'description']))
-const { data: files } = useLazyAsyncData('search', () => queryCollectionSearchSections('docs'), {
+const { data: files } = useLazyAsyncData('search', () => queryCollectionSearchSections('docs', {
+  ignoredTags: ['style']
+}), {
   server: false
 })
+
 const color = computed(() => colorMode.value === 'dark' ? (colors as any)[appConfig.ui.colors.neutral][900] : 'white')
-const radius = computed(() => `:root { --ui-radius: ${appConfig.theme.radius}rem; }`)
-const blackAsPrimary = computed(() => appConfig.theme.blackAsPrimary ? `:root { --ui-primary: black; } .dark { --ui-primary: white; }` : ':root {}')
-const font = computed(() => `:root { --font-sans: '${appConfig.theme.font}', sans-serif; }`)
 
 useHead({
   meta: [
     { name: 'viewport', content: 'width=device-width, initial-scale=1' },
     { key: 'theme-color', name: 'theme-color', content: color }
   ],
-  style: [
-    { innerHTML: radius, id: 'nuxt-ui-radius', tagPriority: -2 },
-    { innerHTML: blackAsPrimary, id: 'nuxt-ui-black-as-primary', tagPriority: -2 },
-    { innerHTML: font, id: 'nuxt-ui-font', tagPriority: -2 }
-  ]
+  link: [
+    { rel: 'icon', href: '/favicon.ico' },
+    { rel: 'canonical', href: `${site.url}${withoutTrailingSlash(route.path)}` },
+    ...link.value
+  ],
+  htmlAttrs: {
+    lang: 'zh-CN',
+    dir: 'ltr'
+  },
+  style
 })
 
 useSeoMeta({
   titleTemplate: appConfig.seo.titleTemplate,
   title: appConfig.seo.title,
   description: appConfig.seo.description,
-  ogSiteName: site.name,
-  twitterCard: 'summary_large_image'
+  ogSiteName: site.name
 })
 
 const { rootNavigation } = useNavigation(navigation)
@@ -42,7 +49,7 @@ provide('navigation', rootNavigation)
 </script>
 
 <template>
-  <UApp :toaster="appConfig.toaster">
+  <UApp :toaster="appConfig.toaster" :locale="zh_cn">
     <NuxtLoadingIndicator color="var(--ui-primary)" :height="2" />
 
     <div class="flex">

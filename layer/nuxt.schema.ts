@@ -33,7 +33,7 @@ export default defineNuxtSchema({
           title: '字体',
           description: '全局字体名称',
           icon: 'i-lucide-type',
-          default: 'Public Sans'
+          default: 'Noto Sans SC'
         })
       }
     }),

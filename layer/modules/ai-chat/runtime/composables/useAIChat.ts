@@ -3,10 +3,12 @@ import { createSharedComposable, useLocalStorage } from '@vueuse/core'
 
 export const useAIChat = createSharedComposable(() => {
   const config = useRuntimeConfig()
+  const site = useSiteConfig()
+
   const isEnabled = computed(() => config.public.aiChat?.enabled ?? false)
 
-  const storageOpen = useLocalStorage('ai-chat-open', false)
-  const messages = useLocalStorage<UIMessage[]>('ai-chat-messages', [])
+  const storageOpen = useLocalStorage(`${site.name}-ai-chat-open`, false)
+  const messages = useLocalStorage<UIMessage[]>(`${site.name}-ai-chat-messages`, [])
 
   const isOpen = ref(false)
 

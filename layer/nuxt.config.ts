@@ -166,7 +166,7 @@ export default defineNuxtConfig({
     provider: 'bunny',
     families: [
       { name: 'Noto Sans SC', global: true },
-      { name: 'Public Sans', global: true },
+      { name: 'Public Sans' },
       { name: 'DM Sans' },
       { name: 'Geist' },
       { name: 'Inter' },
@@ -197,7 +197,6 @@ export default defineNuxtConfig({
   },
 
   ogImage: {
-    zeroRuntime: true,
-    buildCache: true
+    zeroRuntime: true
   }
 })

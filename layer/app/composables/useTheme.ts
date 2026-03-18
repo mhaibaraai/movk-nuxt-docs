@@ -1,5 +1,6 @@
 import { themeIcons } from '../utils/theme'
-import { omit } from '@movk/core'
+import { omit, kebabCase } from '@movk/core'
+import { useLocalStorage } from '@vueuse/core'
 import colors from 'tailwindcss/colors'
 
 export function useTheme() {
@@ -7,7 +8,12 @@ export function useTheme() {
   const colorMode = useColorMode()
   const site = useSiteConfig()
 
-  const neutralColors = ['slate', 'gray', 'zinc', 'neutral', 'stone']
+  const radius = useLocalStorage(`${site.name}-ui-radius`, 0.25)
+  const font = useLocalStorage(`${site.name}-ui-font`, 'Noto Sans SC')
+  const _iconSet = useLocalStorage(`${site.name}-ui-icons`, 'lucide')
+  const blackAsPrimary = useLocalStorage(`${site.name}-ui-black-as-primary`, false)
+
+  const neutralColors = ['slate', 'gray', 'zinc', 'neutral', 'stone', 'taupe', 'mauve', 'mist', 'olive']
   const neutral = computed({
     get() {
       return appConfig.ui.colors.neutral
@@ -27,33 +33,12 @@ export function useTheme() {
     set(option) {
       appConfig.ui.colors.primary = option
       window.localStorage.setItem(`${site.name}-ui-primary`, appConfig.ui.colors.primary)
-      setBlackAsPrimary(false)
+      blackAsPrimary.value = false
     }
   })
 
   const radiuses = [0, 0.125, 0.25, 0.375, 0.5]
-  const radius = computed({
-    get() {
-      return appConfig.theme.radius
-    },
-    set(option) {
-      appConfig.theme.radius = option
-      window.localStorage.setItem(`${site.name}-ui-radius`, String(appConfig.theme.radius))
-    }
-  })
-
-  const fonts = ['Public Sans', 'DM Sans', 'Geist', 'Inter', 'Poppins', 'Outfit', 'Raleway']
-  const font = computed({
-    get() {
-      return appConfig.theme.font
-    },
-    set(option) {
-      appConfig.theme.font = option
-      if (appConfig.theme.font) {
-        window.localStorage.setItem(`${site.name}-ui-font`, appConfig.theme.font)
-      }
-    }
-  })
+  const fonts = ['Noto Sans SC', 'Public Sans', 'DM Sans', 'Geist', 'Inter', 'Poppins', 'Outfit', 'Raleway']
 
   const icons = [{
     label: 'Lucide',
@@ -70,22 +55,19 @@ export function useTheme() {
   }]
   const icon = computed({
     get() {
-      return appConfig.theme.icons
+      return _iconSet.value
     },
     set(option) {
-      appConfig.theme.icons = option
+      _iconSet.value = option
       appConfig.ui.icons = themeIcons[option as keyof typeof themeIcons] as any
-      if (appConfig.theme.icons) {
-        window.localStorage.setItem(`${site.name}-ui-icons`, appConfig.theme.icons)
-      }
     }
   })
 
-  const modes = [
+  const modes = computed(() => [
     { label: 'light', icon: appConfig.ui.icons.light },
     { label: 'dark', icon: appConfig.ui.icons.dark },
     { label: 'system', icon: appConfig.ui.icons.system }
-  ]
+  ])
   const mode = computed({
     get() {
       return colorMode.value
@@ -95,21 +77,36 @@ export function useTheme() {
     }
   })
 
-  function setBlackAsPrimary(value: boolean) {
-    appConfig.theme.blackAsPrimary = value
-    window.localStorage.setItem(`${site.name}-ui-black-as-primary`, String(value))
-  }
+  const radiusStyle = computed(() => `:root { --ui-radius: ${radius.value}rem; }`)
+  const blackAsPrimaryStyle = computed(() => blackAsPrimary.value ? `:root { --ui-primary: black; } .dark { --ui-primary: white; }` : ':root {}')
+  const fontStyle = computed(() => `:root { --font-sans: '${font.value}', sans-serif; }`)
+
+  const link = computed(() => {
+    const name = font.value
+    if (name === 'Noto Sans SC') return []
+    return [{
+      rel: 'stylesheet' as const,
+      href: `https://fonts.googleapis.com/css2?family=${encodeURIComponent(name)}:wght@400;500;600;700&display=swap`,
+      id: `font-${kebabCase(name)}`
+    }]
+  })
+
+  const style = [
+    { innerHTML: radiusStyle, id: `${site.name}-ui-radius`, tagPriority: -2 },
+    { innerHTML: blackAsPrimaryStyle, id: `${site.name}-ui-black-as-primary`, tagPriority: -2 },
+    { innerHTML: fontStyle, id: `${site.name}-ui-font`, tagPriority: -2 }
+  ]
 
   const hasCSSChanges = computed(() => {
-    return appConfig.theme.radius !== 0.25
-      || appConfig.theme.blackAsPrimary
-      || appConfig.theme.font !== 'Public Sans'
+    return radius.value !== 0.25
+      || blackAsPrimary.value
+      || font.value !== 'Noto Sans SC'
   })
 
   const hasAppConfigChanges = computed(() => {
     return appConfig.ui.colors.primary !== 'green'
       || appConfig.ui.colors.neutral !== 'slate'
-      || appConfig.theme.icons !== 'lucide'
+      || _iconSet.value !== 'lucide'
   })
 
   function exportCSS(): string {
@@ -118,15 +115,15 @@ export function useTheme() {
       '@import "@nuxt/ui";'
     ]
 
-    if (appConfig.theme.font !== 'Public Sans') {
-      lines.push('', '@theme {', `  --font-sans: '${appConfig.theme.font}', sans-serif;`, '}')
+    if (font.value !== 'Noto Sans SC') {
+      lines.push('', '@theme {', `  --font-sans: '${font.value}', sans-serif;`, '}')
     }
 
     const rootLines: string[] = []
-    if (appConfig.theme.radius !== 0.25) {
-      rootLines.push(`  --ui-radius: ${appConfig.theme.radius}rem;`)
+    if (radius.value !== 0.25) {
+      rootLines.push(`  --ui-radius: ${radius.value}rem;`)
     }
-    if (appConfig.theme.blackAsPrimary) {
+    if (blackAsPrimary.value) {
       rootLines.push('  --ui-primary: black;')
     }
 
@@ -134,31 +131,30 @@ export function useTheme() {
       lines.push('', ':root {', ...rootLines, '}')
     }
 
-    if (appConfig.theme.blackAsPrimary) {
-      lines.push('', '.dark {', '  --ui-primary: white;', '}')
+    const darkLines: string[] = []
+    if (blackAsPrimary.value) {
+      darkLines.push('  --ui-primary: white;')
     }
 
+    if (darkLines.length) {
+      lines.push('', '.dark {', ...darkLines, '}')
+    }
     return lines.join('\n')
   }
 
   function exportAppConfig(): string {
     const config: Record<string, any> = {}
 
-    if (appConfig.ui.colors.primary !== 'green' || appConfig.ui.colors.neutral !== 'slate') {
-      config.ui = { colors: {} }
-      if (appConfig.ui.colors.primary !== 'green') {
-        config.ui.colors.primary = appConfig.ui.colors.primary
-      }
-      if (appConfig.ui.colors.neutral !== 'slate') {
-        config.ui.colors.neutral = appConfig.ui.colors.neutral
-      }
+    const defaultColors: Record<string, string> = { primary: 'green', neutral: 'slate', secondary: 'blue', success: 'green', info: 'blue', warning: 'yellow', error: 'red' }
+    const colorEntries = Object.entries(defaultColors).filter(([key, def]) => (appConfig.ui.colors as any)[key] !== def)
+    if (colorEntries.length) {
+      config.ui = { colors: Object.fromEntries(colorEntries.map(([key]) => [key, (appConfig.ui.colors as any)[key]])) }
     }
 
-    if (appConfig.theme.icons !== 'lucide') {
-      const iconSet = appConfig.theme.icons
-      const icons = themeIcons[iconSet as keyof typeof themeIcons]
+    if (_iconSet.value !== 'lucide') {
+      const iconMapping = themeIcons[_iconSet.value as keyof typeof themeIcons]
       config.ui = config.ui || {}
-      config.ui.icons = icons
+      config.ui.icons = iconMapping
     }
 
     const configString = JSON.stringify(config, null, 2)
@@ -169,33 +165,31 @@ export function useTheme() {
   }
 
   function resetTheme() {
-    // Reset without triggering individual tracking events
     appConfig.ui.colors.primary = 'green'
     window.localStorage.removeItem(`${site.name}-ui-primary`)
 
     appConfig.ui.colors.neutral = 'slate'
     window.localStorage.removeItem(`${site.name}-ui-neutral`)
 
-    appConfig.theme.radius = 0.25
-    window.localStorage.removeItem(`${site.name}-ui-radius`)
-
-    appConfig.theme.font = 'Public Sans'
-    window.localStorage.removeItem(`${site.name}-ui-font`)
-
-    appConfig.theme.icons = 'lucide'
+    radius.value = 0.25
+    font.value = 'Noto Sans SC'
+    _iconSet.value = 'lucide'
     appConfig.ui.icons = themeIcons.lucide as any
-    window.localStorage.removeItem(`${site.name}-ui-icons`)
+    blackAsPrimary.value = false
 
-    appConfig.theme.blackAsPrimary = false
-    window.localStorage.removeItem(`${site.name}-ui-black-as-primary`)
+    window.localStorage.removeItem(`${site.name}-ui-ai-theme`)
+    window.localStorage.removeItem(`${site.name}-ui-custom-colors`)
+    window.localStorage.removeItem(`${site.name}-ui-css-variables`)
   }
 
   return {
+    style,
+    link,
     neutralColors,
     neutral,
     primaryColors,
     primary,
-    setBlackAsPrimary,
+    blackAsPrimary,
     radiuses,
     radius,
     fonts,

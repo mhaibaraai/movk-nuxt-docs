@@ -7,84 +7,49 @@ export default defineNuxtPlugin({
     const site = useSiteConfig()
 
     if (import.meta.client) {
-      function updateColor(type: 'primary' | 'neutral') {
-        const color = localStorage.getItem(`${site.name}-ui-${type}`)
-        if (color) {
-          appConfig.ui.colors[type] = color
-        }
-      }
+      const primary = localStorage.getItem(`${site.name}-ui-primary`)
+      if (primary) appConfig.ui.colors.primary = primary
 
-      function updateRadius() {
-        const radius = localStorage.getItem(`${site.name}-ui-radius`)
-        if (radius) {
-          appConfig.theme.radius = Number.parseFloat(radius)
-        }
-      }
+      const neutral = localStorage.getItem(`${site.name}-ui-neutral`)
+      if (neutral) appConfig.ui.colors.neutral = neutral
 
-      function updateBlackAsPrimary() {
-        const blackAsPrimary = localStorage.getItem(`${site.name}-ui-black-as-primary`)
-        if (blackAsPrimary) {
-          appConfig.theme.blackAsPrimary = blackAsPrimary === 'true'
-        }
-      }
-
-      function updateFont() {
-        const font = localStorage.getItem(`${site.name}-ui-font`)
-        if (font) {
-          appConfig.theme.font = font
-        }
-      }
-
-      updateColor('primary')
-      updateColor('neutral')
-      updateRadius()
-      updateBlackAsPrimary()
-      updateFont()
+      const icons = localStorage.getItem(`${site.name}-ui-icons`)
+      if (icons) appConfig.ui.icons = themeIcons[icons as keyof typeof themeIcons] as any
     }
-
-    onNuxtReady(() => {
-      function updateIcons() {
-        const icons = localStorage.getItem(`${site.name}-ui-icons`)
-        if (icons) {
-          appConfig.theme.icons = icons
-          appConfig.ui.icons = themeIcons[icons as keyof typeof themeIcons] as any
-        }
-      }
-
-      updateIcons()
-    })
 
     if (import.meta.server) {
       useHead({
         script: [{
           innerHTML: `
-            let html = document.querySelector('style#nuxt-ui-colors').innerHTML;
-
-            if (localStorage.getItem('${site.name}-ui-primary')) {
-              const primaryColor = localStorage.getItem('${site.name}-ui-primary');
-              if (primaryColor !== 'black') {
+            var colorsEl = document.querySelector('style#nuxt-ui-colors');
+            if (colorsEl) {
+              let html = colorsEl.innerHTML;
+              if (localStorage.getItem('${site.name}-ui-primary')) {
+                const primaryColor = localStorage.getItem('${site.name}-ui-primary');
+                if (primaryColor !== 'black') {
+                  html = html.replace(
+                    /(--ui-color-primary-\\d{2,3}:\\s*var\\(--color-)${appConfig.ui.colors.primary}(-\\d{2,3}.*?\\))/g,
+                    \`$1\${primaryColor}$2\`
+                  );
+                }
+              }
+              if (localStorage.getItem('${site.name}-ui-neutral')) {
+                let neutralColor = localStorage.getItem('${site.name}-ui-neutral');
                 html = html.replace(
-                  /(--ui-color-primary-\\d{2,3}:\\s*var\\(--color-)${appConfig.ui.colors.primary}(-\\d{2,3}.*?\\))/g,
-                  \`$1\${primaryColor}$2\`
+                  /(--ui-color-neutral-\\d{2,3}:\\s*var\\(--color-)${appConfig.ui.colors.neutral}(-\\d{2,3}.*?\\))/g,
+                  \`$1\${neutralColor === 'neutral' ? 'old-neutral' : neutralColor}$2\`
                 );
               }
-            }
-            if (localStorage.getItem('${site.name}-ui-neutral')) {
-              let neutralColor = localStorage.getItem('${site.name}-ui-neutral');
-              html = html.replace(
-                /(--ui-color-neutral-\\d{2,3}:\\s*var\\(--color-)${appConfig.ui.colors.neutral}(-\\d{2,3}.*?\\))/g,
-                \`$1\${neutralColor === 'neutral' ? 'old-neutral' : neutralColor}$2\`
-              );
-            }
 
-            document.querySelector('style#nuxt-ui-colors').innerHTML = html;
+              colorsEl.innerHTML = html;
+            }
             `.replace(/\s+/g, ' '),
           type: 'text/javascript',
           tagPriority: -1
         }, {
           innerHTML: `
             if (localStorage.getItem('${site.name}-ui-radius')) {
-              document.querySelector('style#nuxt-ui-radius').innerHTML = ':root { --ui-radius: ' + localStorage.getItem('${site.name}-ui-radius') + 'rem; }';
+              document.querySelector('style#${site.name}-ui-radius').innerHTML = ':root { --ui-radius: ' + localStorage.getItem('${site.name}-ui-radius') + 'rem; }';
             }
           `.replace(/\s+/g, ' '),
           type: 'text/javascript',
@@ -92,18 +57,24 @@ export default defineNuxtPlugin({
         }, {
           innerHTML: `
             if (localStorage.getItem('${site.name}-ui-black-as-primary') === 'true') {
-              document.querySelector('style#nuxt-ui-black-as-primary').innerHTML = ':root { --ui-primary: black; } .dark { --ui-primary: white; }';
+              document.querySelector('style#${site.name}-ui-black-as-primary').innerHTML = ':root { --ui-primary: black; } .dark { --ui-primary: white; }';
             } else {
-              document.querySelector('style#nuxt-ui-black-as-primary').innerHTML = '';
+              document.querySelector('style#${site.name}-ui-black-as-primary').innerHTML = '';
             }
           `.replace(/\s+/g, ' ')
         }, {
-          innerHTML: `
-            if (localStorage.getItem('${site.name}-ui-font')) {
-              const font = localStorage.getItem('${site.name}-ui-font');
-              document.querySelector('style#nuxt-ui-font').innerHTML = ':root { --font-sans: \\'' + font + '\\', sans-serif; }';
-            }
-          `.replace(/\s+/g, ' ')
+          innerHTML: [
+            `if (localStorage.getItem('${site.name}-ui-font')) {`,
+            `var font = localStorage.getItem('${site.name}-ui-font');`,
+            `document.querySelector('style#${site.name}-ui-font').innerHTML = ':root { --font-sans: \\'' + font + '\\', sans-serif; }';`,
+            `if (font !== 'Noto Sans SC') {`,
+            `var lnk = document.createElement('link');`,
+            `lnk.rel = 'stylesheet';`,
+            `lnk.href = 'https://fonts.googleapis.com/css2?family=' + encodeURIComponent(font) + ':wght@400;500;600;700&display=swap';`,
+            `lnk.id = 'font-' + font.toLowerCase().replace(/\\s+/g, '-');`,
+            `document.head.appendChild(lnk);`,
+            `}}`
+          ].join(' ')
         }]
       })
     }

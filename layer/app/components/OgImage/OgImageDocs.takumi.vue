@@ -12,7 +12,8 @@ withDefaults(defineProps<{
 
 <template>
   <div
-    class="font-noto w-full h-full relative flex flex-col overflow-hidden bg-white text-neutral-900 dark:bg-neutral-900 dark:text-neutral-50"
+    style="font-family: 'Noto Sans SC', sans-serif;"
+    class="w-full h-full relative flex flex-col overflow-hidden bg-white text-neutral-900 dark:bg-neutral-900 dark:text-neutral-50"
     :style="{
       backgroundImage: `linear-gradient(to bottom right, rgba(34, 197, 94, 0.15), transparent)`
     }"

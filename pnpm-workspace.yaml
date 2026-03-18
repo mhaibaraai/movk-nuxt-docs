@@ -14,4 +14,4 @@ onlyBuiltDependencies:
   - sharp
 
 overrides:
-  '@nuxt/ui': 'https://pkg.pr.new/@nuxt/ui@0642727'
+  '@nuxt/ui': 'https://pkg.pr.new/@nuxt/ui@2d22070'

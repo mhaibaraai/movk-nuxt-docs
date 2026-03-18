@@ -11,7 +11,7 @@ export default defineAppConfig({
     radius: 0.25,
     blackAsPrimary: false,
     icons: 'lucide',
-    font: 'Public Sans'
+    font: 'Noto Sans SC'
   },
   ui: {
     colors: {
