@@ -186,17 +186,12 @@ export default defineNuxtConfig({
     clientBundle: {
       scan: true,
       includeCustomCollections: true
-    },
-    provider: 'iconify'
+    }
   },
 
   llms: {
     // Must be defined before @nuxt/content setup,
     // otherwise Content LLMS module will overwrite it in modules:done.
     contentRawMarkdown: false
-  },
-
-  ogImage: {
-    zeroRuntime: true
   }
 })

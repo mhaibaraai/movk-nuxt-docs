@@ -40,7 +40,8 @@ useSeoMeta({
   titleTemplate: appConfig.seo.titleTemplate,
   title: appConfig.seo.title,
   description: appConfig.seo.description,
-  ogSiteName: site.name
+  ogSiteName: site.name,
+  twitterCard: 'summary_large_image'
 })
 
 const { rootNavigation } = useNavigation(navigation)
