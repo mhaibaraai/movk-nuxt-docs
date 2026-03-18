@@ -67,7 +67,7 @@ export default defineNuxtPlugin({
             `if (localStorage.getItem('${site.name}-ui-font')) {`,
             `var font = localStorage.getItem('${site.name}-ui-font');`,
             `document.querySelector('style#${site.name}-ui-font').innerHTML = ':root { --font-sans: \\'' + font + '\\', sans-serif; }';`,
-            `if (font !== 'Noto Sans SC') {`,
+            `if (font !== 'Public Sans') {`,
             `var lnk = document.createElement('link');`,
             `lnk.rel = 'stylesheet';`,
             `lnk.href = 'https://fonts.googleapis.com/css2?family=' + encodeURIComponent(font) + ':wght@400;500;600;700&display=swap';`,

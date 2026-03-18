@@ -11,28 +11,14 @@ export default defineAppConfig({
     radius: 0.25,
     blackAsPrimary: false,
     icons: 'lucide',
-    font: 'Noto Sans SC'
+    font: 'Public Sans'
   },
   ui: {
     colors: {
       primary: 'green',
       neutral: 'slate'
-    },
-    contentNavigation: {
-      slots: {
-        linkLeadingIcon: 'size-4 mr-1',
-        linkTrailing: 'hidden'
-      },
-      defaultVariants: {
-        variant: 'link'
-      }
-    },
-    pageLinks: {
-      slots: {
-        linkLeadingIcon: 'size-4',
-        linkLabelExternalIcon: 'size-2.5'
-      }
     }
+
   },
   header: {
     avatar: 'https://docs.mhaibaraai.cn/avatar.png',

@@ -85,7 +85,7 @@ export default defineAppConfig({
     radius: 0.25,           // 圆角大小（rem）
     blackAsPrimary: false,   // 是否使用黑色作为主色调
     icons: 'lucide',         // 图标集（lucide）
-    font: 'Noto Sans SC',     // 字体
+    font: 'Public Sans',     // 字体
   },
   ui: {
     colors: {

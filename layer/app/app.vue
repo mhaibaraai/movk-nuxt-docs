@@ -53,32 +53,45 @@ provide('navigation', rootNavigation)
   <UApp :toaster="appConfig.toaster" :locale="zh_cn">
     <NuxtLoadingIndicator color="var(--ui-primary)" :height="2" />
 
-    <div class="flex">
-      <div class="flex-1 min-w-0" :class="[route.path.startsWith('/docs/') && 'root']">
-        <template v-if="!route.path.startsWith('/examples')">
-          <Header v-if="$route.meta.header !== false" />
-        </template>
+    <UTheme
+      :ui="{
+        contentNavigation: {
+          linkLeadingIcon: 'size-4 mr-1',
+          linkTrailing: 'hidden'
+        },
+        pageLinks: {
+          linkLeadingIcon: 'size-4',
+          linkLabelExternalIcon: 'size-2.5'
+        }
+      }"
+    >
+      <div class="flex">
+        <div class="flex-1 min-w-0" :class="[route.path.startsWith('/docs/') && 'root']">
+          <template v-if="!route.path.startsWith('/examples')">
+            <Header v-if="$route.meta.header !== false" />
+          </template>
 
-        <NuxtLayout>
-          <NuxtPage />
-        </NuxtLayout>
+          <NuxtLayout>
+            <NuxtPage />
+          </NuxtLayout>
 
-        <template v-if="!route.path.startsWith('/examples')">
-          <Footer v-if="$route.meta.footer !== false" />
+          <template v-if="!route.path.startsWith('/examples')">
+            <Footer v-if="$route.meta.footer !== false" />
 
+            <ClientOnly>
+              <UContentSearch :files="files" :navigation="rootNavigation" :fuse="{ resultLimit: 500 }" />
+            </ClientOnly>
+          </template>
+        </div>
+
+        <template v-if="!route.path.startsWith('/examples') && isAiChatEnabled">
           <ClientOnly>
-            <UContentSearch :files="files" :navigation="rootNavigation" :fuse="{ resultLimit: 500 }" />
+            <AiChatPanel />
+            <AiChatFloatingInput />
           </ClientOnly>
         </template>
       </div>
-
-      <template v-if="!route.path.startsWith('/examples') && isAiChatEnabled">
-        <ClientOnly>
-          <AiChatPanel />
-          <AiChatFloatingInput />
-        </ClientOnly>
-      </template>
-    </div>
+    </UTheme>
   </UApp>
 </template>
 
