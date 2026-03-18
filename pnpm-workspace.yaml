@@ -5,6 +5,7 @@ packages:
 ignoredBuiltDependencies:
   - '@parcel/watcher'
   - '@tailwindcss/oxide'
+  - '@vercel/speed-insights'
   - esbuild
   - unrs-resolver
   - vue-demi

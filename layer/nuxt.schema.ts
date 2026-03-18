@@ -149,7 +149,7 @@ export default defineNuxtSchema({
           title: '目录标题',
           description: '目录区域的标题',
           icon: 'i-lucide-heading',
-          default: '目录'
+          default: '页面导航'
         }),
 
         bottom: group({
@@ -344,25 +344,11 @@ export default defineNuxtSchema({
               icon: 'i-lucide-heading',
               default: 'AI 助手'
             }),
-            collapse: field({
-              type: 'string',
-              title: '折叠按钮',
-              description: '折叠按钮的文本',
-              icon: 'i-lucide-chevron-up',
-              default: '折叠'
-            }),
-            expand: field({
-              type: 'string',
-              title: '展开按钮',
-              description: '展开按钮的文本',
-              icon: 'i-lucide-chevron-down',
-              default: '展开'
-            }),
             clearChat: field({
               type: 'string',
               title: '清除聊天记录',
               description: '清除聊天记录按钮的文本',
-              icon: 'i-lucide-trash-2',
+              icon: 'i-lucide-list-x',
               default: '清除聊天记录'
             }),
             close: field({
@@ -371,34 +357,6 @@ export default defineNuxtSchema({
               description: '关闭按钮的文本',
               icon: 'i-lucide-panel-right-close',
               default: '关闭'
-            }),
-            loading: field({
-              type: 'string',
-              title: '加载中',
-              description: '加载时的提示文本',
-              icon: 'i-lucide-loader',
-              default: 'Loading...'
-            }),
-            askAnything: field({
-              type: 'string',
-              title: '询问提示',
-              description: '询问任何事情的文本',
-              icon: 'i-lucide-message-circle',
-              default: '问我任何事情...'
-            }),
-            askMeAnythingDescription: field({
-              type: 'string',
-              title: '询问提示描述',
-              description: '询问任何事情的描述文本',
-              icon: 'i-lucide-info',
-              default: '我可以帮助您浏览文档、解释概念并回答您的问题。'
-            }),
-            faq: field({
-              type: 'string',
-              title: 'FAQ 建议',
-              description: 'FAQ 建议标题文本',
-              icon: 'i-lucide-help-circle',
-              default: 'FAQ 建议'
             }),
             placeholder: field({
               type: 'string',
@@ -421,20 +379,6 @@ export default defineNuxtSchema({
               icon: 'i-custom-ai',
               default: '与 AI 聊天'
             }),
-            streaming: field({
-              type: 'string',
-              title: '思考中',
-              description: '思考时的提示文本',
-              icon: 'i-lucide-brain',
-              default: '思考中...'
-            }),
-            streamed: field({
-              type: 'string',
-              title: '思考完成',
-              description: '思考后的提示文本',
-              icon: 'i-lucide-check-circle',
-              default: '思考过程'
-            }),
             explainWithAi: field({
               type: 'string',
               title: '用 AI 解释按钮',
@@ -450,13 +394,6 @@ export default defineNuxtSchema({
           description: 'UI 图标配置',
           icon: 'i-lucide-icon',
           fields: {
-            loading: field({
-              type: 'string',
-              title: '加载图标',
-              description: '加载时的图标',
-              icon: 'i-lucide-loader',
-              default: 'i-lucide-loader'
-            }),
             trigger: field({
               type: 'string',
               title: '触发图标',
@@ -468,29 +405,29 @@ export default defineNuxtSchema({
               type: 'string',
               title: '解释图标',
               description: '「用 AI 解释」按钮的图标',
+              icon: 'i-lucide-bot-message-square',
+              default: 'i-lucide-bot-message-square'
+            }),
+            reasoning: field({
+              type: 'string',
+              title: '推理图标',
+              description: '推理/思考过程的图标',
               icon: 'i-lucide-brain',
               default: 'i-lucide-brain'
-            }),
-            streaming: field({
-              type: 'string',
-              title: '思考图标',
-              description: '思考时的图标',
-              icon: 'i-lucide-chevron-down',
-              default: 'i-lucide-chevron-down'
             }),
             clearChat: field({
               type: 'string',
               title: '清除图标',
               description: '清除聊天记录按钮的图标',
-              icon: 'i-lucide-trash-2',
-              default: 'i-lucide-trash-2'
+              icon: 'i-lucide-list-x',
+              default: 'i-lucide-list-x'
             }),
             close: field({
               type: 'string',
               title: '关闭图标',
               description: '关闭按钮的图标',
-              icon: 'i-lucide-x',
-              default: 'i-lucide-x'
+              icon: 'i-lucide-panel-right-close',
+              default: 'i-lucide-panel-right-close'
             }),
             providers: field({
               type: 'object',

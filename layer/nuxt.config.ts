@@ -17,6 +17,7 @@ export default defineNuxtConfig({
       })
     },
     '@nuxt/ui',
+    '@nuxt/fonts',
     '@nuxt/content',
     '@nuxt/image',
     '@nuxt/a11y',
