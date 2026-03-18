@@ -67,7 +67,7 @@ declare module 'nuxt/schema' {
        * 在文档侧边栏中显示“使用 AI 进行解释”按钮。
        * @default true
        */
-      explainWithAi?: boolean
+      explainWithAi: boolean
       /**
        * 显示的常见问题解答问题。
        * @example 简单格式: ['如何安装？', '如何配置？']
@@ -120,7 +120,7 @@ declare module 'nuxt/schema' {
         trigger: string
         /**
          * 使用 AI 进行解释按钮的文本。
-         * @default '用 AI 解释此页面
+         * @default '用 AI 解释此页面'
          */
         explainWithAi: string
       }
@@ -156,7 +156,7 @@ declare module 'nuxt/schema' {
         /**
          * 用于映射不同 AI 提供商的图标。
          * @example { mistral: 'i-simple-icons-mistralai' }
-         * @default { xxx: 'i-simple-xxx', mistral: 'i-simple-icons-mistralai', kwaipilot: 'i-lucide-wand', zai: 'i-lucide-wand' }
+         * @default { deepseek: 'i-hugeicons:deepseek', alibaba: 'i-hugeicons:qwen', zai: 'i-simple-icons:zig', moonshotai: 'i-hugeicons:kimi-ai', xai: 'i-hugeicons:grok-02' }
          */
         providers: Record<string, string>
       }

@@ -20,7 +20,7 @@ useSeoMeta({
 defineOgImage('Docs', {
   title,
   description,
-  site: site.name
+  siteName: site.name
 })
 </script>
 

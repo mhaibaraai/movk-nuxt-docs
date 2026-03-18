@@ -21,7 +21,7 @@ useSeoMeta({
 defineOgImage('Docs', {
   title,
   description,
-  site: site.name
+  siteName: site.name
 })
 
 const { data: versions } = page.value.releases
