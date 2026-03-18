@@ -166,14 +166,7 @@ export default defineNuxtConfig({
   fonts: {
     provider: 'bunny',
     families: [
-      { name: 'Noto Sans SC', global: true },
-      { name: 'Public Sans' },
-      { name: 'DM Sans' },
-      { name: 'Geist' },
-      { name: 'Inter' },
-      { name: 'Poppins' },
-      { name: 'Outfit' },
-      { name: 'Raleway' }
+      { name: 'Noto Sans SC', global: true }
     ]
   },
 
@@ -194,5 +187,9 @@ export default defineNuxtConfig({
     // Must be defined before @nuxt/content setup,
     // otherwise Content LLMS module will overwrite it in modules:done.
     contentRawMarkdown: false
+  },
+
+  ogImage: {
+    zeroRuntime: true
   }
 })
