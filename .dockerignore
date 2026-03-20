@@ -24,8 +24,5 @@ reports
 # Logs
 *.log
 
-# Root-level markdown (not docs content)
-/*.md
-
 # Config not needed for build
 renovate.json
