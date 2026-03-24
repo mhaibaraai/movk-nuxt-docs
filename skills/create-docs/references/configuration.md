@@ -47,6 +47,12 @@ export default defineNuxtConfig({
       'Card*',
     ],
   },
+
+  // Twoslash 类型提示配置
+  twoslash: {
+    enableInDev: false,  // 开发环境关闭以提升性能
+    throws: false,       // 类型检查失败不中断构建（建议 CI 中开启）
+  },
 })
 ```
 
@@ -58,6 +64,15 @@ export default defineNuxtConfig({
 | `aiChat.models` | `string[]` | 可选模型列表 |
 
 模型格式为 `provider/model-name`，例如 `openai/gpt-5-nano`、`deepseek/deepseek-v3.2`。
+
+### Twoslash 类型提示
+
+内置，无需安装。代码块语言标识后加 `twoslash` 即可启用。
+
+| 选项 | 默认值 | 说明 |
+|------|--------|------|
+| `enableInDev` | `false` | 开发环境是否运行（关闭可加速热更新） |
+| `throws` | `false` | 类型检查失败时是否中断构建 |
 
 ### 组件元数据
 
