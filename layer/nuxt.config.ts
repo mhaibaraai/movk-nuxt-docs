@@ -66,7 +66,14 @@ export default defineNuxtConfig({
       colors: ['primary', 'secondary', 'info', 'success', 'warning', 'error', 'important']
     },
     experimental: {
-      componentDetection: true
+      componentDetection: [
+        'Sidebar',
+        'ChatMessages',
+        'ChatPrompt',
+        'ChatPromptSubmit',
+        'ChatReasoning',
+        'ChatTool'
+      ]
     }
   },
 
