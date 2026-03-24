@@ -49,7 +49,7 @@ export default defineNuxtPlugin({
         }, {
           innerHTML: `
             if (localStorage.getItem('${site.name}-ui-radius')) {
-              document.querySelector('style#${site.name}-ui-radius').innerHTML = ':root { --ui-radius: ' + localStorage.getItem('${site.name}-ui-radius') + 'rem; }';
+              document.getElementById('${site.name}-ui-radius').innerHTML = ':root { --ui-radius: ' + localStorage.getItem('${site.name}-ui-radius') + 'rem; }';
             }
           `.replace(/\s+/g, ' '),
           type: 'text/javascript',
@@ -57,16 +57,16 @@ export default defineNuxtPlugin({
         }, {
           innerHTML: `
             if (localStorage.getItem('${site.name}-ui-black-as-primary') === 'true') {
-              document.querySelector('style#${site.name}-ui-black-as-primary').innerHTML = ':root { --ui-primary: black; } .dark { --ui-primary: white; }';
+              document.getElementById('${site.name}-ui-black-as-primary').innerHTML = ':root { --ui-primary: black; } .dark { --ui-primary: white; }';
             } else {
-              document.querySelector('style#${site.name}-ui-black-as-primary').innerHTML = '';
+              document.getElementById('${site.name}-ui-black-as-primary').innerHTML = '';
             }
           `.replace(/\s+/g, ' ')
         }, {
           innerHTML: [
             `if (localStorage.getItem('${site.name}-ui-font')) {`,
             `var font = localStorage.getItem('${site.name}-ui-font');`,
-            `document.querySelector('style#${site.name}-ui-font').innerHTML = ':root { --font-sans: \\'' + font + '\\', sans-serif; }';`,
+            `document.getElementById('${site.name}-ui-font').innerHTML = ':root { --font-sans: \\'' + font + '\\', sans-serif; }';`,
             `if (font !== 'Public Sans') {`,
             `var lnk = document.createElement('link');`,
             `lnk.rel = 'stylesheet';`,

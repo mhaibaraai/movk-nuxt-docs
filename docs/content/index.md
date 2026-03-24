@@ -1,6 +1,6 @@
 ---
 seo:
-  title: Movk Nuxt Docs - 现代化 Nuxt 文档主题
+  title: 现代化 Nuxt 文档主题
   description: 基于 Nuxt 4 的现代文档主题，集成组件自动化文档、AI 聊天助手、MCP Server 和完整的开发者体验优化。
 ---
 
