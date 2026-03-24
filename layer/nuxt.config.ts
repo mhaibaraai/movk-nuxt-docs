@@ -167,7 +167,8 @@ export default defineNuxtConfig({
   fonts: {
     provider: 'bunny',
     families: [
-      { name: 'Noto Serif SC', global: true }
+      { name: 'Public Sans', global: true },
+      { name: 'Noto Sans SC', global: true }
     ]
   },
 

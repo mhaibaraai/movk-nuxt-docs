@@ -12,7 +12,7 @@ withDefaults(defineProps<{
 
 <template>
   <div
-    style="font-family: 'Noto Serif SC', sans-serif;"
+    style="font-family: 'Noto Sans SC', sans-serif;"
     class="w-full h-full flex flex-col justify-center items-center relative p-10 lg:p-15 bg-white text-neutral-900 dark:bg-neutral-900 dark:text-neutral-50"
   >
     <div
@@ -75,14 +75,14 @@ withDefaults(defineProps<{
 
       <div class="items-center justify-center w-full">
         <h1
-          class="text-[48px] lg:text-[80px] text-pretty font-bold text-slate-900 max-w-175 lg:max-w-250"
+          class="text-[48px] lg:text-[72px] leading-tight text-pretty font-normal text-slate-900 max-w-175 lg:max-w-250"
           style="display: block; line-clamp: 3; text-overflow: ellipsis; text-wrap: balance;"
         >
           {{ title }}
         </h1>
       </div>
 
-      <p v-if="description" class="text-slate-500 text-[24px] lg:text-[32px] opacity-70 max-w-162.5 lg:max-w-225 leading-relaxed">
+      <p v-if="description" class="text-slate-500 text-[24px] lg:text-[32px] opacity-70 max-w-162.5 lg:max-w-225 leading-normal">
         {{ description }}
       </p>
     </div>
