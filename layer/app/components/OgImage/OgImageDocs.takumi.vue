@@ -12,7 +12,7 @@ withDefaults(defineProps<{
 
 <template>
   <div
-    style="font-family: 'Noto Sans SC', sans-serif;"
+    style="font-family: 'Public Sans', 'Noto Sans SC', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;"
     class="w-full h-full flex flex-col justify-center items-center relative p-10 lg:p-15 bg-white text-neutral-900 dark:bg-neutral-900 dark:text-neutral-50"
   >
     <div
