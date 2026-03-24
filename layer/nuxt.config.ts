@@ -18,7 +18,6 @@ export default defineNuxtConfig({
     },
     '@nuxt/ui',
     '@nuxt/fonts',
-    'nuxt-content-twoslash',
     '@nuxt/content',
     '@nuxt/image',
     '@nuxt/a11y',
@@ -197,12 +196,5 @@ export default defineNuxtConfig({
     // Must be defined before @nuxt/content setup,
     // otherwise Content LLMS module will overwrite it in modules:done.
     contentRawMarkdown: false
-  },
-
-  twoslash: {
-    // Skip Twoslash in dev to improve performance. Turn this on when you want to explicitly test twoslash in dev.
-    enableInDev: false,
-    // Do not throw when twoslash fails, the typecheck should be down in CI
-    throws: false
   }
 })

@@ -68,9 +68,5 @@ export default defineNuxtConfig({
 
   mermaid: {
     enabled: true
-  },
-
-  twoslash: {
-    enableInDev: true
   }
 })
