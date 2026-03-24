@@ -1,5 +1,30 @@
 # 📋 Changelog
 
+## [1.15.0](https://github.com/mhaibaraai/movk-nuxt-docs/compare/v1.14.2...v1.15.0) (2026-03-24)
+
+### ✨ Features
+
+* 升级 @nuxt/ui 至正式版，默认字体切换为 Public Sans（回退 Noto Sans SC），通过 Bunny Fonts 加载 ([4f0e4a9](https://github.com/mhaibaraai/movk-nuxt-docs/commit/4f0e4a9))
+* 升级 nuxt-og-image 至 v6，迁移至自定义 Takumi 风格 OgImage 组件 ([d93878c](https://github.com/mhaibaraai/movk-nuxt-docs/commit/d93878c))
+* AI Chat 移除 OpenRouter 支持，统一使用 @ai-sdk/gateway ([489c644](https://github.com/mhaibaraai/movk-nuxt-docs/commit/489c644))
+* 重构主题系统，新增 `theme.font` 字体配置项 ([80a62cc](https://github.com/mhaibaraai/movk-nuxt-docs/commit/80a62cc))
+* 将 @vueuse/nuxt 添加至 layer ([36d15df](https://github.com/mhaibaraai/movk-nuxt-docs/commit/36d15df))
+
+### ♻️ Code Refactoring
+
+* 重构 AI Chat 模块，简化配置并优化组件结构 ([ed4fc24](https://github.com/mhaibaraai/movk-nuxt-docs/commit/ed4fc24))
+* 重构 layer 核心模块和组件 ([0330617](https://github.com/mhaibaraai/movk-nuxt-docs/commit/0330617))
+* 移除 useAnalytics composable ([c93eb76](https://github.com/mhaibaraai/movk-nuxt-docs/commit/c93eb76))
+
+### 🐛 Bug Fixes
+
+* 修复 GitHub API handler 在无 token 时缓存空结果的问题 ([d15df15](https://github.com/mhaibaraai/movk-nuxt-docs/commit/d15df15))
+* 完善 OG Image 标题样式并添加 Twitter Card 元标签 ([8389e1a](https://github.com/mhaibaraai/movk-nuxt-docs/commit/8389e1a))
+
+### 🔧 Chores
+
+* 更新所有非主版本依赖 ([70ded15](https://github.com/mhaibaraai/movk-nuxt-docs/commit/70ded15))
+
 ## [1.14.2](https://github.com/mhaibaraai/movk-nuxt-docs/compare/v1.14.1...v1.14.2) (2026-03-09)
 
 ### 🐛 Bug Fixes
@@ -218,34 +243,34 @@
   - 自动主题切换（深色/浅色模式）和懒加载优化
   - 支持复制代码、全屏查看功能
 
-  #### 流程图：
+#### 流程图：
 
-  ![Mermaid 流程图示例](https://docs.mhaibaraai.cn/mermaid/mermaid-flowchart.png)
+![Mermaid 流程图示例](https://docs.mhaibaraai.cn/mermaid/mermaid-flowchart.png)
 
-  ````md
-  ```mermaid
-  graph TD
-      A[开始] --> B{是否支持?}
-      B -->|是| C[渲染图表]
-      B -->|否| D[显示代码]
-      C --> E[完成]
-      D --> E
-  ```
-  ````
+````md
+```mermaid
+graph TD
+A[开始] --> B{是否支持?}
+B -->|是| C[渲染图表]
+B -->|否| D[显示代码]
+C --> E[完成]
+D --> E
+```
+````
 
-  #### 时序图：
+#### 时序图：
 
-  ![Mermaid 时序图示例](https://docs.mhaibaraai.cn/mermaid/mermaid-sequence.png)
+![Mermaid 时序图示例](https://docs.mhaibaraai.cn/mermaid/mermaid-sequence.png)
 
-  ````md
-  ```mermaid
-  sequenceDiagram
-      用户->>Nuxt: 编写 Markdown
-      Nuxt->>Mermaid: 解析图表语法
-      Mermaid->>浏览器: 渲染 SVG
-      浏览器-->>用户: 显示图表
-  ```
-  ````
+````md
+```mermaid
+sequenceDiagram
+用户->>Nuxt: 编写 Markdown
+Nuxt->>Mermaid: 解析图表语法
+Mermaid->>浏览器: 渲染 SVG
+浏览器-->>用户: 显示图表
+```
+````
 
 ### ⚡ Performance Improvements
 
