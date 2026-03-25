@@ -14,8 +14,7 @@ const log = logger.withTag('movk-nuxt-docs')
 
 export default defineNuxtModule<MermaidModuleOptions>({
   meta: {
-    name: 'mermaid',
-    configKey: 'mermaid'
+    name: 'mermaid'
   },
   defaults: {
     enabled: false
