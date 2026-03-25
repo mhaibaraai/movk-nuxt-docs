@@ -66,7 +66,7 @@ export default defineNuxtConfig({
     browserRedirect: '/docs/getting-started/mcp'
   },
 
-  mermaid: {
-    enabled: true
+  movkNuxtDocs: {
+    mermaid: true
   }
 })
