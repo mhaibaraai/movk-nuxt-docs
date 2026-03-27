@@ -67,6 +67,7 @@ export default defineNuxtConfig({
   },
 
   movkNuxtDocs: {
+    a11y: true,
     mermaid: true
   }
 })

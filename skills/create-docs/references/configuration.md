@@ -40,6 +40,12 @@ export default defineNuxtConfig({
     name: 'My Docs',
   },
 
+  // Layer 功能开关
+  movkNuxtDocs: {
+    a11y: true,
+    mermaid: false
+  },
+
   // 组件元数据（用于自动生成组件文档）
   componentMeta: {
     include: [
@@ -49,6 +55,13 @@ export default defineNuxtConfig({
   }
 })
 ```
+
+### Layer 功能开关（movkNuxtDocs）
+
+| 选项 | 类型 | 默认值 | 描述 |
+|------|------|--------|------|
+| `movkNuxtDocs.a11y` | `boolean` | `true` | 是否启用 `@nuxt/a11y` 无障碍模块 |
+| `movkNuxtDocs.mermaid` | `boolean` | `false` | 是否启用 Mermaid 图表渲染（需安装 `mermaid` 与 `dompurify`） |
 
 ### AI 聊天
 
