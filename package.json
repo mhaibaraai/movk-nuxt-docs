@@ -23,11 +23,6 @@
     "typecheck": "nuxt typecheck layer",
     "clean": "movk-clean"
   },
-  "pnpm": {
-    "overrides": {
-      "@nuxtjs/mdc": "^0.21.0"
-    }
-  },
   "devDependencies": {
     "@movk/core": "^1.2.2",
     "@nuxt/eslint": "^1.15.2",
