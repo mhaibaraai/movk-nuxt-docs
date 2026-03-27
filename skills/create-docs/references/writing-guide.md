@@ -243,7 +243,7 @@ links:
 | CSS 样式 | `css` | |
 | HTML | `html` | |
 | 纯文本 | `text` | |
-| Mermaid 图表 | `mermaid` | 需启用 `mermaid: { enabled: true }` |
+| Mermaid 图表 | `mermaid` | 需启用 `movkNuxtDocs.mermaid = true` |
 
 ### 文件名标注
 

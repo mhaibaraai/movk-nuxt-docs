@@ -189,7 +189,10 @@ pnpm add mermaid dompurify
 ```ts [nuxt.config.ts]
 export default defineNuxtConfig({
   extends: ['@movk/nuxt-docs'],
-  mermaid: { enabled: true }
+
+  movkNuxtDocs: {
+    mermaid: true
+  }
 })
 ```
 
@@ -224,6 +227,20 @@ graph TD
 - **饼图**（`pie`）：用于展示数据占比
 - **Git 图**（`gitGraph`）：用于展示分支历史
 - 以及更多 [Mermaid 支持的图表类型](https://mermaid.js.org/intro())
+
+### 无障碍支持（A11y）
+
+Movk Nuxt Docs 默认启用 `@nuxt/a11y`。如需关闭，可在 `movkNuxtDocs` 中设置：
+
+```ts [nuxt.config.ts]
+export default defineNuxtConfig({
+  extends: ['@movk/nuxt-docs'],
+
+  movkNuxtDocs: {
+    a11y: false
+  }
+})
+```
 
 ## 🛠️ 开发
 

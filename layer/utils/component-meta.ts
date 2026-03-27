@@ -52,11 +52,7 @@ export function createComponentMetaExcludeFilters(
     resolve('../app/components/content/ComponentProps.vue'),
     resolve('../app/components/content/ComponentSlots.vue'),
     resolve('../app/components/content/PageLastCommit.vue'),
-    resolve('../app/components/content/Mermaid.vue'),
-    resolve('./ai-chat/runtime/components/AiChatToolCall.vue'),
-    resolve('./ai-chat/runtime/components/AiChatReasoning.vue'),
-    resolve('./ai-chat/runtime/components/AiChatSlideoverFaq.vue'),
-    resolve('./ai-chat/runtime/components/AiChatPreStream.vue')
+    resolve('./runtime/components/prose/Mermaid.vue')
   ]
 
   const userComponentPaths = [

@@ -20,7 +20,6 @@ export default defineNuxtConfig({
     '@nuxt/fonts',
     '@nuxt/content',
     '@nuxt/image',
-    '@nuxt/a11y',
     '@nuxtjs/robots',
     '@nuxtjs/mcp-toolkit',
     '@vueuse/nuxt',

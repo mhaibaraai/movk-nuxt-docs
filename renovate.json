@@ -54,6 +54,41 @@
       ]
     },
     {
+      "groupName": "nuxt",
+      "matchPackageNames": [
+        "nuxt",
+        "@nuxt/*",
+        "@nuxtjs/*"
+      ]
+    },
+    {
+      "groupName": "nuxt-modules",
+      "matchPackageNames": [
+        "nuxt-component-meta",
+        "nuxt-llms",
+        "nuxt-og-image"
+      ]
+    },
+    {
+      "groupName": "release-it",
+      "matchPackageNames": [
+        "release-it",
+        "@release-it/*"
+      ]
+    },
+    {
+      "groupName": "takumi",
+      "matchPackageNames": [
+        "@takumi-rs/*"
+      ]
+    },
+    {
+      "groupName": "octokit",
+      "matchPackageNames": [
+        "@octokit/*"
+      ]
+    },
+    {
       "matchDepTypes": [
         "peerDependencies"
       ],

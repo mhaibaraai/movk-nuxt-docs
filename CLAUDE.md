@@ -60,7 +60,7 @@ movk-nuxt-docs/
 - **`app/app.config.ts`** - 所有 appConfig 字段的默认值
 - **`app/components/`** - 共享 UI 组件（DocsAsideLeftBody、DocsAsideLeftTop、PageHeaderLinks 等）
 - **`app/composables/`** - 共享 Composable（useCategory、useHeader、useNavigation、useTheme、fetchComponentMeta、fetchComponentExample）
-- **`modules/`** - 自定义 Nuxt 模块（ai-chat、component-example、config、css、md-rewrite、mermaid、routing）
+- **`modules/`** - 自定义 Nuxt 模块（ai-chat、component-example、config、css、md-rewrite、module、routing）
 
 Layer 的 peer dependencies：`nuxt 4.x`、`tailwindcss 4.x`、`better-sqlite3 12.x`（必需）；`mermaid 11.x`、`dompurify 3.x`（可选，启用 Mermaid 图表时需要）。
 
@@ -85,7 +85,7 @@ AI 聊天功能通过自定义 Nuxt 模块实现：
 
 使用此 Layer 的项目通过两处配置自定义行为：
 
-1. **`nuxt.config.ts`** - Nuxt 模块级配置（如 `aiChat.model`、`mermaid.enabled`、`mcp` 等顶层字段）
+1. **`nuxt.config.ts`** - Nuxt 模块级配置（如 `aiChat.model`、`movkNuxtDocs.mermaid`、`mcp` 等字段）
 2. **`app.config.ts`** - 运行时 UI 配置（如 `header.title`、`footer.credits`、`github.owner` 等），可被终端用户覆盖
 
 `nuxt.schema.ts` 是两者的权威来源，定义了所有可配置字段的类型和默认值。
@@ -113,5 +113,4 @@ AI 聊天功能通过自定义 Nuxt 模块实现：
 - **AI Chat 条件编译**：无 `AI_GATEWAY_API_KEY` 时，AI 相关依赖不会被打包，AiChat 组件全部指向禁用版本
 - **Mermaid 可选依赖**：需要 Mermaid 图表时须手动安装 `mermaid` + `dompurify`
 - **md-rewrite 模块**：仅在 Vercel 部署预设下激活，添加 Markdown 原文路由
-- **@nuxt/ui 使用 PR 版本覆盖**：`pnpm-workspace.yaml` 中 overrides 了 `@nuxt/ui` 指向 pkg.pr.new 的 PR 构建
 - **无测试套件**：项目当前不包含单元、集成或 E2E 测试

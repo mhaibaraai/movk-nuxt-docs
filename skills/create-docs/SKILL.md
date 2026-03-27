@@ -124,6 +124,10 @@ description: 页面描述，用于 SEO 和搜索。
 
 加载 `references/configuration.md` 了解详细配置选项。
 
+如果文档涉及无障碍、Mermaid 图表，请同步检查 `movkNuxtDocs` 开关：
+- `movkNuxtDocs.a11y`
+- `movkNuxtDocs.mermaid`
+
 基础 `nuxt.config.ts`：
 
 ```ts
