@@ -72,5 +72,13 @@ export default defineNuxtModule({
         ...createComponentMetaExcludeFilters(resolve, dir, layerPath, userInclude)
       ]
     })
+
+    nuxt.hook('nitro:config', (nitroConfig) => {
+      nitroConfig.publicAssets ||= []
+      nitroConfig.publicAssets.push({
+        dir: resolve('./runtime/public'),
+        maxAge: 60 * 60 * 24 * 30
+      })
+    })
   }
 })
