@@ -1,5 +1,24 @@
 # 📋 Changelog
 
+## [1.16.0](https://github.com/mhaibaraai/movk-nuxt-docs/compare/v1.15.0...v1.16.0) (2026-03-28)
+
+### ✨ Features
+
+* 移动 Mermaid 组件 ([89d74ae](https://github.com/mhaibaraai/movk-nuxt-docs/commit/89d74ae3f88cd012830f5ec1a77bbce1aeb5da93))
+
+### 🐛 Bug Fixes
+
+* 修复 OgImage 字体加载并添加静态资产支持 ([891c8e0](https://github.com/mhaibaraai/movk-nuxt-docs/commit/891c8e08327af4cffef759b1826e2ecbf997f228))
+
+### ♻️ Code Refactoring
+
+* 将 mermaid 和 a11y 合并为统一模块并内置 ProsePre ([4207626](https://github.com/mhaibaraai/movk-nuxt-docs/commit/4207626d12e0920b9172ea7df0a8d0afc23fd879))
+
+### 🔧 Chores
+
+* 升级依赖版本并同步 pnpm 版本 ([f8913a8](https://github.com/mhaibaraai/movk-nuxt-docs/commit/f8913a852d64630ad700ffc1fdfced8f2431fa5b))
+* 同步 pnpm-lock.yaml 依赖版本说明符 ([4a0c67d](https://github.com/mhaibaraai/movk-nuxt-docs/commit/4a0c67d12b81747811feec793fef56aefe8ce922))
+
 ## [1.15.0](https://github.com/mhaibaraai/movk-nuxt-docs/compare/v1.14.2...v1.15.0) (2026-03-24)
 
 ### ✨ Features
