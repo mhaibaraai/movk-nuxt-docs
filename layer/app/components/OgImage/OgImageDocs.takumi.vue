@@ -11,10 +11,7 @@ withDefaults(defineProps<{
 </script>
 
 <template>
-  <div
-    style="font-family: 'Public Sans', 'Noto Sans SC', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;"
-    class="w-full h-full flex flex-col justify-center items-center relative p-10 lg:p-15 bg-white text-neutral-900 dark:bg-neutral-900 dark:text-neutral-50"
-  >
+  <div style="font-family: 'Noto Sans SC', sans-serif;" class="w-full h-full flex flex-col justify-center items-center relative p-10 lg:p-15 bg-white text-neutral-900 dark:bg-neutral-900 dark:text-neutral-50">
     <div
       class="absolute top-0 left-0 right-0 bottom-0"
       :style="{
@@ -82,7 +79,10 @@ withDefaults(defineProps<{
         </h1>
       </div>
 
-      <p v-if="description" class="text-slate-500 text-[24px] lg:text-[32px] opacity-70 max-w-162.5 lg:max-w-225 leading-normal">
+      <p
+        v-if="description"
+        class="text-slate-500 text-[24px] lg:text-[32px] opacity-70 max-w-162.5 lg:max-w-225 leading-normal"
+      >
         {{ description }}
       </p>
     </div>
