@@ -22,7 +22,7 @@ export default defineMcpTool({
         content: [{ type: 'text', text: JSON.stringify(content, null, 2) }]
       }
     } catch (error) {
-      return errorResult(`获取页面失败: ${error}`)
+      throw createError({ statusCode: 500, message: `获取页面失败: ${error}` })
     }
   }
 })

@@ -5,6 +5,6 @@ export default defineMcpTool({
   description: '列出所有可用的示例和代码演示',
   cache: '1h',
   async handler() {
-    return jsonResult(await listComponentExamples())
+    return await listComponentExamples()
   }
 })

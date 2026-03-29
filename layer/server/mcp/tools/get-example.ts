@@ -13,7 +13,7 @@ export default defineMcpTool({
         content: [{ type: 'text' as const, text: result.code }]
       }
     } catch {
-      return errorResult(`示例 '${exampleName}' 未找到。使用 list_examples 工具查看所有可用示例。`)
+      throw createError({ statusCode: 404, message: `示例 '${exampleName}' 未找到。使用 list_examples 工具查看所有可用示例。` })
     }
   }
 })
