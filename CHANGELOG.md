@@ -1,5 +1,15 @@
 # 📋 Changelog
 
+## [1.16.1](https://github.com/mhaibaraai/movk-nuxt-docs/compare/v1.16.0...v1.16.1) (2026-03-29)
+
+### 🐛 Bug Fixes
+
+* 升级 nuxt-og-image 至 v6.3.0 并启用 zeroRuntime 模式 ([2773c0d](https://github.com/mhaibaraai/movk-nuxt-docs/commit/2773c0de8906b3127d1aa264513956c387dedd47))
+
+### ♻️ Code Refactoring
+
+* 迁移废弃的 MCP 工具响应 helper 并更新工具图标 ([6fc8817](https://github.com/mhaibaraai/movk-nuxt-docs/commit/6fc8817c1d53f1c516d02b3f82b88ffb3cbd5b20))
+
 ## [1.16.0](https://github.com/mhaibaraai/movk-nuxt-docs/compare/v1.15.0...v1.16.0) (2026-03-28)
 
 ### ✨ Features
