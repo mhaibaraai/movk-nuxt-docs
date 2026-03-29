@@ -22,6 +22,6 @@ export default defineMcpTool({
       navigation: page.navigation
     })).sort((a, b) => a.path.localeCompare(b.path))
 
-    return jsonResult(result)
+    return result
   }
 })

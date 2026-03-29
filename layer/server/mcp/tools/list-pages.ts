@@ -8,10 +8,10 @@ export default defineMcpTool({
 
     const pages = await queryCollection(event, 'docs').all()
 
-    return jsonResult(pages.map(doc => ({
+    return pages.map(doc => ({
       title: doc.title,
       description: doc.description,
       path: doc.path
-    })))
+    }))
   }
 })

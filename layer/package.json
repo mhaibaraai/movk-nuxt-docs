@@ -41,7 +41,7 @@
   "dependencies": {
     "@ai-sdk/gateway": "^3.0.83",
     "@ai-sdk/mcp": "^1.0.30",
-    "@ai-sdk/vue": "^3.0.140",
+    "@ai-sdk/vue": "^3.0.141",
     "@iconify-json/lucide": "^1.2.100",
     "@iconify-json/simple-icons": "^1.2.75",
     "@iconify-json/vscode-icons": "^1.2.45",

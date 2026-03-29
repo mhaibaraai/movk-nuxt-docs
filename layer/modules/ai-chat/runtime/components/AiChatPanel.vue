@@ -98,8 +98,11 @@ function getToolIcon(part: ToolPart): string {
   const { toolIcon } = useToolCall(part.state, toolName, part.input || {} as any)
 
   const iconMap: Record<string, string> = {
-    'get-page': 'i-lucide-file-text',
-    'get-example': 'i-lucide-file-text',
+    'get-page': 'i-lucide-book-open',
+    'get-example': 'i-lucide-codepen',
+    'list-examples': 'i-lucide-codesandbox',
+    'list-getting-started-guides': 'i-lucide-square-play',
+    'list-pages': 'i-lucide-book-minus',
     ...toolIcon
   }
 
