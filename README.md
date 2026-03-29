@@ -1,3 +1,4 @@
+[![Movk Nuxt Docs OG](https://docs.mhaibaraai.cn/_og/s/c_Docs,title_~546w5Luj5YyWIE51eHQg5paH5qGj5Li76aKY,description_~5Z-65LqOIE51eHQgNCDnmoTnjrDku6PmlofmoaPkuLvpopjvvIzpm4bmiJDnu4Tku7boh6rliqjljJbmlofmoaPjgIFBSSDogYrlpKnliqnmiYvjgIFNQ1AgU2VydmVyIOWSjOWujOaVtOeahOW8gOWPkeiAheS9k-mqjOS8mOWMluOAgg.png)](https://docs.mhaibaraai.cn/)
 [![Movk Nuxt Docs](https://docs.mhaibaraai.cn/og-image.png)](https://docs.mhaibaraai.cn/)
 
 > 基于 Nuxt 4 的现代文档主题，集成组件自动化文档、AI 聊天助手、MCP Server 和完整的开发者体验优化
@@ -21,7 +22,7 @@
 ### 🤖 AI 增强体验
 
 <div style="padding: 40px 0; display: flex; justify-content: center;">
-  <img src="https://docs.mhaibaraai.cn/ai/AiChat.png" alt="AiChat" width="400">
+<img src="https://docs.mhaibaraai.cn/ai/AiChat.png" alt="AiChat" width="400">
 </div>
 
 - **AI 聊天助手** - 内置智能文档助手，基于 Vercel AI SDK 支持多种 LLM 模型
@@ -201,11 +202,11 @@ export default defineNuxtConfig({
 ````md [md]
 ```mermaid
 graph TD
-    A[开始] --> B{是否有效?}
-    B -->|是| C[处理数据]
-    B -->|否| D[显示错误]
-    C --> E[完成]
-    D --> E
+A[开始] --> B{是否有效?}
+B -->|是| C[处理数据]
+B -->|否| D[显示错误]
+C --> E[完成]
+D --> E
 ```
 ````
 
@@ -218,9 +219,9 @@ graph TD
 
 **支持的图表类型：**
 - **流程图**（`flowchart`/`graph`）：用于展示流程和决策
-  ![Mermaid 流程图示例](https://docs.mhaibaraai.cn/mermaid/mermaid-flowchart.png)
+![Mermaid 流程图示例](https://docs.mhaibaraai.cn/mermaid/mermaid-flowchart.png)
 - **时序图**（`sequenceDiagram`）：用于展示交互时序
-  ![Mermaid 时序图示例](https://docs.mhaibaraai.cn/mermaid/mermaid-sequence.png)
+![Mermaid 时序图示例](https://docs.mhaibaraai.cn/mermaid/mermaid-sequence.png)
 - **类图**（`classDiagram`）：用于展示类关系
 - **状态图**（`stateDiagram`）：用于展示状态转换
 - **甘特图**（`gantt`）：用于展示项目时间线
