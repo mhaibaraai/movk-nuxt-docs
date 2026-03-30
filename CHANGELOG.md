@@ -1,5 +1,11 @@
 # 📋 Changelog
 
+## [1.16.3](https://github.com/mhaibaraai/movk-nuxt-docs/compare/v1.16.2...v1.16.3) (2026-03-30)
+
+### 🐛 Bug Fixes
+
+* 修复 aiChat 配置访问的类型安全问题及 GitHub API 非空断言 ([c737cd4](https://github.com/mhaibaraai/movk-nuxt-docs/commit/c737cd4d379f264c2028399c368b66d7200caa61))
+
 ## [1.16.2](https://github.com/mhaibaraai/movk-nuxt-docs/compare/v1.16.1...v1.16.2) (2026-03-30)
 
 ### ♻️ Code Refactoring
