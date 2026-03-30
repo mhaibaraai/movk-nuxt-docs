@@ -4,7 +4,7 @@ import type { ButtonProps } from '@nuxt/ui'
 const route = useRoute()
 const { header, github } = useAppConfig()
 
-const links = computed<ButtonProps[]>(() => github && github.url
+const links = computed<ButtonProps[]>(() => (github && github.url
   ? [
       {
         'icon': 'i-simple-icons-github',
@@ -12,9 +12,9 @@ const links = computed<ButtonProps[]>(() => github && github.url
         'target': '_blank',
         'aria-label': 'GitHub'
       },
-      ...header?.links || []
+      ...(header?.links || [])
     ]
-  : header.links)
+  : header?.links || []) as ButtonProps[])
 </script>
 
 <template>

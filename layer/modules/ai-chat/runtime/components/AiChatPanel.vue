@@ -159,30 +159,30 @@ const faqQuestions = computed<FaqCategory[]>(() => {
   <USidebar
     v-model:open="isOpen"
     side="right"
-    :title="aiChat.texts.title"
+    :title="aiChat.texts?.title ?? ''"
     rail
     :style="{ '--sidebar-width': '24rem' }"
     :ui="{ footer: 'p-0', actions: 'gap-0.5' }"
   >
     <template #actions>
-      <UTooltip v-if="canClear" :text="aiChat.texts.clearChat">
+      <UTooltip v-if="canClear" :text="aiChat.texts?.clearChat ?? ''">
         <UButton
-          :icon="aiChat.icons.clearChat"
+          :icon="aiChat.icons?.clearChat ?? ''"
           color="neutral"
           variant="ghost"
-          :aria-label="aiChat.texts.clearChat"
+          :aria-label="aiChat.texts?.clearChat ?? ''"
           @click="clearMessages"
         />
       </UTooltip>
     </template>
 
     <template #close>
-      <UTooltip :text="aiChat.texts.close">
+      <UTooltip :text="aiChat.texts?.close ?? ''">
         <UButton
-          :icon="aiChat.icons.close"
+          :icon="aiChat.icons?.close ?? ''"
           color="neutral"
           variant="ghost"
-          :aria-label="aiChat.texts.close"
+          :aria-label="aiChat.texts?.close ?? ''"
           @click="isOpen = false"
         />
       </UTooltip>
@@ -221,7 +221,7 @@ const faqQuestions = computed<FaqCategory[]>(() => {
               v-if="isReasoningUIPart(part)"
               :text="part.text"
               :streaming="isReasoningStreaming(message, index, chat)"
-              :icon="aiChat.icons.reasoning"
+              :icon="aiChat.icons?.reasoning ?? ''"
             >
               <MDCCached
                 :value="part.text"
@@ -262,7 +262,7 @@ const faqQuestions = computed<FaqCategory[]>(() => {
       <UChatPrompt
         v-model="input"
         :error="chat.error"
-        :placeholder="aiChat.texts.placeholder"
+        :placeholder="aiChat.texts?.placeholder ?? ''"
         variant="naked"
         size="sm"
         autofocus
@@ -275,7 +275,7 @@ const faqQuestions = computed<FaqCategory[]>(() => {
             <AiChatModelSelect v-model="model" />
 
             <div class="flex gap-1 justify-between items-center px-1 text-xs text-muted">
-              <span>{{ aiChat.texts.lineBreak }}</span>
+              <span>{{ aiChat.texts?.lineBreak ?? '' }}</span>
               <UKbd value="shift" />
               <UKbd value="enter" />
             </div>

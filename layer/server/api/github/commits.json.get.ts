@@ -32,9 +32,9 @@ export default defineCachedEventHandler(async (event) => {
   const allCommits = await Promise.all(
     paths.map(path =>
       octokit.rest.repos.listCommits({
-        sha: github.branch,
-        owner: github.owner,
-        repo: github.name,
+        sha: github.branch!,
+        owner: github.owner!,
+        repo: github.name!,
         path,
         since: github.since,
         per_page: github.per_page || 100,

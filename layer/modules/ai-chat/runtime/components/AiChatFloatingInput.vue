@@ -12,7 +12,7 @@ const inputRef = ref<{ inputRef: HTMLInputElement } | null>(null)
 
 const isDocsRoute = computed(() => route.meta.layout === 'docs')
 const isFloatingInputEnabled = computed(() => aiChat.floatingInput !== false)
-const focusInputShortcut = computed(() => aiChat.shortcuts.focusInput)
+const focusInputShortcut = computed(() => aiChat.shortcuts?.focusInput ?? 'meta_i')
 
 const shortcutDisplayKeys = computed(() => {
   const shortcut = focusInputShortcut.value
@@ -72,7 +72,7 @@ defineShortcuts(shortcuts)
           <UInput
             ref="inputRef"
             v-model="input"
-            :placeholder="aiChat.texts.placeholder"
+            :placeholder="aiChat.texts?.placeholder ?? ''"
             size="lg"
             maxlength="1000"
             :ui="{
