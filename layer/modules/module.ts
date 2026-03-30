@@ -5,6 +5,7 @@ import { getGitBranch, getGitEnv, getLocalGitInfo } from '../utils/git'
 import { getPackageJsonMetadata, inferSiteURL } from '../utils/meta'
 import { createComponentMetaExcludeFilters } from '../utils/component-meta'
 import { startCase, kebabCase } from '@movk/core'
+import { updateSiteConfig } from 'nuxt-site-config/kit'
 
 export interface ModuleOptions {
   /**
@@ -110,13 +111,14 @@ export default defineNuxtModule<ModuleOptions>({
     const meta = await getPackageJsonMetadata(dir)
     const gitInfo = await getLocalGitInfo(dir) || getGitEnv()
 
-    nuxt.options.site = defu(nuxt.options.site, {
+    const site = defu(nuxt.options.site, {
       url,
       name: kebabCase(meta.name || gitInfo?.name || ''),
       debug: false
     })
+    updateSiteConfig(site)
 
-    const siteName = nuxt.options.site.name
+    const siteName = (typeof nuxt.options.site === 'object' && nuxt.options.site?.name) || meta.name || gitInfo?.name || ''
 
     nuxt.options.llms = defu(nuxt.options.llms, {
       domain: url || 'https://example.com',
