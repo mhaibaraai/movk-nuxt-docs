@@ -1,5 +1,12 @@
 # 📋 Changelog
 
+## [1.16.2](https://github.com/mhaibaraai/movk-nuxt-docs/compare/v1.16.1...v1.16.2) (2026-03-30)
+
+### ♻️ Code Refactoring
+
+* 使用 updateSiteConfig 替代直接赋值并调整模块注册方式 ([f5b5881](https://github.com/mhaibaraai/movk-nuxt-docs/commit/f5b58815286ec910ce3808db6cb67603e9207fbe))
+* 合并 config 模块至 module.ts 并添加 robots 配置 ([43cebdd](https://github.com/mhaibaraai/movk-nuxt-docs/commit/43cebddba8f8ad2db8cd7ddc3ae9c5f48219f9e9))
+
 ## [1.16.1](https://github.com/mhaibaraai/movk-nuxt-docs/compare/v1.16.0...v1.16.1) (2026-03-29)
 
 ### 🐛 Bug Fixes
