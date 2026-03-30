@@ -4,12 +4,12 @@ const { toggleChat } = useAIChat()
 </script>
 
 <template>
-  <UTooltip :text="aiChat.texts.trigger">
+  <UTooltip :text="aiChat.texts?.trigger ?? ''">
     <UButton
-      :icon="aiChat.icons.trigger"
+      :icon="aiChat.icons?.trigger ?? ''"
       variant="ghost"
       class="rounded-full"
-      :aria-label="aiChat.texts.trigger"
+      :aria-label="aiChat.texts?.trigger ?? ''"
       @click="toggleChat"
     />
   </UTooltip>

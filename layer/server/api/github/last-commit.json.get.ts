@@ -29,9 +29,9 @@ export default defineCachedEventHandler(async (event) => {
 
   try {
     const commits = await octokit.rest.repos.listCommits({
-      sha: github.branch,
-      owner: github.owner,
-      repo: github.name,
+      sha: github.branch!,
+      owner: github.owner!,
+      repo: github.name!,
       path,
       per_page: 1
     }).then(res => res.data).catch(() => [])
@@ -58,8 +58,8 @@ export default defineCachedEventHandler(async (event) => {
         const prMatch = commit.commit.message.match(/#(\d+)/)
         if (prMatch?.[1]) {
           const prData = await octokit.rest.pulls.get({
-            owner: github.owner,
-            repo: github.name,
+            owner: github.owner!,
+            repo: github.name!,
             pull_number: Number.parseInt(prMatch[1])
           }).then(res => res.data).catch(() => null)
 

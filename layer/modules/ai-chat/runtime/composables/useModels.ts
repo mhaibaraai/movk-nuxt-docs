@@ -3,7 +3,7 @@ export function useModels() {
   const model = useCookie<string>('model', { default: () => config.public.aiChat.model })
 
   const { aiChat } = useAppConfig()
-  const providerIcons = computed(() => aiChat.icons.providers || {})
+  const providerIcons = computed(() => (aiChat.icons?.providers ?? {}) as Record<string, string>)
 
   function getModelIcon(modelId: string): string {
     const provider = modelId.split('/')[0] || ''

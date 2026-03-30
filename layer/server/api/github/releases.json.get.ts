@@ -17,8 +17,8 @@ export default defineCachedEventHandler(async () => {
   const octokit = new Octokit({ auth: process.env.NUXT_GITHUB_TOKEN })
 
   const releases = await octokit.rest.repos.listReleases({
-    owner: github.owner,
-    repo: github.name
+    owner: github.owner!,
+    repo: github.name!
   }).then(res => res.data).catch(() => [])
 
   return releases

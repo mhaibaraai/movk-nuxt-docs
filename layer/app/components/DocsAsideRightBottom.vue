@@ -13,9 +13,9 @@ const showExplainWithAi = computed(() => {
 <template>
   <UButton
     v-if="showExplainWithAi"
-    :icon="aiChat.icons.explain"
+    :icon="aiChat.icons?.explain ?? ''"
     target="_blank"
-    :label="aiChat.texts.explainWithAi"
+    :label="aiChat.texts?.explainWithAi ?? ''"
     size="sm"
     variant="ghost"
     color="neutral"
