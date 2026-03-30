@@ -22,7 +22,6 @@ export default defineAppConfig({
   },
   header: {
     avatar: 'https://docs.mhaibaraai.cn/avatar.png',
-    title: 'Movk Nuxt Docs',
     to: '/',
     search: true,
     colorMode: true,

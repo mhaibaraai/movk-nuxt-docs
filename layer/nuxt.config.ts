@@ -7,6 +7,7 @@ const { resolve } = createResolver(import.meta.url)
 
 export default defineNuxtConfig({
   modules: [
+    resolve('./modules/module'),
     () => {
       const nuxt = useNuxt()
       nuxt.options.icon ||= {}
@@ -145,10 +146,6 @@ export default defineNuxtConfig({
     }
   },
 
-  a11y: {
-    logIssues: false
-  },
-
   componentMeta: {
     metaFields: {
       type: false,
@@ -198,5 +195,15 @@ export default defineNuxtConfig({
 
   ogImage: {
     zeroRuntime: true
+  },
+
+  robots: {
+    groups: [
+      {
+        userAgent: '*',
+        allow: '/'
+      }
+    ],
+    sitemap: '/sitemap.xml'
   }
 })
