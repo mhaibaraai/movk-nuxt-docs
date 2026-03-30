@@ -1,5 +1,11 @@
 import { addComponentsDir, createResolver, defineNuxtModule, logger } from '@nuxt/kit'
 import type { ModuleDependencies } from 'nuxt/schema'
+import { defu } from 'defu'
+import { getGitBranch, getGitEnv, getLocalGitInfo } from '../utils/git'
+import { getPackageJsonMetadata, inferSiteURL } from '../utils/meta'
+import { createComponentMetaExcludeFilters } from '../utils/component-meta'
+import { startCase, kebabCase } from '@movk/core'
+import { updateSiteConfig } from 'nuxt-site-config/kit'
 
 export interface ModuleOptions {
   /**
@@ -29,16 +35,22 @@ export default defineNuxtModule<ModuleOptions>({
   },
   moduleDependencies(nuxt): ModuleDependencies {
     const userOptions = nuxt.options.movkNuxtDocs || {}
+
     return {
       ...userOptions.a11y !== false && {
         '@nuxt/a11y': {
-          version: '^1.0.0-alpha.1'
+          version: '^1.0.0-alpha.1',
+          defaults: {
+            logIssues: false
+          }
         }
       }
     }
   },
-  setup(options, nuxt) {
+  async setup(options, nuxt) {
     const { resolve } = createResolver(import.meta.url)
+
+    nuxt.options.alias['#ai-chat'] = resolve('./ai-chat/runtime')
 
     if (options.mermaid) {
       let mermaidAvailable = true
@@ -93,6 +105,74 @@ export default defineNuxtModule<ModuleOptions>({
         log.info('mermaid diagram support enabled')
       }
     }
+
+    const dir = nuxt.options.rootDir
+    const url = inferSiteURL()
+    const meta = await getPackageJsonMetadata(dir)
+    const gitInfo = await getLocalGitInfo(dir) || getGitEnv()
+
+    const site = defu(nuxt.options.site, {
+      url,
+      name: kebabCase(meta.name || gitInfo?.name || ''),
+      debug: false
+    })
+    updateSiteConfig(site)
+
+    const siteName = (typeof nuxt.options.site === 'object' && nuxt.options.site?.name) || meta.name || gitInfo?.name || ''
+
+    nuxt.options.llms = defu(nuxt.options.llms, {
+      domain: url || 'https://example.com',
+      title: siteName,
+      description: meta.description || '',
+      full: {
+        title: siteName,
+        description: meta.description || ''
+      }
+    })
+
+    nuxt.options.appConfig.header = defu(nuxt.options.appConfig.header, {
+      title: startCase(siteName)
+    })
+
+    nuxt.options.appConfig.seo = defu(nuxt.options.appConfig.seo, {
+      titleTemplate: `%s - ${siteName}`,
+      title: siteName,
+      description: meta.description || ''
+    })
+
+    nuxt.options.appConfig.github = defu(nuxt.options.appConfig.github, {
+      owner: gitInfo?.owner,
+      name: gitInfo?.name,
+      url: gitInfo?.url,
+      commitPath: 'src',
+      suffix: 'vue',
+      since: '2025-01-31T04:00:00Z',
+      branch: getGitBranch(),
+      per_page: 100,
+      until: new Date().toISOString()
+    })
+
+    const layerPath = resolve('..')
+
+    // @ts-ignore - component-meta is not typed
+    nuxt.hook('component-meta:extend', (options: any) => {
+      const userInclude = (nuxt.options.componentMeta && typeof nuxt.options.componentMeta === 'object')
+        ? nuxt.options.componentMeta.include || []
+        : []
+
+      options.exclude = [
+        ...(options.exclude || []),
+        ...createComponentMetaExcludeFilters(resolve, dir, layerPath, userInclude)
+      ]
+    })
+
+    nuxt.hook('nitro:config', (nitroConfig) => {
+      nitroConfig.publicAssets ||= []
+      nitroConfig.publicAssets.push({
+        dir: resolve('./runtime/public'),
+        maxAge: 60 * 60 * 24 * 30
+      })
+    })
   }
 })
 
