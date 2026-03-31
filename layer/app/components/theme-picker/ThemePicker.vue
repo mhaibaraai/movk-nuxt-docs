@@ -49,7 +49,7 @@ const {
           Primary
 
           <UButton
-            to="/docs/getting-started/theme/css-variables#colors"
+            to="https://ui.nuxt.com/docs/getting-started/theme/css-variables#colors"
             size="xs"
             color="neutral"
             variant="link"
@@ -86,7 +86,7 @@ const {
           Neutral
 
           <UButton
-            to="/docs/getting-started/theme/css-variables#text"
+            to="https://ui.nuxt.com/docs/getting-started/theme/css-variables#text"
             size="xs"
             color="neutral"
             variant="link"
@@ -113,7 +113,7 @@ const {
           Radius
 
           <UButton
-            to="/docs/getting-started/theme/css-variables#radius"
+            to="https://ui.nuxt.com/docs/getting-started/theme/css-variables#radius"
             size="xs"
             color="neutral"
             variant="link"
@@ -140,7 +140,7 @@ const {
           Font
 
           <UButton
-            to="/docs/getting-started/integrations/fonts"
+            to="https://ui.nuxt.com/docs/getting-started/integrations/fonts"
             size="xs"
             color="neutral"
             variant="link"
@@ -168,7 +168,7 @@ const {
           Icons
 
           <UButton
-            to="/docs/getting-started/integrations/icons"
+            to="https://ui.nuxt.com/docs/getting-started/integrations/icons"
             size="xs"
             color="neutral"
             variant="link"
@@ -196,7 +196,7 @@ const {
           Color Mode
 
           <UButton
-            to="/docs/getting-started/integrations/color-mode"
+            to="https://ui.nuxt.com/docs/getting-started/integrations/color-mode"
             size="xs"
             color="neutral"
             variant="link"
