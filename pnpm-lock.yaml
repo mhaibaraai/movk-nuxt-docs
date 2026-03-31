@@ -171,8 +171,8 @@ importers:
         specifier: ^0.2.0
         version: 0.2.0(magicast@0.5.2)
       nuxt-og-image:
-        specifier: ^6.3.0
-        version: 6.3.0(5d2edc8273c74cb18ffef3adfca5b3e2)
+        specifier: ^6.3.1
+        version: 6.3.1(5d2edc8273c74cb18ffef3adfca5b3e2)
       nuxt-site-config:
         specifier: ^4.0.7
         version: 4.0.7(@nuxt/schema@4.4.2)(magicast@0.5.2)(nuxt@4.4.2(@babel/core@7.29.0)(@babel/plugin-syntax-jsx@7.28.6(@babel/core@7.29.0))(@parcel/watcher@2.5.6)(@types/node@25.5.0)(@vue/compiler-sfc@3.5.31)(better-sqlite3@12.8.0)(cac@6.7.14)(db0@0.3.4(better-sqlite3@12.8.0))(eslint@10.1.0(jiti@2.6.1))(ioredis@5.10.1)(lightningcss@1.32.0)(magicast@0.5.2)(meow@13.2.0)(optionator@0.9.4)(rollup-plugin-visualizer@7.0.1(rollup@4.60.0))(rollup@4.60.0)(terser@5.46.1)(typescript@5.9.3)(vite@7.3.1(@types/node@25.5.0)(jiti@2.6.1)(lightningcss@1.32.0)(terser@5.46.1)(yaml@2.8.3))(vue-tsc@3.2.6(typescript@5.9.3))(yaml@2.8.3))(vite@7.3.1(@types/node@25.5.0)(jiti@2.6.1)(lightningcss@1.32.0)(terser@5.46.1)(yaml@2.8.3))(vue@3.5.31(typescript@5.9.3))(zod@4.3.6)
@@ -5841,8 +5841,8 @@ packages:
   nuxt-llms@0.2.0:
     resolution: {integrity: sha512-GoEW00x8zaZ1wS0R0aOYptt3b54JEaRwlyVtuAiQoH51BwYdjN5/3+00/+4wi39M5cT4j5XcnGwOxJ7v4WVb9A==}
 
-  nuxt-og-image@6.3.0:
-    resolution: {integrity: sha512-MaDiUZjn7N/lvxxYl1FzsoucZFCxcG7jA+KEV7uO0AtYa5nymaBP6kWKh1SY/yrK5BVUgrHCvz4iWjRfgU8/8A==}
+  nuxt-og-image@6.3.1:
+    resolution: {integrity: sha512-QRwUaCcluCpJ8k9BVZAaaL9OINL/8WSVXoVzoQNHNqZRN+ajhsRrWkCaiEOoNhlScq7b9mSSqD9cCQeiKica/Q==}
     engines: {node: '>=18.0.0'}
     hasBin: true
     peerDependencies:
@@ -14173,7 +14173,7 @@ snapshots:
     transitivePeerDependencies:
       - magicast
 
-  nuxt-og-image@6.3.0(5d2edc8273c74cb18ffef3adfca5b3e2):
+  nuxt-og-image@6.3.1(5d2edc8273c74cb18ffef3adfca5b3e2):
     dependencies:
       '@clack/prompts': 1.1.0
       '@nuxt/devtools-kit': 3.2.4(magicast@0.5.2)(vite@7.3.1(@types/node@25.5.0)(jiti@2.6.1)(lightningcss@1.32.0)(terser@5.46.1)(yaml@2.8.3))
