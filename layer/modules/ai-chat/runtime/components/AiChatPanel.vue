@@ -215,6 +215,10 @@ const faqQuestions = computed<FaqCategory[]>(() => {
         class="px-0 gap-2"
         :user="{ ui: { container: 'max-w-full' } }"
       >
+        <template #indicator>
+          <UChatTool icon="i-lucide-brain" text="Thinking..." streaming />
+        </template>
+
         <template #content="{ message }">
           <template v-for="(part, index) in message.parts" :key="`${message.id}-${part.type}-${index}`">
             <UChatReasoning
