@@ -115,7 +115,7 @@ defineOgImage('Docs', {
     v-if="page"
     :ui="isOpen ? {
       center: 'lg:col-span-10',
-      right: 'lg:col-span-0'
+      right: 'lg:col-span-0 hidden'
     } : undefined"
   >
     <UPageHeader :title="title">
