@@ -8,6 +8,7 @@ definePageMeta({
   heroBackground: 'opacity-30'
 })
 
+const { isOpen } = useAIChat()
 const route = useRoute()
 const appConfig = useAppConfig()
 const { toc, github } = appConfig
@@ -110,7 +111,13 @@ defineOgImage('Docs', {
 </script>
 
 <template>
-  <UPage v-if="page">
+  <UPage
+    v-if="page"
+    :ui="isOpen ? {
+      center: 'lg:col-span-10',
+      right: 'lg:col-span-0'
+    } : undefined"
+  >
     <UPageHeader :title="title">
       <template #headline>
         <UBreadcrumb :items="breadcrumb" />
