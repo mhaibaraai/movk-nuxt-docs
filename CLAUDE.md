@@ -60,7 +60,7 @@ movk-nuxt-docs/
 - **`app/app.config.ts`** - 所有 appConfig 字段的默认值
 - **`app/components/`** - 共享 UI 组件（DocsAsideLeftBody、DocsAsideLeftTop、PageHeaderLinks 等）
 - **`app/composables/`** - 共享 Composable（useCategory、useHeader、useNavigation、useTheme、fetchComponentMeta、fetchComponentExample）
-- **`modules/`** - 自定义 Nuxt 模块（ai-chat、component-example、config、css、md-rewrite、module、routing）
+- **`modules/`** - 自定义 Nuxt 模块（ai-chat、component-example、css、md-rewrite、module、routing、skills）
 
 Layer 的 peer dependencies：`nuxt 4.x`、`tailwindcss 4.x`、`better-sqlite3 12.x`（必需）；`mermaid 11.x`、`dompurify 3.x`（可选，启用 Mermaid 图表时需要）。
 

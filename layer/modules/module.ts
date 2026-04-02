@@ -63,7 +63,7 @@ export default defineNuxtModule<ModuleOptions>({
 
       if (mermaidAvailable) {
         addComponentsDir({
-          path: resolve('./runtime/components/prose'),
+          path: resolve('./components/prose'),
           pathPrefix: false,
           prefix: 'Prose',
           global: true

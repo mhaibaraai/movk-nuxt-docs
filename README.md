@@ -1,4 +1,3 @@
-[![Movk Nuxt Docs OG](https://docs.mhaibaraai.cn/_og/s/c_Docs,title_~546w5Luj5YyWIE51eHQg5paH5qGj5Li76aKY,description_~5Z-65LqOIE51eHQgNCDnmoTnjrDku6PmlofmoaPkuLvpopjvvIzpm4bmiJDnu4Tku7boh6rliqjljJbmlofmoaPjgIFBSSDogYrlpKnliqnmiYvjgIFNQ1AgU2VydmVyIOWSjOWujOaVtOeahOW8gOWPkeiAheS9k-mqjOS8mOWMluOAgg.png)](https://docs.mhaibaraai.cn/)
 [![Movk Nuxt Docs](https://docs.mhaibaraai.cn/og-image.png)](https://docs.mhaibaraai.cn/)
 
 > 基于 Nuxt 4 的现代文档主题，集成组件自动化文档、AI 聊天助手、MCP Server 和完整的开发者体验优化
@@ -93,6 +92,14 @@ npx skills add mhaibaraai/movk-nuxt-docs
 - 🎨 中文文档写作规范和内容结构模式
 - 🔧 nuxt.config.ts 和 app.config.ts 配置参考
 - 📚 入门页、功能介绍页等常用页面模板
+
+你也可以通过 Skills 发现端点直接查看已发布能力（无需安装）：
+
+```bash
+curl https://docs.mhaibaraai.cn/.well-known/skills/index.json
+```
+
+更多说明见文档：<https://docs.mhaibaraai.cn/docs/getting-started/skills>
 
 ### 作为 Layer 使用
 
