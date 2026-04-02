@@ -2,6 +2,7 @@ import { defineNuxtConfig } from 'nuxt/config'
 import pkg from './package.json'
 import { createResolver, useNuxt } from '@nuxt/kit'
 import { join } from 'pathe'
+import { createAlibabaPuHuiTiProvider } from './providers/alibaba-puhuiti'
 
 const { resolve } = createResolver(import.meta.url)
 
@@ -120,8 +121,7 @@ export default defineNuxtConfig({
       cfg.optimizeDeps.include.push(
         'tailwindcss/colors',
         '@movk/nuxt-docs > @movk/core',
-        '@movk/nuxt-docs > prettier',
-        '@movk/nuxt-docs > reka-ui'
+        '@movk/nuxt-docs > prettier'
       )
 
       // AI Chat static deps — only pre-bundle when the feature is actually enabled.
@@ -168,8 +168,11 @@ export default defineNuxtConfig({
   },
 
   fonts: {
+    providers: {
+      'alibaba-puhuiti': createAlibabaPuHuiTiProvider('https://cdn.mhaibaraai.cn/fonts')
+    },
     families: [
-      { name: 'Noto Sans SC', global: true, provider: 'local' }
+      { name: 'Alibaba PuHuiTi', provider: 'alibaba-puhuiti', global: true }
     ]
   },
 
