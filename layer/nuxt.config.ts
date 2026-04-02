@@ -95,6 +95,7 @@ export default defineNuxtConfig({
 
   nitro: {
     prerender: {
+      routes: ['/'],
       crawlLinks: true,
       failOnError: false,
       autoSubfolderIndex: false
@@ -168,7 +169,6 @@ export default defineNuxtConfig({
 
   fonts: {
     families: [
-      { name: 'Public Sans', global: true },
       { name: 'Noto Sans SC', global: true, provider: 'local' }
     ]
   },

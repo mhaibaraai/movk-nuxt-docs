@@ -83,7 +83,7 @@ export function useTheme() {
 
   const link = computed(() => {
     const name = font.value
-    if (name === 'Public Sans') return []
+    if (name === 'Public Sans' || !fonts.includes(name)) return []
     return [{
       rel: 'stylesheet' as const,
       href: `https://fonts.googleapis.com/css2?family=${encodeURIComponent(name)}:wght@400;500;600;700&display=swap`,
