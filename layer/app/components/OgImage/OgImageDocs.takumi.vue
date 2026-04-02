@@ -1,17 +1,13 @@
 <script setup lang="ts">
-withDefaults(defineProps<{
+defineProps<{
   title?: string
   description?: string
   siteName?: string
-}>(), {
-  title: '文档',
-  description: '使用 Nuxt Content 构建的文档站点',
-  siteName: 'Movk Nuxt Docs'
-})
+}>()
 </script>
 
 <template>
-  <div style="font-family: 'Noto Sans SC', sans-serif;" class="w-full h-full flex flex-col justify-center items-center relative p-10 lg:p-15 bg-white text-neutral-900 dark:bg-neutral-900 dark:text-neutral-50">
+  <div style="font-family: 'Alibaba PuHuiTi', sans-serif;" class="w-full h-full flex flex-col justify-center items-center relative p-10 lg:p-15 bg-white text-neutral-900 dark:bg-neutral-900 dark:text-neutral-50">
     <div
       class="absolute top-0 left-0 right-0 bottom-0"
       :style="{
@@ -65,14 +61,14 @@ withDefaults(defineProps<{
             fill="url(#nsLine1)"
           />
         </svg>
-        <span class="text-[32px] font-medium lg:text-[42px] text-green-500">
+        <span class="text-[32px] font-bold lg:text-[42px] text-green-500">
           {{ siteName }}
         </span>
       </div>
 
       <div class="items-center justify-center w-full">
         <h1
-          class="text-[48px] lg:text-[72px] leading-tight text-pretty font-normal text-slate-900 max-w-175 lg:max-w-250"
+          class="text-[48px] lg:text-[72px] leading-tight text-pretty font-medium text-slate-800 max-w-175 lg:max-w-250"
           style="display: block; line-clamp: 3; text-overflow: ellipsis; text-wrap: balance;"
         >
           {{ title }}
@@ -81,7 +77,7 @@ withDefaults(defineProps<{
 
       <p
         v-if="description"
-        class="text-slate-500 text-[24px] lg:text-[32px] opacity-70 max-w-162.5 lg:max-w-225 leading-normal"
+        class="text-slate-700 text-[24px] lg:text-[32px] font-normal opacity-70 max-w-162.5 lg:max-w-225 leading-normal"
       >
         {{ description }}
       </p>

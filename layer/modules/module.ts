@@ -153,7 +153,6 @@ export default defineNuxtModule<ModuleOptions>({
     })
 
     const layerPath = resolve('..')
-
     // @ts-ignore - component-meta is not typed
     nuxt.hook('component-meta:extend', (options: any) => {
       const userInclude = (nuxt.options.componentMeta && typeof nuxt.options.componentMeta === 'object')
@@ -164,14 +163,6 @@ export default defineNuxtModule<ModuleOptions>({
         ...(options.exclude || []),
         ...createComponentMetaExcludeFilters(resolve, dir, layerPath, userInclude)
       ]
-    })
-
-    nuxt.hook('nitro:config', (nitroConfig) => {
-      nitroConfig.publicAssets ||= []
-      nitroConfig.publicAssets.push({
-        dir: resolve('./runtime/public'),
-        maxAge: 60 * 60 * 24 * 30
-      })
     })
   }
 })
