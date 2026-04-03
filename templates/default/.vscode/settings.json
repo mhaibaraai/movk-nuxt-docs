@@ -12,8 +12,9 @@
   },
   "prettier.enable": false,
   "tailwindCSS.classAttributes": ["class", "ui"],
+  "tailwindCSS.classFunctions": ["defineAppConfig"],
   "tailwindCSS.experimental.classRegex": [
-    ["['\"`]([^'\"`]*)['\"`]"]
+    ["[:\\[,]\\s*['\"`]([^'\"`]*)['\"`]"]
   ],
   // Required for the extension
   "mdc.enableFormatting": true,

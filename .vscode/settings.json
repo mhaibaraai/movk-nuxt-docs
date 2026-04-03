@@ -11,9 +11,17 @@
     "*.css": "tailwindcss"
   },
   "prettier.enable": false,
-  "tailwindCSS.classAttributes": ["class", "ui"],
+  "tailwindCSS.classAttributes": [
+    "class",
+    "ui"
+  ],
+  "tailwindCSS.classFunctions": [
+    "defineAppConfig"
+  ],
   "tailwindCSS.experimental.classRegex": [
-    ["['\"`]([^'\"`]*)['\"`]"]
+    [
+      "[:\\[,]\\s*['\"`]([^'\"`]*)['\"`]"
+    ]
   ],
   // Required for the extension
   "mdc.enableFormatting": true,
@@ -24,5 +32,11 @@
     "editor.insertSpaces": true,
     "editor.detectIndentation": false,
     "editor.formatOnPaste": true
+  },
+  "tailwindCSS.experimental.configFile": {
+    "layer/app/assets/css/main.css": [
+      "layer/**",
+      "docs/**"
+    ]
   }
 }
