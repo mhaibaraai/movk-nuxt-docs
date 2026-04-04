@@ -4,7 +4,7 @@ import type { FaqCategory, FaqQuestions, ToolPart, ToolState } from '../types'
 import { Chat } from '@ai-sdk/vue'
 import { DefaultChatTransport, getToolName, isReasoningUIPart, isTextUIPart, isToolUIPart } from 'ai'
 import { computed } from 'vue'
-import { isReasoningStreaming, isToolStreaming } from '@nuxt/ui/utils/ai'
+import { isPartStreaming, isToolStreaming } from '@nuxt/ui/utils/ai'
 import { useModels } from '../composables/useModels'
 import { splitByCase, upperFirst } from 'scule'
 import AiChatPreStream from './AiChatPreStream.vue'
@@ -224,7 +224,7 @@ const faqQuestions = computed<FaqCategory[]>(() => {
             <UChatReasoning
               v-if="isReasoningUIPart(part)"
               :text="part.text"
-              :streaming="isReasoningStreaming(message, index, chat)"
+              :streaming="isPartStreaming(part)"
               :icon="aiChat.icons?.reasoning ?? ''"
             >
               <MDCCached
@@ -244,7 +244,7 @@ const faqQuestions = computed<FaqCategory[]>(() => {
                 :parser-options="{ highlight: false }"
                 class="*:first:mt-0 *:last:mb-0"
               />
-              <p v-else-if="message.role === 'user'" class="whitespace-pre-wrap">
+              <p v-else-if="message.role === 'user'" class="whitespace-pre-wrap text-sm/6">
                 {{ part.text }}
               </p>
             </template>
