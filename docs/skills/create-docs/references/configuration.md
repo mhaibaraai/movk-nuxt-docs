@@ -56,7 +56,7 @@ export default defineNuxtConfig({
 })
 ```
 
-### Layer 功能开关（movkNuxtDocs）
+### Layer 功能开关
 
 | 选项 | 类型 | 默认值 | 描述 |
 |------|------|--------|------|

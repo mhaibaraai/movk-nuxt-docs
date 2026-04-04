@@ -1,282 +1,219 @@
 # MDC 组件参考
 
-Movk Nuxt Docs 支持在 Markdown 中使用 Vue 组件（MDC 语法）。所有 Nuxt UI Prose 组件均可使用。
+Movk Nuxt Docs 使用带有 MDC 语法的 Nuxt UI 组件。
 
-## MDC 语法规则
+**关键：在 MDC 中始终对 Nuxt UI 组件使用 `u-` 前缀：**
 
-### 块级组件
+```markdown
+::u-page-hero      ✅ 正确（解析为 UPageHero）
+::page-hero        ❌ 错误（无法解析）
+```
 
-使用 `::` 开始和结束，嵌套时增加冒号数量：
+---
 
-```mdc
-<!-- 一层嵌套 -->
-::component-name
-内容
-::
+## 文档源
 
-<!-- 两层嵌套 -->
-::parent
-  :::child
-  内容
+**组件：**
+- 组件列表：https://ui.nuxt.com/llms.txt
+- 原始文档：`https://ui.nuxt.com/raw/docs/components/[component].md`
+
+**排版/Prose：**
+- 介绍：https://ui.nuxt.com/raw/docs/typography.md
+- 标题和文本：https://ui.nuxt.com/raw/docs/typography/headers-and-text.md
+- 列表和表格：https://ui.nuxt.com/raw/docs/typography/lists-and-tables.md
+- 代码块：https://ui.nuxt.com/raw/docs/typography/code-blocks.md
+- 标注：https://ui.nuxt.com/raw/docs/typography/callouts.md
+- 手风琴：https://ui.nuxt.com/raw/docs/typography/accordion.md
+- 选项卡：https://ui.nuxt.com/raw/docs/typography/tabs.md
+
+---
+
+## 页面布局组件
+
+文档网站最常用的组件：
+
+| 组件 | 原始文档 | 用途 |
+|-----------|----------|---------|
+| `u-page-hero` | [page-hero.md](https://ui.nuxt.com/raw/docs/components/page-hero.md) | 登陆页视图 |
+| `u-page-section` | [page-section.md](https://ui.nuxt.com/raw/docs/components/page-section.md) | 内容部分 |
+| `u-page-grid` | [page-grid.md](https://ui.nuxt.com/raw/docs/components/page-grid.md) | 响应式网格布局 |
+| `u-page-card` | [page-card.md](https://ui.nuxt.com/raw/docs/components/page-card.md) | 富内容卡片 |
+| `u-page-feature` | [page-feature.md](https://ui.nuxt.com/raw/docs/components/page-feature.md) | 功能展示 |
+| `u-page-cta` | [page-cta.md](https://ui.nuxt.com/raw/docs/components/page-cta.md) | 行动号召 |
+| `u-page-header` | [page-header.md](https://ui.nuxt.com/raw/docs/components/page-header.md) | 页面标题 |
+
+---
+
+## 快速语法示例
+
+### 带按钮的登陆页视图
+
+```markdown
+::u-page-hero
+#title
+项目名称
+
+#description
+简短描述
+
+#headline
+  :::u-button{size="sm" to="/changelog" variant="outline"}
+  v1.0.0 →
+  :::
+
+#links
+  :::u-button{color="neutral" size="xl" to="/getting-started" trailing-icon="i-lucide-arrow-right"}
+  开始使用
+  :::
+
+  :::u-button{color="neutral" size="xl" to="https://github.com/..." target="_blank" variant="outline" icon="i-simple-icons-github"}
+  GitHub
   :::
 ::
+```
 
-<!-- 三层嵌套 -->
-::parent
-  :::child
-    ::::grandchild
-    内容
+### 包含卡片的网格
+
+```markdown
+::u-page-section
+  :::u-page-grid
+    ::::u-page-card{spotlight class="col-span-2 lg:col-span-1" to="/feature"}
+    #title
+    功能标题
+
+    #description
+    功能描述
+    ::::
+
+    ::::u-page-card{spotlight class="col-span-2"}
+      :::::u-color-mode-image{alt="截图" class="w-full rounded-lg" dark="/images/dark.png" light="/images/light.png"}
+      :::::
+
+    #title
+    视觉功能
+
+    #description
+    带有浅色/深色模式图像
     ::::
   :::
 ::
 ```
 
-### 行内组件
+### 包含代码块的卡片
 
-使用单个 `:` 前缀：
-
-```mdc
-:icon{name="i-lucide-star"}
-:badge[v3.0.0]
-:kbd{value="meta"}
-```
-
-### 传递 Props
-
-**行内 Props：**
-
-```mdc
-::callout{icon="i-lucide-info" color="blue"}
-内容
-::
-```
-
-**YAML Props（复杂属性）：**
-
-```mdc
-::component
----
-icon: i-lucide-star
-title: 标题
-to: /docs/guide
-target: _blank
----
-内容
-::
-```
-
-### 传递 Slots
-
-使用 `#slot-name` 语法：
-
-```mdc
-::card
-默认插槽内容
+```markdown
+::::u-page-card{spotlight class="col-span-2 md:col-span-1"}
+  :::::div{.bg-elevated.rounded-lg.p-3}
+  ```ts [config.ts]
+  export default {
+    option: 'value'
+  }
+  ```
+  :::::
 
 #title
-标题插槽内容
+配置
 
 #description
-描述插槽内容
+易于配置
+::::
+```
+
+---
+
+## 内容组件
+
+| 组件 | 原始文档 | 用途 |
+|-----------|----------|---------|
+| `code-group` | N/A (Nuxt Content) | 多选项卡代码块 |
+| `steps` | N/A (Nuxt Content) | 分步指南 |
+| `tabs` | [tabs.md](https://ui.nuxt.com/raw/docs/components/tabs.md) | 选项卡式内容 |
+| `accordion` | [accordion.md](https://ui.nuxt.com/raw/docs/components/accordion.md) | 可折叠部分 |
+
+### 代码组（Nuxt Content）
+
+```markdown
+::code-group
+```ts [nuxt.config.ts]
+export default defineNuxtConfig({})
+```
+
+```ts [app.config.ts]
+export default defineAppConfig({})
+```
 ::
 ```
 
-## 可用组件
+### 步骤（Nuxt Content）
 
-### Callout 提示框
+```markdown
+::steps
+### 安装
 
-四种快捷方式，带预设图标和颜色：
+运行安装命令。
 
-```mdc
-::note
-补充信息。
+### 配置
+
+添加你的配置。
+
+### 使用
+
+开始使用该功能。
+::
+```
+
+---
+
+## 标注组件
+
+| 组件 | 用途 |
+|-----------|---------|
+| `::note` | 附加信息 |
+| `::tip` | 有用的建议 |
+| `::warning` | 重要警告 |
+| `::caution` | 严重警告 |
+
+```markdown
+::note{title="自定义标题"}
+在此处提供上下文。
 ::
 
 ::tip
-有用的建议。
+专业提示内容。
 ::
 
 ::warning
-请谨慎操作。
+小心使用此功能。
 ::
 
 ::caution
-此操作不可撤销。
+此操作无法撤销。
 ::
 ```
 
-也支持自定义 `callout`：
-
-```mdc
-::callout{icon="i-lucide-rocket" color="primary"}
-自定义提示内容。
-::
-```
-
-支持链接跳转：
-
-```mdc
-::tip{to="/docs/guide"}
-点击查看指南。
-::
-```
-
-### Accordion 折叠面板
-
-```mdc
-::accordion
-  :::accordion-item{label="问题一" icon="i-lucide-circle-help"}
-  回答内容。
-  :::
-
-  :::accordion-item{label="问题二" icon="i-lucide-circle-help"}
-  回答内容。
-  :::
-::
-```
-
-### Tabs 标签页
-
-```mdc
-::tabs
-  :::tabs-item{label="pnpm" icon="i-simple-icons-pnpm"}
-  ```bash
-  pnpm add @movk/nuxt-docs
-  ```
-  :::
-
-  :::tabs-item{label="npm" icon="i-simple-icons-npm"}
-  ```bash
-  npm install @movk/nuxt-docs
-  ```
-  :::
-
-  :::tabs-item{label="yarn" icon="i-simple-icons-yarn"}
-  ```bash
-  yarn add @movk/nuxt-docs
-  ```
-  :::
-::
-```
-
-### Card 和 CardGroup 卡片
-
-单个卡片：
-
-```mdc
-::card
 ---
-icon: i-lucide-book
-title: 文档标题
-to: /docs/guide
+
+## 图像
+
+### 颜色模式图像
+
+```markdown
+:u-color-mode-image{alt="功能" dark="/images/dark.png" light="/images/light.png" class="rounded-lg" width="859" height="400"}
+```
+
 ---
-卡片描述内容。
-::
-```
 
-卡片组（网格布局）：
+## 网格类参考
 
-```mdc
-::card-group
-  :::card
-  ---
-  icon: i-lucide-rocket
-  title: 快速开始
-  to: /docs/getting-started
-  ---
-  5 分钟创建文档站点。
-  :::
+| 类 | 用法 |
+|-------|-------|
+| `col-span-2` | 全宽 |
+| `col-span-2 lg:col-span-1` | 移动设备全宽，桌面设备半宽 |
+| `col-span-2 md:col-span-1` | 移动设备全宽，平板电脑及以上设备半宽 |
 
-  :::card
-  ---
-  icon: i-lucide-palette
-  title: 自定义主题
-  to: /docs/customization
-  ---
-  自定义颜色、字体和布局。
-  :::
-::
-```
+---
 
-### Steps 步骤
-
-```mdc
-::steps{level="4"}
-#### 安装依赖
-
-```bash [Terminal]
-pnpm add @movk/nuxt-docs better-sqlite3 tailwindcss
-```
-
-#### 配置 Nuxt
-
-```ts [nuxt.config.ts]
-export default defineNuxtConfig({
-  extends: ['@movk/nuxt-docs']
-})
-```
-
-#### 启动开发服务器
-
-```bash [Terminal]
-pnpm dev
-```
-::
-```
-
-### Badge 标签
-
-```mdc
-::badge
-**v1.0.0**
-::
-```
-
-### Collapsible 折叠内容
-
-```mdc
-::collapsible
-| 属性 | 默认值 | 类型 |
-|------|--------|------|
-| `name` | - | `string` |
-| `size` | `md` | `string` |
-::
-```
-
-### Field 和 FieldGroup 字段说明
-
-```mdc
-::field-group
-  :::field{name="title" type="string"}
-  页面标题，显示在浏览器标签和导航中。
-  :::
-
-  :::field{name="description" type="string"}
-  页面描述，用于 SEO meta 标签。
-  :::
-::
-```
-
-### Icon 图标
-
-```mdc
-:icon{name="i-lucide-star"}
-:icon{name="i-simple-icons-github"}
-```
-
-图标集：
-- **Lucide**：`i-lucide-*`（默认图标集）
-- **Simple Icons**：`i-simple-icons-*`（品牌图标）
-
-### Kbd 键盘快捷键
-
-```mdc
-:kbd{value="meta"} :kbd{value="K"}
-```
-
-### Mermaid 图表
-
-> **前提条件**：需在 `nuxt.config.ts` 中启用 `movkNuxtDocs.mermaid = true`，并安装 `mermaid` 和 `dompurify` 依赖。
+## Mermaid 图表
 
 ````mdc
 ```mermaid
@@ -286,6 +223,8 @@ graph TD
     B -->|否| D[结束]
 ```
 ````
+
+---
 
 ## 内容展示组件
 
@@ -321,182 +260,12 @@ graph TD
 :page-last-commit
 ```
 
-## 代码块
-
-### 语言标识和文件名
-
-```mdc
-```ts [nuxt.config.ts]
-export default defineNuxtConfig({})
-```
-```
-
-### 代码组
-
-````mdc
-::code-group
-```ts [nuxt.config.ts]
-export default defineNuxtConfig({
-  extends: ['@movk/nuxt-docs']
-})
-```
-
-```json [package.json]
-{
-  "dependencies": {
-    "@movk/nuxt-docs": "latest"
-  }
-}
-```
-::
-````
-
-### 代码预览
-
-````mdc
-::code-preview
-预览内容
-
-#code
-```mdc
-预览对应的代码
-```
-::
-````
-
-### Diff 高亮
-
-```mdc
-```diff [nuxt.config.ts]
-export default defineNuxtConfig({
-+  extends: ['@movk/nuxt-docs']
-})
-```
-```
-
-## 页面模板
-
-### 落地页首页模板
-
-首页 `content/index.md` 使用 Nuxt UI 落地页组件（**必须带 `u-` 前缀**）：
-
-```md
----
-title: 项目名称
-description: 项目简短描述。
-navigation: false
 ---
 
-::u-page-hero
-#title
-项目名称
+## 完整文档参考
 
-#description
-一句话介绍项目的核心价值。
-
-#links
-  :::u-button{color="neutral" size="xl" to="/docs/getting-started" trailing-icon="i-lucide-arrow-right"}
-  快速开始
-  :::
-
-  :::u-button{color="neutral" size="xl" to="https://github.com/..." target="_blank" variant="outline" icon="i-simple-icons-github"}
-  GitHub
-  :::
-::
-
-::u-page-section
-  :::u-page-grid
-    ::::u-page-feature{icon="i-lucide-zap" title="功能一"}
-    功能一的简短描述。
-    ::::
-
-    ::::u-page-feature{icon="i-lucide-palette" title="功能二"}
-    功能二的简短描述。
-    ::::
-
-    ::::u-page-feature{icon="i-lucide-bot" title="AI 聊天"}
-    内置 AI 聊天助手，支持多模型切换。
-    ::::
-  :::
-::
-```
-
-> 落地页专用组件（`u-page-*`）**仅在首页使用**，文档页面使用普通内容组件（无 `u-` 前缀）。
-
-### 入门页面模板
-
-```md
----
-title: 快速开始
-description: 5 分钟创建你的文档站点。
----
-
-## 安装
-
-::steps{level="3"}
-### 创建项目
-
-```bash [Terminal]
-npx nuxi init -t gh:mhaibaraai/movk-nuxt-docs/templates/default my-docs
-```
-
-### 启动开发服务器
-
-```bash [Terminal]
-cd my-docs
-pnpm dev
-```
-::
-
-## 下一步
-
-::card-group
-  :::card{icon="i-lucide-settings" title="配置" to="/docs/configuration"}
-  自定义站点设置。
-  :::
-
-  :::card{icon="i-lucide-palette" title="主题" to="/docs/customization"}
-  调整外观和主题。
-  :::
-::
-```
-
-### 功能介绍页面模板
-
-```md
----
-title: 功能名称
-description: 功能的简短描述。
----
-
-## 概述
-
-功能介绍...
-
-## 基础用法
-
-基本使用说明...
-
-::note
-补充说明信息。
-::
-
-## 配置选项
-
-| 选项 | 类型 | 默认值 | 描述 |
-|------|------|--------|------|
-| `option1` | `string` | - | 选项说明 |
-| `option2` | `boolean` | `true` | 选项说明 |
-
-## 示例
-
-代码示例...
-
-## 下一步
-
-::card-group
-  :::card{icon="i-lucide-arrow-right" title="相关功能" to="/docs/..."}
-  相关功能描述。
-  :::
-::
-```
+- **所有组件**：https://ui.nuxt.com/llms.txt
+- **完整文档（用于 LLM）**：https://ui.nuxt.com/llms-full.txt
+- **排版介绍**：https://ui.nuxt.com/raw/docs/typography.md
+- **内容集成**：https://ui.nuxt.com/raw/docs/getting-started/integrations/content.md
+- **主题自定义**：https://ui.nuxt.com/raw/docs/getting-started/theme/components.md
