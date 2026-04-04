@@ -5,7 +5,7 @@ export interface ExtendedButtonProps extends ButtonProps {
 }
 
 declare module 'nuxt/schema' {
-  interface AppConfig {
+  interface AppConfigInput {
     seo: {
       titleTemplate: string
       title: string
