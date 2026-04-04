@@ -24,10 +24,11 @@
     ]
   ],
   "mdc.enableComponentMetadataCompletions": true,
-  // Recommended (for `mdc` and `md`, depending on your usage)
   "[mdc]": {
     "editor.tabSize": 2,
-    "editor.insertSpaces": true
+    "editor.insertSpaces": true,
+    "editor.detectIndentation": false,
+    "editor.formatOnPaste": false
   },
   "tailwindCSS.experimental.configFile": {
     "layer/app/assets/css/main.css": [
