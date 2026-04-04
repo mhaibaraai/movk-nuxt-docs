@@ -1,4 +1,3 @@
-[![Movk Nuxt Docs OG](https://docs.mhaibaraai.cn/_og/s/c_Docs,title_~546w5Luj5YyWIE51eHQg5paH5qGj5Li76aKY,description_~5Z-65LqOIE51eHQgNCDnmoTnjrDku6PmlofmoaPkuLvpopjvvIzpm4bmiJDnu4Tku7boh6rliqjljJbmlofmoaPjgIFBSSDogYrlpKnliqnmiYvjgIFNQ1AgU2VydmVyIOWSjOWujOaVtOeahOW8gOWPkeiAheS9k-mqjOS8mOWMluOAgg.png)](https://docs.mhaibaraai.cn/)
 [![Movk Nuxt Docs](https://docs.mhaibaraai.cn/og-image.png)](https://docs.mhaibaraai.cn/)
 
 > 基于 Nuxt 4 的现代文档主题，集成组件自动化文档、AI 聊天助手、MCP Server 和完整的开发者体验优化
@@ -29,6 +28,23 @@
 - **MCP Server 支持** - 集成 Model Context Protocol 服务器，为 AI 助手提供结构化的文档访问能力
 - **LLM 优化** - 通过 `nuxt-llms` 模块自动生成 `llms.txt` 和 `llms-full.txt`，为 AI 工具提供优化的文档索引
 - **流式响应** - 支持 AI 响应流式输出和代码高亮，配合 `shiki-stream` 实现实时语法高亮渲染
+
+### AI 助手 Skill
+
+Agent Skills 是一种开放格式，允许 AI 代理（Claude Code、Cursor、Windsurf 等）自动发现并加载文档站的专属工作流。Movk Nuxt Docs 将 `skills/` 目录下的所有技能自动发布到 `/.well-known/skills/` 端点。
+
+**内置技能：**
+
+- `create-docs` - 为任意项目生成基于 Movk Nuxt Docs 的完整文档网站
+- `review-docs` - 审查文档质量，检查清晰度、SEO 和技术正确性
+
+**一键安装到 AI 工具：**
+
+```bash
+npx skills add https://docs.mhaibaraai.cn
+```
+
+详见 [Agent Skills 文档](https://docs.mhaibaraai.cn/docs/getting-started/skills)。
 
 ### 🧩 自动化文档生成
 
