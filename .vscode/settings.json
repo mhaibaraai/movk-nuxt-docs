@@ -31,9 +31,6 @@
     "editor.formatOnPaste": false
   },
   "tailwindCSS.experimental.configFile": {
-    "layer/app/assets/css/main.css": [
-      "layer/**",
-      "docs/**"
-    ]
+    "layer/app/assets/css/main.css": "layer/**"
   }
 }
