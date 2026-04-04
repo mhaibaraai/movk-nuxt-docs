@@ -1,5 +1,11 @@
 # 📋 Changelog
 
+## [1.17.2](https://github.com/mhaibaraai/movk-nuxt-docs/compare/v1.17.1...v1.17.2) (2026-04-04)
+
+### 🐛 Bug Fixes
+
+* **layer:** 补全 AppConfig 类型声明并修复 defu 类型兼容性 ([36ee1d5](https://github.com/mhaibaraai/movk-nuxt-docs/commit/36ee1d5e90301c8d4022331d9f165808b12bd27b))
+
 ## [1.17.1](https://github.com/mhaibaraai/movk-nuxt-docs/compare/v1.17.0...v1.17.1) (2026-04-04)
 
 ### 🐛 Bug Fixes
