@@ -29,6 +29,23 @@
 - **LLM 优化** - 通过 `nuxt-llms` 模块自动生成 `llms.txt` 和 `llms-full.txt`，为 AI 工具提供优化的文档索引
 - **流式响应** - 支持 AI 响应流式输出和代码高亮，配合 `shiki-stream` 实现实时语法高亮渲染
 
+### AI 助手 Skill
+
+Agent Skills 是一种开放格式，允许 AI 代理（Claude Code、Cursor、Windsurf 等）自动发现并加载文档站的专属工作流。Movk Nuxt Docs 将 `skills/` 目录下的所有技能自动发布到 `/.well-known/skills/` 端点。
+
+**内置技能：**
+
+- `create-docs` - 为任意项目生成基于 Movk Nuxt Docs 的完整文档网站
+- `review-docs` - 审查文档质量，检查清晰度、SEO 和技术正确性
+
+**一键安装到 AI 工具：**
+
+```bash
+npx skills add https://docs.mhaibaraai.cn
+```
+
+详见 [Agent Skills 文档](https://docs.mhaibaraai.cn/docs/getting-started/skills)。
+
 ### 🧩 自动化文档生成
 
 - **组件元数据自动提取** - 基于 `nuxt-component-meta` 自动提取 Vue 组件的 Props、Slots、Emits 定义
@@ -77,29 +94,6 @@ pnpm dev
 ```
 
 访问 `http://localhost:3000` 查看你的文档网站。
-
-### AI 助手 Skill
-
-为你的 AI 助手（Cursor、Claude Code 等）添加 Movk Nuxt Docs 专业知识，加速文档编写：
-
-```bash
-npx skills add mhaibaraai/movk-nuxt-docs
-```
-
-此 Skill 为 AI 助手提供 Movk Nuxt Docs 专业知识，帮助你更高效地编写文档：
-
-- 📝 MDC 组件用法和现成模板
-- 🎨 中文文档写作规范和内容结构模式
-- 🔧 nuxt.config.ts 和 app.config.ts 配置参考
-- 📚 入门页、功能介绍页等常用页面模板
-
-你也可以通过 Skills 发现端点直接查看已发布能力（无需安装）：
-
-```bash
-curl https://docs.mhaibaraai.cn/.well-known/skills/index.json
-```
-
-更多说明见文档：<https://docs.mhaibaraai.cn/docs/getting-started/skills>
 
 ### 作为 Layer 使用
 

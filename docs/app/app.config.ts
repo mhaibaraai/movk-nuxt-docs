@@ -59,7 +59,8 @@ export default defineAppConfig({
           'AI Chat 是怎么「读懂」我整个文档站的？',
           'MCP Server 能做什么普通 AI 对话做不到的事？',
           'llms.txt 和 RAG 检索有什么关系？',
-          '如何让 Cursor、Claude 这类工具直接理解我的文档？'
+          '如何让 Cursor、Claude 这类工具直接理解我的文档？',
+          '帮我写一个用于代码审查的 Agent Skill'
         ]
       },
       {

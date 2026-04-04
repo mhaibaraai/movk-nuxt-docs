@@ -1,12 +1,10 @@
 # SEO 审查指南
 
-Movk Nuxt Docs 文档站点的 SEO 最佳实践，针对中文内容进行了适配。
+Movk Nuxt Docs 文档站点的 SEO 最佳实践。
 
 ## 标题优化（title）
 
-### 长度建议（中文适配）
-
-中文字符的信息密度约为英文的 2 倍，建议：
+### 长度建议
 
 | 状态 | 字符数 | 说明 |
 |------|--------|------|
@@ -42,7 +40,7 @@ seo:
 
 ## 描述优化（description）
 
-### 长度建议（中文适配）
+### 长度建议
 
 | 状态 | 字符数 | 说明 |
 |------|--------|------|
@@ -80,6 +78,17 @@ Movk Nuxt Docs 中 H1 由系统自动从 `title` 字段渲染，文档内容从 
 - [ ] 不在文档正文使用 `#`（H1）
 - [ ] 不跳级（`##` → `###`，不从 `##` 跳到 `####`）
 - [ ] H2 和 H3 标题描述性强，不通用
+- [ ] 逻辑流和嵌套
+- [ ] 页面上的每个标题都是唯一的
+
+### H1 要求
+
+通用文档（不使用 Movk Nuxt Docs 主题）可以使用 H1，但建议保持清晰的层级结构。
+
+- [ ] **每页单一 H1**（对 SEO 至关重要）
+- [ ] 匹配或关联到 `<title>` 标签
+- [ ] 包含主要关键字
+- [ ] 描述性和具体
 
 ### 描述性标题
 
@@ -90,116 +99,135 @@ Movk Nuxt Docs 中 H1 由系统自动从 `title` 字段渲染，文档内容从 
 | 示例 | 自定义浮动输入框示例 |
 | 选项 | aiChat 配置选项参考 |
 
----
+### 关键字优化
 
-## 内部链接
+H2 和 H3 标题应该：
+- 自然地包含相关关键字
+- 回答用户问题（适当时以 FAQ 风格）
+- 可扫描（用户经常跳过标题）
 
-### 链接文本质量
-
-✅ 描述性锚文本：
-- 「了解更多关于 [AI 聊天配置](/docs/ai-chat)」
-- 「查看 [app.config.ts 配置参考](/docs/configuration)」
-
-❌ 无意义锚文本：
-- 「点击 [这里](/docs/ai-chat) 了解更多」
-- 「[查看详情](/docs/configuration)」（太通用）
-
-### 链接覆盖
-
-- [ ] 每个指南页面有指向相关页面的链接
-- [ ] Front-Matter `links` 字段包含主要相关资源
-- [ ] 章节入口页链接到本章所有子页面
-
----
-
-## 内容长度
-
-### 建议长度（中文）
-
-| 页面类型 | 最少字数 | 最优字数 |
-|----------|----------|----------|
-| 首页（index.md） | 200 字 | 400-600 字 |
-| 快速开始/安装 | 300 字 | 500-800 字 |
-| 功能指南 | 400 字 | 600-1200 字 |
-| API 参考 | 200 字 | 400-800 字 |
-
-相邻 H2 标题之间：100-400 个中文字符。
-
-**警告：**
-- 少于 100 字的章节：内容太薄，SEO 价值低
-- 超过 1000 字的章节无子标题：拆分为 H3 子章节
-
----
-
-## 图片 SEO
-
-### Alt 文本
-
-所有图片必须有描述性 alt 文本：
-
-✅ 好：`alt="Movk Nuxt Docs 文档站点截图，展示 AI 聊天面板"`
-❌ 差：`alt="截图"`、`alt="图片"`
-
-### 深浅模式图片
-
-使用 `:u-color-mode-image` 提供两个版本：
-
-```mdc
-:u-color-mode-image{
-  alt="AI 聊天面板截图"
-  light="/images/ai-chat-light.png"
-  dark="/images/ai-chat-dark.png"
-  class="rounded-lg"
-  width="1200"
-  height="675"
-}
-```
-
-### 图片文件命名
-
-使用描述性 kebab-case 命名：
-✅ `ai-chat-panel-dark.png`
-❌ `screenshot-1.png`、`图片.png`
+**示例 FAQ 风格标题：**
+- "我如何轮换 API 密钥？"
+- "OAuth 和 JWT 之间有什么区别？"
+- "我何时应该使用服务器端呈现？"
 
 ---
 
 ## URL 结构
 
-Movk Nuxt Docs 自动从文件结构生成 URL，数字前缀不出现在 URL 中：
+### 最佳实践
+- [ ] 小写、用连字符分隔（kebab-case）
+- [ ] 描述性和稳定（发布后不要更改）
+- [ ] 遵循编号目录模式（`1.getting-started/`、`2.guide/`）
+- [ ] 匹配内容层级
+- [ ] 避免特殊字符和下划线
 
-| 文件路径 | 生成 URL |
-|----------|----------|
-| `1.getting-started/1.index.md` | `/docs/getting-started` |
-| `1.getting-started/2.installation.md` | `/docs/getting-started/installation` |
-| `2.guide/ai-chat.md` | `/docs/guide/ai-chat` |
+### 示例
 
-**URL 规则（自动保证）：**
-- 全小写
-- 连字符分隔（kebab-case）
-- 无特殊字符
-- 描述性路径
+✅ 好的：
+- `/docs/getting-started/installation`
+- `/docs/guide/authentication`
+- `/docs/api/composables`
+
+❌ 避免：
+- `/docs/getting_started/installation`（下划线）
+- `/docs/GetStarted/Installation`（不是小写）
+- `/docs/p/123`（不描述性）
+- `/docs/docs-page`（太通用）
+
+---
+
+## 内部链接
+
+### 策略
+- 链接到相关文档页面
+- 使用描述性锚点文本（不是"点击这里"或"这里"）
+- 包括"后续步骤"或"相关"部分
+- 将重要链接添加到 frontmatter `links` 数组
+
+### 锚文本最佳实践
+
+| 差 | 更好 |
+|------|--------|
+| 点击这里 | 了解身份验证 |
+| 阅读更多 | 配置 OAuth 提供商 |
+| 见此页 | 查看 API 参考 |
+| 文档 | 部署文档 |
+
+### Frontmatter 中的链接
+
+对于重要的相关链接，使用 frontmatter `links` 数组：
+
+```yaml
+---
+links:
+  - label: "API 参考"
+    icon: "i-lucide-book"
+    to: "/api/reference"
+  - label: "GitHub 仓库"
+    icon: "i-simple-icons-github"
+    to: "https://github.com/..."
+    target: "_blank"
+---
+```
+
+---
+
+## 图像优化
+
+### Alt 文本
+- [ ] 描述性和具体（不是"图像"或"屏幕截图"）
+- [ ] 自然地包含相关关键字
+- [ ] 为无障碍用户描述图像内容
+- [ ] 50-125 字符最优
+
+### 颜色模式图像
+
+始终提供浅色和深色变体：
+
+```markdown
+:u-color-mode-image{
+  alt="显示用户分析的仪表板"
+  light="/images/dashboard-light.png"
+  dark="/images/dashboard-dark.png"
+  class="rounded-lg"
+  width="859"
+  height="400"
+}
+```
+
+### 图像文件名
+- 使用描述性 kebab-case 名称
+- 包含上下文：`dashboard-analytics.png` 而不是 `screenshot-1.png`
 
 ---
 
 ## 常见 SEO 问题
 
-| 问题 | 影响 | 修复建议 |
-|------|------|----------|
-| 多页面 title 相同 | 搜索引擎降权 | 每页设置唯一 title |
-| description 过短（<30 字）| 搜索摘要不完整 | 补充描述，说明页面价值 |
-| 缺少 seo.title/seo.description | 搜索优化欠缺 | 为重要页面添加 SEO 专用字段 |
-| 标题不描述性（「配置」、「指南」）| 搜索点击率低 | 添加具体内容说明 |
-| 链接锚文本「点击这里」 | SEO 信号弱 | 改为描述性文本 |
+### 重复元数据
+❌ 多个页面具有相同的标题或描述
+✅ 每个页面都有唯一的、描述性的元数据
 
----
+### 缺少元数据
+❌ Frontmatter 中没有 `seo.title` 或 `seo.description`
+✅ 所有页面都定义了 SEO 元数据
+
+### 关键字填充
+❌ "Movk Nuxt Docs 文档 Movk Nuxt Docs 主题 Movk Nuxt Docs 指南"
+✅ 自然语言，关键字在上下文中集成
 
 ## 验证清单
 
-- [ ] `title` 10-20 个字，描述性强
-- [ ] `description` 50-80 个字，包含关键词
-- [ ] 每页 title 和 description 唯一
-- [ ] H2/H3 标题描述性，不通用
-- [ ] 内部链接使用描述性锚文本
-- [ ] 图片有描述性 alt 文本
-- [ ] 指南页面字数在 400 字以上
-- [ ] 重要页面添加了 `seo.title` 和 `seo.description`
+为每个页面执行此检查列表：
+
+- [ ] 标题：50-60 字符、包含关键字、唯一
+- [ ] 描述：120-160 字符、引人注目、准确
+- [ ] 单一 H1，匹配标题
+- [ ] 标题层级是逻辑的（无跳过的级别）
+- [ ] H2/H3 标题是描述性的，不是通用的
+- [ ] URL 是稳定的、描述性的、小写连字符
+- [ ] 内部链接使用描述性锚点文本
+- [ ] 内容对实质性页面为 300+ 字
+- [ ] 部分是 200-400 字标题之间
+- [ ] 图像有描述性的 alt 文本
+- [ ] 颜色模式图像有浅色/深色变体
