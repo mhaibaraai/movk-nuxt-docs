@@ -1,5 +1,33 @@
 # 📋 Changelog
 
+## [1.17.0](https://github.com/mhaibaraai/movk-nuxt-docs/compare/v1.16.3...v1.17.0) (2026-04-04)
+
+### ✨ Features
+
+* 优化 AI Chat 布局与交互体验 ([9fe0d9e](https://github.com/mhaibaraai/movk-nuxt-docs/commit/9fe0d9e68b6649575212d4943225777c8ad712f9))
+
+### 🐛 Bug Fixes
+
+* **layer:** 修复阿里普惠体字体权重映射过滤 ([ed33392](https://github.com/mhaibaraai/movk-nuxt-docs/commit/ed3339292e1869f12cf842517c76c2b100cbd589))
+* 修复 AI Chat 用户消息渲染与布局隐藏问题 ([5820bda](https://github.com/mhaibaraai/movk-nuxt-docs/commit/5820bda67d07e05a0b57cd3696050b5592c0adef))
+* 将 ThemePicker 中的相对链接替换为 Nuxt UI 文档绝对链接 ([0f3801b](https://github.com/mhaibaraai/movk-nuxt-docs/commit/0f3801b0440feb6561252173a42bbf2687af709f))
+
+### 📝 Documentation
+
+* 全面提升文档质量，修复截断内容并优化 SEO 元数据 ([a2833fb](https://github.com/mhaibaraai/movk-nuxt-docs/commit/a2833fba6dcdd93c33dd9f757a80b28263a1d9f9))
+* 同步 docus PR [#1297](https://github.com/mhaibaraai/movk-nuxt-docs/issues/1297) 文档与 skills 说明 ([83e48d0](https://github.com/mhaibaraai/movk-nuxt-docs/commit/83e48d0bcefb75045fd0d4380c82b2342455a097))
+* 更新 README.md，添加 AI 助手技能及一键安装说明 ([7ef84d2](https://github.com/mhaibaraai/movk-nuxt-docs/commit/7ef84d2cf405afda26e9135fda77d2a2968facb9))
+
+### 🔧 Chores
+
+* **deps:** update dependency @nuxt/ui to ^4.6.1 ([030ff1e](https://github.com/mhaibaraai/movk-nuxt-docs/commit/030ff1e98024850ceaf145e975f9c439f8235125))
+* **deps:** update dependency @nuxtjs/mcp-toolkit to ^0.13.1 ([19fec6f](https://github.com/mhaibaraai/movk-nuxt-docs/commit/19fec6f147ac7685e00c5a99ad221a6dbd445392))
+* **deps:** update dependency nuxt-og-image to ^6.3.2 ([cf2f9f4](https://github.com/mhaibaraai/movk-nuxt-docs/commit/cf2f9f4611ea0b46840e2d68e24dda092f124a40))
+* **deps:** update dependency reka-ui to ^2.9.3 ([b979da5](https://github.com/mhaibaraai/movk-nuxt-docs/commit/b979da537f0b7c8d867efef25459146c969ef455))
+* **deps:** update devdependency eslint to ^10.2.0 ([c48e852](https://github.com/mhaibaraai/movk-nuxt-docs/commit/c48e852b9c00c8254c1f12ef04fcd33ee34d8191))
+* **deps:** update devdependency typescript to v6 ([765d252](https://github.com/mhaibaraai/movk-nuxt-docs/commit/765d252665e1207328d3451196a16480272c16d2))
+* **deps:** update nuxt ([ee49718](https://github.com/mhaibaraai/movk-nuxt-docs/commit/ee4971808822a2d868cc52fad28ec1d482ec4408))
+
 ## [1.16.3](https://github.com/mhaibaraai/movk-nuxt-docs/compare/v1.16.2...v1.16.3) (2026-03-30)
 
 ### 🐛 Bug Fixes
