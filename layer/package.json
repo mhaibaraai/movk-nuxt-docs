@@ -29,14 +29,13 @@
   },
   "files": [
     "app",
-    "content.config.ts",
     "modules",
-    "nuxt.config.ts",
-    "nuxt.schema.ts",
     "providers",
     "server",
     "utils",
-    "pnpm-workspace.yaml",
+    "content.config.ts",
+    "nuxt.config.ts",
+    "nuxt.schema.ts",
     "README.md"
   ],
   "dependencies": {
