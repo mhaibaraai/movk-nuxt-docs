@@ -96,7 +96,7 @@ export default defineNuxtConfig({
 
   nitro: {
     prerender: {
-      routes: ['/'],
+      routes: ['/', '/sitemap.xml'],
       crawlLinks: true,
       failOnError: false,
       autoSubfolderIndex: false
@@ -186,7 +186,8 @@ export default defineNuxtConfig({
     clientBundle: {
       scan: true,
       includeCustomCollections: true
-    }
+    },
+    provider: 'iconify'
   },
 
   llms: {

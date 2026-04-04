@@ -42,6 +42,7 @@ export default defineEventHandler(async (event) => {
   const siteConfig = getSiteConfig(event)
   const siteName = siteConfig.name || 'Documentation'
 
+  const baseURL = config.app?.baseURL?.replace(/\/$/, '') || ''
   const mcpPath = config.aiChat.mcpPath
   const isExternalUrl = mcpPath.startsWith('http://') || mcpPath.startsWith('https://')
 
@@ -50,7 +51,7 @@ export default defineEventHandler(async (event) => {
   try {
     const mcpUrl = isExternalUrl
       ? mcpPath
-      : `${getRequestURL(event).origin}${mcpPath}`
+      : `${getRequestURL(event).origin}${baseURL}${mcpPath}`
 
     httpClient = await createMCPClient({
       transport: { type: 'http', url: mcpUrl }

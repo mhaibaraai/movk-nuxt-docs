@@ -92,7 +92,7 @@ description: 一句话描述（用于 SEO 和搜索）。
 
 内容...
 
-## 下一步
+## 下一步（可选）
 
 ::card-group
   :::card{icon="i-lucide-arrow-right" title="相关页面" to="/docs/..."}
@@ -137,7 +137,7 @@ description: 一句话描述（用于 SEO 和搜索）。
 - API 参考页：使用函数/组件名称（`useTheme`、`AiChatPanel`）
 - 概念页：可使用名词（「架构」、「核心概念」）
 
-## 下一步链接
+## 下一步链接 （可选）
 
 每个**指南页面**应包含"下一步"区域，让用户有清晰的阅读路径：
 

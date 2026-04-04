@@ -28,7 +28,7 @@ let _skipSync = false
 const chat = new Chat({
   messages: messages.value,
   transport: new DefaultChatTransport({
-    api: config.public.aiChat.apiPath,
+    api: (config.app?.baseURL.replace(/\/$/, '') || '') + config.public.aiChat.apiPath,
     body: () => ({ model: model.value })
   }),
   onError: (error: Error) => {

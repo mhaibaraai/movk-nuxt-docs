@@ -22,7 +22,7 @@ export interface ModuleOptions {
   mermaid?: boolean
 }
 
-const log = logger.withTag('movk-nuxt-docs')
+const log = logger.withTag('@movk/nuxt-docs')
 
 export default defineNuxtModule<ModuleOptions>({
   meta: {
@@ -63,7 +63,7 @@ export default defineNuxtModule<ModuleOptions>({
 
       if (mermaidAvailable) {
         addComponentsDir({
-          path: resolve('./runtime/components/prose'),
+          path: resolve('./components/prose'),
           pathPrefix: false,
           prefix: 'Prose',
           global: true

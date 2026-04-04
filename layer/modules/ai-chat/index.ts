@@ -31,7 +31,7 @@ export interface AiChatModuleOptions {
   models?: string[]
 }
 
-const log = logger.withTag('movk-nuxt-docs')
+const log = logger.withTag('@movk/nuxt-docs')
 
 export default defineNuxtModule<AiChatModuleOptions>({
   meta: {
