@@ -1,5 +1,12 @@
 # 📋 Changelog
 
+## [1.17.1](https://github.com/mhaibaraai/movk-nuxt-docs/compare/v1.17.0...v1.17.1) (2026-04-04)
+
+### 🐛 Bug Fixes
+
+* **docs:** 修复预渲染时的两处 404 断链 ([b379280](https://github.com/mhaibaraai/movk-nuxt-docs/commit/b37928005c04c50dffdf21142941db5ac650723f))
+* **layer:** 将 providers 目录加入 npm 发布白名单并移除 sitemap 预渲染路由 ([dc036b1](https://github.com/mhaibaraai/movk-nuxt-docs/commit/dc036b155037cd04b226b44e6d5d4bf4a23bff95))
+
 ## [1.17.0](https://github.com/mhaibaraai/movk-nuxt-docs/compare/v1.16.3...v1.17.0) (2026-04-04)
 
 ### ✨ Features
