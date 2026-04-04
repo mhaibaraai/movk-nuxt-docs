@@ -130,17 +130,17 @@ export default defineNuxtModule<ModuleOptions>({
       }
     })
 
-    nuxt.options.appConfig.header = defu(nuxt.options.appConfig.header, {
+    nuxt.options.appConfig.header = defu(nuxt.options.appConfig.header as Record<string, any>, {
       title: startCase(siteName)
     })
 
-    nuxt.options.appConfig.seo = defu(nuxt.options.appConfig.seo, {
+    nuxt.options.appConfig.seo = defu(nuxt.options.appConfig.seo as Record<string, any>, {
       titleTemplate: `%s - ${siteName}`,
       title: siteName,
       description: meta.description || ''
     })
 
-    nuxt.options.appConfig.github = defu(nuxt.options.appConfig.github, {
+    nuxt.options.appConfig.github = defu(nuxt.options.appConfig.github as Record<string, any>, {
       owner: gitInfo?.owner,
       name: gitInfo?.name,
       url: gitInfo?.url,
