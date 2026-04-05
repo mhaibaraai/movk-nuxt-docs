@@ -9,8 +9,8 @@ importers:
   .:
     devDependencies:
       '@movk/core':
-        specifier: ^1.2.2
-        version: 1.2.2(vue@3.5.32(typescript@6.0.2))
+        specifier: ^1.2.3
+        version: 1.2.3(vue@3.5.32(typescript@6.0.2))
       '@nuxt/eslint':
         specifier: ^1.15.2
         version: 1.15.2(@typescript-eslint/utils@8.58.0(eslint@10.2.0(jiti@2.6.1))(typescript@6.0.2))(@vue/compiler-sfc@3.5.32)(eslint@10.2.0(jiti@2.6.1))(magicast@0.5.2)(typescript@6.0.2)(vite@7.3.1(@types/node@25.5.2)(jiti@2.6.1)(lightningcss@1.32.0)(terser@5.46.1)(yaml@2.8.3))
@@ -84,8 +84,8 @@ importers:
         specifier: ^1.2.45
         version: 1.2.45
       '@movk/core':
-        specifier: ^1.2.2
-        version: 1.2.2(vue@3.5.32(typescript@6.0.2))
+        specifier: ^1.2.3
+        version: 1.2.3(vue@3.5.32(typescript@6.0.2))
       '@nuxt/a11y':
         specifier: ^1.0.0-alpha.1
         version: 1.0.0-alpha.1(magicast@0.5.2)(vite@7.3.1(@types/node@25.5.2)(jiti@2.6.1)(lightningcss@1.32.0)(terser@5.46.1)(yaml@2.8.3))
@@ -1088,8 +1088,8 @@ packages:
       '@cfworker/json-schema':
         optional: true
 
-  '@movk/core@1.2.2':
-    resolution: {integrity: sha512-crKKB8Ym3PmN8m/UIEl1BTOlWj90Np4Q4rvs91AQGUJiTvCUQqObkKmbFqaXbeNLqu1P4L/RNSJ5ymgv1RHGEw==}
+  '@movk/core@1.2.3':
+    resolution: {integrity: sha512-9aYuLiW/wB6/1zsCaYMREuWxTFwiceg0+U1YbFez/vLdMC37WyuV65ktQ5aCRpgV4J2edoiTk1TW8Qlx6rnGTg==}
     hasBin: true
     peerDependencies:
       vue: ^3.5.25
@@ -8657,7 +8657,7 @@ snapshots:
     transitivePeerDependencies:
       - supports-color
 
-  '@movk/core@1.2.2(vue@3.5.32(typescript@6.0.2))':
+  '@movk/core@1.2.3(vue@3.5.32(typescript@6.0.2))':
     dependencies:
       '@vueuse/core': 14.2.1(vue@3.5.32(typescript@6.0.2))
       tinyglobby: 0.2.15
