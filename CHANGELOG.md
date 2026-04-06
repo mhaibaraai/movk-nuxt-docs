@@ -1,5 +1,11 @@
 # 📋 Changelog
 
+## [1.17.3](https://github.com/mhaibaraai/movk-nuxt-docs/compare/v1.17.2...v1.17.3) (2026-04-06)
+
+### 🐛 Bug Fixes
+
+* **layer:** 统一 localStorage key 前缀为 kebab-case 格式 ([ff08c85](https://github.com/mhaibaraai/movk-nuxt-docs/commit/ff08c85feb4d9462df9b0803f38d7bf15056566d))
+
 ## [1.17.2](https://github.com/mhaibaraai/movk-nuxt-docs/compare/v1.17.1...v1.17.2) (2026-04-04)
 
 ### 🐛 Bug Fixes
