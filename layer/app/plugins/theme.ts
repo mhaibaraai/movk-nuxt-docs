@@ -1,19 +1,21 @@
 import { themeIcons } from '../utils/theme'
+import { kebabCase } from '@movk/core'
 
 export default defineNuxtPlugin({
   enforce: 'post',
   setup() {
     const appConfig = useAppConfig()
     const site = useSiteConfig()
+    const name = kebabCase(site.name)
 
     if (import.meta.client) {
-      const primary = localStorage.getItem(`${site.name}-ui-primary`)
+      const primary = localStorage.getItem(`${name}-ui-primary`)
       if (primary) appConfig.ui.colors.primary = primary
 
-      const neutral = localStorage.getItem(`${site.name}-ui-neutral`)
+      const neutral = localStorage.getItem(`${name}-ui-neutral`)
       if (neutral) appConfig.ui.colors.neutral = neutral
 
-      const icons = localStorage.getItem(`${site.name}-ui-icons`)
+      const icons = localStorage.getItem(`${name}-ui-icons`)
       if (icons) appConfig.ui.icons = themeIcons[icons as keyof typeof themeIcons] as any
     }
 
@@ -24,8 +26,8 @@ export default defineNuxtPlugin({
             var colorsEl = document.querySelector('style#nuxt-ui-colors');
             if (colorsEl) {
               let html = colorsEl.innerHTML;
-              if (localStorage.getItem('${site.name}-ui-primary')) {
-                const primaryColor = localStorage.getItem('${site.name}-ui-primary');
+              if (localStorage.getItem('${name}-ui-primary')) {
+                const primaryColor = localStorage.getItem('${name}-ui-primary');
                 if (primaryColor !== 'black') {
                   html = html.replace(
                     /(--ui-color-primary-\\d{2,3}:\\s*var\\(--color-)${appConfig.ui.colors.primary}(-\\d{2,3}.*?\\))/g,
@@ -33,8 +35,8 @@ export default defineNuxtPlugin({
                   );
                 }
               }
-              if (localStorage.getItem('${site.name}-ui-neutral')) {
-                let neutralColor = localStorage.getItem('${site.name}-ui-neutral');
+              if (localStorage.getItem('${name}-ui-neutral')) {
+                let neutralColor = localStorage.getItem('${name}-ui-neutral');
                 html = html.replace(
                   /(--ui-color-neutral-\\d{2,3}:\\s*var\\(--color-)${appConfig.ui.colors.neutral}(-\\d{2,3}.*?\\))/g,
                   \`$1\${neutralColor === 'neutral' ? 'old-neutral' : neutralColor}$2\`
@@ -48,25 +50,25 @@ export default defineNuxtPlugin({
           tagPriority: -1
         }, {
           innerHTML: `
-            if (localStorage.getItem('${site.name}-ui-radius')) {
-              document.getElementById('${site.name}-ui-radius').innerHTML = ':root { --ui-radius: ' + localStorage.getItem('${site.name}-ui-radius') + 'rem; }';
+            if (localStorage.getItem('${name}-ui-radius')) {
+              document.getElementById('${name}-ui-radius').innerHTML = ':root { --ui-radius: ' + localStorage.getItem('${name}-ui-radius') + 'rem; }';
             }
           `.replace(/\s+/g, ' '),
           type: 'text/javascript',
           tagPriority: -1
         }, {
           innerHTML: `
-            if (localStorage.getItem('${site.name}-ui-black-as-primary') === 'true') {
-              document.getElementById('${site.name}-ui-black-as-primary').innerHTML = ':root { --ui-primary: black; } .dark { --ui-primary: white; }';
+            if (localStorage.getItem('${name}-ui-black-as-primary') === 'true') {
+              document.getElementById('${name}-ui-black-as-primary').innerHTML = ':root { --ui-primary: black; } .dark { --ui-primary: white; }';
             } else {
-              document.getElementById('${site.name}-ui-black-as-primary').innerHTML = '';
+              document.getElementById('${name}-ui-black-as-primary').innerHTML = '';
             }
           `.replace(/\s+/g, ' ')
         }, {
           innerHTML: [
-            `if (localStorage.getItem('${site.name}-ui-font')) {`,
-            `var font = localStorage.getItem('${site.name}-ui-font');`,
-            `document.getElementById('${site.name}-ui-font').innerHTML = ':root { --font-sans: \\'' + font + '\\', sans-serif; }';`,
+            `if (localStorage.getItem('${name}-ui-font')) {`,
+            `var font = localStorage.getItem('${name}-ui-font');`,
+            `document.getElementById('${name}-ui-font').innerHTML = ':root { --font-sans: \\'' + font + '\\', sans-serif; }';`,
             `if (font !== 'Alibaba PuHuiTi' && ['Alibaba PuHuiTi', 'Public Sans', 'DM Sans', 'Geist', 'Inter', 'Poppins', 'Outfit', 'Raleway'].includes(font)) {`,
             `var lnk = document.createElement('link');`,
             `lnk.rel = 'stylesheet';`,
