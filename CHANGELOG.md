@@ -1,5 +1,19 @@
 # 📋 Changelog
 
+## [1.17.4](https://github.com/mhaibaraai/movk-nuxt-docs/compare/v1.17.3...v1.17.4) (2026-04-07)
+
+### 🐛 Bug Fixes
+
+* **ai-chat:** 统一本地存储键名为 kebab-case ([efc8c9e](https://github.com/mhaibaraai/movk-nuxt-docs/commit/efc8c9e0839c7ea078c444c2e5ad0992c011dfb5))
+
+### 🔧 Chores
+
+* **deps:** update ai-sdk ([6f1b6fa](https://github.com/mhaibaraai/movk-nuxt-docs/commit/6f1b6fa9db6719ebd40600ba46099f71f2150010))
+* **deps:** update dependency @iconify-json/simple-icons to ^1.2.77 ([66d8f28](https://github.com/mhaibaraai/movk-nuxt-docs/commit/66d8f286b74f2d425749f3536c465007d74e01d4))
+* **deps:** update dependency @nuxtjs/mcp-toolkit to ^0.13.4 ([a7b35ba](https://github.com/mhaibaraai/movk-nuxt-docs/commit/a7b35ba620b8d000514555391855c4d1e2470548))
+* **deps:** update dependency defu to ^6.1.7 ([fa22466](https://github.com/mhaibaraai/movk-nuxt-docs/commit/fa22466c82d2b18b7c08ca6a2cbf5dc9c9dea149))
+* **deps:** 更新依赖版本 ([a580fad](https://github.com/mhaibaraai/movk-nuxt-docs/commit/a580fad1d9667e7f978b8e818000bcee2a71dc8f))
+
 ## [1.17.3](https://github.com/mhaibaraai/movk-nuxt-docs/compare/v1.17.2...v1.17.3) (2026-04-06)
 
 ### 🐛 Bug Fixes
