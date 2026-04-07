@@ -51,7 +51,7 @@
     "@nuxt/image": "^2.0.0",
     "@nuxt/kit": "^4.4.2",
     "@nuxt/ui": "^4.6.1",
-    "@nuxtjs/mcp-toolkit": "^0.13.3",
+    "@nuxtjs/mcp-toolkit": "^0.13.4",
     "@nuxtjs/mdc": "^0.21.1",
     "@nuxtjs/robots": "^6.0.6",
     "@octokit/rest": "^22.0.1",
