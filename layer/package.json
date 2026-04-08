@@ -70,7 +70,7 @@
     "motion-v": "^2.2.0",
     "nuxt-component-meta": "^0.17.2",
     "nuxt-llms": "^0.2.0",
-    "nuxt-og-image": "^6.3.2",
+    "nuxt-og-image": "^6.3.3",
     "nuxt-site-config": "^4.0.7",
     "ohash": "^2.0.11",
     "pathe": "^2.0.3",
