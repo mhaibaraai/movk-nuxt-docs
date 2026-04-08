@@ -1,5 +1,18 @@
 # 📋 Changelog
 
+## [1.17.5](https://github.com/mhaibaraai/movk-nuxt-docs/compare/v1.17.4...v1.17.5) (2026-04-08)
+
+### 📝 Documentation
+
+* **mcp:** 更新至最新版本支持 ([c609828](https://github.com/mhaibaraai/movk-nuxt-docs/commit/c609828c4300b4b731d102e342bccf5e711b6d80))
+* 改进页面提示词用于 AI 工具 ([9186ee3](https://github.com/mhaibaraai/movk-nuxt-docs/commit/9186ee3e537d60dceeedffedc8943942f8e459d9))
+
+### 🔧 Chores
+
+* **deps:** update ai-sdk ([a477656](https://github.com/mhaibaraai/movk-nuxt-docs/commit/a477656e67b9809c62b9ac885b97c373fcc67f90))
+* **deps:** update dependency nuxt-og-image to ^6.3.3 ([f7c39b5](https://github.com/mhaibaraai/movk-nuxt-docs/commit/f7c39b54e20e6d7c16cae7f5e42adb6cdb4f7b28))
+* **deps:** 更新依赖锁文件 ([9b1fa5a](https://github.com/mhaibaraai/movk-nuxt-docs/commit/9b1fa5a70418a012611882944070570cf905c4cf))
+
 ## [1.17.4](https://github.com/mhaibaraai/movk-nuxt-docs/compare/v1.17.3...v1.17.4) (2026-04-07)
 
 ### 🐛 Bug Fixes
