@@ -167,12 +167,14 @@ export default defineNuxtConfig({
     ]
   },
 
+  // for users in China who may have trouble loading Google Fonts.
   fonts: {
+    provider: 'alibaba-puhuiti',
     providers: {
-      'alibaba-puhuiti': createAlibabaPuHuiTiProvider('https://cdn.mhaibaraai.cn/fonts')
+      'alibaba-puhuiti': createAlibabaPuHuiTiProvider('https://cdn.mhaibaraai.cn/fonts', 'Alibaba PuHuiTi')
     },
     families: [
-      { name: 'Alibaba PuHuiTi', provider: 'alibaba-puhuiti', global: true }
+      { name: 'Alibaba PuHuiTi', global: true }
     ]
   },
 

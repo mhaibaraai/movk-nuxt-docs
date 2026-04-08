@@ -13,12 +13,10 @@ const WEIGHT_MAP: Record<string, string> = {
   950: 'Black'
 }
 
-const FONT_FAMILY = 'Alibaba PuHuiTi'
-
-export function createAlibabaPuHuiTiProvider(cdnBase: string) {
+export function createAlibabaPuHuiTiProvider(cdnBase: string, name: string) {
   return defineFontProvider('alibaba-puhuiti', () => ({
     async resolveFont(fontFamily, options) {
-      if (fontFamily !== FONT_FAMILY) return undefined
+      if (fontFamily !== name) return undefined
 
       const weights = options.weights?.length
         ? options.weights.filter(w => WEIGHT_MAP[w])
