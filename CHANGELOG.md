@@ -1,5 +1,15 @@
 # 📋 Changelog
 
+## [1.17.6](https://github.com/mhaibaraai/movk-nuxt-docs/compare/v1.17.5...v1.17.6) (2026-04-08)
+
+### 🐛 Bug Fixes
+
+* 修正 Mermaid 组件路径引用 ([e99118e](https://github.com/mhaibaraai/movk-nuxt-docs/commit/e99118ed2ee8ff28e3db8481ba647a203b75e59c))
+
+### ♻️ Code Refactoring
+
+* **fonts:** 简化阿里巴巴普惠体字体配置 ([37d78e0](https://github.com/mhaibaraai/movk-nuxt-docs/commit/37d78e09d49a1a9c3bcfd57ac9a1e8aec3782238))
+
 ## [1.17.5](https://github.com/mhaibaraai/movk-nuxt-docs/compare/v1.17.4...v1.17.5) (2026-04-08)
 
 ### 📝 Documentation
