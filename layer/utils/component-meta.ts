@@ -52,7 +52,7 @@ export function createComponentMetaExcludeFilters(
     resolve('../app/components/content/ComponentProps.vue'),
     resolve('../app/components/content/ComponentSlots.vue'),
     resolve('../app/components/content/PageLastCommit.vue'),
-    resolve('./runtime/components/prose/Mermaid.vue')
+    resolve('./components/prose/Mermaid.vue')
   ]
 
   const userComponentPaths = [
