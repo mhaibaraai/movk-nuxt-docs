@@ -3,6 +3,12 @@ import { inferSiteURL } from '../../../utils/meta'
 
 export default defineMcpTool({
   description: '列出所有入门指南和安装说明',
+  annotations: {
+    readOnlyHint: true,
+    destructiveHint: false,
+    idempotentHint: true,
+    openWorldHint: false
+  },
   cache: '30m',
   async handler() {
     const event = useEvent()
@@ -14,14 +20,12 @@ export default defineMcpTool({
       .select('id', 'title', 'description', 'path', 'navigation')
       .all()
 
-    const result = pages.map(page => ({
+    return pages.map(page => ({
       title: page.title,
       description: page.description,
       path: page.path,
       url: `${siteUrl}${page.path}`,
       navigation: page.navigation
     })).sort((a, b) => a.path.localeCompare(b.path))
-
-    return result
   }
 })

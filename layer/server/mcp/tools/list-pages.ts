@@ -2,6 +2,12 @@ import { queryCollection } from '@nuxt/content/server'
 
 export default defineMcpTool({
   description: `列出所有可用的文档页面及其分类和基本信息。`,
+  annotations: {
+    readOnlyHint: true,
+    destructiveHint: false,
+    idempotentHint: true,
+    openWorldHint: false
+  },
   cache: '1h',
   async handler() {
     const event = useEvent()
