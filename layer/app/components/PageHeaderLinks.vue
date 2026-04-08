@@ -10,6 +10,7 @@ const { ui } = useAppConfig()
 const appBaseURL = useRuntimeConfig().app?.baseURL || '/'
 
 const mdPath = computed(() => `${site.url}/raw${route.path}.md`)
+const aiPrompt = computed(() => `I'm looking at this documentation: ${mdPath.value}\nHelp me understand how to use it. Be ready to explain concepts, give examples, or help debug based on it.`)
 
 const items = [[
   {
@@ -33,13 +34,13 @@ const items = [[
     label: 'Open in ChatGPT',
     icon: 'i-simple-icons-openai',
     target: '_blank',
-    to: `https://chatgpt.com/?hints=search&q=${encodeURIComponent(`Read ${mdPath.value} so I can ask questions about it.`)}`
+    to: `https://chatgpt.com/?prompt=${encodeURIComponent(aiPrompt.value)}`
   },
   {
     label: 'Open in Claude',
     icon: 'i-simple-icons-anthropic',
     target: '_blank',
-    to: `https://claude.ai/new?q=${encodeURIComponent(`Read ${mdPath.value} so I can ask questions about it.`)}`
+    to: `https://claude.ai/new?q=${encodeURIComponent(aiPrompt.value)}`
   }
 ], [
   {
