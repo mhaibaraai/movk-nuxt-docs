@@ -1,5 +1,17 @@
 # 📋 Changelog
 
+## [1.17.7](https://github.com/mhaibaraai/movk-nuxt-docs/compare/v1.17.6...v1.17.7) (2026-04-10)
+
+### 🐛 Bug Fixes
+
+* **module:** 修复 `updateSiteConfig` 的类型报错 ([9ad96f6](https://github.com/mhaibaraai/movk-nuxt-docs/commit/9ad96f686db89fb2cf04c3fb44c997e7a39c1795))
+
+### 🔧 Chores
+
+* **deps:** update ai-sdk ([5ef90bb](https://github.com/mhaibaraai/movk-nuxt-docs/commit/5ef90bbecb083009d63a84beab3ee67ffaca58dd))
+* **deps:** update all non-major dependencies ([423bf6d](https://github.com/mhaibaraai/movk-nuxt-docs/commit/423bf6d5469988196c016ce7a5522e511f3254f8))
+* **deps:** update dependency nuxt-og-image to ^6.3.6 ([97bf671](https://github.com/mhaibaraai/movk-nuxt-docs/commit/97bf671964e3ded6901dcfb55cd356625631a0be))
+
 ## [1.17.6](https://github.com/mhaibaraai/movk-nuxt-docs/compare/v1.17.5...v1.17.6) (2026-04-08)
 
 ### 🐛 Bug Fixes
