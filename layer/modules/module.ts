@@ -6,6 +6,7 @@ import { getPackageJsonMetadata, inferSiteURL } from '../utils/meta'
 import { createComponentMetaExcludeFilters } from '../utils/component-meta'
 import { startCase, kebabCase } from '@movk/core'
 import { updateSiteConfig } from 'nuxt-site-config/kit'
+import type { SiteConfigInput } from 'nuxt-site-config/kit'
 
 export interface ModuleOptions {
   /**
@@ -116,7 +117,8 @@ export default defineNuxtModule<ModuleOptions>({
       name: kebabCase(meta.name || gitInfo?.name || ''),
       debug: false
     })
-    updateSiteConfig(site)
+
+    updateSiteConfig(site as SiteConfigInput)
 
     const siteName = (typeof nuxt.options.site === 'object' && nuxt.options.site?.name) || meta.name || gitInfo?.name || ''
 
