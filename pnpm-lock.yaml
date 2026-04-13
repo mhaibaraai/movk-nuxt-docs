@@ -75,11 +75,11 @@ importers:
         specifier: ^3.0.156
         version: 3.0.156(vue@3.5.32(typescript@6.0.2))(zod@4.3.6)
       '@iconify-json/lucide':
-        specifier: ^1.2.101
-        version: 1.2.101
+        specifier: ^1.2.102
+        version: 1.2.102
       '@iconify-json/simple-icons':
-        specifier: ^1.2.77
-        version: 1.2.77
+        specifier: ^1.2.78
+        version: 1.2.78
       '@iconify-json/vscode-icons':
         specifier: ^1.2.45
         version: 1.2.45
@@ -715,11 +715,11 @@ packages:
   '@iarna/toml@3.0.0':
     resolution: {integrity: sha512-td6ZUkz2oS3VeleBcN+m//Q6HlCFCPrnI0FZhrt/h4XqLEdOyYp2u21nd8MdsR+WJy5r9PTDaHTDDfhf4H4l6Q==}
 
-  '@iconify-json/lucide@1.2.101':
-    resolution: {integrity: sha512-JUN7uuSLRG3GK/9c5b8cK9e7sL6EAWDaASIwBOd0zUeKS0ACcokJubo2RMQHyVUVpd8mYkrR3Zd2mkH9ghhw1Q==}
+  '@iconify-json/lucide@1.2.102':
+    resolution: {integrity: sha512-Dm3EEqu5NrmzyDMB2U1+8yroEj2/dB9V4KlH0m/szwwF/ofSf0cPaGTZqkd1aExXjCor+vU53ttRMCGuXf+/cg==}
 
-  '@iconify-json/simple-icons@1.2.77':
-    resolution: {integrity: sha512-oaENvo6C3BkAEWMlcQA3XemxU9v2SFOTlApSUCODAkIu1haeLCjzrmH3HgmGqjRnJjM+LevO8sA+MgdMHBFBDA==}
+  '@iconify-json/simple-icons@1.2.78':
+    resolution: {integrity: sha512-I3lkNp0Qu7q2iZWkdcf/I2hqGhzK6qxdILh9T7XqowQrnpmG/BayDsiCf6PktDoWlW0U971xA5g+panm+NFrfQ==}
 
   '@iconify-json/vscode-icons@1.2.45':
     resolution: {integrity: sha512-ow+ueibMIq79ueM1kv6cOWgHx8jfh1XJQi2RrqMHb4HLbvIBlxpy5PCMvOJXlA68R6fBAHpWQeh6uWx7VKEVsA==}
@@ -8313,11 +8313,11 @@ snapshots:
 
   '@iarna/toml@3.0.0': {}
 
-  '@iconify-json/lucide@1.2.101':
+  '@iconify-json/lucide@1.2.102':
     dependencies:
       '@iconify/types': 2.0.0
 
-  '@iconify-json/simple-icons@1.2.77':
+  '@iconify-json/simple-icons@1.2.78':
     dependencies:
       '@iconify/types': 2.0.0
 
