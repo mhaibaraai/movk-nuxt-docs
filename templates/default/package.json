@@ -13,7 +13,7 @@
     "@movk/nuxt-docs": "latest",
     "better-sqlite3": "^12.8.0",
     "nuxt": "^4.4.2",
-    "tailwindcss": "^4.2.2"
+    "tailwindcss": "^4.2.4"
   },
   "devDependencies": {
     "@nuxt/eslint": "^1.15.2",
