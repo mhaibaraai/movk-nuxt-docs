@@ -39,9 +39,9 @@
     "README.md"
   ],
   "dependencies": {
-    "@ai-sdk/gateway": "^3.0.98",
+    "@ai-sdk/gateway": "^3.0.104",
     "@ai-sdk/mcp": "^1.0.36",
-    "@ai-sdk/vue": "^3.0.161",
+    "@ai-sdk/vue": "^3.0.168",
     "@iconify-json/lucide": "^1.2.102",
     "@iconify-json/simple-icons": "^1.2.79",
     "@iconify-json/vscode-icons": "^1.2.46",
@@ -63,7 +63,7 @@
     "@takumi-rs/wasm": "^0.73.1",
     "@vueuse/core": "^14.2.1",
     "@vueuse/nuxt": "^14.2.1",
-    "ai": "^6.0.161",
+    "ai": "^6.0.168",
     "defu": "^6.1.7",
     "exsolve": "^1.0.8",
     "git-url-parse": "^16.1.0",
