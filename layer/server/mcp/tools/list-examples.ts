@@ -2,7 +2,7 @@
 import { listComponentExamples } from '#component-example/nitro'
 
 export default defineMcpTool({
-  description: '列出所有可用的示例和代码演示',
+  description: 'Lists all available examples and code demonstrations',
   annotations: {
     readOnlyHint: true,
     destructiveHint: false,

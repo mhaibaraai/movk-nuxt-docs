@@ -2,7 +2,7 @@ import { queryCollection } from '@nuxt/content/server'
 
 export default defineMcpResource({
   uri: 'resource://docs/documentation-pages',
-  description: '所有可用文档页面的完整列表',
+  description: 'Complete list of available documentation pages',
   cache: '1h',
   async handler(uri: URL) {
     const event = useEvent()

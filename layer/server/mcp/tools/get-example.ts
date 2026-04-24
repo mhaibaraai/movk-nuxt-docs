@@ -1,7 +1,7 @@
 import { z } from 'zod'
 
 export default defineMcpTool({
-  description: '检索特定的示例实现代码和详细信息',
+  description: 'Retrieves specific example implementation code and details',
   annotations: {
     readOnlyHint: true,
     destructiveHint: false,
@@ -9,7 +9,7 @@ export default defineMcpTool({
     openWorldHint: false
   },
   inputSchema: {
-    exampleName: z.string().describe('示例名称（PascalCase）')
+    exampleName: z.string().describe('The name of the example (PascalCase)')
   },
   inputExamples: [
     { exampleName: 'ButtonBasic' },
@@ -24,7 +24,7 @@ export default defineMcpTool({
       const err = error as { statusCode?: number, response?: { status?: number } }
       const status = err?.statusCode ?? err?.response?.status
       if (status === 404) {
-        throw createError({ statusCode: 404, message: `示例 '${exampleName}' 未找到。使用 list_examples 工具查看所有可用示例。` })
+        throw createError({ statusCode: 404, message: `Example '${exampleName}' not found. Use the list_examples tool to see all available examples.` })
       }
       throw error
     }

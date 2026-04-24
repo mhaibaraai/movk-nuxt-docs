@@ -3,14 +3,14 @@ import { listComponentExamples } from '#component-example/nitro'
 
 export default defineMcpResource({
   uri: 'resource://docs/examples',
-  description: '所有可用示例代码和演示的完整列表',
+  description: 'Complete list of available example code and demonstrations',
   cache: '1h',
-  async handler(uri: URL) {
+  handler(uri: URL) {
     return {
       contents: [{
         uri: uri.toString(),
         mimeType: 'application/json',
-        text: JSON.stringify(await listComponentExamples(), null, 2)
+        text: JSON.stringify(listComponentExamples(), null, 2)
       }]
     }
   }
