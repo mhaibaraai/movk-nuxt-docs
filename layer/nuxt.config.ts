@@ -208,8 +208,27 @@ export default defineNuxtConfig({
     groups: [
       {
         userAgent: '*',
+        disallow: [
+          '/vercel/',
+          '/node_modules/',
+          '/docs/src/',
+          '/home/',
+          '/_nuxt/',
+          '/_plausible',
+          '/dev/',
+          '/api/'
+        ],
         allow: '/'
-      }
+      },
+      { userAgent: 'GPTBot', allow: '/' },
+      { userAgent: 'ChatGPT-User', allow: '/' },
+      { userAgent: 'ClaudeBot', allow: '/' },
+      { userAgent: 'Claude-Web', allow: '/' },
+      { userAgent: 'CCBot', allow: '/' },
+      { userAgent: 'Google-Extended', allow: '/' },
+      { userAgent: 'PerplexityBot', allow: '/' },
+      { userAgent: 'Amazonbot', allow: '/' },
+      { userAgent: 'cohere-ai', allow: '/' }
     ],
     sitemap: '/sitemap.xml'
   }

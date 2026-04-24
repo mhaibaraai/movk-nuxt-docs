@@ -32,6 +32,8 @@ const { findBreadcrumb } = useNavigation(navigation!)
 const breadcrumb = computed(() => findBreadcrumb(page.value?.path as string))
 
 const title = page.value?.seo?.title || page.value?.title
+const prefix = page.value?.path.includes('components/') || page.value?.path.includes('composables/') ? 'Vue ' : ''
+const suffix = page.value?.path.includes('components/') ? 'Component ' : page.value?.path.includes('composables/') ? 'Composable ' : ''
 const description = page.value?.seo?.description || page.value?.description
 
 const filterValidLinks = (links: Array<any>) => links.filter(Boolean)
@@ -90,10 +92,29 @@ useHead({
   link: [
     {
       rel: 'alternate',
-      href: joinURL(site.url, 'raw', `${path.value}.md`),
+      href: `${site.url}${path.value}.md`,
       type: 'text/markdown'
     }
-  ]
+  ],
+  script: [{
+    type: 'application/ld+json',
+    innerHTML: JSON.stringify({
+      '@context': 'https://schema.org',
+      '@type': 'TechArticle',
+      'headline': `${prefix}${title} ${suffix}`.trim(),
+      'description': description,
+      'url': joinURL(site.url, path.value),
+      'breadcrumb': {
+        '@type': 'BreadcrumbList',
+        'itemListElement': breadcrumb.value?.map((item, index) => ({
+          '@type': 'ListItem',
+          'position': index + 1,
+          'name': item.label,
+          'item': item.to ? joinURL(site.url, String(item.to)) : undefined
+        })) || []
+      }
+    }).replace(/</g, '\\u003c').replace(/>/g, '\\u003e')
+  }]
 })
 
 useSeoMeta({
@@ -115,7 +136,7 @@ defineOgImage('Docs', {
     v-if="page"
     :ui="isOpen ? {
       center: 'lg:col-span-10',
-      right: 'lg:col-span-0 hidden'
+      right: 'lg:hidden'
     } : undefined"
   >
     <UPageHeader :title="title">

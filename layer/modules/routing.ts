@@ -11,6 +11,16 @@ export default defineNuxtModule({
 
     const hasReleasesFile = releasesFileExists(rootDir)
     const hasLandingPage = landingPageExists(rootDir)
+    const routeRules = nuxt.options.routeRules ||= {}
+    const docsRouteRules = routeRules['/docs/**'] || {}
+
+    routeRules['/docs/**'] = {
+      ...docsRouteRules,
+      headers: {
+        ...docsRouteRules.headers,
+        Vary: 'Accept, User-Agent'
+      }
+    }
 
     extendPages((pages) => {
       if (!hasLandingPage) {
