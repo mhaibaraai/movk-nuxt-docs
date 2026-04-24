@@ -54,7 +54,7 @@
     "@nuxt/ui": "^4.6.1",
     "@nuxtjs/mcp-toolkit": "^0.14.0",
     "@nuxtjs/mdc": "^0.21.1",
-    "@nuxtjs/robots": "^6.0.7",
+    "@nuxtjs/robots": "^6.0.8",
     "@octokit/rest": "^22.0.1",
     "@shikijs/core": "^4.0.2",
     "@shikijs/engine-javascript": "^4.0.2",
