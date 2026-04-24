@@ -78,8 +78,8 @@ importers:
         specifier: ^0.2.1
         version: 0.2.1(@types/markdown-it@14.1.2)(katex@0.16.45)(markdown-it@14.1.1)(shiki@4.0.2)(vue@3.5.33(typescript@6.0.3))
       '@iconify-json/lucide':
-        specifier: ^1.2.102
-        version: 1.2.102
+        specifier: ^1.2.103
+        version: 1.2.103
       '@iconify-json/simple-icons':
         specifier: ^1.2.79
         version: 1.2.79
@@ -745,8 +745,8 @@ packages:
   '@iarna/toml@3.0.0':
     resolution: {integrity: sha512-td6ZUkz2oS3VeleBcN+m//Q6HlCFCPrnI0FZhrt/h4XqLEdOyYp2u21nd8MdsR+WJy5r9PTDaHTDDfhf4H4l6Q==}
 
-  '@iconify-json/lucide@1.2.102':
-    resolution: {integrity: sha512-Dm3EEqu5NrmzyDMB2U1+8yroEj2/dB9V4KlH0m/szwwF/ofSf0cPaGTZqkd1aExXjCor+vU53ttRMCGuXf+/cg==}
+  '@iconify-json/lucide@1.2.103':
+    resolution: {integrity: sha512-A5WdDll62RPxYs1yeYa9b2mV1Vs+lK/wX0wYKR+xVnhwsfPGLBwo6qfyoAQLo7AaP7oHlkw3gnHdOCERegbwTA==}
 
   '@iconify-json/simple-icons@1.2.79':
     resolution: {integrity: sha512-aNyO7Fd1qej9oQfIyohYFRv0lhQLaZ+6UkK1c1qwax0MDPUOZOdq65MlU500kow97pD/W+b2u1And3e25eE24Q==}
@@ -8321,7 +8321,7 @@ snapshots:
 
   '@iarna/toml@3.0.0': {}
 
-  '@iconify-json/lucide@1.2.102':
+  '@iconify-json/lucide@1.2.103':
     dependencies:
       '@iconify/types': 2.0.0
 

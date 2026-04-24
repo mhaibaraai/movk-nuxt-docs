@@ -43,7 +43,7 @@
     "@ai-sdk/mcp": "^1.0.36",
     "@ai-sdk/vue": "^3.0.168",
     "@comark/vue": "^0.2.1",
-    "@iconify-json/lucide": "^1.2.102",
+    "@iconify-json/lucide": "^1.2.103",
     "@iconify-json/simple-icons": "^1.2.79",
     "@iconify-json/vscode-icons": "^1.2.46",
     "@movk/core": "^1.2.3",
