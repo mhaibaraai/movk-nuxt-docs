@@ -67,8 +67,7 @@ export default defineNuxtModule<AiChatModuleOptions>({
       'AiChat',
       'AiChatFloatingInput',
       'AiChatModelSelect',
-      'AiChatPanel',
-      'AiChatPreStream'
+      'AiChatPanel'
     ]
 
     components.forEach(name =>
@@ -79,6 +78,13 @@ export default defineNuxtModule<AiChatModuleOptions>({
           : resolve('./runtime/components/AiChatDisabled.vue')
       })
     )
+
+    if (hasApiKey) {
+      addComponent({
+        name: 'AiComark',
+        filePath: resolve('./runtime/components/AiComark.client.ts')
+      })
+    }
 
     if (!hasApiKey) {
       log.warn('[movk-nuxt-docs] Ai Chat Module disabled: no API key found in environment variables.')

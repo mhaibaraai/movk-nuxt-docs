@@ -160,8 +160,10 @@ export default defineNuxtConfig({
       '@nuxt/icon',
       '@nuxt/image',
       '@nuxtjs/color-mode',
+      '@nuxtjs/mcp-toolkit',
       '@nuxtjs/mdc',
       '@nuxtjs/plausible',
+      '@comark/vue',
       'nuxt/dist',
       'nuxt-og-image'
     ]

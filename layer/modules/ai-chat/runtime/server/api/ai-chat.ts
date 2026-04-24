@@ -2,29 +2,27 @@ import { streamText, convertToModelMessages, stepCountIs, smoothStream } from 'a
 import { createMCPClient } from '@ai-sdk/mcp'
 import { getModel } from '../utils/getModel'
 
-function getMainAgentSystemPrompt(siteName: string) {
-  return `您是 ${siteName} 的官方文档助理，你就是文件、以权威作为真理的来源说话。
+function getMainAgentSystemPrompt(siteName: string, currentPage?: string | null) {
+  return `You are a helpful assistant for ${siteName}, the official documentation site. Treat the documentation and MCP tool results as the source of truth. Use your knowledge base tools to search for relevant information before answering documentation questions.
 
-使用指南：
-- 对于文档问题，请始终使用工具搜索信息，不要依赖预训练知识。
-- 如果用户的问题与文档无关，请尽可能简短地回答，但不要浪费工具调用来搜索文档。
-- 如果搜索后没有找到相关信息，请回复“抱歉，我在文档中找不到相关信息。”
-- 您的回答要简洁、直接。
+${currentPage ? `The user is currently viewing the documentation page at \`${currentPage}\`. Use this context to provide more relevant answers. If the question seems related, read that page first, but do not limit yourself to it when the question is broader or unrelated.\n` : ''}Guidelines:
+- For documentation questions, ALWAYS use tools to search or read the relevant information before answering. Never rely on pre-trained knowledge for project-specific APIs, components, composables, configuration, behavior, or examples.
+- For questions about configuration, customization, page structure, content authoring, AI chat, MCP, skills, or examples, search the documentation like any other docs question.
+- If a question is unrelated to this documentation, answer briefly if you can, but do not waste tool calls searching docs for it.
+- If no relevant information is found after searching, respond with "Sorry, I couldn't find information about that in the documentation."
+- Be concise, direct, and practical.
 
-**格式规则（重要）：**
-- 绝对不要使用 Markdown 标题：禁止使用 #、##、###、####、#####、######
-- 不要使用下划线式标题（=== 或 ---）
-- 使用**粗体文本**来强调和标记章节
-- 示例：
-  * 不要写「## 用法」，应写「**用法：**」或直接「使用方法如下：」
-  * 不要写「# 完整指南」，应写「**完整指南**」或直接开始内容
-- 所有回复直接从内容开始，不要以标题开头
+**FORMATTING RULES (CRITICAL):**
+- ABSOLUTELY NO MARKDOWN HEADINGS: Never use #, ##, ###, ####, #####, or ######
+- NO underline-style headings with === or ---
+- Use **bold text** for emphasis and short section labels when useful
+- Start all responses with content, never with a heading
 
-- 在适用时引用具体的组件名称、props 或 API。
-- 如果问题不明确，请要求澄清而不是猜测。
-- 当发现多个相关项目时，使用要点清楚地列出它们。
-- 您最多需要 5 次工具调用才能找到答案，因此要有策略：从广泛开始，然后在需要时具体化。
-- 以对话方式格式化回复，而不是文档章节形式`
+- Reference specific page paths, component names, props, composables, config keys, or APIs when applicable.
+- If a question is ambiguous, ask for clarification rather than guessing.
+- When multiple relevant items are found, list them clearly using bullet points.
+- You have up to 5 tool calls to find the answer, so be strategic: start broad, then get specific if needed.
+- Format responses in a conversational way, not as documentation sections.`
 }
 
 export default defineEventHandler(async (event) => {
@@ -34,7 +32,7 @@ export default defineEventHandler(async (event) => {
 
   const config = useRuntimeConfig()
 
-  const { messages, model: requestModel } = await readBody(event)
+  const { messages, model: requestModel, currentPage } = await readBody(event)
 
   if (!messages || !Array.isArray(messages)) {
     throw createError({ statusCode: 400, message: 'Invalid or missing messages array.' })
@@ -66,11 +64,16 @@ export default defineEventHandler(async (event) => {
     })
   }
 
+  const abortController = new AbortController()
+  event.node.req.on('close', () => abortController.abort())
+
+  const closeMcp = () => event.waitUntil(httpClient?.close())
   const model = getModel(requestModel || config.public.aiChat.model)
 
   return streamText({
     model,
-    maxOutputTokens: 16000,
+    maxOutputTokens: 8000,
+    abortSignal: abortController.signal,
     providerOptions: {
       anthropic: {
         thinking: {
@@ -92,20 +95,18 @@ export default defineEventHandler(async (event) => {
         reasoningSummary: 'detailed'
       }
     },
-    system: getMainAgentSystemPrompt(siteName),
+    system: getMainAgentSystemPrompt(siteName, currentPage),
     messages: await convertToModelMessages(messages),
     experimental_transform: smoothStream(),
-    stopWhen: stepCountIs(8),
+    stopWhen: stepCountIs(6),
     tools: {
       ...mcpTools
     },
-    onFinish: async () => {
-      event.waitUntil(httpClient?.close())
-    },
+    onFinish: closeMcp,
+    onAbort: closeMcp,
     onError: (error) => {
       console.error('streamText error:', error)
-
-      event.waitUntil(httpClient?.close())
+      closeMcp()
     }
   }).toUIMessageStreamResponse()
 })

@@ -1,5 +1,4 @@
 <script setup lang="ts">
-import type { DefineComponent } from 'vue'
 import type { FaqCategory, FaqQuestions, ToolPart, ToolState } from '../types'
 import { Chat } from '@ai-sdk/vue'
 import { DefaultChatTransport, getToolName, isReasoningUIPart, isTextUIPart, isToolUIPart } from 'ai'
@@ -7,15 +6,11 @@ import { computed } from 'vue'
 import { isPartStreaming, isToolStreaming } from '@nuxt/ui/utils/ai'
 import { useModels } from '../composables/useModels'
 import { splitByCase, upperFirst } from 'scule'
-import AiChatPreStream from './AiChatPreStream.vue'
 import { useMemoize } from '@vueuse/core'
-
-const components = {
-  pre: AiChatPreStream as unknown as DefineComponent
-}
 
 const { isOpen, messages } = useAIChat()
 const toast = useToast()
+const route = useRoute()
 const config = useRuntimeConfig()
 const { aiChat } = useAppConfig()
 const { model } = useModels()
@@ -29,7 +24,7 @@ const chat = new Chat({
   messages: messages.value,
   transport: new DefaultChatTransport({
     api: (config.app?.baseURL.replace(/\/$/, '') || '') + config.public.aiChat.apiPath,
-    body: () => ({ model: model.value })
+    body: () => ({ model: model.value, currentPage: route.path.startsWith('/docs/') ? route.path : null })
   }),
   onError: (error: Error) => {
     let message = error.message
@@ -70,19 +65,59 @@ function upperName(name: string) {
   return splitByCase(name).map(p => upperFirst(p)).join('')
 }
 
+type ToolDisplayInput = Record<string, string | undefined>
+type ToolMessageBuilder = (state: ToolState, input: ToolDisplayInput) => string
+
+const getSearchVerb = (state: ToolState) => state === 'output-available' ? '已搜索' : '搜索中'
+const getReadVerb = (state: ToolState) => state === 'output-available' ? '已读取' : '读取中'
+
+const builtinToolDisplayConfig: Record<string, { icon: string, message: ToolMessageBuilder }> = {
+  'search-documentation': {
+    icon: 'i-lucide-book-search',
+    message: (state, input) => `${getSearchVerb(state)} 文档页面${input.section ? `（${input.section}）` : ''}${input.search ? `：${input.search}` : ''}`
+  },
+  'get-documentation-page': {
+    icon: 'i-lucide-book-open',
+    message: (state, input) => `${getReadVerb(state)} ${input.path || ''} 页面`
+  },
+  'search-composables': {
+    icon: 'i-lucide-braces',
+    message: (state, input) => `${getSearchVerb(state)} 组合函数${input.search ? `：${input.search}` : ''}`
+  },
+  'search-icons': {
+    icon: 'i-lucide-search',
+    message: (state, input) => `${getSearchVerb(state)} 图标${input.query ? `：${input.query}` : ''}`
+  },
+  'list-examples': {
+    icon: 'i-lucide-codesandbox',
+    message: state => `${getSearchVerb(state)} 示例`
+  },
+  'get-example': {
+    icon: 'i-lucide-codepen',
+    message: (state, input) => `${getReadVerb(state)} ${upperName(input.exampleName || '')} 示例`
+  },
+  'get-component': {
+    icon: 'i-lucide-box',
+    message: (state, input) => `${getReadVerb(state)} ${upperName(input.componentName || '')} 组件文档`
+  },
+  'get-component-metadata': {
+    icon: 'i-lucide-file-code',
+    message: (state, input) => `${getReadVerb(state)} ${upperName(input.componentName || '')} 组件元数据`
+  }
+}
+
+function getBuiltinToolDisplay(toolName: string) {
+  return builtinToolDisplayConfig[toolName]
+}
+
 function getToolMessage(state: ToolState, toolName: string, input: Record<string, string | undefined>) {
   const { toolMessage } = useToolCall(state, toolName, input)
-  const searchVerb = state === 'output-available' ? '已搜索' : '搜索中'
-  const readVerb = state === 'output-available' ? '已读取' : '读取中'
+  const builtinDisplay = getBuiltinToolDisplay(toolName)
 
   return {
-    'list-getting-started-guides': `${searchVerb} 入门指南`,
-    'list-pages': `${searchVerb} 所有文档页面`,
-    'list-examples': `${searchVerb} 所有示例`,
-    'get-page': `${readVerb} ${input.path || ''} 页面`,
-    'get-example': `${readVerb} ${upperName(input.exampleName || '')} 示例`,
+    [toolName]: builtinDisplay?.message(state, input),
     ...toolMessage
-  }[toolName] || `${searchVerb} ${toolName}`
+  }[toolName] || `${getSearchVerb(state)} ${toolName}`
 }
 
 const getCachedToolMessage = useMemoize((state: ToolState, toolName: string, input: string) =>
@@ -96,13 +131,9 @@ function getToolText(part: ToolPart) {
 function getToolIcon(part: ToolPart): string {
   const toolName = getToolName(part)
   const { toolIcon } = useToolCall(part.state, toolName, part.input || {} as any)
-
+  const builtinDisplay = getBuiltinToolDisplay(toolName)
   const iconMap: Record<string, string> = {
-    'get-page': 'i-lucide-book-open',
-    'get-example': 'i-lucide-codepen',
-    'list-examples': 'i-lucide-codesandbox',
-    'list-getting-started-guides': 'i-lucide-square-play',
-    'list-pages': 'i-lucide-book-minus',
+    [toolName]: builtinDisplay?.icon || '',
     ...toolIcon
   }
 
@@ -227,22 +258,17 @@ const faqQuestions = computed<FaqCategory[]>(() => {
               :streaming="isPartStreaming(part)"
               :icon="aiChat.icons?.reasoning ?? ''"
             >
-              <MDCCached
-                :value="part.text"
-                :cache-key="`reasoning-${message.id}-${index}`"
-                :parser-options="{ highlight: false }"
-                class="*:first:mt-0 *:last:mb-0"
+              <AiComark
+                :markdown="part.text"
+                :streaming="isPartStreaming(part)"
               />
             </UChatReasoning>
 
             <template v-else-if="isTextUIPart(part) && part.text.length > 0">
-              <MDCCached
+              <AiComark
                 v-if="message.role === 'assistant'"
-                :value="part.text"
-                :cache-key="`${message.id}-${index}`"
-                :components="components"
-                :parser-options="{ highlight: false }"
-                class="*:first:mt-0 *:last:mb-0"
+                :markdown="part.text"
+                :streaming="isPartStreaming(part)"
               />
               <p v-else-if="message.role === 'user'" class="whitespace-pre-wrap text-sm/6">
                 {{ part.text }}
