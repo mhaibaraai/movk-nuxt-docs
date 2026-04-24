@@ -207,6 +207,9 @@ export default defineNuxtConfig({
   robots: {
     groups: [
       {
+        contentSignal: 'search=yes, ai-train=yes, ai-input=yes'
+      },
+      {
         userAgent: '*',
         disallow: [
           '/vercel/',
