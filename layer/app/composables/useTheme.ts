@@ -9,10 +9,16 @@ export function useTheme() {
   const site = useSiteConfig()
   const name = kebabCase(site.name)
 
-  const radius = useLocalStorage(`${name}-ui-radius`, 0.25)
-  const font = useLocalStorage(`${name}-ui-font`, 'Alibaba PuHuiTi')
+  const _radius = useLocalStorage(`${name}-ui-radius`, 0.25)
+  const _font = useLocalStorage(`${name}-ui-font`, 'Alibaba PuHuiTi')
   const _iconSet = useLocalStorage(`${name}-ui-icons`, 'lucide')
-  const blackAsPrimary = useLocalStorage(`${name}-ui-black-as-primary`, false)
+  const _blackAsPrimary = useLocalStorage(`${name}-ui-black-as-primary`, false)
+
+  const blackAsPrimary = computed(() => _blackAsPrimary.value)
+
+  function setBlackAsPrimary(value: boolean) {
+    _blackAsPrimary.value = value
+  }
 
   const neutralColors = ['slate', 'gray', 'zinc', 'neutral', 'stone', 'taupe', 'mauve', 'mist', 'olive']
   const neutral = computed({
@@ -34,12 +40,29 @@ export function useTheme() {
     set(option) {
       appConfig.ui.colors.primary = option
       window.localStorage.setItem(`${name}-ui-primary`, appConfig.ui.colors.primary)
-      blackAsPrimary.value = false
+      setBlackAsPrimary(false)
     }
   })
 
   const radiuses = [0, 0.125, 0.25, 0.375, 0.5]
+  const radius = computed({
+    get() {
+      return _radius.value
+    },
+    set(option) {
+      _radius.value = option
+    }
+  })
+
   const fonts = ['Alibaba PuHuiTi', 'Public Sans', 'DM Sans', 'Geist', 'Inter', 'Poppins', 'Outfit', 'Raleway']
+  const font = computed({
+    get() {
+      return _font.value
+    },
+    set(option) {
+      _font.value = option
+    }
+  })
 
   const icons = [{
     label: 'Lucide',
@@ -78,12 +101,12 @@ export function useTheme() {
     }
   })
 
-  const radiusStyle = computed(() => `:root { --ui-radius: ${radius.value}rem; }`)
-  const blackAsPrimaryStyle = computed(() => blackAsPrimary.value ? `:root { --ui-primary: black; } .dark { --ui-primary: white; }` : ':root {}')
-  const fontStyle = computed(() => `:root { --font-sans: '${font.value}', sans-serif; }`)
+  const radiusStyle = computed(() => `:root { --ui-radius: ${_radius.value}rem; }`)
+  const blackAsPrimaryStyle = computed(() => _blackAsPrimary.value ? `:root { --ui-primary: black; } .dark { --ui-primary: white; }` : ':root {}')
+  const fontStyle = computed(() => `:root { --font-sans: '${_font.value}', sans-serif; }`)
 
   const link = computed(() => {
-    const name = font.value
+    const name = _font.value
     if (name === 'Alibaba PuHuiTi' || !fonts.includes(name)) return []
     return [{
       rel: 'stylesheet' as const,
@@ -93,15 +116,15 @@ export function useTheme() {
   })
 
   const style = [
-    { innerHTML: radiusStyle, id: `${name}-ui-radius`, tagPriority: -2 },
-    { innerHTML: blackAsPrimaryStyle, id: `${name}-ui-black-as-primary`, tagPriority: -2 },
-    { innerHTML: fontStyle, id: `${name}-ui-font`, tagPriority: -2 }
+    { innerHTML: radiusStyle, id: `nuxt-ui-radius`, tagPriority: -2 },
+    { innerHTML: blackAsPrimaryStyle, id: `nuxt-ui-black-as-primary`, tagPriority: -2 },
+    { innerHTML: fontStyle, id: `nuxt-ui-font`, tagPriority: -2 }
   ]
 
   const hasCSSChanges = computed(() => {
-    return radius.value !== 0.25
-      || blackAsPrimary.value
-      || font.value !== 'Alibaba PuHuiTi'
+    return _radius.value !== 0.25
+      || _blackAsPrimary.value
+      || _font.value !== 'Alibaba PuHuiTi'
   })
 
   const hasAppConfigChanges = computed(() => {
@@ -116,15 +139,15 @@ export function useTheme() {
       '@import "@nuxt/ui";'
     ]
 
-    if (font.value !== 'Alibaba PuHuiTi') {
-      lines.push('', '@theme {', `  --font-sans: '${font.value}', sans-serif;`, '}')
+    if (_font.value !== 'Alibaba PuHuiTi') {
+      lines.push('', '@theme {', `  --font-sans: '${_font.value}', sans-serif;`, '}')
     }
 
     const rootLines: string[] = []
-    if (radius.value !== 0.25) {
-      rootLines.push(`  --ui-radius: ${radius.value}rem;`)
+    if (_radius.value !== 0.25) {
+      rootLines.push(`  --ui-radius: ${_radius.value}rem;`)
     }
-    if (blackAsPrimary.value) {
+    if (_blackAsPrimary.value) {
       rootLines.push('  --ui-primary: black;')
     }
 
@@ -133,7 +156,7 @@ export function useTheme() {
     }
 
     const darkLines: string[] = []
-    if (blackAsPrimary.value) {
+    if (_blackAsPrimary.value) {
       darkLines.push('  --ui-primary: white;')
     }
 
@@ -172,15 +195,11 @@ export function useTheme() {
     appConfig.ui.colors.neutral = 'slate'
     window.localStorage.removeItem(`${name}-ui-neutral`)
 
-    radius.value = 0.25
-    font.value = 'Alibaba PuHuiTi'
+    _radius.value = 0.25
+    _font.value = 'Alibaba PuHuiTi'
     _iconSet.value = 'lucide'
     appConfig.ui.icons = themeIcons.lucide as any
-    blackAsPrimary.value = false
-
-    window.localStorage.removeItem(`${name}-ui-ai-theme`)
-    window.localStorage.removeItem(`${name}-ui-custom-colors`)
-    window.localStorage.removeItem(`${name}-ui-css-variables`)
+    _blackAsPrimary.value = false
   }
 
   return {
