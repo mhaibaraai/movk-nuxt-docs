@@ -42,7 +42,9 @@ export default eventHandler(async (event) => {
 
   setHeader(event, 'Content-Type', 'text/markdown; charset=utf-8')
 
-  const canonicalUrl = `${getRequestURL(event).origin}${page.path}`
+  const siteUrl = (getSiteConfig(event).url || getRequestURL(event).origin).replace(/\/$/, '')
+  const baseURL = useRuntimeConfig(event).app.baseURL.replace(/\/$/, '')
+  const canonicalUrl = `${siteUrl}${baseURL}${page.path}`
   const frontmatter = [
     '---',
     `title: ${JSON.stringify(page.title || '')}`,
