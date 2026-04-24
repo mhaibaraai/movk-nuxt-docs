@@ -2,7 +2,6 @@ import type { Collections, PageCollectionItemBase } from '@nuxt/content'
 import { withLeadingSlash } from 'ufo'
 import { queryCollection } from '@nuxt/content/server'
 import { getRouterParams, eventHandler, setHeader } from 'h3'
-import collections from '#content/manifest'
 
 export default eventHandler(async (event) => {
   const slug = getRouterParams(event)['slug.md']
@@ -16,12 +15,8 @@ export default eventHandler(async (event) => {
     path = path.substring(0, path.length - 6)
   }
 
-  const _collections = Object.entries(collections as unknown as Record<string, { type: string }>)
-    .filter(([_key, value]) => value.type === 'page')
-    .map(([key]) => key) as string[]
-
   let page: PageCollectionItemBase | null = null
-  for (const collection of _collections) {
+  for (const collection of getPageCollections()) {
     page = await queryCollection(event, collection as keyof Collections).path(path).first() as PageCollectionItemBase | null
     if (page) break
   }
@@ -42,14 +37,13 @@ export default eventHandler(async (event) => {
 
   setHeader(event, 'Content-Type', 'text/markdown; charset=utf-8')
 
-  const siteUrl = (getSiteConfig(event).url || getRequestURL(event).origin).replace(/\/$/, '')
-  const baseURL = useRuntimeConfig(event).app.baseURL.replace(/\/$/, '')
-  const canonicalUrl = `${siteUrl}${baseURL}${page.path}`
+  const canonicalUrl = createSiteURL(event, page.path)
   const frontmatter = [
     '---',
     `title: ${JSON.stringify(page.title || '')}`,
     `description: ${JSON.stringify(page.description || '')}`,
     `canonical_url: ${JSON.stringify(canonicalUrl)}`,
+    `last_updated: ${JSON.stringify(new Date().toISOString().split('T')[0])}`,
     '---',
     ''
   ].join('\n')

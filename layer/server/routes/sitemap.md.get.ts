@@ -1,5 +1,5 @@
 import { queryCollection } from '@nuxt/content/server'
-import { eventHandler, getRequestURL, setHeader } from 'h3'
+import { eventHandler, setHeader } from 'h3'
 
 export default eventHandler(async (event) => {
   const pages = await queryCollection(event, 'docs')
@@ -9,8 +9,6 @@ export default eventHandler(async (event) => {
     .order('path', 'ASC')
     .all()
 
-  const siteUrl = (getSiteConfig(event).url || getRequestURL(event).origin).replace(/\/$/, '')
-  const baseURL = useRuntimeConfig(event).app.baseURL.replace(/\/$/, '')
   let md = '# Sitemap\n\n'
   let currentSection = ''
 
@@ -30,7 +28,7 @@ export default eventHandler(async (event) => {
       .replace(/\\/g, '\\\\')
       .replace(/\[/g, '\\[')
       .replace(/\]/g, '\\]')
-    const href = `${siteUrl}${baseURL}/raw${page.path}.md`
+    const href = createSiteURL(event, `/raw${page.path}.md`)
     md += `- [${pageLabel}](${href})\n`
   }
 

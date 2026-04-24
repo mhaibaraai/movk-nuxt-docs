@@ -96,7 +96,7 @@ export default defineNuxtConfig({
 
   nitro: {
     prerender: {
-      routes: ['/'],
+      routes: ['/', '/raw/index.md'],
       crawlLinks: true,
       failOnError: false,
       autoSubfolderIndex: false

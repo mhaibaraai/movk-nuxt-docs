@@ -1,5 +1,5 @@
 import { queryCollection } from '@nuxt/content/server'
-import { eventHandler, getRequestURL, setHeader } from 'h3'
+import { eventHandler, setHeader } from 'h3'
 
 function xmlEscape(str: string): string {
   return str.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;').replace(/'/g, '&apos;')
@@ -13,11 +13,9 @@ export default eventHandler(async (event) => {
     .order('path', 'ASC')
     .all()
 
-  const siteUrl = (getSiteConfig(event).url || getRequestURL(event).origin).replace(/\/$/, '')
-  const baseURL = useRuntimeConfig(event).app.baseURL.replace(/\/$/, '')
   const today = new Date().toISOString().split('T')[0]
   const urls = pages.map(page =>
-    `  <url>\n    <loc>${xmlEscape(`${siteUrl}${baseURL}${page.path}`)}</loc>\n    <lastmod>${today}</lastmod>\n  </url>`
+    `  <url>\n    <loc>${xmlEscape(createSiteURL(event, page.path))}</loc>\n    <lastmod>${today}</lastmod>\n  </url>`
   ).join('\n')
 
   const xml = `<?xml version="1.0" encoding="UTF-8"?>
