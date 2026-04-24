@@ -1,5 +1,36 @@
 # 📋 Changelog
 
+## [1.18.0](https://github.com/mhaibaraai/movk-nuxt-docs/compare/v1.17.7...v1.18.0) (2026-04-24)
+
+### ✨ Features
+
+* **agent:** 添加 Agent 发现入口 ([b952628](https://github.com/mhaibaraai/movk-nuxt-docs/commit/b952628f29b8e06860e0cfd93674426ccdcab408))
+* **ai-chat:** 使用 Comark 渲染流式消息 ([c510bba](https://github.com/mhaibaraai/movk-nuxt-docs/commit/c510bbaa168219cf7b209ac7cd4d385bc631b95f))
+* **markdown:** 优化 LLM 可读文档输出 ([4434137](https://github.com/mhaibaraai/movk-nuxt-docs/commit/44341373c874c23673abebb2534bd9220c9b4af3))
+* **mcp:** 重构内置文档工具 ([5f85adf](https://github.com/mhaibaraai/movk-nuxt-docs/commit/5f85adf4347e818731c54496791d7b56e3abd916))
+* **raw:** 添加首页 Markdown 原文入口 ([7c2e5e8](https://github.com/mhaibaraai/movk-nuxt-docs/commit/7c2e5e8eb78e74a7e6553f9a2d16253fe0f87344))
+
+### 🐛 Bug Fixes
+
+* **raw:** 修正文档原文规范链接 ([e7d32b7](https://github.com/mhaibaraai/movk-nuxt-docs/commit/e7d32b7fd9862663e6542124967d267e3e31c0a4))
+* **theme:** 稳定主题设置注入 ([1c381ff](https://github.com/mhaibaraai/movk-nuxt-docs/commit/1c381ff9d13593b3af2cdfdbe18df96a28eb49c9))
+
+### 🔧 Chores
+
+* **deps:** update all non-major dependencies ([163dd10](https://github.com/mhaibaraai/movk-nuxt-docs/commit/163dd10b15786b13d9fabf2cf2b70c4a85fe8466))
+* **deps:** update dependency @iconify-json/lucide to ^1.2.103 ([b7af3a7](https://github.com/mhaibaraai/movk-nuxt-docs/commit/b7af3a78ad2d322f554b1dfc2a38609e0a0d0927))
+* **deps:** update dependency @nuxtjs/robots to ^6.0.8 ([a095b67](https://github.com/mhaibaraai/movk-nuxt-docs/commit/a095b67e108e8eb9916841fb2484be6cc7433f95))
+* **deps:** update dependency nuxt-og-image to ^6.4.7 ([4b30b97](https://github.com/mhaibaraai/movk-nuxt-docs/commit/4b30b97acc4952882d8dccafec2a7b6dd2d3a572))
+* **deps:** update dependency tailwindcss to ^4.2.4 ([d91a1d1](https://github.com/mhaibaraai/movk-nuxt-docs/commit/d91a1d15faa8042fcb78b5639f3f4c4b7f88d559))
+* **deps:** update devdependency release-it to ^20.0.1 ([71786f6](https://github.com/mhaibaraai/movk-nuxt-docs/commit/71786f67be101d8e02120d2f6df775ccec3de9a1))
+* **deps:** update iconify ([433523a](https://github.com/mhaibaraai/movk-nuxt-docs/commit/433523a203d817fd99ea17e8706d843346a7e4dc))
+* **deps:** update nuxt ([017179b](https://github.com/mhaibaraai/movk-nuxt-docs/commit/017179baf57a775d87c83d435c02978476f62111))
+* **deps:** update pnpm/action-setup action to v6 ([7b9d9d2](https://github.com/mhaibaraai/movk-nuxt-docs/commit/7b9d9d2451dc264d127da88849225fe39c48701e))
+* **deps:** update takumi to v1 ([fc738c2](https://github.com/mhaibaraai/movk-nuxt-docs/commit/fc738c225d7fd29dfffbb2bc1f665120621311a6))
+* **deps:** update vue-tsc to ^3.2.7 ([4ec108b](https://github.com/mhaibaraai/movk-nuxt-docs/commit/4ec108b3193a05cf75071c8dc7e74e7a1e45be1c))
+* **deps:** 更新文档依赖 ([52a5ed4](https://github.com/mhaibaraai/movk-nuxt-docs/commit/52a5ed4e22512681392ef5e76c6710a5121d5971))
+* **prettier:** 更新 worker 使用的 CDN 版本 ([4da354a](https://github.com/mhaibaraai/movk-nuxt-docs/commit/4da354a68beb25e67c76ab6c78a8c8b6b17d651e))
+
 ## [1.17.7](https://github.com/mhaibaraai/movk-nuxt-docs/compare/v1.17.6...v1.17.7) (2026-04-10)
 
 ### 🐛 Bug Fixes
