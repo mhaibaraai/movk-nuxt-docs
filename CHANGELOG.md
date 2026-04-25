@@ -1,5 +1,21 @@
 # 📋 Changelog
 
+## [1.18.1](https://github.com/mhaibaraai/movk-nuxt-docs/compare/v1.18.0...v1.18.1) (2026-04-25)
+
+### 🐛 Bug Fixes
+
+* **theme:** 调整主题样式注入优先级 ([be3590a](https://github.com/mhaibaraai/movk-nuxt-docs/commit/be3590a9486229a089b16f0a387c1412404779a3))
+
+### 📝 Documentation
+
+* 重设计 AI 问答引导 ([2b2e93e](https://github.com/mhaibaraai/movk-nuxt-docs/commit/2b2e93e3fe9d65aed2391c701d46d1bc9c6a4851))
+
+### 🔧 Chores
+
+* **deps:** update dependency @nuxt/ui to ^4.7.0 ([fd097e2](https://github.com/mhaibaraai/movk-nuxt-docs/commit/fd097e2c1a11475a52bd7bee23173895f5eebe56))
+* **deps:** update pnpm to v10.33.2 ([eae7f27](https://github.com/mhaibaraai/movk-nuxt-docs/commit/eae7f27951162b5b916d782f8fe13311d2aac087))
+* **deps:** 更新依赖锁定版本 ([83cfc00](https://github.com/mhaibaraai/movk-nuxt-docs/commit/83cfc0008eb21e7e8ecb648f81029b66ac1226f4))
+
 ## [1.18.0](https://github.com/mhaibaraai/movk-nuxt-docs/compare/v1.17.7...v1.18.0) (2026-04-24)
 
 ### ✨ Features
