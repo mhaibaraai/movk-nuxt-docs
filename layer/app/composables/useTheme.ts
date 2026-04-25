@@ -116,9 +116,9 @@ export function useTheme() {
   })
 
   const style = [
-    { innerHTML: radiusStyle, id: `nuxt-ui-radius`, tagPriority: -2 },
-    { innerHTML: blackAsPrimaryStyle, id: `nuxt-ui-black-as-primary`, tagPriority: -2 },
-    { innerHTML: fontStyle, id: `nuxt-ui-font`, tagPriority: -2 }
+    { innerHTML: radiusStyle, id: `nuxt-ui-radius`, tagPriority: 'critical' as const },
+    { innerHTML: blackAsPrimaryStyle, id: `nuxt-ui-black-as-primary`, tagPriority: 'critical' as const },
+    { innerHTML: fontStyle, id: `nuxt-ui-font`, tagPriority: 'critical' as const }
   ]
 
   const hasCSSChanges = computed(() => {
