@@ -66,18 +66,24 @@ export default defineNuxtPlugin({
           tagPriority: 'high'
         }, {
           innerHTML: `
+            var r = localStorage.getItem('${name}-ui-radius');
+            if (r) document.documentElement.style.setProperty('--ui-radius', r + 'rem');
+          `.replace(/\s+/g, ' '),
+          type: 'text/javascript',
+          tagPriority: 'high'
+        }, {
+          innerHTML: `
             if (localStorage.getItem('${name}-ui-black-as-primary') === 'true') {
-              document.querySelector('style#nuxt-ui-black-as-primary').innerHTML = ':root { --ui-primary: black; } .dark { --ui-primary: white; }';
-            } else {
-              document.querySelector('style#nuxt-ui-black-as-primary').innerHTML = '';
+              var isDark = document.documentElement.classList.contains('dark');
+              document.documentElement.style.setProperty('--ui-primary', isDark ? 'white' : 'black');
             }
           `.replace(/\s+/g, ' ')
         }, {
           innerHTML: [
-            `if (localStorage.getItem('${name}-ui-font')) {`,
             `var font = localStorage.getItem('${name}-ui-font');`,
-            `document.querySelector('style#nuxt-ui-font').innerHTML = ':root { --font-sans: \\'' + font + '\\', sans-serif; }';`,
-            `if (font !== 'Alibaba PuHuiTi' && ['Alibaba PuHuiTi', 'Public Sans', 'DM Sans', 'Geist', 'Inter', 'Poppins', 'Outfit', 'Raleway'].includes(font)) {`,
+            `if (font) {`,
+            `document.documentElement.style.setProperty('--font-sans', "'" + font + "', sans-serif");`,
+            `if (font !== 'Alibaba PuHuiTi' && ['Public Sans', 'DM Sans', 'Geist', 'Inter', 'Poppins', 'Outfit', 'Raleway'].includes(font)) {`,
             `var lnk = document.createElement('link');`,
             `lnk.rel = 'stylesheet';`,
             `lnk.href = 'https://fonts.googleapis.com/css2?family=' + encodeURIComponent(font) + ':wght@400;500;600;700&display=swap';`,
