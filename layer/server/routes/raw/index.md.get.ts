@@ -30,7 +30,9 @@ export default eventHandler(async (event) => {
   const page = await findIndexPage(event)
   const metadata = getSiteMetadata(event, page)
   const title = page?.title || metadata.siteName
+  const seoTitle = page?.seo?.title || ''
   const description = page?.description || metadata.description
+  const seoDescription = page?.seo?.description || ''
   const canonicalUrl = metadata.baseSiteUrl
 
   const links = [
@@ -42,6 +44,8 @@ export default eventHandler(async (event) => {
     '---',
     `title: ${JSON.stringify(title)}`,
     `description: ${JSON.stringify(description)}`,
+    `seo_title: ${JSON.stringify(seoTitle)}`,
+    `seo_description: ${JSON.stringify(seoDescription)}`,
     `canonical_url: ${JSON.stringify(canonicalUrl)}`,
     `last_updated: ${JSON.stringify(new Date().toISOString().split('T')[0])}`,
     '---',

@@ -42,6 +42,8 @@ export default eventHandler(async (event) => {
     '---',
     `title: ${JSON.stringify(page.title || '')}`,
     `description: ${JSON.stringify(page.description || '')}`,
+    `seo_title: ${JSON.stringify(page.seo?.title || '')}`,
+    `seo_description: ${JSON.stringify(page.seo?.description || '')}`,
     `canonical_url: ${JSON.stringify(canonicalUrl)}`,
     `last_updated: ${JSON.stringify(new Date().toISOString().split('T')[0])}`,
     '---',
