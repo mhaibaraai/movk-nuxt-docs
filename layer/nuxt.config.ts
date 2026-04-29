@@ -2,7 +2,6 @@ import { defineNuxtConfig } from 'nuxt/config'
 import pkg from './package.json'
 import { createResolver, useNuxt } from '@nuxt/kit'
 import { join } from 'pathe'
-import { createAlibabaPuHuiTiProvider } from './providers/alibaba-puhuiti'
 
 const { resolve } = createResolver(import.meta.url)
 
@@ -18,7 +17,6 @@ export default defineNuxtConfig({
       })
     },
     '@nuxt/ui',
-    '@nuxt/fonts',
     '@nuxt/content',
     '@nuxt/image',
     '@nuxtjs/robots',
@@ -120,7 +118,6 @@ export default defineNuxtConfig({
       // tailwindcss/colors is a peer dep resolved in the consumer project directly.
       cfg.optimizeDeps.include.push(
         'tailwindcss/colors',
-        '@movk/nuxt-docs > @movk/core',
         '@movk/nuxt-docs > prettier'
       )
 
@@ -169,15 +166,8 @@ export default defineNuxtConfig({
     ]
   },
 
-  // for users in China who may have trouble loading Google Fonts.
   fonts: {
-    provider: 'alibaba-puhuiti',
-    providers: {
-      'alibaba-puhuiti': createAlibabaPuHuiTiProvider('https://cdn.mhaibaraai.cn/fonts', 'Alibaba PuHuiTi')
-    },
-    families: [
-      { name: 'Alibaba PuHuiTi', global: true }
-    ]
+    provider: 'local'
   },
 
   icon: {
@@ -190,8 +180,7 @@ export default defineNuxtConfig({
     clientBundle: {
       scan: true,
       includeCustomCollections: true
-    },
-    provider: 'iconify'
+    }
   },
 
   llms: {

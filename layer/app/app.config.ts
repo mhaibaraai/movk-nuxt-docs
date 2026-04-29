@@ -18,7 +18,6 @@ export default defineAppConfig({
       primary: 'green',
       neutral: 'slate'
     }
-
   },
   header: {
     avatar: 'https://docs.mhaibaraai.cn/avatar.png',

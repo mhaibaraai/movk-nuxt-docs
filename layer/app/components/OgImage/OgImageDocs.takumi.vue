@@ -7,7 +7,7 @@ defineProps<{
 </script>
 
 <template>
-  <div style="font-family: 'Alibaba PuHuiTi', sans-serif;" class="w-full h-full flex flex-col justify-center items-center relative p-10 lg:p-15 bg-white text-neutral-900 dark:bg-neutral-900 dark:text-neutral-50">
+  <div class="w-full h-full flex flex-col justify-center items-center relative p-10 lg:p-15 bg-white text-neutral-900 dark:bg-neutral-900 dark:text-neutral-50">
     <div
       class="absolute top-0 left-0 right-0 bottom-0"
       :style="{

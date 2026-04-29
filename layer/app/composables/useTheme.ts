@@ -14,12 +14,6 @@ export function useTheme() {
   const _iconSet = useLocalStorage(`${name}-ui-icons`, 'lucide')
   const _blackAsPrimary = useLocalStorage(`${name}-ui-black-as-primary`, false)
 
-  const blackAsPrimary = computed(() => _blackAsPrimary.value)
-
-  function setBlackAsPrimary(value: boolean) {
-    _blackAsPrimary.value = value
-  }
-
   const neutralColors = ['slate', 'gray', 'zinc', 'neutral', 'stone', 'taupe', 'mauve', 'mist', 'olive']
   const neutral = computed({
     get() {
@@ -101,24 +95,29 @@ export function useTheme() {
     }
   })
 
+  const blackAsPrimary = computed(() => _blackAsPrimary.value)
+
+  function setBlackAsPrimary(value: boolean) {
+    _blackAsPrimary.value = value
+  }
+
   const radiusStyle = computed(() => `:root { --ui-radius: ${_radius.value}rem; }`)
   const blackAsPrimaryStyle = computed(() => _blackAsPrimary.value ? `:root { --ui-primary: black; } .dark { --ui-primary: white; }` : ':root {}')
   const fontStyle = computed(() => `:root { --font-sans: '${_font.value}', sans-serif; }`)
 
   const link = computed(() => {
     const name = _font.value
-    if (name === 'Alibaba PuHuiTi' || !fonts.includes(name)) return []
     return [{
       rel: 'stylesheet' as const,
-      href: `https://fonts.googleapis.com/css2?family=${encodeURIComponent(name)}:wght@400;500;600;700&display=swap`,
-      id: `font-${kebabCase(name)}`
+      href: name === 'Alibaba PuHuiTi' ? 'https://cdn.mhaibaraai.cn/fonts/alibaba-puhuiti.css' : `https://fonts.googleapis.com/css2?family=${encodeURIComponent(name)}:wght@400;500;600;700&display=swap`,
+      id: `font-${name.toLowerCase().replace(/\s+/g, '-')}`
     }]
   })
 
   const style = [
-    { innerHTML: radiusStyle, id: `nuxt-ui-radius`, tagPriority: 'critical' as const },
-    { innerHTML: blackAsPrimaryStyle, id: `nuxt-ui-black-as-primary`, tagPriority: 'critical' as const },
-    { innerHTML: fontStyle, id: `nuxt-ui-font`, tagPriority: 'critical' as const }
+    { innerHTML: radiusStyle, id: `nuxt-ui-radius`, tagPriority: -2 },
+    { innerHTML: blackAsPrimaryStyle, id: `nuxt-ui-black-as-primary`, tagPriority: -2 },
+    { innerHTML: fontStyle, id: `nuxt-ui-font`, tagPriority: -2 }
   ]
 
   const hasCSSChanges = computed(() => {
@@ -127,7 +126,7 @@ export function useTheme() {
       || _font.value !== 'Alibaba PuHuiTi'
   })
 
-  const hasAppConfigChanges = computed(() => {
+  const hasConfigChanges = computed(() => {
     return appConfig.ui.colors.primary !== 'green'
       || appConfig.ui.colors.neutral !== 'slate'
       || _iconSet.value !== 'lucide'
@@ -166,7 +165,7 @@ export function useTheme() {
     return lines.join('\n')
   }
 
-  function exportAppConfig(): string {
+  function exportConfig(): string {
     const config: Record<string, any> = {}
 
     const defaultColors: Record<string, string> = { primary: 'green', neutral: 'slate', secondary: 'blue', success: 'green', info: 'blue', warning: 'yellow', error: 'red' }
@@ -210,6 +209,7 @@ export function useTheme() {
     primaryColors,
     primary,
     blackAsPrimary,
+    setBlackAsPrimary,
     radiuses,
     radius,
     fonts,
@@ -219,9 +219,10 @@ export function useTheme() {
     modes,
     mode,
     hasCSSChanges,
-    hasAppConfigChanges,
+    hasConfigChanges,
+    configLabel: 'vite.config.ts',
     exportCSS,
-    exportAppConfig,
+    exportConfig,
     resetTheme
   }
 }

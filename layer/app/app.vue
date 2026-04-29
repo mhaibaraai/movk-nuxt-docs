@@ -24,11 +24,11 @@ useHead({
     { name: 'viewport', content: 'width=device-width, initial-scale=1' },
     { key: 'theme-color', name: 'theme-color', content: color }
   ],
-  link: [
+  link: computed(() => [
     { rel: 'icon', href: '/favicon.ico' },
     { rel: 'canonical', href: `${site.url}${withoutTrailingSlash(route.path)}` },
     ...link.value
-  ],
+  ]),
   htmlAttrs: {
     lang: 'zh-CN',
     dir: 'ltr'

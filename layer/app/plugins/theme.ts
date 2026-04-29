@@ -55,22 +55,14 @@ export default defineNuxtPlugin({
             })();
             `.replace(/\s+/g, ' '),
           type: 'text/javascript',
-          tagPriority: 'high'
-        }, {
-          innerHTML: `
-            if (localStorage.getItem('${name}-ui-radius')) {
-              document.querySelector('style#nuxt-ui-radius').innerHTML = ':root { --ui-radius: ' + localStorage.getItem('${name}-ui-radius') + 'rem; }';
-            }
-          `.replace(/\s+/g, ' '),
-          type: 'text/javascript',
-          tagPriority: 'high'
+          tagPriority: -1
         }, {
           innerHTML: `
             var r = localStorage.getItem('${name}-ui-radius');
             if (r) document.documentElement.style.setProperty('--ui-radius', r + 'rem');
           `.replace(/\s+/g, ' '),
           type: 'text/javascript',
-          tagPriority: 'high'
+          tagPriority: -1
         }, {
           innerHTML: `
             if (localStorage.getItem('${name}-ui-black-as-primary') === 'true') {
@@ -80,16 +72,16 @@ export default defineNuxtPlugin({
           `.replace(/\s+/g, ' ')
         }, {
           innerHTML: [
+            `if (localStorage.getItem('${name}-ui-font')) {`,
             `var font = localStorage.getItem('${name}-ui-font');`,
-            `if (font) {`,
-            `document.documentElement.style.setProperty('--font-sans', "'" + font + "', sans-serif");`,
-            `if (font !== 'Alibaba PuHuiTi' && ['Public Sans', 'DM Sans', 'Geist', 'Inter', 'Poppins', 'Outfit', 'Raleway'].includes(font)) {`,
+            `var fontEl = document.querySelector('style#nuxt-ui-font');`,
+            `if (fontEl) { fontEl.innerHTML = ':root { --font-sans: \\'' + font + '\\', sans-serif; }'; }`,
             `var lnk = document.createElement('link');`,
             `lnk.rel = 'stylesheet';`,
-            `lnk.href = 'https://fonts.googleapis.com/css2?family=' + encodeURIComponent(font) + ':wght@400;500;600;700&display=swap';`,
+            `lnk.href = font === 'Alibaba PuHuiTi' ? 'https://cdn.mhaibaraai.cn/fonts/alibaba-puhuiti.css' : 'https://fonts.googleapis.com/css2?family=' + encodeURIComponent(font) + ':wght@400;500;600;700&display=swap';`,
             `lnk.id = 'font-' + font.toLowerCase().replace(/\\s+/g, '-');`,
             `document.head.appendChild(lnk);`,
-            `}}`
+            `}`
           ].join(' ')
         }]
       })
