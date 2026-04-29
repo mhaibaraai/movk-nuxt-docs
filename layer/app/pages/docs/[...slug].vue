@@ -139,7 +139,7 @@ defineOgImage('Docs', {
       right: 'lg:hidden'
     } : undefined"
   >
-    <UPageHeader :title="title">
+    <UPageHeader :title="page.title">
       <template #headline>
         <UBreadcrumb :items="breadcrumb" />
       </template>
