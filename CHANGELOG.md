@@ -1,5 +1,22 @@
 # 📋 Changelog
 
+## [1.18.2](https://github.com/mhaibaraai/movk-nuxt-docs/compare/v1.18.1...v1.18.2) (2026-04-29)
+
+### 🐛 Bug Fixes
+
+* **theme:** 修正主题字体加载方式 ([1f761e1](https://github.com/mhaibaraai/movk-nuxt-docs/commit/1f761e105e0080eee5c10e233d65717cdc028c24))
+
+### ♻️ Code Refactoring
+
+* **theme:** 改用 CSS 变量直接注入主题设置 ([963e858](https://github.com/mhaibaraai/movk-nuxt-docs/commit/963e8584f5243a460696a45d071b33093f2caf12))
+
+### 🔧 Chores
+
+* **deps:** update dependency nuxt-og-image to ^6.4.8 ([c510982](https://github.com/mhaibaraai/movk-nuxt-docs/commit/c51098282ecd1a8ff5822cd8a47f3158c6dd35ee))
+* **deps:** update dependency pkg-types to ^2.3.1 ([23d0bdf](https://github.com/mhaibaraai/movk-nuxt-docs/commit/23d0bdf8f77b3d7cdfe207fdfc6ef3188041755e))
+* **deps:** update iconify ([e9dd2c7](https://github.com/mhaibaraai/movk-nuxt-docs/commit/e9dd2c7e15aca745864a2f7a693a216471267312))
+* **deps:** update nuxt ([ea8b1fa](https://github.com/mhaibaraai/movk-nuxt-docs/commit/ea8b1faee0a44119ef4e4a7f9af35f96b6b1ba89))
+
 ## [1.18.1](https://github.com/mhaibaraai/movk-nuxt-docs/compare/v1.18.0...v1.18.1) (2026-04-25)
 
 ### 🐛 Bug Fixes
