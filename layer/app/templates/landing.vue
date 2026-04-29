@@ -17,7 +17,7 @@ useSeoMeta({
   ogDescription: description
 })
 
-defineOgImage('Docs', {
+defineOgImage('NuxtSeoTakumi', {
   title,
   description,
   siteName: site.name
