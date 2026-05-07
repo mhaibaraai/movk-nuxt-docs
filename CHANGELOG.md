@@ -1,5 +1,33 @@
 # 📋 Changelog
 
+## [1.18.3](https://github.com/mhaibaraai/movk-nuxt-docs/compare/v1.18.2...v1.18.3) (2026-05-07)
+
+### ✨ Features
+
+* **raw:** 输出页面 SEO 元数据 ([62d4a8e](https://github.com/mhaibaraai/movk-nuxt-docs/commit/62d4a8e255da8579e9c4379eb1f3e5dead43a788))
+* **seo:** 集成 nuxt-schema-org 并重构 SEO 元数据 ([ff3f82f](https://github.com/mhaibaraai/movk-nuxt-docs/commit/ff3f82f1d6899dba8b28e3c29d69899ed848892a))
+
+### 🐛 Bug Fixes
+
+* **og:** 使用内置 Takumi 图片模板 ([0bec42a](https://github.com/mhaibaraai/movk-nuxt-docs/commit/0bec42ab73be639442147bcc6d13b79d96079ebc))
+* **theme:** 用 MutationObserver 替代 requestAnimationFrame 等待颜色样式挂载 ([5ffc108](https://github.com/mhaibaraai/movk-nuxt-docs/commit/5ffc108ed4da686d9a2d88cd1dea4c9c9c4527b3))
+
+### 📝 Documentation
+
+* **agents:** 重写架构说明，覆盖 server 目录与 vite:extendConfig 细节 ([a47efe8](https://github.com/mhaibaraai/movk-nuxt-docs/commit/a47efe89a133ce9493be7873a2cfd863e1906338))
+* **content:** 补齐页面 SEO 元数据 ([c3ac93c](https://github.com/mhaibaraai/movk-nuxt-docs/commit/c3ac93ca40348f4a3b1b80a7ff5561329f1ec57a))
+* **readme:** 新增英文 README 并补充语言切换徽章 ([1184683](https://github.com/mhaibaraai/movk-nuxt-docs/commit/11846839a5968d1546256732e29feffb52359e7c))
+* **skills:** 将 create-docs 与 review-docs 全套文档英化 ([62971f2](https://github.com/mhaibaraai/movk-nuxt-docs/commit/62971f27e81aefe8ee7a03075bf9efd5047aa6ea))
+
+### ♻️ Code Refactoring
+
+* **layer:** 显式类型化模块定义并补充 meta.docs 链接 ([44110a6](https://github.com/mhaibaraai/movk-nuxt-docs/commit/44110a6a8902300256e3d51eb1203c93139f1ee1))
+
+### 🔧 Chores
+
+* **ai-chat:** 更新可选模型列表并替换示例截图 ([19042da](https://github.com/mhaibaraai/movk-nuxt-docs/commit/19042daab773d889e67e5dfb0d7c8a480cc53954))
+* **deps:** 升级 pnpm 至 11.0.8 并简化构建依赖与 renovate 配置 ([8335fde](https://github.com/mhaibaraai/movk-nuxt-docs/commit/8335fded68c02035f15fd9a314c794eac580d3b8))
+
 ## [1.18.2](https://github.com/mhaibaraai/movk-nuxt-docs/compare/v1.18.1...v1.18.2) (2026-04-29)
 
 ### 🐛 Bug Fixes
