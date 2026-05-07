@@ -8,7 +8,6 @@ export default defineNitroPlugin((nitroApp) => {
   })
 
   nitroApp.hooks.hook('llms:generate', (_, { sections, domain }) => {
-    // Transform links except for "Documentation Sets"
     sections.forEach((section: LLMsSection) => {
       if (section.title !== 'Documentation Sets') {
         section.links = section.links?.map(link => ({
@@ -18,7 +17,6 @@ export default defineNitroPlugin((nitroApp) => {
       }
     })
 
-    // Move "Documentation Sets" to the end
     const docSetIdx = sections.findIndex((s: any) => s.title === 'Documentation Sets')
     if (docSetIdx !== -1) {
       const [docSet] = sections.splice(docSetIdx, 1)

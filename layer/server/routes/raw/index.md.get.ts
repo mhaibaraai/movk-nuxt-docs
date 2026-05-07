@@ -1,7 +1,6 @@
 import type { Collections, PageCollectionItemBase } from '@nuxt/content'
 import { queryCollection } from '@nuxt/content/server'
 import type { H3Event } from 'h3'
-import { eventHandler, setHeader } from 'h3'
 
 async function findIndexPage(event: H3Event) {
   const landingCollection = 'landing' as keyof Collections
@@ -26,7 +25,7 @@ async function findIndexPage(event: H3Event) {
   return null
 }
 
-export default eventHandler(async (event) => {
+export default defineCachedEventHandler(async (event) => {
   const page = await findIndexPage(event)
   const metadata = getSiteMetadata(event, page)
   const title = page?.title || metadata.siteName
@@ -49,12 +48,12 @@ export default eventHandler(async (event) => {
     `canonical_url: ${JSON.stringify(canonicalUrl)}`,
     `last_updated: ${JSON.stringify(new Date().toISOString().split('T')[0])}`,
     '---',
-    ''
+    '\n'
   ].join('\n')
 
   const body = `# ${title}
 
-> ${description}
+${description}
 
 ## About
 
@@ -63,7 +62,8 @@ ${description || `${title} documentation site.`}
 ## Explore
 
 - Documentation: <${createSiteURL(event, '/docs')}>
-- Sitemap: <${createSiteURL(event, '/sitemap.md')}>
+- Sitemap (XML): <${createSiteURL(event, '/sitemap.md')}>
+- Sitemap (Markdown): <${createSiteURL(event, '/sitemap.md')}>
 - LLMs index: <${createSiteURL(event, '/llms.txt')}>
 - Full LLMs documentation: <${createSiteURL(event, '/llms-full.txt')}>
 
@@ -79,7 +79,13 @@ ${description || `${title} documentation site.`}
 ${links}
 `
 
-  setHeader(event, 'Content-Type', 'text/markdown; charset=utf-8')
-  setHeader(event, 'Link', `<${canonicalUrl}>; rel="canonical"`)
+  setResponseHeader(event, 'Content-Type', 'text/markdown; charset=utf-8')
+  setResponseHeader(event, 'Link', [
+    `<${canonicalUrl}>; rel="canonical"`,
+    `<${canonicalUrl}>; rel="alternate"; type="text/html"`
+  ].join(', '))
   return frontmatter + body
+}, {
+  swr: true,
+  maxAge: 60 * 60
 })

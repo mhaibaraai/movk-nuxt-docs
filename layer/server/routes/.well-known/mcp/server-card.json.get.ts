@@ -1,7 +1,8 @@
-import { eventHandler, setHeader } from 'h3'
+import { listMcpDefinitions } from '@nuxtjs/mcp-toolkit/server'
 
-export default eventHandler((event) => {
+export default defineCachedEventHandler(async (event) => {
   const metadata = getSiteMetadata(event)
+  const { tools, resources, prompts } = await listMcpDefinitions({ event })
 
   const serverCard = {
     $schema: 'https://modelcontextprotocol.io/schema/server-card/v1',
@@ -13,10 +14,6 @@ export default eventHandler((event) => {
       homepage: metadata.baseSiteUrl,
       documentation: createSiteURL(event, '/docs'),
       ...(metadata.repository ? { repository: metadata.repository } : {})
-    },
-    transport: {
-      type: 'streamable-http',
-      endpoint: metadata.mcpUrl
     },
     endpoints: [
       {
@@ -30,33 +27,17 @@ export default eventHandler((event) => {
       prompts: { listChanged: false },
       logging: {}
     },
-    tools: [
-      { name: 'search-components', description: 'Search documented components by name, description, or category.' },
-      { name: 'get-component', description: 'Get the full documentation for a documented component.' },
-      { name: 'get-component-metadata', description: 'Get component metadata such as props, slots, and events.' },
-      { name: 'list-examples', description: 'List available component examples.' },
-      { name: 'get-example', description: 'Get the source code for a component example.' },
-      { name: 'search-composables', description: 'Search documented composables.' },
-      { name: 'search-documentation', description: 'Search the documentation site.' },
-      { name: 'get-documentation-page', description: 'Get the markdown content of a documentation page.' },
-      { name: 'search-icons', description: 'Search icons from the configured icon collections.' }
-    ],
-    resources: [
-      { name: 'components', description: 'Catalog of documented components.' },
-      { name: 'composables', description: 'Catalog of documented composables.' },
-      { name: 'documentation-pages', description: 'Catalog of documentation pages.' },
-      { name: 'examples', description: 'Catalog of component examples.' }
-    ],
-    prompts: [
-      { name: 'find-component-for-usecase', description: 'Find the best documented component for a specific use case.' },
-      { name: 'implement-component-with-props', description: 'Implement a documented component with the right props and slots.' }
-    ],
+    tools: tools.map(t => ({ name: t.name, description: t.description })),
+    resources: resources.map(r => ({ name: r.name, uri: r.uri, description: r.description })),
+    prompts: prompts.map(p => ({ name: p.name, description: p.description })),
     authentication: {
       required: false
     }
   }
 
-  setHeader(event, 'Content-Type', 'application/json; charset=utf-8')
-  setHeader(event, 'Cache-Control', 'public, max-age=3600')
+  setResponseHeader(event, 'Content-Type', 'application/json; charset=utf-8')
   return serverCard
+}, {
+  swr: true,
+  maxAge: 60 * 60
 })

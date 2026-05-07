@@ -84,50 +84,39 @@ const communityLinks = computed(() => {
   return filterValidLinks([...links, ...(toc?.bottom?.links || [])])
 })
 
-// Pre-render the markdown path + add it to alternate links
-const site = useSiteConfig()
 const path = computed(() => route.path.replace(/\/$/, ''))
-prerenderRoutes([joinURL('/raw', `${path.value}.md`)])
-useHead({
-  link: [
-    {
-      rel: 'alternate',
-      href: `${site.url}${path.value}.md`,
-      type: 'text/markdown'
-    }
-  ],
-  script: [{
-    type: 'application/ld+json',
-    innerHTML: JSON.stringify({
-      '@context': 'https://schema.org',
-      '@type': 'TechArticle',
-      'headline': `${prefix}${title} ${suffix}`.trim(),
-      'description': description,
-      'url': joinURL(site.url, path.value),
-      'breadcrumb': {
-        '@type': 'BreadcrumbList',
-        'itemListElement': breadcrumb.value?.map((item, index) => ({
-          '@type': 'ListItem',
-          'position': index + 1,
-          'name': item.label,
-          'item': item.to ? joinURL(site.url, String(item.to)) : undefined
-        })) || []
-      }
-    }).replace(/</g, '\\u003c').replace(/>/g, '\\u003e')
-  }]
-})
+
+if (import.meta.server) {
+  prerenderRoutes([joinURL('/raw', `${path.value}.md`)])
+
+  defineOgImage('NuxtSeoTakumi', {
+    title,
+    description,
+    siteName: useSiteConfig().name
+  })
+}
+
+useCanonical(computed(() => `${path.value}.md`))
+
+useSchemaOrg([
+  defineArticle({
+    '@type': 'TechArticle',
+    'headline': `${prefix}${title} ${suffix}`.trim(),
+    'description': description
+  }),
+  defineBreadcrumb({
+    itemListElement: breadcrumb.value?.map(item => ({
+      name: item.label,
+      item: item.to ? String(item.to) : undefined
+    })) || []
+  })
+])
 
 useSeoMeta({
   title,
   ogTitle: title,
   description,
   ogDescription: description
-})
-
-defineOgImage('NuxtSeoTakumi', {
-  title,
-  description,
-  siteName: site.name
 })
 </script>
 

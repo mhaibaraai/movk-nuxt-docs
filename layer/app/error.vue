@@ -32,10 +32,12 @@ useHead({
   ]
 })
 
-useSeoMeta({
-  title: 'Page not found',
-  description: 'We are sorry but this page could not be found.'
-})
+if (import.meta.server) {
+  useSeoMeta({
+    title: 'Page not found',
+    description: 'We are sorry but this page could not be found.'
+  })
+}
 
 const { rootNavigation } = useNavigation(navigation)
 
@@ -46,14 +48,20 @@ provide('navigation', rootNavigation)
   <UApp>
     <NuxtLoadingIndicator color="var(--ui-primary)" :height="2" />
 
-    <div :class="{ root: route.path.startsWith('/docs/') }">
-      <Header v-if="$route.meta.header !== false" />
+    <div class="flex">
+      <div class="flex-1 min-w-0" :class="{ root: route.path.startsWith('/docs/') }">
+        <Header v-if="$route.meta.header !== false" />
 
-      <UError :error="error" />
+        <UError :error="error" />
 
-      <Footer v-if="$route.meta.footer !== false" />
+        <Footer v-if="$route.meta.footer !== false" />
+      </div>
 
       <ClientOnly>
+        <AiChatPanel />
+
+        <AiChatFloatingInput />
+
         <UContentSearch :files="files" :navigation="navigation" />
       </ClientOnly>
     </div>

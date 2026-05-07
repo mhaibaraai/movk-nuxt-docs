@@ -18,11 +18,15 @@ useSeoMeta({
   ogDescription: description
 })
 
-defineOgImage('NuxtSeoTakumi', {
-  title,
-  description,
-  siteName: site.name
-})
+useCanonical()
+
+if (import.meta.server) {
+  defineOgImage('NuxtSeoTakumi', {
+    title,
+    description,
+    siteName: site.name
+  })
+}
 
 const { data: versions } = page.value.releases
   ? useLazyFetch(page.value.releases, {

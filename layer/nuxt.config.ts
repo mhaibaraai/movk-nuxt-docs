@@ -25,6 +25,7 @@ export default defineNuxtConfig({
     'nuxt-component-meta',
     'nuxt-llms',
     'nuxt-og-image',
+    'nuxt-schema-org',
     'motion-v/nuxt'
   ],
 

@@ -1,7 +1,6 @@
 import { queryCollection } from '@nuxt/content/server'
-import { eventHandler, setHeader } from 'h3'
 
-export default eventHandler(async (event) => {
+export default defineEventHandler(async (event) => {
   const pages = await queryCollection(event, 'docs')
     .select('path', 'title', 'navigation')
     .where('extension', '=', 'md')
@@ -10,6 +9,8 @@ export default eventHandler(async (event) => {
     .all()
 
   let md = '# Sitemap\n\n'
+  md += '> Markdown index of every page on this site. Append `.md` to any docs URL (or set `Accept: text/markdown`) to retrieve the markdown source.\n\n'
+
   let currentSection = ''
 
   for (const page of pages) {
@@ -32,6 +33,6 @@ export default eventHandler(async (event) => {
     md += `- [${pageLabel}](${href})\n`
   }
 
-  setHeader(event, 'Content-Type', 'text/markdown; charset=utf-8')
+  setResponseHeader(event, 'Content-Type', 'text/markdown; charset=utf-8')
   return md
 })

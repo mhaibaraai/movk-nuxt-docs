@@ -1,6 +1,5 @@
 <script setup lang="ts">
 import colors from 'tailwindcss/colors'
-import { withoutTrailingSlash } from 'ufo'
 import { zh_cn } from '@nuxt/ui/locale'
 
 const site = useSiteConfig()
@@ -26,7 +25,6 @@ useHead({
   ],
   link: computed(() => [
     { rel: 'icon', href: '/favicon.ico' },
-    { rel: 'canonical', href: `${site.url}${withoutTrailingSlash(route.path)}` },
     ...link.value
   ]),
   htmlAttrs: {
@@ -36,13 +34,25 @@ useHead({
   style
 })
 
-useSeoMeta({
-  titleTemplate: appConfig.seo.titleTemplate,
-  title: appConfig.seo.title,
-  description: appConfig.seo.description,
-  ogSiteName: site.name,
-  twitterCard: 'summary_large_image'
-})
+if (import.meta.server) {
+  useSeoMeta({
+    titleTemplate: appConfig.seo.titleTemplate,
+    title: appConfig.seo.title,
+    description: appConfig.seo.description,
+    ogSiteName: site.name,
+    twitterCard: 'summary_large_image'
+  })
+
+  useSchemaOrg([
+    defineWebSite({
+      name: useSiteConfig().name
+    })
+  ])
+}
+
+const fuse = {
+  resultLimit: 500
+}
 
 const { rootNavigation } = useNavigation(navigation)
 
@@ -77,17 +87,16 @@ provide('navigation', rootNavigation)
 
           <template v-if="!route.path.startsWith('/examples')">
             <Footer v-if="$route.meta.footer !== false" />
-
-            <ClientOnly>
-              <UContentSearch :files="files" :navigation="rootNavigation" :fuse="{ resultLimit: 500 }" />
-            </ClientOnly>
           </template>
         </div>
 
         <template v-if="!route.path.startsWith('/examples') && isAiChatEnabled">
           <ClientOnly>
             <AiChatPanel />
+
             <AiChatFloatingInput />
+
+            <UContentSearch :files="files" :navigation="rootNavigation" :fuse="fuse" />
           </ClientOnly>
         </template>
       </div>
