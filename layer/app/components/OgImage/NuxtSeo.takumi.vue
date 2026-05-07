@@ -9,6 +9,7 @@ const props = withDefaults(defineProps<{
   colorMode?: 'dark' | 'light'
   title?: string
   description?: string
+  siteName?: string
   isPro?: boolean
   width?: number
   height?: number
@@ -24,7 +25,7 @@ const themeColor = computed(() => props.isPro ? '124, 58, 237' : '34, 197, 94')
 
 <template>
   <div
-    class="w-full h-full flex flex-col justify-center items-center relative p-10 lg:p-[60px] bg-white text-neutral-900 dark:bg-neutral-900 dark:text-neutral-50"
+    class="w-full h-full flex flex-col justify-center items-center relative p-10 lg:p-15 bg-white text-neutral-900 dark:bg-neutral-900 dark:text-neutral-50"
   >
     <!-- Gradient background -->
     <div
@@ -81,15 +82,15 @@ const themeColor = computed(() => props.isPro ? '124, 58, 237' : '34, 197, 94')
             :fill="`url(#${isPro ? 'nsLine2' : 'nsLine1'})`"
           />
         </svg>
-        <span class="text-[32px] lg:text-[42px] font-bold tracking-tight">
-          Nuxt<span :class="isPro ? 'text-violet-500' : 'text-green-500'" class="ml-2">SEO{{ isPro ? ' Pro' : '' }}</span>
+        <span class="text-[32px] lg:text-[42px] font-bold tracking-tight text-green-500">
+          {{ siteName }}
         </span>
       </div>
 
       <div class="items-center justify-center w-full">
         <!-- Title -->
         <h1
-          class="text-[48px] lg:text-[80px] font-bold m-0 leading-tight max-w-[700px] lg:max-w-[1000px]"
+          class="text-[48px] lg:text-[80px] font-bold m-0 leading-tight max-w-175 lg:max-w-250"
           style="display: block; line-clamp: 3; text-overflow: ellipsis; text-wrap: balance;"
         >
           {{ title }}
@@ -97,7 +98,7 @@ const themeColor = computed(() => props.isPro ? '124, 58, 237' : '34, 197, 94')
       </div>
 
       <!-- Description -->
-      <p v-if="description" class="text-[24px] lg:text-[32px] opacity-70 max-w-[650px] lg:max-w-[900px] leading-relaxed">
+      <p v-if="description" class="text-[24px] lg:text-[32px] opacity-70 max-w-162.5 lg:max-w-225 leading-relaxed">
         {{ description }}
       </p>
     </div>
