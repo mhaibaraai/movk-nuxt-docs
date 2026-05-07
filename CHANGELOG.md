@@ -1,5 +1,12 @@
 # 📋 Changelog
 
+## [1.18.4](https://github.com/mhaibaraai/movk-nuxt-docs/compare/v1.18.3...v1.18.4) (2026-05-07)
+
+### ✨ Features
+
+* **og:** 自定义 NuxtSeo.takumi 模板并替换内置组件引用 ([abe604d](https://github.com/mhaibaraai/movk-nuxt-docs/commit/abe604d394cb4bcfbbd718d07ca927848ac84c93))
+* **og:** 自定义 OG 图模板支持 siteName 并恢复封面图引用 ([7233d4f](https://github.com/mhaibaraai/movk-nuxt-docs/commit/7233d4fc9f45cc6979a4b9ec57109204242396bf))
+
 ## [1.18.3](https://github.com/mhaibaraai/movk-nuxt-docs/compare/v1.18.2...v1.18.3) (2026-05-07)
 
 ### ✨ Features
