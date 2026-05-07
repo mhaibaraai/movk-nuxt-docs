@@ -25,10 +25,8 @@ export default defineNuxtConfig({
   aiChat: {
     model: 'anthropic/claude-sonnet-4.6',
     models: [
-      'zai/glm-5',
-      'openai/gpt-5-mini',
-      'google/gemini-2.5-flash',
-      'moonshotai/kimi-k2-thinking',
+      'zai/glm-5.1',
+      'openai/gpt-5.4',
       'anthropic/claude-sonnet-4.6'
     ]
   },
