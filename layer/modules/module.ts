@@ -1,5 +1,5 @@
 import { addComponentsDir, createResolver, defineNuxtModule, logger } from '@nuxt/kit'
-import type { ModuleDependencies } from 'nuxt/schema'
+import type { ModuleDependencies, NuxtModule } from 'nuxt/schema'
 import { defu } from 'defu'
 import { getGitBranch, getGitEnv, getLocalGitInfo } from '../utils/git'
 import { getPackageJsonMetadata, inferSiteURL } from '../utils/meta'
@@ -25,10 +25,11 @@ export interface ModuleOptions {
 
 const log = logger.withTag('@movk/nuxt-docs')
 
-export default defineNuxtModule<ModuleOptions>({
+const movkNuxtDocsModule: NuxtModule<ModuleOptions> = defineNuxtModule<ModuleOptions>({
   meta: {
     name: 'movk-nuxt-docs',
-    configKey: 'movkNuxtDocs'
+    configKey: 'movkNuxtDocs',
+    docs: 'https://docs.mhaibaraai.cn/'
   },
   defaults: {
     a11y: true,
@@ -70,7 +71,6 @@ export default defineNuxtModule<ModuleOptions>({
           global: true
         })
 
-        // 添加 mermaid 语言高亮
         const contentOptions = nuxt.options.content as Record<string, any> | false
         if (contentOptions) {
           const build = contentOptions.build ??= {}
@@ -82,7 +82,6 @@ export default defineNuxtModule<ModuleOptions>({
           }
         }
 
-        // 为 mermaid ESM 兼容性配置 optimizeDeps
         nuxt.hooks.hook('vite:extendConfig', (config) => {
           const cfg = config as { optimizeDeps?: { include?: string[] } }
           cfg.optimizeDeps ??= {}
@@ -96,7 +95,6 @@ export default defineNuxtModule<ModuleOptions>({
           )
         })
 
-        // 注入 mermaid 代码图标配置到 appConfig
         const appConfig = nuxt.options.appConfig as Record<string, any>
         appConfig.ui ??= {}
         appConfig.ui.prose ??= {}
@@ -169,8 +167,4 @@ export default defineNuxtModule<ModuleOptions>({
   }
 })
 
-declare module 'nuxt/schema' {
-  interface NuxtConfig {
-    movkNuxtDocs?: ModuleOptions
-  }
-}
+export default movkNuxtDocsModule
