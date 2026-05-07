@@ -1,5 +1,6 @@
-[![Movk Nuxt Docs OG](https://docs.mhaibaraai.cn/_og/s/o_njw78u.png)](https://docs.mhaibaraai.cn/)
 [![Movk Nuxt Docs](https://docs.mhaibaraai.cn/og-image.png)](https://docs.mhaibaraai.cn/)
+
+[![English README](https://img.shields.io/badge/README-English-00DC82?style=flat&colorA=020420)](./README.en.md)
 
 > 基于 Nuxt 4 的现代文档主题，集成组件自动化文档、AI 聊天助手、MCP Server 和完整的开发者体验优化
 
