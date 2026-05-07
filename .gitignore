@@ -58,3 +58,6 @@ Temporary Items
 
 .claude/settings.json
 .playwright-mcp
+
+# VSC
+.history

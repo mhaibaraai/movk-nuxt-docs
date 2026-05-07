@@ -4,98 +4,10 @@
   ],
   "timezone": "Asia/Shanghai",
   "schedule": ["* 6-9 * * 1"],
-  "lockFileMaintenance": {
-    "enabled": true
-  },
   "packageRules": [
     {
-      "groupName": "tailwindcss",
-      "matchPackageNames": [
-        "tailwindcss"
-      ]
-    },
-    {
-      "groupName": "shiki",
-      "matchPackageNames": [
-        "@shikijs/*",
-        "shiki-*"
-      ]
-    },
-    {
-      "groupName": "ai-sdk",
-      "matchPackageNames": [
-        "@ai-sdk/*",
-        "ai"
-      ]
-    },
-    {
-      "groupName": "iconify",
-      "matchPackageNames": [
-        "@iconify-json/*"
-      ]
-    },
-    {
-      "groupName": "vueuse",
-      "matchPackageNames": [
-        "@vueuse/*"
-      ]
-    },
-    {
-      "groupName": "vue-tsc",
-      "matchPackageNames": [
-        "vue-tsc",
-        "vue-component-meta"
-      ]
-    },
-    {
-      "groupName": "nuxt",
-      "matchPackageNames": [
-        "nuxt",
-        "@nuxt/*",
-        "@nuxtjs/*"
-      ]
-    },
-    {
-      "groupName": "nuxt-modules",
-      "matchPackageNames": [
-        "nuxt-component-meta",
-        "nuxt-llms",
-        "nuxt-og-image"
-      ]
-    },
-    {
-      "groupName": "release-it",
-      "matchPackageNames": [
-        "release-it",
-        "@release-it/*"
-      ]
-    },
-    {
-      "groupName": "takumi",
-      "matchPackageNames": [
-        "@takumi-rs/*"
-      ]
-    },
-    {
-      "groupName": "octokit",
-      "matchPackageNames": [
-        "@octokit/*"
-      ]
-    },
-    {
-      "matchDepTypes": [
-        "peerDependencies"
-      ],
-      "enabled": false
-    },
-    {
-      "matchDepTypes": [
-        "resolutions"
-      ],
+      "matchDepTypes": ["peerDependencies", "resolutions"],
       "enabled": false
     }
-  ],
-  "postUpdateOptions": [
-    "pnpmDedupe"
   ]
 }
