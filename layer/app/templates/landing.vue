@@ -20,7 +20,7 @@ useSeoMeta({
 useCanonical()
 
 if (import.meta.server) {
-  defineOgImage('NuxtSeoTakumi', {
+  defineOgImage('NuxtSeo.takumi', {
     title,
     description,
     siteName: site.name

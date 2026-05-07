@@ -89,7 +89,7 @@ const path = computed(() => route.path.replace(/\/$/, ''))
 if (import.meta.server) {
   prerenderRoutes([joinURL('/raw', `${path.value}.md`)])
 
-  defineOgImage('NuxtSeoTakumi', {
+  defineOgImage('NuxtSeo.takumi', {
     title,
     description,
     siteName: useSiteConfig().name
