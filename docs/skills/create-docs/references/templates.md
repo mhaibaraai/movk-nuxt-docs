@@ -1,39 +1,39 @@
-# 文档模板
+# Documentation Templates
 
-生成文档页面的现成模板。
+Ready-to-use templates for generating documentation pages.
 
-**关键：所有 Nuxt UI 组件在 MDC 语法中必须使用 `u-` 前缀。**
-- `::u-page-hero` 不是 `::page-hero`
-- `:::u-button` 不是 `:::button`
-- `::::u-page-card` 不是 `::::page-card`
+**Critical: every Nuxt UI component must use the `u-` prefix in MDC syntax.**
+- `::u-page-hero` not `::page-hero`
+- `:::u-button` not `:::button`
+- `::::u-page-card` not `::::page-card`
 
-## 目录
+## Table of Contents
 
-- [登陆页](#登陆页)
-- [介绍页](#介绍页)
-- [安装页](#安装页)
-- [指南页](#指南页)
-- [导航 YAML](#导航-yaml)
+- [Landing page](#landing-page)
+- [Introduction page](#introduction-page)
+- [Installation page](#installation-page)
+- [Guide page](#guide-page)
+- [Navigation YAML](#navigation-yaml)
 
 ---
 
-## 登陆页
+## Landing Page
 
-### 基础登陆页
+### Basic Landing Page
 
 ```markdown
 ---
 seo:
-  title: [项目名称] 文档
-  description: [项目描述]
+  title: [Project Name] Documentation
+  description: [Project description]
 ---
 
 ::u-page-hero
 #title
-[项目名称]
+[Project Name]
 
 #description
-[简短描述 - 它解决什么问题？]
+[Short description — what problem does it solve?]
 
 #links
   :::u-button
@@ -43,7 +43,7 @@ seo:
   to: /getting-started/introduction
   trailing-icon: i-lucide-arrow-right
   ---
-  开始使用
+  Get started
   :::
 
   :::u-button
@@ -55,13 +55,13 @@ seo:
   target: _blank
   variant: outline
   ---
-  在 GitHub 上查看
+  View on GitHub
   :::
 ::
 
 ::u-page-section
 #title
-你可以做什么
+What you can do
 
 #features
   :::u-page-feature
@@ -70,25 +70,25 @@ seo:
   to: /guide/[topic]
   ---
   #title
-  [动作动词] [事物]
+  [Action verb] [thing]
 
   #description
-  [一句话描述该功能]
+  [One-sentence description of the feature]
   :::
 ::
 ```
 
-### 带网格卡片的高级登陆页
+### Advanced Landing Page with Grid Cards
 
-使用 `u-page-grid` + `u-page-card` 来进行丰富的功能展示：
+Use `u-page-grid` + `u-page-card` for richer feature showcases:
 
 ```markdown
 ::u-page-hero
 #title
-[项目名称]
+[Project Name]
 
 #description
-[描述]
+[Description]
 
 #headline
   :::u-button
@@ -97,7 +97,7 @@ seo:
   to: [changelog-url]
   variant: outline
   ---
-  v1.0.0 已发布 →
+  v1.0.0 released →
   :::
 
 #links
@@ -108,7 +108,7 @@ seo:
   to: /getting-started
   trailing-icon: i-lucide-arrow-right
   ---
-  开始使用
+  Get started
   :::
 ::
 
@@ -121,10 +121,10 @@ seo:
     to: /guide/feature-1
     ---
     #title
-    功能一
+    Feature one
 
     #description
-    此功能的描述及其用途。
+    Description of this feature and what it's for.
     ::::
 
     ::::u-page-card
@@ -134,7 +134,7 @@ seo:
     ---
       :::::u-color-mode-image
       ---
-      alt: 功能截图
+      alt: Feature screenshot
       class: w-full rounded-lg
       dark: /images/feature-dark.png
       light: /images/feature-light.png
@@ -142,16 +142,16 @@ seo:
       :::::
 
     #title
-    带图像的功能
+    Feature with image
 
     #description
-    用深色/浅色模式图像展示功能。
+    Showcase a feature with light/dark mode images.
     ::::
   :::
 ::
 ```
 
-### 带代码预览的卡片
+### Card with Code Preview
 
 ```markdown
 ::::u-page-card
@@ -168,16 +168,16 @@ class: col-span-2 md:col-span-1
   :::::
 
 #title
-简单配置
+Simple configuration
 
 #description
-使用简单选项进行配置。
+Configure with straightforward options.
 ::::
 ```
 
-### 带自定义组件的卡片
+### Card with a Custom Component
 
-在 `app/components/content/` 中创建自定义组件用于交互演示：
+Create custom components under `app/components/content/` for interactive demos:
 
 ```markdown
 ::::u-page-card
@@ -188,88 +188,88 @@ class: col-span-2
 :my-custom-demo
 
 #title
-交互演示
+Interactive demo
 
 #description
-嵌入卡片中的自定义 Vue 组件。
+A custom Vue component embedded in a card.
 ::::
 ```
 
-### 网格布局类
+### Grid Layout Classes
 
-| 类 | 用法 |
+| Class | Usage |
 |-------|-------|
-| `col-span-2` | 全宽（2 列） |
-| `col-span-2 lg:col-span-1` | 移动设备全宽，桌面设备半宽 |
-| `col-span-2 md:col-span-1` | 移动设备全宽，平板电脑及以上设备半宽 |
-| `min-h-[450px]` | 高卡片的最小高度 |
+| `col-span-2` | Full width (2 columns) |
+| `col-span-2 lg:col-span-1` | Full width on mobile, half width on desktop |
+| `col-span-2 md:col-span-1` | Full width on mobile, half width on tablet and up |
+| `min-h-[450px]` | Minimum height for tall cards |
 
-### 可选增强模式
+### Optional Enhancement Patterns
 
-根据项目需求选择：
+Choose based on the project's needs:
 
-| 模式 | 何时使用 |
+| Pattern | When to use |
 |---------|-------------|
-| 卡片中的代码预览 | 库、API、CLI |
-| 带图标的功能网格 | 具有多个功能的项目 |
-| CTA 部分 | 推动用户行动 |
-| 代码对比 | 解决痛点的项目 |
+| Code preview in cards | Libraries, APIs, CLIs |
+| Feature grid with icons | Projects with multiple features |
+| CTA section | Drive user action |
+| Code comparison | Projects that solve a pain point |
 
-见 [mdc-components.md](mdc-components.md) 获取组件语法。
-见 https://ui.nuxt.com/llms.txt 获取完整组件参考。
+See [mdc-components.md](mdc-components.md) for component syntax.
+See https://ui.nuxt.com/llms.txt for the full component reference.
 
 ---
 
-## 介绍页
+## Introduction Page
 
 ```markdown
 ---
-title: 介绍
-description: 了解 [项目名称] 是什么及何时使用
+title: Introduction
+description: Learn what [Project Name] is and when to use it
 navigation:
   icon: i-lucide-house
 ---
 
-[项目名称] 帮你 [主要价值主张]。
+[Project Name] helps you [main value proposition].
 
-## [项目名称] 是什么？
+## What is [Project Name]?
 
-[2-3 句话解释该项目]
+[2–3 sentences explaining the project]
 
-## 你可以做什么
+## What you can do
 
-- **[操作 1]** - [简短描述]
-- **[操作 2]** - [简短描述]
-- **[操作 3]** - [简短描述]
+- **[Action 1]** — [Short description]
+- **[Action 2]** — [Short description]
+- **[Action 3]** — [Short description]
 
-## 何时使用 [项目名称]
+## When to use [Project Name]
 
-当你需要以下情况时使用 [项目名称]：
+Use [Project Name] when you need to:
 
-- [使用案例 1]
-- [使用案例 2]
-- [使用案例 3]
+- [Use case 1]
+- [Use case 2]
+- [Use case 3]
 ```
 
 ---
 
-## 安装页
+## Installation Page
 
-使用检测到的包管理器并显示所有选项：
+Use the detected package manager and show every option:
 
 ```markdown
 ---
-title: 安装
-description: 如何安装 [项目名称]
+title: Installation
+description: How to install [Project Name]
 navigation:
   icon: i-lucide-download
 ---
 
-## 前提条件
+## Prerequisites
 
-[列出任何前提条件]
+[List any prerequisites]
 
-## 如何安装
+## How to install
 
 ::code-group
 ```bash [pnpm]
@@ -289,74 +289,74 @@ bun add [package-name]
 ```
 ::
 
-## 如何验证安装
+## How to verify the installation
 
-[验证步骤]
+[Verification steps]
 ```
 
 ---
 
-## 指南页
+## Guide Page
 
-在 H2/H3 标题中使用动作动词：
+Use action verbs in H2/H3 headings:
 
 ```markdown
 ---
-title: [主题]
-description: 在你的 [项目名称] 应用中 [动作动词] [事物]
+title: [Topic]
+description: [Action verb] [thing] in your [Project Name] app
 navigation:
   icon: [icon]
 ---
 
-[一句话概览]
+[One-sentence overview]
 
-## 添加基础 [功能]
+## Add basic [feature]
 
-[解释]
-
-```[language] [[file-path]]
-[code]
-```
-
-## 配置 [功能]
-
-[解释]
+[Explanation]
 
 ```[language] [[file-path]]
 [code]
 ```
 
-## 处理 [边界情况]
+## Configure [feature]
 
-[解释]
+[Explanation]
 
-## 后续步骤
-
-- [关联指南的链接]
-- [高级主题的链接]
+```[language] [[file-path]]
+[code]
 ```
 
-**H2 标题的动作动词：** 添加、配置、创建、设置、启用、连接、处理、自定义、部署、使用
+## Handle [edge case]
+
+[Explanation]
+
+## Next steps
+
+- [Link to related guide]
+- [Link to advanced topic]
+```
+
+**Action verbs for H2 headings:** add, configure, create, set up, enable, connect, handle, customize, deploy, use.
 
 ---
 
-## 导航 YAML
+## Navigation YAML
 
-每个部分文件夹需要一个 `.navigation.yml`：
+Each section folder needs a `.navigation.yml`:
 
 ```yaml
-title: [部分标题]
+title: [Section title]
 icon: [icon-name]
 ```
 
-### 按部分推荐的图标
+### Recommended Icons by Section
 
-| 部分 | 图标 |
+| Section | Icon |
 |---------|------|
-| 开始使用 | `i-lucide-rocket` |
-| 指南 | `i-lucide-book-open` |
-| 食谱 | `i-lucide-chef-hat` |
+| Getting started | `i-lucide-rocket` |
+| Guide | `i-lucide-book-open` |
+| Recipes | `i-lucide-chef-hat` |
 | API | `i-lucide-code` |
-| 示例 | `i-lucide-lightbulb` |
-| 配置 | `i-lucide-settings` |
-| 高级 | `i-lucide-sparkles` |
+| Examples | `i-lucide-lightbulb` |
+| Configuration | `i-lucide-settings` |
+| Advanced | `i-lucide-sparkles` |

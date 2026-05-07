@@ -1,118 +1,118 @@
-# 技术验证指南
+# Technical Validation Guide
 
-Movk Nuxt Docs 文档的技术规范检查，涵盖 Front-Matter、MDC 组件、代码块和文件命名。
+Technical specification checks for Movk Nuxt Docs documentation, covering frontmatter, MDC components, code blocks, and file naming.
 
-## Front-Matter 验证
+## Frontmatter Validation
 
-### 必填字段
+### Required Fields
 
-每个文档页面必须包含：
+Every documentation page must include:
 
 ```yaml
 ---
-title: 页面标题
-description: 页面描述，用于 SEO 和搜索结果。
+title: Page title
+description: Page description used for SEO and search results.
 ---
 ```
 
-### 可选字段
+### Optional Fields
 
 ```yaml
 ---
-title: 页面标题
-description: 页面描述
+title: Page title
+description: Page description
 navigation:
-  title: 导航短标题（1-3 个词）
+  title: Short navigation title (1–3 words)
   icon: i-lucide-book
 category: core-concepts
 seo:
-  title: SEO 优化标题（15-30 个中文字符）
-  description: SEO 描述（50-80 个中文字符）
+  title: SEO-optimized title (50–60 characters)
+  description: SEO description (120–160 characters)
 links:
-  - label: 相关链接
+  - label: Related link
     icon: i-lucide-arrow-right
     to: /docs/guide
-    target: _blank  # 外部链接需要
+    target: _blank  # Required for external links
 ---
 ```
 
-### 字段验证规则
+### Field Validation Rules
 
-**title：**
-- 类型：字符串
-- 必填：是
-- 建议长度：15 个字符以内（导航显示）
-- 必须在页面中唯一
+**title:**
+- Type: string
+- Required: yes
+- Recommended length: under 60 characters (page title and SEO use)
+- Must be unique across pages
 
-**description：**
-- 类型：字符串
-- 必填：是
-- 建议长度：50-80 个中文字符（SEO 最优范围）
-- 应简洁且描述性
+**description:**
+- Type: string
+- Required: yes
+- Recommended length: 120–160 characters (optimal SEO range)
+- Should be concise and descriptive
 
-**navigation.icon：**
-- 格式：`i-{collection}-{icon-name}`（如 `i-lucide-house`、`i-simple-icons-github`）
-- 必须以 `i-` 开头
-- 优先使用 Lucide 图标集（`i-lucide-*`）保持一致性
+**navigation.icon:**
+- Format: `i-{collection}-{icon-name}` (e.g. `i-lucide-house`, `i-simple-icons-github`)
+- Must start with `i-`
+- Prefer the Lucide icon set (`i-lucide-*`) for consistency
 
-**navigation.title：**
-- 类型：字符串
-- 可选：覆盖默认边栏标题
-- 保持简短（1-3 字）
+**navigation.title:**
+- Type: string
+- Optional: overrides the default sidebar title
+- Keep it short (1–3 words)
 
-**seo.title：**
-- 类型：字符串
-- 最优：50-60 字符
-- 可与页面标题不同以进行 SEO 优化
+**seo.title:**
+- Type: string
+- Optimal: 50–60 characters
+- May differ from the page title for SEO optimization
 
-**seo.description：**
-- 类型：字符串
-- 最优：120-160 字符
-- 如果需要，比主描述更详细
+**seo.description:**
+- Type: string
+- Optimal: 120–160 characters
+- More detailed than the main description if needed
 
-**links：**
-- 类型：对象数组
-- 每个对象必须包含：`label`、`to`
-- 可选：`icon`、`target`（用于外部链接）
+**links:**
+- Type: array of objects
+- Each object must include: `label`, `to`
+- Optional: `icon`, `target` (for external links)
 
-### 常见 Front-Matter 错误
+### Common Frontmatter Errors
 
-❌ **缺少必填字段：**
+❌ **Missing required fields:**
 ```yaml
 ---
-title: 我的页面
-# 错误：缺少 description
+title: My page
+# Wrong: description is missing
 ---
 ```
 
-❌ **图标格式错误：**
+❌ **Wrong icon format:**
 ```yaml
 ---
 navigation:
-  icon: lucide-house  # 错误：缺少 i- 前缀
+  icon: lucide-house  # Wrong: missing the i- prefix
 ---
 ```
 
-❌ **links 结构错误：**
+❌ **Wrong links structure:**
 ```yaml
 ---
 links:
-  - "https://example.com"  # 错误：必须是对象
+  - "https://example.com"  # Wrong: must be an object
 ---
 ```
 
-✅ **正确示例：**
+✅ **Correct example:**
 ```yaml
 ---
-title: AI 聊天
-description: 为您的文档站点添加内置 AI 聊天助手，支持多模型切换和自定义界面。
+title: AI Chat
+description: Add a built-in AI chat assistant to your docs site, with multi-model switching and a customizable UI.
 navigation:
   icon: i-lucide-bot
 seo:
-  title: AI 聊天功能 - Movk Nuxt Docs
-  description: 了解如何在 Movk Nuxt Docs 中集成 AI 聊天功能，提供智能问答和交互体验。
+  title: AI Chat — Movk Nuxt Docs
+  description: Learn how to integrate the AI chat feature in Movk Nuxt Docs to provide intelligent Q&A and an interactive experience.
 links:
-  - label: 配置参考
+  - label: Configuration reference
     icon: i-lucide-settings
     to: /docs/configuration
 ---
@@ -120,51 +120,51 @@ links:
 
 ---
 
-## MDC 组件验证
+## MDC Component Validation
 
-### 严格规则：u- 前缀
+### Strict Rule: the `u-` Prefix
 
-**所有 MDC 中的 Nuxt UI 组件必须使用 `u-` 前缀。**
+**Every Nuxt UI component used in MDC must use the `u-` prefix.**
 
-这是最常见的错誤，導致構建失敗。
+This is the most common error and causes build failures.
 
-### 需要 u- 前缀的常见组件
+### Common Components Requiring the `u-` Prefix
 
-| 组件 | 错误 | 正确 |
-|-----------|-----------|---------|
-| 页面英雄 | `::page-hero` | `::u-page-hero` |
-| 页面部分 | `::page-section` | `::u-page-section` |
-| 页面网格 | `::page-grid` | `::u-page-grid` |
-| 页面卡片 | `::page-card` | `::u-page-card` |
-| 页面功能 | `::page-feature` | `::u-page-feature` |
-| 按钮 | `::button` 或 `:::button` | `:::u-button` |
-| 徽章 | `::badge` | `::u-badge` |
-| 颜色模式图像 | `:color-mode-image` | `:u-color-mode-image` |
+| Component | Wrong | Correct |
+|-----------|-------|---------|
+| Page hero | `::page-hero` | `::u-page-hero` |
+| Page section | `::page-section` | `::u-page-section` |
+| Page grid | `::page-grid` | `::u-page-grid` |
+| Page card | `::page-card` | `::u-page-card` |
+| Page feature | `::page-feature` | `::u-page-feature` |
+| Button | `::button` or `:::button` | `:::u-button` |
+| Badge | `::badge` | `::u-badge` |
+| Color mode image | `:color-mode-image` | `:u-color-mode-image` |
 
-### 组件嵌套级别
+### Component Nesting Levels
 
-MDC 使用冒号指示嵌套深度：
+MDC uses colons to indicate nesting depth:
 
 ```markdown
-::u-page-hero           # 第 1 级：2 个冒号
-  :::u-button           # 第 2 级：3 个冒号
-    ::::div             # 第 3 级：4 个冒号（HTML 元素）
-      :::::span         # 第 4 级：5 个冒号
+::u-page-hero           # Level 1: 2 colons
+  :::u-button           # Level 2: 3 colons
+    ::::div             # Level 3: 4 colons (HTML element)
+      :::::span         # Level 4: 5 colons
 ```
 
-**验证：** 确保嵌套级别一致且合逻辑。
+**Validate:** ensure nesting levels are consistent and logical.
 
-### 组件属性
+### Component Properties
 
-**内联属性**（使用大括号）：
+**Inline properties** (using braces):
 
 ```markdown
 :::u-button{color="neutral" size="xl" to="/path" trailing-icon="i-lucide-arrow-right"}
-按钮文本
+Button text
 :::
 ```
 
-**块属性**（使用 --- 分隔符）：
+**Block properties** (using `---` delimiters):
 
 ```markdown
 :::u-button
@@ -174,58 +174,58 @@ size: xl
 to: /path
 trailing-icon: i-lucide-arrow-right
 ---
-按钮文本
+Button text
 :::
 ```
 
-**常见属性错误：**
+**Common property errors:**
 
-❌ 错误：`:::u-button(color="neutral")`
-✅ 正确：`:::u-button{color="neutral"}`
+❌ Wrong: `:::u-button(color="neutral")`
+✅ Correct: `:::u-button{color="neutral"}`
 
-❌ 错误：`:::u-button[size=xl]`
-✅ 正确：`:::u-button{size="xl"}`
+❌ Wrong: `:::u-button[size=xl]`
+✅ Correct: `:::u-button{size="xl"}`
 
-### 插槽语法
+### Slot Syntax
 
-带有命名插槽的组件使用 `#slot-name`：
+Components with named slots use `#slot-name`:
 
 ```markdown
 ::u-page-hero
 #title
-你的标题在这里
+Your title here
 
 #description
-你的描述文本
+Your description text
 
 #links
   :::u-button{to="/start"}
-  开始使用
+  Get started
   :::
 ::
 ```
 
-**验证：** 确保插槽名称与组件文档匹配。
+**Validate:** ensure slot names match the component documentation.
 
-### 内容 vs Nuxt Content 组件
+### Content vs. Nuxt Content Components
 
-**Nuxt Content 组件**（无 u- 前缀）：
-- `::code-group` - 多选项卡代码块
-- `::steps` - 分步说明
-- `::note`、`::tip`、`::warning`、`::caution` - 标注
+**Nuxt Content components** (no `u-` prefix):
+- `::code-group` — multi-tab code block
+- `::steps` — step-by-step instructions
+- `::note`, `::tip`, `::warning`, `::caution` — callouts
 
-**Nuxt UI 组件**（需要 u- 前缀）：
-- `::u-page-*` - 页面布局组件
-- `::u-button`、`::u-badge` - 交互元素
-- `:u-color-mode-image` - 带主题变体的图像
+**Nuxt UI components** (require the `u-` prefix):
+- `::u-page-*` — page layout components
+- `::u-button`, `::u-badge` — interactive elements
+- `:u-color-mode-image` — image with theme variants
 
-### 代码块验证
+### Code Block Validation
 
-#### 文件路径标签
+#### File Path Labels
 
-**所有代码块都应包含文件名标签**，而不仅仅是配置文件。这适用于代表文件的每个代码示例：
+**Every code block that represents a file should include a filename label**, not just config files. This applies to every code sample that represents a file:
 
-✅ 好的：
+✅ Good:
 ````markdown
 ```vue [App.vue]
 <script setup lang="ts">
@@ -246,7 +246,7 @@ export default function App() {}
 ```
 ````
 
-❌ 缺少标签：
+❌ Missing label:
 ````markdown
 ```vue
 <script setup lang="ts">
@@ -255,38 +255,38 @@ import { ref } from 'vue'
 ```
 ````
 
-**标签命名约定：**
-- Vue 组件：`[App.vue]`、`[components/Alert.vue]`、`[pages/index.vue]`
-- TypeScript 文件：`[parse.ts]`、`[config.ts]`、`[server.ts]`
-- React 组件：`[App.tsx]`、`[components/Card.tsx]`
-- 配置文件：`[nuxt.config.ts]`、`[app.config.ts]`
-- CSS 文件：`[styles.css]`、`[app/assets/css/main.css]`
-- 终端命令：`[Terminal]`
+**Label naming conventions:**
+- Vue components: `[App.vue]`, `[components/Alert.vue]`, `[pages/index.vue]`
+- TypeScript files: `[parse.ts]`, `[config.ts]`, `[server.ts]`
+- React components: `[App.tsx]`, `[components/Card.tsx]`
+- Configuration files: `[nuxt.config.ts]`, `[app.config.ts]`
+- CSS files: `[styles.css]`, `[app/assets/css/main.css]`
+- Terminal commands: `[Terminal]`
 
-**例外**（无标签需要）：
-- 类型定义/接口
-- MDC 语法示例（` ```mdc `）
-- 不代表文件的内联片段
+**Exceptions** (no label needed):
+- Type definitions / interfaces
+- MDC syntax examples (` ```mdc `)
+- Inline snippets that don't represent a file
 
-#### 代码语言一致性
+#### Code Language Consistency
 
-代码示例应与项目的语言整合相匹配。检查项目的 `tsconfig.json`、`package.json` 或现有代码以确定默认语言。
+Code samples should match the project's language stack. Check the project's `tsconfig.json`, `package.json`, or existing code to determine the default language.
 
-**对于 TypeScript 项目**，所有代码示例都应使用 TypeScript。要标记的常见不匹配：
-- Vue `<script setup>` 缺少 `lang="ts"` → 应该是 `<script setup lang="ts">`
-- 当项目使用 `.ts` 时，示例中的 `.js` 文件扩展名
-- 当项目使用严格 TypeScript 时，函数签名中缺少类型注解
+**For TypeScript projects**, every code sample should use TypeScript. Common mismatches to flag:
+- Vue `<script setup>` missing `lang="ts"` → should be `<script setup lang="ts">`.
+- `.js` extensions in samples when the project uses `.ts`.
+- Missing type annotations on function signatures when the project uses strict TypeScript.
 
-#### 语言标签
+#### Language Tags
 
-始终为语法突出显示指定语言：
+Always specify a language for syntax highlighting:
 
-✅ 好的：` ```ts `、` ```bash `、` ```vue `
-❌ 避免：` ``` `（无语言）
+✅ Good: ` ```ts `, ` ```bash `, ` ```vue `
+❌ Avoid: ` ``` ` (no language)
 
-#### 代码组
+#### Code Group
 
-为多变量示例使用 `::code-group`（包管理器、框架等）：
+Use `::code-group` for multi-variant examples (package managers, frameworks, etc.):
 
 ````markdown
 ::code-group
@@ -308,13 +308,13 @@ bun add @movk/nuxt-docs
 ::
 ````
 
-**确保项目/生态系统支持的所有包管理器都代表存在。** 检查项目的 README、`package.json` 脚本或 lock 文件以确定要包括哪些。常见遗漏：忘记较新的包管理器（例如 bun）或误删除一个。
+**Make sure every package manager the project / ecosystem supports is represented.** Check the project's README, `package.json` scripts, or lock files to decide which to include. Common omissions: forgetting newer package managers (such as bun) or accidentally dropping one.
 
-#### 代码组：不要分组什么
+#### Code Group: What Not to Group
 
-**不要在一个组中混合终端命令和配置文件** ——— 这些是单独的步骤：
+**Don't mix terminal commands and config files in one group** — these are separate steps:
 
-❌ 坏（在一个组中混合安装 + 配置）：
+❌ Bad (mixing install + config in one group):
 ````markdown
 ::code-group
 ```bash [Terminal]
@@ -329,13 +329,13 @@ export default defineNuxtConfig({
 ::
 ````
 
-✅ 好（单独块带过渡文本）：
+✅ Good (separate blocks with transition text):
 ````markdown
 ```bash [Terminal]
 npm install my-package
 ```
 
-将模块添加到你的 `nuxt.config.ts`：
+Add the module to your `nuxt.config.ts`:
 
 ```ts [nuxt.config.ts]
 export default defineNuxtConfig({
@@ -344,47 +344,47 @@ export default defineNuxtConfig({
 ```
 ````
 
-**何时使用 `::code-group`：**
-- 包管理器变体（pnpm/npm/yarn/bun）
-- 框架变体（Vue/React）
-- 代码 + 输出对（`[Code]` / `[Output]`）
-- 语法 + AST 对（`[Syntax]` / `[AST]`）
+**When to use `::code-group`:**
+- Package manager variants (pnpm/npm/yarn/bun).
+- Framework variants (Vue/React).
+- Code + output pairs (`[Code]` / `[Output]`).
+- Syntax + AST pairs (`[Syntax]` / `[AST]`).
 
-#### 代码预览
+#### Code Preview
 
-使用 `::code-preview` 在源代码旁边显示呈现的输出。这对于记录视觉功能（如 markdown 语法、代码块元数据、组件呈现）非常理想：
+Use `::code-preview` to display rendered output beside the source code. This is ideal for documenting visual features (Markdown syntax, code-block metadata, component rendering):
 
 ````markdown
 ::code-preview
-| 标题 1 | 标题 2 |
+| Header 1 | Header 2 |
 | -------- | -------- |
-| 单元格 1 | 单元格 2 |
+| Cell 1   | Cell 2   |
 
 #code
 ```mdc
-| 标题 1 | 标题 2 |
+| Header 1 | Header 2 |
 | -------- | -------- |
-| 单元格 1 | 单元格 2 |
+| Cell 1   | Cell 2   |
 ```
 ::
 ````
 
-**何时使用 `::code-preview`：**
-- Markdown 语法示例（标题、列表、表格、块引用、任务列表、表情符号）
-- 代码块功能（文件名标签、行突出显示）
-- 呈现结果增加清晰度的任何功能
+**When to use `::code-preview`:**
+- Markdown syntax examples (headings, lists, tables, blockquotes, task lists, emojis).
+- Code-block features (filename labels, line highlighting).
+- Any feature where rendering adds clarity.
 
-**何时不使用 `::code-preview`：**
-- API/TypeScript 代码示例（无视觉预览）
-- 带有未注册自定义组件的组件示例
+**When not to use `::code-preview`:**
+- API/TypeScript code samples (no visual preview).
+- Component samples that use unregistered custom components.
 
 ---
 
-## 文件和目录命名
+## File and Directory Naming
 
-### 目录结构
+### Directory Structure
 
-文档部分应遵循编号模式：
+Documentation sections should follow a numbered pattern:
 
 ```
 content/
@@ -396,177 +396,177 @@ content/
 │   └── 4.advanced/
 ```
 
-**规则：**
-- 目录以数字开头以进行排序：`1.`、`2.`、`3.`
-- 目录名称使用 kebab-case
-- 名称反映部分内容
+**Rules:**
+- Directories start with a number for ordering: `1.`, `2.`, `3.`.
+- Directory names use kebab-case.
+- Names reflect the section content.
 
-### 文件命名
+### File Naming
 
-**模式：** `{number}.{name}.md`
+**Pattern:** `{number}.{name}.md`
 
-示例：
+Examples:
 - `1.introduction.md`
 - `2.installation.md`
 - `3.configuration.md`
 
-**规则：**
-- 以数字开头开始排序
-- 使用 kebab-case（小写，带连字符）
-- 描述性名称（不是 `page-1.md` 或 `doc.md`）
+**Rules:**
+- Start with a number for ordering.
+- Use kebab-case (lowercase with hyphens).
+- Use descriptive names (not `page-1.md` or `doc.md`).
 
-### 导航文件
+### Navigation Files
 
-**每个部分目录必须有 `.navigation.yml`：**
+**Every section directory must have a `.navigation.yml`:**
 
 ```yaml
 # 1.getting-started/.navigation.yml
-title: 开始使用
+title: Getting started
 icon: i-lucide-rocket
 ```
 
-**目的：** 控制边栏显示和部分元数据。
+**Purpose:** controls sidebar display and section metadata.
 
 ---
 
-## 常见技术错误
+## Common Technical Errors
 
-### 1. 缺少 u- 前缀（最常见）
+### 1. Missing `u-` Prefix (most common)
 
-**错误模式：**
+**Error pattern:**
 ```markdown
 ::page-hero
 #title
-欢迎
+Welcome
 ::
 ```
 
-**修复：**
+**Fix:**
 ```markdown
 ::u-page-hero
 #title
-欢迎
+Welcome
 ::
 ```
 
-### 2. 不一致的嵌套
+### 2. Inconsistent Nesting
 
-**错误模式：**
+**Error pattern:**
 ```markdown
 ::u-page-section
-::::u-button  # 错误：跳过了嵌套级别
-关闭
+::::u-button  # Wrong: skipped a nesting level
+Close
 ::::
 ::
 ```
 
-**修复：**
+**Fix:**
 ```markdown
 ::u-page-section
   :::u-button
-  关闭
+  Close
   :::
 ::
 ```
 
-### 3. 无效的组件名称
+### 3. Invalid Component Name
 
-**错误模式：**
+**Error pattern:**
 ```markdown
-::u-hero  # 组件不存在
+::u-hero  # Component does not exist
 ```
 
-**修复：**
+**Fix:**
 ```markdown
-::u-page-hero  # 使用正确的组件名称
+::u-page-hero  # Use the correct component name
 ```
 
-### 4. 代码块中缺少文件标签
+### 4. Missing File Label on a Code Block
 
-**错误模式：**
+**Error pattern:**
 ````markdown
 ```typescript
 export default defineNuxtConfig({})
 ```
 ````
 
-**修复：**
+**Fix:**
 ````markdown
 ```ts [nuxt.config.ts]
 export default defineNuxtConfig({})
 ```
 ````
 
-### 5. 损坏的组件属性
+### 5. Broken Component Attributes
 
-**错误模式：**
+**Error pattern:**
 ```markdown
 :::u-button color=neutral size=xl
 ```
 
-**修复：**
+**Fix:**
 ```markdown
 :::u-button{color="neutral" size="xl"}
 ```
 
 ---
 
-## 组件文档专属组件
+## Component Documentation Components
 
-当文档站点用于记录 Vue 组件时，可使用以下组件：
+When the docs site documents Vue components, the following components are available:
 
 ```markdown
-<!-- 渲染组件示例（需在 app/components/content/examples/ 创建示例文件）-->
+<!-- Render a component example (requires an example file under app/components/content/examples/) -->
 :component-example{name="MyButton"}
 
-<!-- 自动生成 Props 表格 -->
+<!-- Auto-generate the props table -->
 :component-props{name="MyButton"}
 
-<!-- 自动生成 Slots 表格 -->
+<!-- Auto-generate the slots table -->
 :component-slots{name="MyButton"}
 
-<!-- 自动生成 Emits 表格 -->
+<!-- Auto-generate the emits table -->
 :component-emits{name="MyButton"}
 
-<!-- 显示提交历史 -->
+<!-- Show commit history -->
 :commit-changelog{name="MyButton"}
 
-<!-- 显示页面最后更新时间 -->
+<!-- Show the page's last update time -->
 :page-last-commit
 ```
 
 ---
 
-## 验证清单
+## Validation Checklist
 
-对于每个页面，验证：
+Validate every page against the following:
 
 ### Frontmatter
-- [ ] `title` 和 `description` 字段存在
-- [ ] `navigation.icon` 存在时现开始 `i-`
-- [ ] `links` 数组具有正确的对象结构
-- [ ] 无效的 YAML 语法
-- [ ] 为不应出现在边栏但应作为路由存在的页面使用 `navigation: false`
+- [ ] `title` and `description` fields are present.
+- [ ] `navigation.icon`, when present, starts with `i-`.
+- [ ] The `links` array has the correct object structure.
+- [ ] No invalid YAML syntax.
+- [ ] Use `navigation: false` for pages that should exist as routes but be excluded from the sidebar.
 
-### MDC 组件
-- [ ] 所有 Nuxt UI 组件使用 `u-` 前缀
-- [ ] 嵌套级别一致（::、:::、::::）
-- [ ] 组件名称有效
-- [ ] 属性使用正确的语法 `{key="value"}`
-- [ ] 插槽名称与组件文档匹配
-- [ ] 对视觉上可呈现的示例使用 `::code-preview`（markdown 语法、表格、列表等）
+### MDC Components
+- [ ] Every Nuxt UI component uses the `u-` prefix.
+- [ ] Nesting levels are consistent (`::`, `:::`, `::::`).
+- [ ] Component names are valid.
+- [ ] Properties use the correct syntax `{key="value"}`.
+- [ ] Slot names match the component documentation.
+- [ ] `::code-preview` is used for visually renderable examples (Markdown syntax, tables, lists, etc.).
 
-### 代码块
-- [ ] 指定的语言标签（ts、js、vue、bash 等）
-- [ ] 代表文件的所有代码块上的文件名标签（不仅仅是配置文件）
-- [ ] 代码语言与项目的栈匹配（例如，`lang="ts"` 在 Vue `<script setup>` 对于 TypeScript 项目）
-- [ ] 对多变量示例使用 `::code-group`（包管理器、框架等）
-- [ ] 包管理器 `::code-group` 覆盖所有支持的包管理器（根据项目/生态系统检查）
-- [ ] 仅组合等效替有品体——不要在 `::code-group` 中混合无关的步骤（例如，安装 + 配置）
-- [ ] 呈现预览增加清晰度时使用 `::code-preview`
+### Code Blocks
+- [ ] Language tags are specified (ts, js, vue, bash, etc.).
+- [ ] Filename labels exist on every code block that represents a file (not just config files).
+- [ ] Code language matches the project's stack (for example, `lang="ts"` on Vue `<script setup>` in TypeScript projects).
+- [ ] `::code-group` is used for multi-variant examples (package managers, frameworks, etc.).
+- [ ] Package manager `::code-group` blocks cover every supported package manager (check by project / ecosystem).
+- [ ] Only equivalent alternatives are grouped — don't mix unrelated steps in `::code-group` (for example install + config).
+- [ ] `::code-preview` is used wherever a rendered preview adds clarity.
 
-### 文件结构
-- [ ] 目录遵循编号模式（`1.section/`）
-- [ ] 文件遵循编号模式（`1.page.md`）
-- [ ] `.navigation.yml` 存在于每个部分
-- [ ] 文件和目录名称是 kebab-case
+### File Structure
+- [ ] Directories follow the numbered pattern (`1.section/`).
+- [ ] Files follow the numbered pattern (`1.page.md`).
+- [ ] `.navigation.yml` exists in every section.
+- [ ] File and directory names are kebab-case.

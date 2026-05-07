@@ -1,201 +1,201 @@
-# 文档审查报告
+# Documentation Review Report
 
-**生成时间：** [日期时间]
-**项目：** [从 package.json 或目录获取项目名]
-**内容目录：** [实际路径]
-**审查范围：** [X] 个页面，[Y] 个章节
-
----
-
-## 执行摘要
-
-- **严重问题：** X（必须修复——会阻塞部署或引发错误）
-- **重要问题：** Y（对用户体验 / SEO 有显著影响）
-- **可优化项：** Z（润色与优化建议）
-
-**总体评估：** [用 1-2 句话简要总结文档质量]
+**Generated:** [date and time]
+**Project:** [project name from package.json or directory]
+**Content directory:** [actual path]
+**Scope reviewed:** [X] pages, [Y] sections
 
 ---
 
-## 严重问题
+## Executive Summary
 
-> 必须修复的问题，因为它们会导致构建错误或关键功能异常。
+- **Critical issues:** X (must fix — block deployment or cause errors)
+- **Important issues:** Y (significant impact on UX / SEO)
+- **Suggested optimizations:** Z (polish and optimization suggestions)
 
-### [问题类别]
+**Overall assessment:** [1–2 sentence summary of documentation quality]
 
-**优先级：** 严重
-**影响：** [简要说明若不修复会导致什么问题]
+---
 
-#### 问题 1：[简短描述]
+## Critical Issues
 
-**文件：** [/path/to/file.md:line-number]
+> Must-fix issues because they cause build errors or break critical functionality.
 
-**问题：**
-[该问题的详细说明]
+### [Issue category]
 
-**当前内容：**
+**Priority:** Critical
+**Impact:** [Brief explanation of what breaks if this isn't fixed]
+
+#### Issue 1: [Short description]
+
+**File:** [/path/to/file.md:line-number]
+
+**Issue:**
+[Detailed description of the problem]
+
+**Current:**
 ```markdown
-[当前有问题的代码]
+[Current problematic code]
 ```
 
-**应修改为：**
+**Should be:**
 ```markdown
-[修正后的代码]
+[Corrected code]
 ```
 
-**原因：** [说明为什么这是严重问题]
+**Reason:** [Explain why this is a critical issue]
 
 ---
 
-## 重要问题
+## Important Issues
 
-> 对用户体验或 SEO 有明显影响，但不会直接破坏功能的问题。
+> Significant impact on user experience or SEO, but they don't directly break functionality.
 
-### 中英文未加空格
+### Missing Space Between Code and Surrounding Text
 
-**文件：** `content/docs/[path]/[page].md:行号`
+**File:** `content/docs/[path]/[page].md:line`
 
-**当前：** 「安装@movk/nuxt-docs依赖」
-**应为：** 「安装 @movk/nuxt-docs 依赖」
+**Current:** `Install the@movk/nuxt-docsdependency`
+**Should be:** `Install the @movk/nuxt-docs dependency`
 
-### SEO 问题
+### SEO Issues
 
-#### 问题 1：[简短描述]
+#### Issue 1: [Short description]
 
-**文件：** [/path/to/file.md]
+**File:** [/path/to/file.md]
 
-**问题：** [描述]
+**Issue:** [Description]
 
-**当前内容：** [示例]
+**Current:** [Example]
 
-**建议：** [具体修复建议]
+**Suggestion:** [Specific fix recommendation]
 
-**影响：** [说明对 SEO 或 UX 的影响]
+**Impact:** [Impact on SEO or UX]
 
-### 表达清晰度问题
+### Clarity Issues
 
-[类似结构]
+[Use the same structure]
 
-### 结构组织问题
+### Structural Issues
 
-[类似结构]
-
----
-
-## 可优化建议
-
-> 用于润色和优化的建议。不紧急，但能提升整体质量。
-
-### SEO 优化
-
-- **[文件路径]：** [建议]
-- **[文件路径]：** [建议]
-
-### 清晰度改进
-
-- **[文件路径]：** 建议为 [specific content] 增加 callout（::tip）
-- **[文件路径]：** 代码示例可更贴近真实场景
-
-### 结构增强
-
-- **[章节]：** 建议拆分为子章节以提升导航体验
-- **[章节]：** 增加相关页面的交叉引用
+[Use the same structure]
 
 ---
 
-### 内容概览
+## Suggested Optimizations
 
-| 章节 | 页面数 | 平均词数 / 页 |
-|----------|------------|----------------|
-| 入门 | X | ~XXX |
-| 指南 | X | ~XXX |
+> Polish and optimization suggestions. Not urgent, but they raise the overall quality.
+
+### SEO Optimizations
+
+- **[file path]:** [suggestion]
+- **[file path]:** [suggestion]
+
+### Clarity Improvements
+
+- **[file path]:** consider adding a callout (`::tip`) for [specific content].
+- **[file path]:** code examples could be closer to real-world scenarios.
+
+### Structural Enhancements
+
+- **[section]:** consider splitting into subsections for better navigation.
+- **[section]:** add cross-references to related pages.
+
+---
+
+### Content Overview
+
+| Section | Pages | Avg. words / page |
+|---------|-------|-------------------|
+| Getting started | X | ~XXX |
+| Guide | X | ~XXX |
 | API | X | ~XXX |
 
-### 问题分布
+### Issue Breakdown
 
-| 类别 | 严重 | 重要 | 建议 | 合计 |
-|------|------|------|------|------|
-| 技术 | [X] | [X] | [X] | [X] |
+| Category | Critical | Important | Suggested | Total |
+|----------|----------|-----------|-----------|-------|
+| Technical | [X] | [X] | [X] | [X] |
 | SEO | [X] | [X] | [X] | [X] |
-| 清晰度 | [X] | [X] | [X] | [X] |
-| 结构 | [X] | [X] | [X] | [X] |
-| **合计** | **[X]** | **[X]** | **[X]** | **[X]** |
+| Clarity | [X] | [X] | [X] | [X] |
+| Structure | [X] | [X] | [X] | [X] |
+| **Total** | **[X]** | **[X]** | **[X]** | **[X]** |
 
 ---
 
-## 正向亮点
+## Positive Highlights
 
-[列出文档做得好的 2-3 点]
+[List 2–3 things the documentation does well]
 
-- callout 与代码示例使用得当
-- MDC 组件使用一致
-- 章节结构清晰有序
-- 落地页 SEO 元数据质量较高
-
----
-
-## 建议执行计划
-
-### 优先级 1：修复严重问题（今天）
-
-1. 修复所有 MDC 语法错误（缺失 `u-` 前缀）
-2. 补全 Frontmatter 必填字段
-3. 修正损坏的导航结构
-
-**预计修复：** X 个文件
-
-### 优先级 2：处理重要问题（本周）
-
-1. 优化 SEO 元数据（标题 / 描述）
-2. 重写清晰度不足的段落（被动语态、表达不清）
-3. 修复标题层级问题
-
-**预计修复：** X 个文件
-
-### 优先级 3：可优化项（下个迭代）
-
-1. 增加建议的 callout 与示例
-2. 强化内部链接
-3. 提升代码示例的真实性
-4. 增加 FAQ 风格标题
-
-**预计修复：** X 个文件
+- Effective use of callouts and code examples.
+- Consistent MDC component usage.
+- Clean, well-ordered section structure.
+- High-quality SEO metadata on the landing page.
 
 ---
 
-## 下一步
+## Recommended Action Plan
 
-**你希望我接下来：**
+### Priority 1: Fix Critical Issues (today)
 
-1. **修复全部严重问题** —— 我可以自动修正 MDC 语法与 Frontmatter 问题
-2. **重写指定章节** —— 你指出需要提升清晰度的页面，我来重写
-3. **优化 SEO 元数据** —— 我可以统一将标题与描述调整到最佳长度
-4. **重构内容结构** —— 如果需要调整章节组织，我可以协助重构
+1. Fix every MDC syntax error (missing `u-` prefix).
+2. Backfill required frontmatter fields.
+3. Repair broken navigation structure.
 
-**或者告诉我你希望先处理哪一部分。**
+**Estimated fix:** X files.
+
+### Priority 2: Important Issues (this week)
+
+1. Optimize SEO metadata (title / description).
+2. Rewrite passages that lack clarity (passive voice, unclear phrasing).
+3. Fix heading hierarchy issues.
+
+**Estimated fix:** X files.
+
+### Priority 3: Suggested Optimizations (next sprint)
+
+1. Add suggested callouts and examples.
+2. Strengthen internal links.
+3. Make code examples more realistic.
+4. Add FAQ-style headings.
+
+**Estimated fix:** X files.
 
 ---
 
-## 附录：逐文件详细分析
+## Next Steps
+
+**Would you like me to:**
+
+1. **Fix every critical issue** — I can auto-correct MDC syntax and frontmatter problems.
+2. **Rewrite specific sections** — point me to pages that need clarity improvements and I'll rewrite them.
+3. **Optimize SEO metadata** — I can normalize every title and description to optimal length.
+4. **Restructure content** — if sections need reorganizing, I can help.
+
+**Or tell me which area you'd like to tackle first.**
+
+---
+
+## Appendix: Per-File Detailed Analysis
 
 <details>
-<summary>点击展开完整的逐文件分析</summary>
+<summary>Click to expand the full per-file analysis</summary>
 
 ### /1.getting-started/1.introduction.md
 
-**Frontmatter：** ✅ 有效
-**MDC 语法：** ✅ 无问题
-**SEO：** ⚠️ 描述过短（85 字符，建议 120-160）
-**清晰度：** ✅ 主动语态良好，结构清晰
-**结构：** ✅ 流程合理，包含下一步指引
+**Frontmatter:** ✅ Valid
+**MDC syntax:** ✅ No issues
+**SEO:** ⚠️ Description too short (85 chars, recommended 120–160)
+**Clarity:** ✅ Active voice, clear structure
+**Structure:** ✅ Logical flow, includes next-step guidance
 
-**建议：**
-- 将 meta description 扩展到 120-160 字符
+**Suggestions:**
+- Extend the meta description to 120–160 characters.
 
 ---
 
 ### /1.getting-started/2.installation.md
 
-[每个文件采用类似的详细拆解结构]
+[Use the same detailed structure for each file]
 
 </details>

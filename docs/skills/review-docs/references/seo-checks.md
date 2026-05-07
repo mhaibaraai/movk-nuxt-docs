@@ -1,170 +1,170 @@
-# SEO 审查指南
+# SEO Review Guide
 
-Movk Nuxt Docs 文档站点的 SEO 最佳实践。
+SEO best practices for Movk Nuxt Docs documentation sites.
 
-## 标题优化（title）
+## Title Optimization (`title`)
 
-### 长度建议
+### Length Recommendations
 
-| 状态 | 字符数 | 说明 |
-|------|--------|------|
-| 过短 | <8 个字 | 信息量不足，如「配置」 |
-| 最优 | 10-20 个字 | 搜索引擎最佳显示范围 |
-| 过长 | >25 个字 | 搜索结果会被截断 |
+| Status | Characters | Notes |
+|--------|------------|-------|
+| Too short | <30 chars | Insufficient information (e.g. "Configuration") |
+| Optimal | 50–60 chars | Best display range in search engines |
+| Too long | >70 chars | Search results get truncated |
 
-### 标题质量
+### Title Quality
 
-✅ 好的标题：
-- 「配置 AI 聊天功能」
-- 「安装 Movk Nuxt Docs 文档主题」
-- 「自定义主题颜色和字体」
+✅ Good titles:
+- "Configure the AI chat feature"
+- "Install the Movk Nuxt Docs theme"
+- "Customize theme colors and fonts"
 
-❌ 需要改进：
-- 「配置」（太短，不描述性）
-- 「文档」（过于通用）
-- 「Movk Nuxt Docs 完整安装配置自定义主题颜色字体指南」（太长）
+❌ Needs improvement:
+- "Configuration" (too short, not descriptive)
+- "Documentation" (too generic)
+- "Movk Nuxt Docs Complete Installation Configuration Theme Customization Guide" (too long)
 
-### title vs seo.title
+### `title` vs. `seo.title`
 
-`title` 用于页面显示，`seo.title` 用于搜索引擎优化（可以不同）：
+`title` is used for the page display; `seo.title` is for search engine optimization (the two may differ):
 
 ```yaml
 ---
-title: AI 聊天           # 导航/页面标题（简短）
+title: AI Chat                                      # Navigation / page title (short)
 seo:
-  title: 为文档站点配置 AI 聊天助手    # 搜索引擎标题（更描述性）
+  title: Configure the AI chat assistant for your docs site   # Search engine title (more descriptive)
 ---
 ```
 
 ---
 
-## 描述优化（description）
+## Description Optimization (`description`)
 
-### 长度建议
+### Length Recommendations
 
-| 状态 | 字符数 | 说明 |
-|------|--------|------|
-| 过短 | <30 个字 | 搜索结果摘要不够吸引 |
-| 最优 | 50-80 个字 | 搜索引擎摘要最佳范围 |
-| 过长 | >100 个字 | 搜索结果会被截断 |
+| Status | Characters | Notes |
+|--------|------------|-------|
+| Too short | <80 chars | Search snippet isn't compelling |
+| Optimal | 120–160 chars | Best snippet range for search engines |
+| Too long | >200 chars | Search results get truncated |
 
-### 描述质量
+### Description Quality
 
-✅ 好的描述：
+✅ Good description:
 ```
-为您的文档站点添加内置 AI 聊天助手，支持多模型切换、FAQ 问题列表和自定义界面。通过 AI Gateway 接入 OpenAI、DeepSeek 等主流模型。
-```
-
-❌ 需要改进：
-```
-AI 聊天功能介绍。  ← 太短，无信息量
+Add a built-in AI chat assistant to your docs site, with multi-model switching, FAQ lists, and a customizable UI. Connect to OpenAI, DeepSeek, and other models via AI Gateway.
 ```
 
-### 描述写作要点
+❌ Needs improvement:
+```
+AI chat feature overview.   ← Too short, no information
+```
 
-- 包含页面核心关键词
-- 描述页面能帮用户解决什么问题
-- 使用动词开头（「为...添加」、「了解如何...」、「配置...」）
-- 每页描述唯一，不重复
+### Description Writing Guidelines
+
+- Include the page's core keywords.
+- Describe the problem the page solves for the user.
+- Start with a verb ("Add...", "Learn how to...", "Configure...").
+- Each page description should be unique, not duplicated.
 
 ---
 
-## 标题层级（H1-H3）
+## Heading Hierarchy (H1–H3)
 
-### 规则
+### Rules
 
-Movk Nuxt Docs 中 H1 由系统自动从 `title` 字段渲染，文档内容从 `##`（H2）开始：
+In Movk Nuxt Docs, H1 is rendered automatically from the `title` field; documentation content starts at `##` (H2):
 
-- [ ] 不在文档正文使用 `#`（H1）
-- [ ] 不跳级（`##` → `###`，不从 `##` 跳到 `####`）
-- [ ] H2 和 H3 标题描述性强，不通用
-- [ ] 逻辑流和嵌套
-- [ ] 页面上的每个标题都是唯一的
+- [ ] Don't use `#` (H1) in the document body.
+- [ ] Don't skip levels (`##` → `###`, never `##` → `####`).
+- [ ] H2 and H3 headings are descriptive, not generic.
+- [ ] Logical flow and nesting.
+- [ ] Every heading on a page is unique.
 
-### H1 要求
+### H1 Requirements
 
-通用文档（不使用 Movk Nuxt Docs 主题）可以使用 H1，但建议保持清晰的层级结构。
+Generic documentation (not using the Movk Nuxt Docs theme) may use H1, but a clear hierarchy is still recommended.
 
-- [ ] **每页单一 H1**（对 SEO 至关重要）
-- [ ] 匹配或关联到 `<title>` 标签
-- [ ] 包含主要关键字
-- [ ] 描述性和具体
+- [ ] **A single H1 per page** (critical for SEO).
+- [ ] Matches or relates to the `<title>` tag.
+- [ ] Contains the primary keyword.
+- [ ] Is descriptive and specific.
 
-### 描述性标题
+### Descriptive Headings
 
-| 通用（避免）| 描述性（推荐）|
-|-------------|---------------|
-| 概述 | AI 聊天功能概述 |
-| 配置 | 配置模型和 API Key |
-| 示例 | 自定义浮动输入框示例 |
-| 选项 | aiChat 配置选项参考 |
+| Generic (avoid) | Descriptive (recommended) |
+|-----------------|---------------------------|
+| Overview | AI chat feature overview |
+| Configuration | Configure the model and API key |
+| Examples | Customize the floating input field |
+| Options | aiChat configuration options reference |
 
-### 关键字优化
+### Keyword Optimization
 
-H2 和 H3 标题应该：
-- 自然地包含相关关键字
-- 回答用户问题（适当时以 FAQ 风格）
-- 可扫描（用户经常跳过标题）
+H2 and H3 headings should:
+- Naturally include relevant keywords.
+- Answer user questions (FAQ-style when appropriate).
+- Be scannable (users frequently skim headings).
 
-**示例 FAQ 风格标题：**
-- "我如何轮换 API 密钥？"
-- "OAuth 和 JWT 之间有什么区别？"
-- "我何时应该使用服务器端呈现？"
+**Example FAQ-style headings:**
+- "How do I rotate API keys?"
+- "What's the difference between OAuth and JWT?"
+- "When should I use server-side rendering?"
 
 ---
 
-## URL 结构
+## URL Structure
 
-### 最佳实践
-- [ ] 小写、用连字符分隔（kebab-case）
-- [ ] 描述性和稳定（发布后不要更改）
-- [ ] 遵循编号目录模式（`1.getting-started/`、`2.guide/`）
-- [ ] 匹配内容层级
-- [ ] 避免特殊字符和下划线
+### Best Practices
+- [ ] Lowercase, separated by hyphens (kebab-case).
+- [ ] Descriptive and stable (don't change after publishing).
+- [ ] Follow the numbered directory pattern (`1.getting-started/`, `2.guide/`).
+- [ ] Match the content hierarchy.
+- [ ] Avoid special characters and underscores.
 
-### 示例
+### Examples
 
-✅ 好的：
+✅ Good:
 - `/docs/getting-started/installation`
 - `/docs/guide/authentication`
 - `/docs/api/composables`
 
-❌ 避免：
-- `/docs/getting_started/installation`（下划线）
-- `/docs/GetStarted/Installation`（不是小写）
-- `/docs/p/123`（不描述性）
-- `/docs/docs-page`（太通用）
+❌ Avoid:
+- `/docs/getting_started/installation` (underscores)
+- `/docs/GetStarted/Installation` (not lowercase)
+- `/docs/p/123` (not descriptive)
+- `/docs/docs-page` (too generic)
 
 ---
 
-## 内部链接
+## Internal Links
 
-### 策略
-- 链接到相关文档页面
-- 使用描述性锚点文本（不是"点击这里"或"这里"）
-- 包括"后续步骤"或"相关"部分
-- 将重要链接添加到 frontmatter `links` 数组
+### Strategy
+- Link to related documentation pages.
+- Use descriptive anchor text (not "click here" or "here").
+- Include "Next steps" or "Related" sections.
+- Add important links to the frontmatter `links` array.
 
-### 锚文本最佳实践
+### Anchor Text Best Practices
 
-| 差 | 更好 |
-|------|--------|
-| 点击这里 | 了解身份验证 |
-| 阅读更多 | 配置 OAuth 提供商 |
-| 见此页 | 查看 API 参考 |
-| 文档 | 部署文档 |
+| Bad | Better |
+|-----|--------|
+| Click here | Learn about authentication |
+| Read more | Configure OAuth providers |
+| See this page | Browse the API reference |
+| Docs | Deployment documentation |
 
-### Frontmatter 中的链接
+### Frontmatter Links
 
-对于重要的相关链接，使用 frontmatter `links` 数组：
+For important related links, use the frontmatter `links` array:
 
 ```yaml
 ---
 links:
-  - label: "API 参考"
+  - label: "API reference"
     icon: "i-lucide-book"
     to: "/api/reference"
-  - label: "GitHub 仓库"
+  - label: "GitHub repository"
     icon: "i-simple-icons-github"
     to: "https://github.com/..."
     target: "_blank"
@@ -173,21 +173,21 @@ links:
 
 ---
 
-## 图像优化
+## Image Optimization
 
-### Alt 文本
-- [ ] 描述性和具体（不是"图像"或"屏幕截图"）
-- [ ] 自然地包含相关关键字
-- [ ] 为无障碍用户描述图像内容
-- [ ] 50-125 字符最优
+### Alt Text
+- [ ] Descriptive and specific (not "image" or "screenshot").
+- [ ] Naturally includes relevant keywords.
+- [ ] Describes the image content for accessibility users.
+- [ ] 50–125 characters is optimal.
 
-### 颜色模式图像
+### Color Mode Images
 
-始终提供浅色和深色变体：
+Always provide light and dark variants:
 
 ```markdown
 :u-color-mode-image{
-  alt="显示用户分析的仪表板"
+  alt="Dashboard showing user analytics"
   light="/images/dashboard-light.png"
   dark="/images/dashboard-dark.png"
   class="rounded-lg"
@@ -196,38 +196,38 @@ links:
 }
 ```
 
-### 图像文件名
-- 使用描述性 kebab-case 名称
-- 包含上下文：`dashboard-analytics.png` 而不是 `screenshot-1.png`
+### Image Filenames
+- Use descriptive kebab-case names.
+- Include context: `dashboard-analytics.png` instead of `screenshot-1.png`.
 
 ---
 
-## 常见 SEO 问题
+## Common SEO Issues
 
-### 重复元数据
-❌ 多个页面具有相同的标题或描述
-✅ 每个页面都有唯一的、描述性的元数据
+### Duplicate Metadata
+❌ Multiple pages share the same title or description.
+✅ Each page has unique, descriptive metadata.
 
-### 缺少元数据
-❌ Frontmatter 中没有 `seo.title` 或 `seo.description`
-✅ 所有页面都定义了 SEO 元数据
+### Missing Metadata
+❌ No `seo.title` or `seo.description` in frontmatter.
+✅ Every page defines SEO metadata.
 
-### 关键字填充
-❌ "Movk Nuxt Docs 文档 Movk Nuxt Docs 主题 Movk Nuxt Docs 指南"
-✅ 自然语言，关键字在上下文中集成
+### Keyword Stuffing
+❌ "Movk Nuxt Docs documentation Movk Nuxt Docs theme Movk Nuxt Docs guide"
+✅ Natural language with keywords integrated in context.
 
-## 验证清单
+## Validation Checklist
 
-为每个页面执行此检查列表：
+Run this checklist for every page:
 
-- [ ] 标题：50-60 字符、包含关键字、唯一
-- [ ] 描述：120-160 字符、引人注目、准确
-- [ ] 单一 H1，匹配标题
-- [ ] 标题层级是逻辑的（无跳过的级别）
-- [ ] H2/H3 标题是描述性的，不是通用的
-- [ ] URL 是稳定的、描述性的、小写连字符
-- [ ] 内部链接使用描述性锚点文本
-- [ ] 内容对实质性页面为 300+ 字
-- [ ] 部分是 200-400 字标题之间
-- [ ] 图像有描述性的 alt 文本
-- [ ] 颜色模式图像有浅色/深色变体
+- [ ] Title: 50–60 characters, includes keywords, unique.
+- [ ] Description: 120–160 characters, compelling, accurate.
+- [ ] Single H1 that matches the title.
+- [ ] Heading hierarchy is logical (no skipped levels).
+- [ ] H2/H3 headings are descriptive, not generic.
+- [ ] URLs are stable, descriptive, lowercase with hyphens.
+- [ ] Internal links use descriptive anchor text.
+- [ ] Content is 300+ words for substantive pages.
+- [ ] Sections are 200–400 words between headings.
+- [ ] Images have descriptive alt text.
+- [ ] Color mode images include light/dark variants.

@@ -1,316 +1,316 @@
-# 结构和组织指南
+# Structure and Organization Guide
 
-评估文档结构、组织和导航模式的指南。
+Guidelines for evaluating documentation structure, organization, and navigation patterns.
 
-## 内容层级
+## Content Hierarchy
 
-### 推荐的目录结构
+### Recommended Directory Structure
 
 ```
 content/
-├── index.md                      # 登陆页（必需）
+├── index.md                      # Landing page (required)
 ├── 1.getting-started/
 │   ├── .navigation.yml
 │   ├── 1.introduction.md
 │   ├── 2.installation.md
 │   └── 3.quick-start.md
-├── 2.guide/                      # 或 2.concepts/
+├── 2.guide/                      # or 2.concepts/
 │   ├── .navigation.yml
 │   ├── 1.configuration.md
 │   ├── 2.authentication.md
 │   └── 3.deployment.md
-├── 3.api/                        # 如适用
+├── 3.api/                        # If applicable
 │   ├── .navigation.yml
 │   └── 1.reference.md
-├── 4.advanced/                   # 可选
+├── 4.advanced/                   # Optional
 │   ├── .navigation.yml
 │   └── 1.customization.md
 ```
 
-### 深度指南
+### Depth Guidelines
 
-**推荐：** 最多 3 级嵌套
-- 第 1 级：主要部分（`1.getting-started/`）
-- 第 2 级：部分中的页面（`1.introduction.md`）
-- 第 3 级：标题中的小节（页面内的 H2、H3）
+**Recommended:** at most 3 levels of nesting.
+- Level 1: top-level sections (`1.getting-started/`).
+- Level 2: pages within a section (`1.introduction.md`).
+- Level 3: subsections within a page (H2/H3 headings).
 
-**避免：** 深文件夹嵌套（4+ 级）- 改用 H2/H3 标题。
+**Avoid:** deep folder nesting (4+ levels) — use H2/H3 headings instead.
 
-## 部分组织
+## Section Organization
 
-### 标准部分类型
+### Standard Section Types
 
-**1. 开始使用**（始终首先）
-- 介绍（什么和为什么）
-- 安装（前提条件、命令）
-- 快速开始/第一步
-- 项目结构（如适用）
+**1. Getting started** (always first)
+- Introduction (what and why)
+- Installation (prerequisites, commands)
+- Quick start / first steps
+- Project structure (if applicable)
 
-**2. 指南/概念**（核心文档）
-- 功能文档
-- 配置指南
-- 集成教程
-- 最佳实践
+**2. Guide / Concepts** (core documentation)
+- Feature documentation
+- Configuration guides
+- Integration tutorials
+- Best practices
 
-**3. API/参考**（如适用）
-- 组件参考
-- 可组合项参考
-- 函数参考
-- 配置选项
+**3. API / Reference** (if applicable)
+- Component reference
+- Composable reference
+- Function reference
+- Configuration options
 
-**4. 高级**（可选）
-- 高级模式
-- 自定义指南
-- 故障排除
-- 迁移指南
+**4. Advanced** (optional)
+- Advanced patterns
+- Customization guides
+- Troubleshooting
+- Migration guides
 
-### 每部分的页数
+### Pages per Section
 
-**指南：**
-- **最小：** 2 页每部分（1 页 = 应该并入另一部分）
-- **最优：** 3-8 页每部分
-- **最大：** 15 页（超过此，考虑分割成小节）
+**Guidelines:**
+- **Minimum:** 2 pages per section (a single-page section should be merged into another).
+- **Optimal:** 3–8 pages per section.
+- **Maximum:** 15 pages (beyond this, consider splitting into subsections).
 
-**红旗：**
-- 仅 1 页的部分
-- 20+ 页的部分（太宽，难以导航）
+**Red flags:**
+- Sections with only 1 page.
+- Sections with 20+ pages (too broad, hard to navigate).
 
-## 导航文件
+## Navigation Files
 
-### .navigation.yml 结构
+### `.navigation.yml` Structure
 
-每个部分目录应该有 `.navigation.yml`：
+Every section directory should have a `.navigation.yml`:
 
 ```yaml
-title: 开始使用
+title: Getting started
 icon: i-lucide-rocket
 ```
 
-**必需字段：**
-- `title`：部分在边栏中的显示名称
-- `icon`：Lucide 图标（格式：`i-lucide-{name}`）
+**Required fields:**
+- `title`: section display name in the sidebar.
+- `icon`: a Lucide icon (format: `i-lucide-{name}`).
 
-### 按部分推荐的图标
+### Recommended Icons by Section
 
-| 部分 | 推荐图标 |
-|---------|----------------|
-| 开始使用 | `i-lucide-rocket`、`i-lucide-play` |
-| 指南/概念 | `i-lucide-book-open`、`i-lucide-layers` |
-| API/参考 | `i-lucide-code`、`i-lucide-book` |
-| 高级 | `i-lucide-settings`、`i-lucide-wrench` |
-| 部署 | `i-lucide-cloud`、`i-lucide-upload` |
-| 故障排除 | `i-lucide-alert-circle`、`i-lucide-help-circle` |
+| Section | Recommended icons |
+|---------|-------------------|
+| Getting started | `i-lucide-rocket`, `i-lucide-play` |
+| Guide / Concepts | `i-lucide-book-open`, `i-lucide-layers` |
+| API / Reference | `i-lucide-code`, `i-lucide-book` |
+| Advanced | `i-lucide-settings`, `i-lucide-wrench` |
+| Deployment | `i-lucide-cloud`, `i-lucide-upload` |
+| Troubleshooting | `i-lucide-alert-circle`, `i-lucide-help-circle` |
 
-## 内容流
+## Content Flow
 
-### 逻辑进展
+### Logical Progression
 
-文档应遵循学习路径：
+Documentation should follow a learning path:
 
-1. **方向** - 这是什么？为什么使用它？
-2. **设置** - 我如何安装它？
-3. **基础** - 我如何使用核心功能？
-4. **高级** - 我如何自定义或扩展？
-5. **参考** - 我在哪里可以找到详细的 API 信息？
+1. **Direction** — What is this? Why use it?
+2. **Setup** — How do I install it?
+3. **Basics** — How do I use the core features?
+4. **Advanced** — How do I customize or extend it?
+5. **Reference** — Where do I find detailed API information?
 
-### 页面结构
+### Page Structure
 
-每个页面应遵循此模式：
+Every page should follow this pattern:
 
 ```markdown
 ---
 frontmatter here
 ---
 
-# H1 页面标题（匹配 frontmatter 标题）
+# H1 page title (matches the frontmatter title)
 
-简短介绍（1-2 句话描述此页面涉及的内容）
+Brief introduction (1–2 sentences describing what this page covers).
 
-## 第一个主要主题（H2）
+## First main topic (H2)
 
-解释该主题的内容（200-400 字）
+Explain the topic (200–400 words).
 
-### 子主题（H3）
+### Subtopic (H3)
 
-详细信息
+Detailed information.
 
-## 第二个主要主题（H2）
+## Second main topic (H2)
 
-更多内容
+More content.
 
-## 后续步骤
+## Next steps
 
-- 相关页面链接
-- 建议的阅读顺序
+- Links to related pages.
+- Suggested reading order.
 ```
 
-### 后续步骤/相关内容
+### Next Steps / Related Content
 
-**每个指南页面应包括：**
-- 相关文档链接
-- 建议的下一页
-- 前提条件或依赖项
+**Every guide page should include:**
+- Links to related documentation.
+- Suggested next page.
+- Prerequisites or dependencies.
 
-**示例：**
+**Example:**
 
 ```markdown
-## 后续步骤
+## Next steps
 
-- [配置你的主题](/guide/configuration)
-- [添加自定义组件](/guide/customization)
-- [部署到生产](/guide/deployment)
+- [Configure your theme](/guide/configuration)
+- [Add custom components](/guide/customization)
+- [Deploy to production](/guide/deployment)
 
-## 相关
+## Related
 
-- [API 参考](/api/reference) - 详细的 API 文档
-- [示例](/examples) - 真实世界的使用示例
+- [API reference](/api/reference) — Detailed API documentation.
+- [Examples](/examples) — Real-world usage examples.
 ```
 
-## 交叉引用
+## Cross-References
 
-### 内部链接
+### Internal Links
 
-**从内容根使用相对链接：**
+**Use relative links from the content root:**
 
-✅ 好的：
+✅ Good:
 ```markdown
-了解更多关于 [身份验证](/guide/authentication)。
+Learn more about [authentication](/guide/authentication).
 ```
 
-❌ 避免：
+❌ Avoid:
 ```markdown
-了解更多关于 [身份验证](../guide/authentication.md)。
+Learn more about [authentication](../guide/authentication.md).
 ```
 
-### 链接模式
+### Linking Patterns
 
-**内联链接** 用于上下文引用：
+**Inline links** for contextual references:
 ```markdown
-通过设置 [环境变量](/guide/configuration#environment-variables) 来配置你的应用。
+Configure your app by setting [environment variables](/guide/configuration#environment-variables).
 ```
 
-**标注链接** 用于重要相关内容：
+**Callout links** for important related content:
 ```markdown
 ::note
-此功能需要身份验证。见 [身份验证指南](/guide/authentication) 了解设置说明。
+This feature requires authentication. See the [authentication guide](/guide/authentication) for setup instructions.
 ::
 ```
 
-**Frontmatter 链接** 用于主要相关页面：
+**Frontmatter links** for primary related pages:
 ```yaml
 ---
 links:
-  - label: API 参考
+  - label: API reference
     to: /api/reference
     icon: i-lucide-book
 ---
 ```
 
-## 一致性检查
+## Consistency Checks
 
-### 跨页面
+### Across Pages
 
-- [ ] 一致的标题风格（指南部分中基于动作的）
-- [ ] 相似的页面结构（介绍 → 内容 → 后续步骤）
-- [ ] 一致的代码示例格式
-- [ ] 一致的术语用法
+- [ ] Consistent heading style (action-based in guide sections).
+- [ ] Similar page structure (introduction → content → next steps).
+- [ ] Consistent code-example formatting.
+- [ ] Consistent terminology.
 
-### 跨部分
+### Across Sections
 
-- [ ] 所有部分都有 `.navigation.yml`
-- [ ] 编号目录用于一致的排序
-- [ ] 相似的深度级别（避免一个部分中 2 级，另一个中 5 级）
-- [ ] 一致的图标样式（所有 Lucide，无混合）
+- [ ] All sections have `.navigation.yml`.
+- [ ] Numbered directories for consistent ordering.
+- [ ] Similar depth levels (avoid 2 levels in one section, 5 in another).
+- [ ] Consistent icon style (all Lucide, no mixing).
 
-## 常见结构问题
+## Common Structural Issues
 
-### 孤立页面
-- 没有传入链接的页面
-- 从登陆页面没有路径到此页面
-- 不包括在导航中
+### Orphan Pages
+- Pages with no incoming links.
+- No path from the landing page reaches this page.
+- Not included in navigation.
 
-**修复：** 从父/相关页面添加链接
+**Fix:** add a link from a parent / related page.
 
-### 冗余内容
-- 多个页面涵盖同一主题
-- 跨部分的重复信息
-- 没有清晰区分的重叠内容
+### Redundant Content
+- Multiple pages cover the same topic.
+- Duplicate information across sections.
+- Overlapping content with no clear distinction.
 
-**修复：** 合并或清楚地区分目的
+**Fix:** merge or clearly differentiate the purpose.
 
-### 缺少登陆页面
-- 没有 index.md 的部分
-- 直接跳转到编号页面（导致部分根 URL 上的 404）
+### Missing Landing Page
+- Section without an `index.md`.
+- Jumps directly to numbered pages (causing 404 on the section root URL).
 
-**修复：** 添加 `index.md` 包含部分概览。如果页面不应出现在边栏导航中，在 frontmatter 中使用 `navigation: false`：
+**Fix:** add an `index.md` with a section overview. If the page should not appear in the sidebar navigation, use `navigation: false` in frontmatter:
 
 ```yaml
 ---
-title: 部分名称
-description: 此部分的概览
+title: Section name
+description: Overview of this section
 navigation: false
 ---
 ```
 
-此模式适用于作为入口点（例如通过重定向或直接 URL）但不应在边栏中招摇的部分登陆页面。
+This pattern works for section landing pages that act as entry points (for example via redirects or direct URLs) but should not surface in the sidebar.
 
-### 不一致的编号
-- 编号中的间隙（1、2、4、5——3 在哪里？）
-- 重重号（1.intro.md、1.install.md 在同一目录中）
+### Inconsistent Numbering
+- Gaps in numbering (1, 2, 4, 5 — where's 3?).
+- Duplicate numbers (`1.intro.md`, `1.install.md` in the same directory).
 
-**修复：** 一致地重新编号文件
+**Fix:** renumber files consistently.
 
-### 差劲的信息架构
-- 指南内容在开始使用部分
-- 基础设置在高级部分
-- API 参考与教程混合
+### Poor Information Architecture
+- Guide content under the getting-started section.
+- Basic setup under the advanced section.
+- API reference mixed with tutorials.
 
-**修复：** 重新组织到适当的部分
+**Fix:** reorganize into the appropriate section.
 
-## 登陆页面结构
+## Landing Page Structure
 
-主登陆页（`index.md`）应包括：
+The main landing page (`index.md`) should include:
 
-1. **英雄部分** - 项目名称、标语、CTA
-2. **关键功能** - 3-6 个主要功能带图标
-3. **快速开始** - 最小示例或安装命令
-4. **部分链接** - 开始使用、指南、API
-5. **可选：** 展示、推荐、赞助商
+1. **Hero section** — project name, tagline, CTA.
+2. **Key features** — 3–6 primary features with icons.
+3. **Quick start** — minimal example or install command.
+4. **Section links** — Getting started, Guide, API.
+5. **Optional:** showcase, testimonials, sponsors.
 
-**示例结构：**
+**Example structure:**
 
 ```markdown
 ---
-title: 项目名称
-description: 项目标语
+title: Project name
+description: Project tagline
 ---
 
 ::u-page-hero
-# 英雄内容
+# Hero content
 ::
 
 ::u-page-section
-# 功能
+# Features
   :::u-page-grid
-  # 功能卡片
+  # Feature cards
   :::
 ::
 
 ::u-page-section
-# 快速开始
-# 最小代码示例
+# Quick start
+# Minimal code example
 ::
 ```
 
-## 验证清单
+## Validation Checklist
 
-- [ ] 登陆页（index.md）存在于根目录
-- [ ] 所有部分都有 `.navigation.yml` 带标题和图标
-- [ ] 编号目录遵循一致的模式（1.、2.、3.）
-- [ ] 部分中的页面编号一致
-- [ ] 最多 3 级层级（文件夹 + 标题）
-- [ ] 每部分有 2-15 页（不是 1，也不是 20+）
-- [ ] 页面包括"后续步骤"或相关链接
-- [ ] 没有孤立页面（所有可从导航访问）
-- [ ] 逻辑进展（开始使用 → 指南 → API → 高级）
-- [ ] 一致的标题深度（没有孤独的 H4 而没有 H3）
+- [ ] Landing page (`index.md`) exists at the root.
+- [ ] Every section has `.navigation.yml` with title and icon.
+- [ ] Numbered directories follow a consistent pattern (`1.`, `2.`, `3.`).
+- [ ] Page numbering is consistent within a section.
+- [ ] At most 3 hierarchy levels (folders + headings).
+- [ ] Each section has 2–15 pages (not 1, not 20+).
+- [ ] Pages include "Next steps" or related links.
+- [ ] No orphan pages (every page is reachable from navigation).
+- [ ] Logical progression (Getting started → Guide → API → Advanced).
+- [ ] Consistent heading depth (no lone H4 without an H3).

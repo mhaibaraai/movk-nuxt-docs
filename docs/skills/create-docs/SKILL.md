@@ -1,100 +1,105 @@
 ---
 name: create-docs
 description: |
+  Create a complete documentation site for any project.
+  Use when asked to:
+  "create docs", "add documentation", "set up a docs site", "generate documentation",
+  "document this project", "write docs", "initialize docs",
+  "add docs folder", "scaffold a documentation site".
   为任何项目创建完整的文档网站。当被要求时使用此技能：
   "创建文档", "添加文档", "建立文档网站", "生成文档",
   "文档化项目", "编写文档", "初始化文档",
-  "添加文档文件夹", "创建文档网站"。生成基于 Movk Nuxt Docs 的网站
-  包含搜索、深色模式、MCP 服务器和 llms.txt 集成。
+  "添加文档文件夹", "创建文档网站"。
+  Generates a Movk Nuxt Docs based site with search, dark mode, MCP server, and llms.txt integration.
 ---
 
-# 创建文档
+# Create Docs
 
-为任何项目生成完整的、生产就绪的文档网站。
+Generate a complete, production-ready documentation site for any project.
 
-## 工作流程
+## Workflow
 
-1. **分析** - 检测包管理器、monorepo 结构、读取上下文
-2. **初始化** - 使用正确的设置创建文档目录
-3. **生成** - 使用模板编写文档页面
-4. **配置** - 设置 AI 集成（MCP、llms.txt）
-5. **最终化** - 提供后续步骤和正确的命令
+1. **Analyze** — Detect package manager, monorepo layout, and read project context.
+2. **Initialize** — Scaffold the docs directory with the right settings.
+3. **Generate** — Author documentation pages from templates.
+4. **Configure** — Set up AI integration (MCP, llms.txt).
+5. **Finalize** — Provide next steps and the correct commands.
 
 ---
 
-## 包管理器参考
+## Package Manager Reference
 
-从 lock 文件检测，如果未找到则默认使用 npm：
+Detect from the lock file. Default to npm if no lock file is found:
 
-| Lock 文件 | PM | 安装 | 运行 | 添加 |
+| Lock file | PM | Install | Run | Add |
 |-----------|------|---------|-----|-----|
 | `pnpm-lock.yaml` | pnpm | `pnpm install` | `pnpm run` | `pnpm add` |
 | `package-lock.json` | npm | `npm install` | `npm run` | `npm install` |
 | `yarn.lock` | yarn | `yarn install` | `yarn` | `yarn add` |
 | `bun.lockb` | bun | `bun install` | `bun run` | `bun add` |
 
-在下面的命令中使用 `[pm]` 作为占位符。
+Use `[pm]` as the placeholder in the commands below.
 
 ---
 
-## 步骤 1：分析项目
+## Step 1: Analyze the Project
 
-### 检测项目结构
+### Detect Project Structure
 
 ```
-检查：
+Check:
 ├── pnpm-workspace.yaml   → pnpm monorepo
 ├── turbo.json            → Turborepo monorepo
 ├── lerna.json            → Lerna monorepo
 ├── nx.json               → Nx monorepo
-├── apps/                 → Apps 目录（monorepo）
-├── packages/             → Packages 目录（monorepo）
-├── docs/                 → 现有文档（避免覆盖）
-├── README.md             → 主文档源
-└── src/ 或 lib/          → 源代码位置
+├── apps/                 → apps directory (monorepo)
+├── packages/             → packages directory (monorepo)
+├── docs/                 → existing documentation (avoid overwriting)
+├── README.md             → primary documentation source
+└── src/ or lib/          → source code location
 ```
 
-### 确定文档位置
+### Determine the Docs Location
 
-| 项目类型 | 目标目录 | Workspace 项目 |
+| Project type | Target directory | Workspace entry |
 |--------------|------------------|-----------------|
-| 标准项目 | `./docs` | N/A |
+| Standard project | `./docs` | N/A |
 | Monorepo with `apps/` | `./apps/docs` | `apps/docs` |
 | Monorepo with `packages/` | `./docs` | `docs` |
-| 现有 `docs/` 文件夹 | 询问用户或 `./documentation` | — |
+| Existing `docs/` folder | Ask the user, or use `./documentation` | — |
 
-### 读取上下文文件
+### Read Context Files
 
-| 文件 | 提取 |
+| File | Extract |
 |------|---------|
-| `README.md` | 项目名称、描述、功能、使用示例 |
-| `package.json` | 名称、描述、依赖、仓库 URL |
-| `src/` 或 `lib/` | 导出的函数、可组合项用于 API 文档 |
+| `README.md` | Project name, description, features, usage examples |
+| `package.json` | Name, description, dependencies, repository URL |
+| `src/` or `lib/` | Exported functions and composables for API docs |
 
 ---
 
-## 步骤 2：初始化文档
+## Step 2: Initialize the Docs
 
-### 创建目录结构
+### Create the Directory Structure
 
 ```bash
-# 完整模板
+# Full template
 npx nuxi init -t gh:mhaibaraai/movk-nuxt-docs/templates/default my-docs
 
-# 模块文档模板
+# Module documentation template
 npx nuxi init -t gh:mhaibaraai/movk-nuxt-docs/templates/module my-module-docs
 ```
 
-**完整模板**
+**Full template**
 
 ```
 [docs-location]/
 ├── app/
 │   └── composables/
-│       ├── useCategory.ts       # 导航分类定义
-│       └── useHeader.ts         # 页头导航链接
+│       ├── useCategory.ts       # Navigation category definitions
+│       └── useHeader.ts         # Header navigation links
 ├── content/
-│   ├── index.md                 # 首页（登陆页）
+│   ├── index.md                 # Landing page
 │   └── docs/
 │       └── 1.getting-started/
 │           ├── .navigation.yml
@@ -115,7 +120,7 @@ npx nuxi init -t gh:mhaibaraai/movk-nuxt-docs/templates/module my-module-docs
 └── tsconfig.json
 ```
 
-**模板目录结构**
+**Module template**
 
 ```
 [docs-location]/
@@ -140,11 +145,11 @@ npx nuxi init -t gh:mhaibaraai/movk-nuxt-docs/templates/module my-module-docs
 └── tsconfig.json
 ```
 
-### 更新 Monorepo 配置（如适用）
+### Update Monorepo Configuration (if applicable)
 
 #### pnpm Monorepo
 
-1. 将文档添加到工作区并配置 `onlyBuiltDependencies`（better-sqlite3 必需）：
+1. Add the docs package to the workspace and configure `onlyBuiltDependencies` (required by better-sqlite3):
 
 ```yaml [pnpm-workspace.yaml]
 packages:
@@ -155,7 +160,7 @@ onlyBuiltDependencies:
   - better-sqlite3
 ```
 
-2. 添加开发脚本到根 package.json：
+2. Add a development script to the root `package.json`:
 
 ```json [package.json]
 {
@@ -165,7 +170,7 @@ onlyBuiltDependencies:
 }
 ```
 
-或用目录路径：
+Or use a directory path:
 
 ```json [package.json]
 {
@@ -188,29 +193,29 @@ onlyBuiltDependencies:
 
 ---
 
-## 步骤 3：生成文档
+## Step 3: Generate Documentation
 
-使用 [references/templates.md](./references/templates.md) 中的模板。
+Use the templates in [references/templates.md](./references/templates.md).
 
-**关键：MDC 组件命名**
+**Critical: MDC component naming**
 
-所有 MDC 中的 Nuxt UI 组件必须使用 `u-` 前缀：
+Every Nuxt UI component used inside MDC must keep the `u-` prefix:
 
-| 正确 | 错误 |
-|---------|-------|
+| Correct | Incorrect |
+|---------|-----------|
 | `::u-page-hero` | `::page-hero` |
 | `::u-page-section` | `::page-section` |
 | `:::u-page-feature` | `:::page-feature` |
 | `:::u-button` | `:::button` |
 | `::::u-page-card` | `::::page-card` |
 
-没有 `u-` 前缀，Vue 将无法解析这些组件。
+Without the `u-` prefix, Vue cannot resolve these components.
 
-### 文档结构
+### Documentation Layout
 
 ```
 content/
-├── index.md                        # 登陆页
+├── index.md                        # Landing page
 ├── 1.getting-started/
 │   ├── .navigation.yml
 │   ├── 1.introduction.md
@@ -220,262 +225,262 @@ content/
 │   ├── 1.configuration.md
 │   ├── 2.authentication.md
 │   └── 3.deployment.md
-└── 3.api/                          # 如适用
+└── 3.api/                          # If applicable
     ├── .navigation.yml
     └── 1.reference.md
 ```
 
-### 生成页面
+### Page Generation
 
-1. **登陆页**（`index.md`）- Hero + 功能网格
-2. **介绍** - 什么和为什么，使用案例
-3. **安装** - 前提条件、安装命令
-4. **指南页面** - 功能文档，使用基于动作的 H2 标题
+1. **Landing page** (`index.md`) — Hero + feature grid.
+2. **Introduction** — What and why, plus use cases.
+3. **Installation** — Prerequisites and install commands.
+4. **Guide pages** — Feature documentation with action-oriented H2 headings.
 
-有关写作风格，见 [references/writing-guide.md](./references/writing-guide.md)。
-有关 MDC 组件，见 [references/mdc-components.md](./references/mdc-components.md)。
+For writing style, see [references/writing-guide.md](./references/writing-guide.md).
+For MDC components, see [references/mdc-components.md](./references/mdc-components.md).
 
 ---
 
-## 步骤 4：配置 AI 集成
+## Step 4: Configure AI Integration
 
-Movk Nuxt Docs 自动包含 MCP 服务器（`/mcp`）和 llms.txt 生成。无需配置。
+Movk Nuxt Docs ships with the MCP server (`/mcp`) and llms.txt generation enabled by default. No configuration is required.
 
-**不要在登陆页面添加 AI 集成部分。** 这些功能自动工作。
+**Do not add an "AI Integration" section to the landing page.** These features work automatically.
 
-可选地在介绍页面中提及：
+Optionally mention them on the introduction page:
 
 ```markdown
 ::note
-本文档包括与 MCP 服务器的 AI 集成和自动 `llms.txt` 生成。
+This documentation includes AI integration through an MCP server and automatic `llms.txt` generation.
 ::
 ```
 
-加载 [references/configuration.md](./references/configuration.md) 了解详细配置选项。
+Load [references/configuration.md](./references/configuration.md) for detailed configuration options.
 
 ---
 
-## 步骤 5：编写 Agent Skills（高级）
+## Step 5: Author Agent Skills (Advanced)
 
-当项目有特定工作流（代码审查、发布流程、内容规范检查等）时，可以为文档站编写 Agent Skills，让 AI 代理直接理解和执行这些工作流。Skills 会自动发布到 `/.well-known/skills/` 端点，Claude Code、Cursor 等工具可以自动发现并加载。
+When the project has specific workflows (code review, release process, content style checks, etc.), author Agent Skills for the docs site so AI agents can understand and execute those workflows directly. Skills are auto-published to the `/.well-known/skills/` endpoint, and tools such as Claude Code and Cursor can discover and load them automatically.
 
-### 目录结构
+### Directory Structure
 
-在文档目录下创建 `skills/` 文件夹：
+Create a `skills/` folder under the docs directory:
 
 ```
 [docs-location]/
 └── skills/
     └── my-skill/
-        ├── SKILL.md          # 必需：frontmatter + 工作流说明
-        ├── references/       # 可选：详细参考文档
+        ├── SKILL.md          # Required: frontmatter + workflow description
+        ├── references/       # Optional: detailed reference docs
         │   └── checklist.md
-        └── assets/           # 可选：模板、示例资产
+        └── assets/           # Optional: templates and example assets
             └── template.md
 ```
 
-### SKILL.md 模板
+### SKILL.md Template
 
 ```markdown
 ---
 name: my-skill
 description: |
-  一句话描述此技能的用途。
-  当被要求时使用：
-  "触发词1", "触发词2", "触发词3"。
+  One-sentence description of what this skill does.
+  Use when asked to:
+  "trigger phrase 1", "trigger phrase 2", "trigger phrase 3".
 ---
 
 # My Skill
 
-简短说明此技能的目标和适用场景。
+A brief statement of the skill's goal and where it applies.
 
-## 工作流程
+## Workflow
 
-1. **步骤一** - 做什么
-2. **步骤二** - 做什么
-3. **步骤三** - 做什么
+1. **Step One** — What to do.
+2. **Step Two** — What to do.
+3. **Step Three** — What to do.
 
 ---
 
-## 步骤一
+## Step One
 
-详细说明...
+Detailed instructions...
 ```
 
-### Frontmatter 字段
+### Frontmatter Fields
 
-| 字段 | 必需 | 说明 |
+| Field | Required | Description |
 |------|------|------|
-| `name` | 是 | kebab-case，须与目录名完全一致，≤64 字符 |
-| `description` | 是 | 功能描述 + 触发词列表，AI 根据触发词决定何时调用此技能 |
+| `name` | Yes | kebab-case, must match the directory name exactly, ≤64 characters |
+| `description` | Yes | Functional description plus trigger phrases. The AI uses these phrases to decide when to invoke the skill. |
 
-**触发词写法：**
+**Trigger-phrase style:**
 
 ```yaml
 description: |
-  审查 Vue 组件代码，检查性能、可访问性和最佳实践。
-  当被要求时使用：
-  "审查组件", "检查代码", "code review",
-  "审计 Vue", "分析组件质量"。
+  Review Vue component code for performance, accessibility, and best practices.
+  Use when asked to:
+  "review component", "check the code", "code review",
+  "audit Vue", "analyze component quality".
 ```
 
-### 参考文件组织
+### Reference File Organization
 
-主 `SKILL.md` 保持简洁（≤500 行）。详细的规则、清单、模板放在 `references/` 中，在主文件中通过链接引用：
+Keep the main `SKILL.md` lean (≤500 lines). Put detailed rules, checklists, and templates under `references/`, then link to them from the main file:
 
 ```markdown
-详见 [references/checklist.md](./references/checklist.md)。
+See [references/checklist.md](./references/checklist.md) for details.
 ```
 
-### 命名验证
+### Naming Validation
 
-- [x] 目录名与 `name` 字段完全一致
-- [x] 仅包含小写字母、数字、连字符
-- [x] 不以连字符开头或结尾
-- [x] 无连续连字符（`--`）
-- [x] 长度 ≤64 字符
+- [x] Directory name matches the `name` field exactly.
+- [x] Lowercase letters, digits, and hyphens only.
+- [x] Does not start or end with a hyphen.
+- [x] No consecutive hyphens (`--`).
+- [x] Length ≤64 characters.
 
-### 完整示例：`release-check`
+### Full Example: `release-check`
 
 ```markdown
 ---
 name: release-check
 description: |
-  发布前检查项目是否满足发布条件。
-  当被要求时使用：
-  "检查发布条件", "准备发布", "release check",
-  "验证发布", "发布前检查"。
+  Verify the project meets release criteria before publishing.
+  Use when asked to:
+  "check release readiness", "prepare a release", "release check",
+  "validate release", "pre-release check".
 ---
 
-# 发布检查
+# Release Check
 
-确保项目在发布前满足所有质量要求。
+Ensure the project meets every quality requirement before release.
 
-## 工作流程
+## Workflow
 
-1. **代码质量** - 运行 lint 和类型检查
-2. **版本号** - 验证版本号已更新
-3. **变更日志** - 确认 CHANGELOG 已记录
-4. **构建验证** - 执行生产构建并验证产物
+1. **Code quality** — Run lint and type checks.
+2. **Version number** — Verify the version field is updated.
+3. **Changelog** — Confirm CHANGELOG entries exist.
+4. **Build verification** — Run the production build and verify the output.
 
 ---
 
-## 步骤 1：代码质量
+## Step 1: Code Quality
 
-运行以下命令，确保全部通过：
+Run the following commands and confirm they all pass:
 
 \`\`\`bash
 pnpm lint
 pnpm typecheck
 \`\`\`
 
-## 步骤 2：版本号
+## Step 2: Version Number
 
-检查 `package.json` 中的 `version` 字段是否与本次发布版本一致。
+Check that the `version` field in `package.json` matches the release version.
 
-## 步骤 3：变更日志
+## Step 3: Changelog
 
-确认 `CHANGELOG.md` 顶部有当前版本的条目，包含所有主要变更。
+Confirm `CHANGELOG.md` has an entry at the top for the current version with all major changes.
 
-## 步骤 4：构建验证
+## Step 4: Build Verification
 
 \`\`\`bash
 pnpm build
 \`\`\`
 
-构建成功后确认 `.output/` 目录非空。
+After a successful build, confirm the `.output/` directory is not empty.
 ```
 
 ---
 
-## 步骤 6：最终化
+## Step 6: Finalize
 
-使用检测到的包管理器提供说明。
+Provide instructions using the detected package manager.
 
-### 标准项目
+### Standard Project
 
 ```
-文档已创建在 [docs-location]
+Documentation created at [docs-location]
 
-启动：
+To start:
 
   cd [docs-location]
   [pm] install
   [pm] run dev
 
-在 http://localhost:3000 可用
+Available at http://localhost:3000
 ```
 
 ### Monorepo
 
 ```
-文档已创建在 [docs-location]
+Documentation created at [docs-location]
 
-从根目录启动：
+From the repo root:
 
   [pm] install
   [pm] run docs:dev
 
-或从文档目录：
+Or from the docs directory:
 
   cd [docs-location]
   [pm] run dev
 
-在 http://localhost:3000 可用
+Available at http://localhost:3000
 ```
 
-### 包含的功能
+### Included Features
 
-- 全文检索
-- 深色模式
-- MCP 服务器用于 AI 工具（/mcp）
-- LLM 集成（/llms.txt）
-- SEO 优化
-- GitHub 集成
-- 组件文档自动生成
+- Full-text search
+- Dark mode
+- MCP server for AI tools (`/mcp`)
+- LLM integration (`/llms.txt`)
+- SEO optimization
+- GitHub integration
+- Automatic component documentation
 
-### 后续步骤
+### Next Steps
 
-1. 审查生成的内容
-2. 验证 Front-Matter 完整性
-3. 检查 MDC 语法正确性
-4. 评估内容清晰度和 SEO
-5. 检查结构和导航合理性
-6. 部署到 Vercel/Netlify/Cloudflare
+1. Review the generated content.
+2. Verify frontmatter completeness.
+3. Check MDC syntax correctness.
+4. Evaluate content clarity and SEO.
+5. Validate structure and navigation.
+6. Deploy to Vercel / Netlify / Cloudflare.
 
-### 建议后续操作
+### Suggested Follow-ups
 
-文档创建后，建议增强：
+After the docs are created, suggest enhancements:
 
 ```
-你的文档已准备好！
+Your documentation is ready!
 
-你想要我：
-- **自定义 UI** - 匹配你的品牌色和风格
-- **增强登陆页** - 添加功能卡片、代码预览、视觉效果
-- **设置部署** - 部署到 Vercel、Netlify 或 Cloudflare
+Would you like me to:
+- **Customize the UI** — match your brand colors and style
+- **Enhance the landing page** — add feature cards, code previews, visual polish
+- **Set up deployment** — deploy to Vercel, Netlify, or Cloudflare
 
-让我知道你想改进什么！
+Let me know what you'd like to improve!
 ```
 
 ---
 
-## 部署
+## Deployment
 
-| 平台 | 命令 | 输出 |
+| Platform | Command | Output |
 |----------|---------|--------|
-| Vercel | `npx vercel --prod` | 自动检测 |
+| Vercel | `npx vercel --prod` | Auto-detected |
 | Netlify | `[pm] run generate` | `.output/public` |
 | Cloudflare Pages | `[pm] run generate` | `.output/public` |
 | GitHub Pages | `[pm] run generate` | `.output/public` |
 
 ---
 
-## 示例：auth-utils
+## Example: auth-utils
 
-**检测到：** pnpm monorepo，包在 packages/ 中
+**Detected:** pnpm monorepo, packages live under `packages/`.
 
-**生成的结构：**
+**Generated structure:**
 ```
 docs/
 ├── content/
@@ -498,10 +503,10 @@ docs/
 └── .gitignore
 ```
 
-**在 `authentication.md` 中**（基于动作的 H2 标题）：
+**In `authentication.md`** (action-oriented H2 headings):
 ```markdown
-## 添加基本身份验证
-## 保护你的路由
-## 处理登录重定向
-## 自定义会话
+## Add basic authentication
+## Protect your routes
+## Handle login redirects
+## Customize sessions
 ```

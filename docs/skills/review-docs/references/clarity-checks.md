@@ -1,180 +1,177 @@
-# 清晰度审查指南
+# Clarity Review Guide
 
-评估 Movk Nuxt Docs 文档内容的清晰度和可读性。
+Evaluate the clarity and readability of Movk Nuxt Docs content.
 
-## 中文写作规范
+## Writing Conventions
 
-### 标点符号
+### Punctuation
 
-使用全角中文标点，这是最常见的错误类别：
+Use straight ASCII punctuation. Common errors to flag:
 
-| 场景 | 正确 | 错误 |
-|------|------|------|
-| 逗号 | 安装，配置 | 安装,配置 |
-| 句号 | 配置完成。 | 配置完成. |
-| 冒号 | 说明：| 说明: |
-| 问号 | 如何使用？ | 如何使用? |
-| 感叹号 | 注意！ | 注意! |
-| 顿号 | 组件、主题、布局 | 组件,主题,布局 |
+| Case | Correct | Incorrect |
+|------|---------|-----------|
+| Comma | Install, configure | Install，configure |
+| Period | Configuration complete. | Configuration complete。 |
+| Colon | Description: | Description： |
+| Question mark | How do I use it? | How do I use it？ |
+| Exclamation mark | Note! | Note！ |
+| Quotes | Use straight `"quotes"` or `'apostrophes'` | Curly “quotes” mixed with straight |
 
-**括号**内如果是中文内容，用全角括号（）；如果是代码或英文，用半角 ()。
+Use the Oxford comma in lists of three or more items: `components, themes, and layouts`.
 
-### 中英文间距
+### Spacing
 
-中文与英文/数字之间必须有空格：
+Add a single space after sentence-ending punctuation. No space between numbers and units:
 
-✅ `使用 Nuxt 4 构建文档`
-❌ `使用Nuxt 4构建文档`
+✅ `Width is 16px` — not `Width is 16 px`.
 
-✅ `安装 @movk/nuxt-docs 依赖`
-❌ `安装@movk/nuxt-docs依赖`
+Add a space between an inline code identifier and surrounding text:
 
-✅ `端口默认为 3000`
-❌ `端口默认为3000`
+✅ `Install the @movk/nuxt-docs dependency.`
+❌ `Install the@movk/nuxt-docsdependency.`
 
-**例外：** 数字与单位之间不加空格
-✅ `宽度为 16px`，不写成 `宽度为 16 px`
+✅ `The default port is 3000.`
 
-### 专有名词大小写
+### Proper Noun Capitalization
 
-| 正确 | 常见错误 |
-|------|----------|
-| Nuxt | nuxt、NUXT |
-| TypeScript | typescript、Typescript |
-| Vue.js | vue.js、VueJS |
-| GitHub | github、Github |
-| Tailwind CSS | tailwindcss、TailwindCSS |
+| Correct | Common errors |
+|---------|---------------|
+| Nuxt | nuxt, NUXT |
+| TypeScript | typescript, Typescript |
+| Vue.js | vue.js, VueJS |
+| GitHub | github, Github |
+| Tailwind CSS | tailwindcss, TailwindCSS |
 | Markdown | markdown |
 | MDC | mdc |
-| pnpm | PNPM、Pnpm |
+| pnpm | PNPM, Pnpm |
 
 ---
 
-## 语气和声调
+## Tone and Voice
 
-### 主动语态
-✅ 好的："通过添加...来配置你的应用"
-❌ 避免："应用可以通过添加...来配置"
+### Active Voice
+✅ Good: "Configure your app by adding..."
+❌ Avoid: "The app can be configured by adding..."
 
-### 现在时
-✅ 好的："服务器处理请求..."
-❌ 避免："服务器将处理请求..."
+### Present Tense
+✅ Good: "The server handles the request..."
+❌ Avoid: "The server will handle the request..."
 
-### 第二人称
-✅ 好的："你可以自定义主题..."
-❌ 避免："用户可以自定义主题..."
+### Second Person
+✅ Good: "You can customize the theme..."
+❌ Avoid: "Users can customize the theme..."
 
-## 句子结构
+## Sentence Structure
 
-**目标：** 每句 15-20 字
-**最大：** 在标记审查前 25 字
+**Target:** 15–20 words per sentence.
+**Maximum:** 25 words before a sentence is flagged for review.
 
-示例：
-- 太长（32 字）："当你想配置你的应用以使用具有 OAuth 提供商的身份验证时，你应该首先安装所需的依赖项，然后配置你的环境变量。"
-- 更好（分成 2 句）："首先，为 OAuth 安装所需的依赖项。然后，配置你的身份验证环境变量。"
+Examples:
+- Too long (32 words): "When you want to configure your app to use authentication with an OAuth provider, you should first install the required dependencies and then configure your environment variables."
+- Better (split into two): "First, install the required dependencies for OAuth. Then, configure your authentication environment variables."
 
-## 段落结构
+## Paragraph Structure
 
-**指南：**
-- 2-5 句每个段落
-- 每个段落一个主要思想
-- 标题之间 200-400 字
+**Guidelines:**
+- 2–5 sentences per paragraph.
+- One main idea per paragraph.
+- 200–400 words between headings.
 
-## 基于动作的标题
+## Action-Based Headings
 
-### 最佳实践：遵循 Nuxt 模式
+### Best Practice: Follow the Nuxt Pattern
 
-现代文档（如 [Nuxt](https://nuxt.com/docs)）在指南和教程页面中始终使用 **动作动词**。这使文档易读且任务导向。
+Modern documentation (such as [Nuxt](https://nuxt.com/docs)) consistently uses **action verbs** in guide and tutorial pages. This makes documentation scannable and task-oriented.
 
-### 何时使用动作动词
+### When to Use Action Verbs
 
-**页面标题（H1）** - 用于：
-- 指南页面："创建你的第一个模块"、"构建自定义插件"
-- 教程页面："部署你的应用"、"设置身份验证"
-- 操作方法页面："添加深色模式"、"配置环境变量"
-- 食谱页面："实现实时更新"
+**Page titles (H1)** — for:
+- Guide pages: "Create your first module", "Build a custom plugin".
+- Tutorial pages: "Deploy your app", "Set up authentication".
+- How-to pages: "Add dark mode", "Configure environment variables".
+- Recipe pages: "Implement realtime updates".
 
-**标题（H2/H3）** - 用于：
-- 指南和教程中的所有步骤
-- 顺序操作
-- 配置部分
-- 实现细节
+**Headings (H2/H3)** — for:
+- All steps in guides and tutorials.
+- Sequential operations.
+- Configuration sections.
+- Implementation details.
 
-### 何时使用名词（例外）
+### When to Use Nouns (Exceptions)
 
-- **文件名：** 始终保持为名词/kebab-case（`1.introduction.md`、`2.installation.md`）
-- **开始使用标题：** "介绍"、"安装"、"快速开始"（方向页面）
-- **API 参考页面：** 使用函数/组件名称（"useSession"、"Button"、"defineNuxtConfig"）
-- **概念页面：** 在解释理论时可以使用名词（"架构"、"核心概念"、"最佳实践"）
+- **File names:** always remain nouns / kebab-case (`1.introduction.md`, `2.installation.md`).
+- **Getting-started titles:** "Introduction", "Installation", "Quick start" (orientation pages).
+- **API reference pages:** use the function / component name ("useSession", "Button", "defineNuxtConfig").
+- **Concept pages:** nouns work when explaining theory ("Architecture", "Core concepts", "Best practices").
 
-### 动作动词示例
+### Action Verb Examples
 
-| 类别 | 动词 |
+| Category | Verbs |
 |----------|-------|
-| 主要 | 创建、构建、使用、开发、运行、发布、添加、配置、设置、启用、连接 |
-| 次要 | 处理、自定义、部署、实现、集成、安装、定义、编写、测试、调试、更新 |
+| Primary | create, build, use, develop, run, publish, add, configure, set up, enable, connect |
+| Secondary | handle, customize, deploy, implement, integrate, install, define, write, test, debug, update |
 
-### 真实示例（Nuxt 模式）
+### Real Examples (Nuxt Pattern)
 
-**页面标题（H1）：**
+**Page title (H1):**
 ```markdown
-# 创建你的第一个模块
+# Create your first module
 ```
 
-**部分标题（H2）：**
+**Section heading (H2):**
 ```markdown
-## 创建模块
-## 使用启动模板
-## 开发你的模块
+## Create the module
+## Use the starter template
+## Develop your module
 ```
 
-**小部分标题（H3）：**
+**Subsection heading (H3):**
 ```markdown
-### 运行测试
-### 构建你的模块
-### 发布到 npm
+### Run the tests
+### Build your module
+### Publish to npm
 ```
 
-### 坏 vs 好的示例
+### Bad vs. Good Examples
 
-| 静态/名词（避免） | 基于动作（使用） |
-|---------------------|-------------------|
-| 配置 | 配置你的应用 |
-| 模块创建 | 创建新模块 |
-| 数据库设置 | 连接数据库 |
-| 路由保护 | 保护你的路由 |
-| 会话管理 | 处理用户会话 |
-| 错误处理 | 优雅地处理错误 |
-| 测试 | 运行你的测试 |
-| 部署 | 部署到生产 |
+| Static / noun (avoid) | Action-based (use) |
+|-----------------------|--------------------|
+| Configuration | Configure your app |
+| Module creation | Create a new module |
+| Database setup | Connect to a database |
+| Route protection | Protect your routes |
+| Session management | Handle user sessions |
+| Error handling | Handle errors gracefully |
+| Testing | Run your tests |
+| Deployment | Deploy to production |
 
-## 术语一致性
+## Terminology Consistency
 
-**检查：**
-- 在"config"和"configuration"之间交替
-- 在"app"和"application"之间切换
-- 大小写不一致（"nuxt"vs"Nuxt"）
-- 对同一概念使用混合的术语
+**Check for:**
+- Alternating between "config" and "configuration".
+- Switching between "app" and "application".
+- Inconsistent capitalization ("nuxt" vs. "Nuxt").
+- Mixed terminology for the same concept.
 
-**验证：**
-- 技术术语在首次使用时定义
-- 术语命名一致
-- 产品特定的术语系统使用
+**Verify:**
+- Technical terms are defined on first use.
+- Terms are named consistently.
+- Product-specific terminology is used systematically.
 
-## 代码示例
+## Code Examples
 
-### 质量清单
-- [ ] 完整且可复制粘贴（不是片段）
-- [ ] 代表文件的所有代码块上的文件名标签（例如，` ```vue [App.vue] `、` ```ts [server.ts] `、` ```tsx [App.tsx] `）
-- [ ] 代码语言匹配项目的栈（例如，如果项目使用的是 TypeScript）
-- [ ] 注释解释非显而易见的逻辑
-- [ ] 现实的变量名称（不是 foo/bar）
-- [ ] 工作代码（无占位符值如 `YOUR_API_KEY`）
-- [ ] 一致的缩进和风格
+### Quality Checklist
+- [ ] Complete and copy-paste-ready (not snippets).
+- [ ] Filename labels on every code block representing a file (for example, ` ```vue [App.vue] `, ` ```ts [server.ts] `, ` ```tsx [App.tsx] `).
+- [ ] Code language matches the project's stack (for example, TypeScript when the project uses TypeScript).
+- [ ] Comments explain non-obvious logic.
+- [ ] Realistic variable names (not foo/bar).
+- [ ] Working code (no placeholder values such as `YOUR_API_KEY`).
+- [ ] Consistent indentation and style.
 
-### 多包管理器支持
+### Multi-Package-Manager Support
 
-始终为覆盖 **项目/生态系统支持的所有包管理器** 的安装命令使用 `::code-group`：
+Always use `::code-group` for installation commands to cover **every package manager the project / ecosystem supports**:
 
 ```markdown
 ::code-group
@@ -196,54 +193,54 @@ bun add package-name
 ::
 ```
 
-检查项目的 README、lock 文件或现有文档，以确定要包含哪些包管理器。确保没有丢失——常见的被遗忘是较新的。
+Check the project's README, lock files, or existing docs to decide which package managers to include. Make sure none are missing — the most commonly forgotten ones are newer entrants.
 
-### 显示呈现输出
+### Showing Rendered Output
 
-使用 `::code-preview` 在源代码旁边显示呈现的结果。这对于记录视觉功能（如 markdown 语法、代码块元数据、组件呈现）非常理想：
+Use `::code-preview` to show rendered output beside the source code. This is ideal for documenting visual features (Markdown syntax, code-block metadata, component rendering):
 
 ```markdown
 ::code-preview
-- 任务 1
-- [x] 任务 2（已完成）
+- Task 1
+- [x] Task 2 (completed)
 
 #code
 ```mdc
-- 任务 1
-- [x] 任务 2（已完成）
+- Task 1
+- [x] Task 2 (completed)
 ```
 ::
 ```
 
-### 代码组最佳实践
+### Code Group Best Practices
 
-**为以下内容使用 `::code-group`：**
-- 包管理器安装变量（pnpm/npm/yarn/bun）
-- 框架变体（Vue / React 并排）
-- 代码 + 输出对
-- 语法 + AST 对
+**Use `::code-group` for:**
+- Package manager install variants (pnpm/npm/yarn/bun).
+- Framework variants (Vue / React side by side).
+- Code + output pairs.
+- Syntax + AST pairs.
 
-**不要使用 `::code-group` 来混合无关的步骤：**
-- 终端安装命令和配置文件编辑——这些是顺序操作，而不是等效替有品体。将它们保持为单独的块，它们之间有过渡文本。
+**Don't use `::code-group` to mix unrelated steps:**
+- Terminal install commands and config file edits — these are sequential operations, not equivalent alternatives. Keep them as separate blocks with transition text in between.
 
-## 常见的清晰度问题
+## Common Clarity Issues
 
-### 说明中的被动语态
-❌ "文件应该在根目录中创建"
-✅ "在根目录中创建文件"
+### Passive Voice in Instructions
+❌ "The file should be created in the root directory."
+✅ "Create the file in the root directory."
 
-### 冗长短语
-| 冗长 | 简洁 |
-|--------|---------|
-| 为了 | 到 |
-| 重要的是要注意 | 注意： |
-| 到目前为止 | 现在 |
-| 由于这个事实 | 因为 |
+### Wordy Phrases
+| Wordy | Concise |
+|-------|---------|
+| In order to | To |
+| It is important to note | Note: |
+| At this point in time | Now |
+| Due to the fact that | Because |
 
-### 模糊代词
-❌ "这允许你..."
-✅ "此配置允许你..."
+### Vague Pronouns
+❌ "This allows you to..."
+✅ "This configuration allows you to..."
 
-### 未解释的行话
-❌ "使用 SSR 以获得更好的性能"
-✅ "使用服务器端呈现（SSR）以获得更好的性能"
+### Unexplained Jargon
+❌ "Use SSR for better performance."
+✅ "Use server-side rendering (SSR) for better performance."

@@ -1,60 +1,60 @@
-# MDC 组件参考
+# MDC Component Reference
 
-Movk Nuxt Docs 使用带有 MDC 语法的 Nuxt UI 组件。
+Movk Nuxt Docs uses Nuxt UI components with MDC syntax.
 
-**关键：在 MDC 中始终对 Nuxt UI 组件使用 `u-` 前缀：**
+**Critical: always use the `u-` prefix for Nuxt UI components in MDC:**
 
 ```markdown
-::u-page-hero      ✅ 正确（解析为 UPageHero）
-::page-hero        ❌ 错误（无法解析）
+::u-page-hero      ✅ Correct (resolves to UPageHero)
+::page-hero        ❌ Incorrect (does not resolve)
 ```
 
 ---
 
-## 文档源
+## Documentation Sources
 
-**组件：**
-- 组件列表：https://ui.nuxt.com/llms.txt
-- 原始文档：`https://ui.nuxt.com/raw/docs/components/[component].md`
+**Components:**
+- Component list: https://ui.nuxt.com/llms.txt
+- Raw docs: `https://ui.nuxt.com/raw/docs/components/[component].md`
 
-**排版/Prose：**
-- 介绍：https://ui.nuxt.com/raw/docs/typography.md
-- 标题和文本：https://ui.nuxt.com/raw/docs/typography/headers-and-text.md
-- 列表和表格：https://ui.nuxt.com/raw/docs/typography/lists-and-tables.md
-- 代码块：https://ui.nuxt.com/raw/docs/typography/code-blocks.md
-- 标注：https://ui.nuxt.com/raw/docs/typography/callouts.md
-- 手风琴：https://ui.nuxt.com/raw/docs/typography/accordion.md
-- 选项卡：https://ui.nuxt.com/raw/docs/typography/tabs.md
+**Typography / Prose:**
+- Introduction: https://ui.nuxt.com/raw/docs/typography.md
+- Headings and text: https://ui.nuxt.com/raw/docs/typography/headers-and-text.md
+- Lists and tables: https://ui.nuxt.com/raw/docs/typography/lists-and-tables.md
+- Code blocks: https://ui.nuxt.com/raw/docs/typography/code-blocks.md
+- Callouts: https://ui.nuxt.com/raw/docs/typography/callouts.md
+- Accordion: https://ui.nuxt.com/raw/docs/typography/accordion.md
+- Tabs: https://ui.nuxt.com/raw/docs/typography/tabs.md
 
 ---
 
-## 页面布局组件
+## Page Layout Components
 
-文档网站最常用的组件：
+The most-used components for documentation sites:
 
-| 组件 | 原始文档 | 用途 |
+| Component | Raw docs | Usage |
 |-----------|----------|---------|
-| `u-page-hero` | [page-hero.md](https://ui.nuxt.com/raw/docs/components/page-hero.md) | 登陆页视图 |
-| `u-page-section` | [page-section.md](https://ui.nuxt.com/raw/docs/components/page-section.md) | 内容部分 |
-| `u-page-grid` | [page-grid.md](https://ui.nuxt.com/raw/docs/components/page-grid.md) | 响应式网格布局 |
-| `u-page-card` | [page-card.md](https://ui.nuxt.com/raw/docs/components/page-card.md) | 富内容卡片 |
-| `u-page-feature` | [page-feature.md](https://ui.nuxt.com/raw/docs/components/page-feature.md) | 功能展示 |
-| `u-page-cta` | [page-cta.md](https://ui.nuxt.com/raw/docs/components/page-cta.md) | 行动号召 |
-| `u-page-header` | [page-header.md](https://ui.nuxt.com/raw/docs/components/page-header.md) | 页面标题 |
+| `u-page-hero` | [page-hero.md](https://ui.nuxt.com/raw/docs/components/page-hero.md) | Landing page hero |
+| `u-page-section` | [page-section.md](https://ui.nuxt.com/raw/docs/components/page-section.md) | Content section |
+| `u-page-grid` | [page-grid.md](https://ui.nuxt.com/raw/docs/components/page-grid.md) | Responsive grid layout |
+| `u-page-card` | [page-card.md](https://ui.nuxt.com/raw/docs/components/page-card.md) | Rich content card |
+| `u-page-feature` | [page-feature.md](https://ui.nuxt.com/raw/docs/components/page-feature.md) | Feature showcase |
+| `u-page-cta` | [page-cta.md](https://ui.nuxt.com/raw/docs/components/page-cta.md) | Call to action |
+| `u-page-header` | [page-header.md](https://ui.nuxt.com/raw/docs/components/page-header.md) | Page header |
 
 ---
 
-## 快速语法示例
+## Quick Syntax Examples
 
-### 带按钮的登陆页视图
+### Landing Hero with Buttons
 
 ```markdown
 ::u-page-hero
 #title
-项目名称
+Project Name
 
 #description
-简短描述
+Short description
 
 #headline
   :::u-button{size="sm" to="/changelog" variant="outline"}
@@ -63,7 +63,7 @@ Movk Nuxt Docs 使用带有 MDC 语法的 Nuxt UI 组件。
 
 #links
   :::u-button{color="neutral" size="xl" to="/getting-started" trailing-icon="i-lucide-arrow-right"}
-  开始使用
+  Get started
   :::
 
   :::u-button{color="neutral" size="xl" to="https://github.com/..." target="_blank" variant="outline" icon="i-simple-icons-github"}
@@ -72,34 +72,34 @@ Movk Nuxt Docs 使用带有 MDC 语法的 Nuxt UI 组件。
 ::
 ```
 
-### 包含卡片的网格
+### Grid with Cards
 
 ```markdown
 ::u-page-section
   :::u-page-grid
     ::::u-page-card{spotlight class="col-span-2 lg:col-span-1" to="/feature"}
     #title
-    功能标题
+    Feature title
 
     #description
-    功能描述
+    Feature description
     ::::
 
     ::::u-page-card{spotlight class="col-span-2"}
-      :::::u-color-mode-image{alt="截图" class="w-full rounded-lg" dark="/images/dark.png" light="/images/light.png"}
+      :::::u-color-mode-image{alt="Screenshot" class="w-full rounded-lg" dark="/images/dark.png" light="/images/light.png"}
       :::::
 
     #title
-    视觉功能
+    Visual feature
 
     #description
-    带有浅色/深色模式图像
+    With light/dark mode images
     ::::
   :::
 ::
 ```
 
-### 包含代码块的卡片
+### Card with a Code Block
 
 ```markdown
 ::::u-page-card{spotlight class="col-span-2 md:col-span-1"}
@@ -112,25 +112,25 @@ Movk Nuxt Docs 使用带有 MDC 语法的 Nuxt UI 组件。
   :::::
 
 #title
-配置
+Configuration
 
 #description
-易于配置
+Easy to configure
 ::::
 ```
 
 ---
 
-## 内容组件
+## Content Components
 
-| 组件 | 原始文档 | 用途 |
+| Component | Raw docs | Usage |
 |-----------|----------|---------|
-| `code-group` | N/A (Nuxt Content) | 多选项卡代码块 |
-| `steps` | N/A (Nuxt Content) | 分步指南 |
-| `tabs` | [tabs.md](https://ui.nuxt.com/raw/docs/components/tabs.md) | 选项卡式内容 |
-| `accordion` | [accordion.md](https://ui.nuxt.com/raw/docs/components/accordion.md) | 可折叠部分 |
+| `code-group` | N/A (Nuxt Content) | Multi-tab code block |
+| `steps` | N/A (Nuxt Content) | Step-by-step guide |
+| `tabs` | [tabs.md](https://ui.nuxt.com/raw/docs/components/tabs.md) | Tabbed content |
+| `accordion` | [accordion.md](https://ui.nuxt.com/raw/docs/components/accordion.md) | Collapsible sections |
 
-### 代码组（Nuxt Content）
+### Code Group (Nuxt Content)
 
 ```markdown
 ::code-group
@@ -144,93 +144,93 @@ export default defineAppConfig({})
 ::
 ```
 
-### 步骤（Nuxt Content）
+### Steps (Nuxt Content)
 
 ```markdown
 ::steps
-### 安装
+### Install
 
-运行安装命令。
+Run the install command.
 
-### 配置
+### Configure
 
-添加你的配置。
+Add your configuration.
 
-### 使用
+### Use
 
-开始使用该功能。
+Start using the feature.
 ::
 ```
 
 ---
 
-## 标注组件
+## Callout Components
 
-| 组件 | 用途 |
+| Component | Usage |
 |-----------|---------|
-| `::note` | 附加信息 |
-| `::tip` | 有用的建议 |
-| `::warning` | 重要警告 |
-| `::caution` | 严重警告 |
+| `::note` | Additional information |
+| `::tip` | Helpful suggestion |
+| `::warning` | Important warning |
+| `::caution` | Critical warning |
 
 ```markdown
-::note{title="自定义标题"}
-在此处提供上下文。
+::note{title="Custom title"}
+Provide context here.
 ::
 
 ::tip
-专业提示内容。
+Pro-tip content.
 ::
 
 ::warning
-小心使用此功能。
+Be careful with this feature.
 ::
 
 ::caution
-此操作无法撤销。
+This action cannot be undone.
 ::
 ```
 
 ---
 
-## 图像
+## Images
 
-### 颜色模式图像
+### Color Mode Image
 
 ```markdown
-:u-color-mode-image{alt="功能" dark="/images/dark.png" light="/images/light.png" class="rounded-lg" width="859" height="400"}
+:u-color-mode-image{alt="Feature" dark="/images/dark.png" light="/images/light.png" class="rounded-lg" width="859" height="400"}
 ```
 
 ---
 
-## 网格类参考
+## Grid Class Reference
 
-| 类 | 用法 |
+| Class | Usage |
 |-------|-------|
-| `col-span-2` | 全宽 |
-| `col-span-2 lg:col-span-1` | 移动设备全宽，桌面设备半宽 |
-| `col-span-2 md:col-span-1` | 移动设备全宽，平板电脑及以上设备半宽 |
+| `col-span-2` | Full width |
+| `col-span-2 lg:col-span-1` | Full width on mobile, half width on desktop |
+| `col-span-2 md:col-span-1` | Full width on mobile, half width on tablet and up |
 
 ---
 
-## Mermaid 图表
+## Mermaid Diagrams
 
 ````mdc
 ```mermaid
 graph TD
-    A[开始] --> B{条件判断}
-    B -->|是| C[执行操作]
-    B -->|否| D[结束]
+    A[Start] --> B{Condition}
+    B -->|Yes| C[Run action]
+    B -->|No| D[End]
 ```
 ````
 
 ---
 
-## 内容展示组件
+## Content Display Components
 
-### ComponentExample 组件示例
+### ComponentExample
 
-在 `app/components/content/examples/` 目录下创建示例组件，然后在 Markdown 中引用：
+Create example components under `app/components/content/examples/`, then reference them in Markdown:
 
 ```mdc
 :component-example{name="MyComponent"}
@@ -238,7 +238,7 @@ graph TD
 
 ### ComponentProps / ComponentSlots / ComponentEmits
 
-自动生成组件 API 文档：
+Auto-generate component API documentation:
 
 ```mdc
 :component-props{name="Button"}
@@ -246,15 +246,15 @@ graph TD
 :component-emits{name="Button"}
 ```
 
-需要在 `nuxt.config.ts` 的 `componentMeta.include` 中配置要生成文档的组件。
+The components to document must be configured under `componentMeta.include` in `nuxt.config.ts`.
 
-### CommitChangelog 提交日志
+### CommitChangelog
 
 ```mdc
 :commit-changelog{name="Button"}
 ```
 
-### PageLastCommit 最后更新时间
+### PageLastCommit
 
 ```mdc
 :page-last-commit
@@ -262,10 +262,10 @@ graph TD
 
 ---
 
-## 完整文档参考
+## Complete Documentation Reference
 
-- **所有组件**：https://ui.nuxt.com/llms.txt
-- **完整文档（用于 LLM）**：https://ui.nuxt.com/llms-full.txt
-- **排版介绍**：https://ui.nuxt.com/raw/docs/typography.md
-- **内容集成**：https://ui.nuxt.com/raw/docs/getting-started/integrations/content.md
-- **主题自定义**：https://ui.nuxt.com/raw/docs/getting-started/theme/components.md
+- **All components**: https://ui.nuxt.com/llms.txt
+- **Full docs (for LLMs)**: https://ui.nuxt.com/llms-full.txt
+- **Typography introduction**: https://ui.nuxt.com/raw/docs/typography.md
+- **Content integration**: https://ui.nuxt.com/raw/docs/getting-started/integrations/content.md
+- **Theme customization**: https://ui.nuxt.com/raw/docs/getting-started/theme/components.md

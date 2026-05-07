@@ -1,430 +1,436 @@
 ---
 name: review-docs
 description: |
-  审查文档的质量、清晰度、SEO 和技术正确性。
-  针对 Movk Nuxt Docs/Nuxt Content 优化，但与任何 Markdown 文档兼容。
-  当被要求时使用：
-  "审查文档"、"检查文档"、"审计文档"、
-  "验证文档"、"改进文档质量"、"分析文档",
-  "检查文档"、"审查文档页面"、"验证 MDC 语法",
-  "检查 SEO 问题"、"分析文档结构"。
-  提供按优先级分类的可操作建议（严重、重要、建议）。
+  Review documentation for quality, clarity, SEO, and technical correctness.
+  Optimized for Movk Nuxt Docs / Nuxt Content but compatible with any Markdown docs.
+  Use when asked to:
+  "review docs", "audit documentation", "check documentation",
+  "validate MDC syntax", "check SEO issues", "analyze docs structure",
+  "improve documentation quality", "verify documentation".
+  审查文档的质量、清晰度、SEO 和技术正确性。当被要求时使用：
+  "审查文档"、"检查文档"、"审计文档"、"验证 MDC 语法"、
+  "检查 SEO 问题"、"分析文档结构"、"改进文档质量"、"分析文档"。
+  Provides prioritized, actionable suggestions (Critical / Important / Suggested).
 ---
 
-# 审查文档
+# Review Docs
 
-全面的文档审查，针对 Movk Nuxt Docs/Nuxt Content 进行了优化，但与任何 Markdown 文档兼容。
+A comprehensive documentation review, optimized for Movk Nuxt Docs / Nuxt Content but compatible with any Markdown documentation.
 
-## 工作流概览
+## Workflow Overview
 
-1. **检测项目类型** - 识别 Movk Nuxt Docs/Nuxt Content 还是通用 Markdown
-2. **分析项目结构** - 定位内容目录，统计页面数量和章节
-3. **技术验证** - 检查 frontmatter、MDC 语法（如适用）、文件命名
-4. **内容质量审查** - 清晰度、SEO、结构组织
-5. **生成报告** - 提供分类的、可操作的建议
+1. **Detect project type** — Identify Movk Nuxt Docs / Nuxt Content vs. generic Markdown.
+2. **Analyze project structure** — Locate the content directory, count pages and sections.
+3. **Technical validation** — Check frontmatter, MDC syntax (where applicable), file naming.
+4. **Content quality review** — Clarity, SEO, structural organization.
+5. **Generate the report** — Provide categorized, actionable suggestions.
 
-### 优先级定义
+### Priority Definitions
 
-- **严重**：阻止构建或导致渲染错误（Front-Matter 缺失、MDC 语法错误）
-- **重要**：显著影响 UX/SEO（差的元数据、被动语态、不清晰的标题）
-- **建议**：锦上添花（添加提示框、改善示例、增加图片）
+- **Critical** — Blocks the build or causes rendering errors (missing frontmatter, MDC syntax errors).
+- **Important** — Significantly impacts UX/SEO (poor metadata, passive voice, unclear headings).
+- **Suggested** — Nice-to-have polish (add callouts, improve examples, add images).
 
-### 期望
+### Expectations
 
-本技能仅生成**详细的报告**。审查后，如果请求，它会提供修复已确定问题的帮助。
-
----
-
-## 步骤 1：检测项目类型
-
-**目标：** 确定这是 Movk Nuxt Docs/Nuxt Content 项目还是通用 Markdown 文档。
-
-### 检测指示器
-
-**检查 Movk Nuxt Docs/Nuxt Content：**
-1. **package.json 依赖项：**
-   - `"@movk/nuxt-docs"` - Movk Nuxt Docs 主题
-   - `"@nuxt/content"` - Nuxt Content 模块
-   - `"@nuxtjs/mdc"` - MDC 支持
-
-2. **配置文件：**
-   - `nuxt.config.ts` 或 `nuxt.config.js` 带有 `@nuxt/content` 模块
-   - `content.config.ts` - 内容集合配置
-
-3. **内容结构：**
-   - `content/` 或 `docs/content/` 目录
-   - 子目录中的 `.navigation.yml` 文件
-   - markdown 文件中的 MDC 语法（`::component-name`）
-
-4. **项目结构：**
-   - 编号目录（`1.getting-started/`、`2.guide/`）
-   - 带有 `navigation`、`seo` 字段的 Frontmatter
-
-### 项目类型分类
-
-**类型 A：Movk Nuxt Docs/Nuxt Content 项目**
-- 所有 Movk Nuxt Docs 特定的验证都适用
-- MDC 组件语法检查（u- 前缀要求）
-- Nuxt Content frontmatter 结构
-- 导航文件（.navigation.yml）
-- 完整的技术验证
-
-**类型 B：通用 Markdown 文档**
-- 仅限基础 Markdown 验证
-- 通用 frontmatter（title、description、date、author）
-- 标准 Markdown 语法
-- 专注内容质量（SEO、清晰度、结构）
-- 无 Movk Nuxt Docs 特定的技术检查
-
-### 检测输出
-
-检测后，在报告中注明：
-```
-项目类型：[Movk Nuxt Docs/Nuxt Content | 通用 Markdown]
-验证模式：[完整（Movk Nuxt Docs 特定）| 基础（仅 Markdown）]
-```
-
-**根据检测的类型调整验证步骤：**
-- **类型 A（Movk Nuxt Docs）：** 执行所有步骤并进行完整验证
-- **类型 B（通用）：** 跳过 Movk Nuxt Docs 特定的检查，专注于内容质量
+This skill **only generates a detailed report**. After the review, it offers help fixing the identified issues if requested.
 
 ---
 
-## 步骤 2：分析文档结构
+## Step 1: Detect the Project Type
 
-### 定位内容目录
+**Goal:** determine whether this is a Movk Nuxt Docs / Nuxt Content project or a generic Markdown documentation project.
 
-按顺序检查以下路径：
-- `docs/content/docs/`（monorepo，最常见）
-- `content/docs/`（独立项目）
-- 检查 `app/content/`（替代位置）
+### Detection Indicators
 
-### 统计页面
+**Check for Movk Nuxt Docs / Nuxt Content:**
 
-列出所有 `.md` 文件，按章节分组记录：
+1. **package.json dependencies:**
+   - `"@movk/nuxt-docs"` — Movk Nuxt Docs theme
+   - `"@nuxt/content"` — Nuxt Content module
+   - `"@nuxtjs/mdc"` — MDC support
+
+2. **Configuration files:**
+   - `nuxt.config.ts` or `nuxt.config.js` with the `@nuxt/content` module
+   - `content.config.ts` — content collection configuration
+
+3. **Content structure:**
+   - `content/` or `docs/content/` directory
+   - `.navigation.yml` files in subdirectories
+   - MDC syntax in Markdown files (`::component-name`)
+
+4. **Project structure:**
+   - Numbered directories (`1.getting-started/`, `2.guide/`)
+   - Frontmatter with `navigation` and `seo` fields
+
+### Project Type Classification
+
+**Type A: Movk Nuxt Docs / Nuxt Content project**
+- All Movk Nuxt Docs specific validations apply.
+- MDC component syntax checks (the `u-` prefix requirement).
+- Nuxt Content frontmatter structure.
+- Navigation files (`.navigation.yml`).
+- Full technical validation.
+
+**Type B: Generic Markdown documentation**
+- Basic Markdown validation only.
+- Generic frontmatter (`title`, `description`, `date`, `author`).
+- Standard Markdown syntax.
+- Focus on content quality (SEO, clarity, structure).
+- No Movk Nuxt Docs specific technical checks.
+
+### Detection Output
+
+After detection, note the following in the report:
 
 ```
-项目：[项目名]
-内容目录：[路径]
-章节：
-  - 1.getting-started：[X] 个页面
-  - 2.guide：[X] 个页面
-  - 3.api：[X] 个页面（如有）
-总计：[X] 个页面
+Project type: [Movk Nuxt Docs/Nuxt Content | Generic Markdown]
+Validation mode: [Full (Movk Nuxt Docs specific) | Basic (Markdown only)]
 ```
 
-### 验证核心文件
+**Adjust the validation steps based on the detected type:**
+- **Type A (Movk Nuxt Docs):** run every step with full validation.
+- **Type B (generic):** skip Movk Nuxt Docs specific checks and focus on content quality.
 
-检查所需文件：
-- [ ] 根目录中存在 `index.md`
-- [ ] 在每个部分目录中存在 `.navigation.yml`
-- [ ] 编号文件遵循模式（`1.introduction.md`、`2.installation.md`）
+---
 
-### 创建结构图
+## Step 2: Analyze the Documentation Structure
 
-为报告记录结构：
+### Locate the Content Directory
+
+Check these paths in order:
+- `docs/content/docs/` (monorepo, most common)
+- `content/docs/` (standalone project)
+- `app/content/` (alternative location)
+
+### Count Pages
+
+List every `.md` file and group by section:
+
 ```
-项目：[project-name]
-部分：
-  - 1.getting-started：5 个页面，.navigation.yml ✅
-  - 2.guide：8 个页面，.navigation.yml ✅
-  - 3.api：3 个页面，.navigation.yml ❌（缺失）
+Project: [project name]
+Content directory: [path]
+Sections:
+  - 1.getting-started: [X] pages
+  - 2.guide: [X] pages
+  - 3.api: [X] pages (if any)
+Total: [X] pages
+```
+
+### Verify Core Files
+
+Check for required files:
+- [ ] `index.md` exists at the root.
+- [ ] `.navigation.yml` exists in every section directory.
+- [ ] Numbered files follow the pattern (`1.introduction.md`, `2.installation.md`).
+
+### Build a Structure Map
+
+Record the structure for the report:
+
+```
+Project: [project-name]
+Sections:
+  - 1.getting-started: 5 pages, .navigation.yml ✅
+  - 2.guide: 8 pages, .navigation.yml ✅
+  - 3.api: 3 pages, .navigation.yml ❌ (missing)
 ```
 
 ---
 
-## 步骤 3：技术验证
+## Step 3: Technical Validation
 
-**根据步骤 1 中检测的项目类型调整验证。**
+**Adjust the validation based on the project type detected in Step 1.**
 
-### 针对 Movk Nuxt Docs/Nuxt Content 项目（类型 A）
+### For Movk Nuxt Docs / Nuxt Content Projects (Type A)
 
-使用 [references/technical-checks.md](./references/technical-checks.md) 进行完整的技术验证：
+Use [references/technical-checks.md](./references/technical-checks.md) for full technical validation:
 
-**验证：**
-1. **Frontmatter 结构** - 必需：`title`、`description`。可选：`navigation`、`seo`、`links`
-2. **MDC 组件语法** - 所有 Nuxt UI 组件必须有 `u-` 前缀（`::u-page-hero`、`:::u-button`）
-3. **代码块标签** - 代表文件的所有代码块需要描述性标签（` ```vue [App.vue] `、` ```ts [config.ts] `）
-4. **代码语言一致性** - 代码示例应匹配项目的语言栈（例如，如果项目使用 TypeScript，`:lang="ts"` 在 Vue `<script setup>`）
-5. **包管理器覆盖** - `::code-group` 安装块必须覆盖项目/生态系统支持的所有包管理器
-6. **代码预览** - 使用 `::code-preview` 用于视觉上可呈现的示例（表格、列表、呈现的 markdown 等）
-7. **代码组范围** - 仅组合等效替有品是（例如包管理器、框架变体）——不要混合无关的步骤（例如安装命令 + 配置文件）
-8. **文件命名** - 编号目录/文件、kebab-case、每个部分中的 `.navigation.yml`
-9. **隐藏页面** - 为不应出现在边栏但应作为路由存在的页面使用 `navigation: false`
+**Validate:**
 
-**常见严重错误：**
-- 缺少 `u-` 前缀：`::page-hero` → 应该是 `::u-page-hero`
-- 缺少必需的 frontmatter：`title`、`description`
-- 无效的 `.navigation.yml` 结构
-- 缺少部分 `index.md` 导致部分根 URL 上的 404
+1. **Frontmatter structure** — Required: `title`, `description`. Optional: `navigation`, `seo`, `links`.
+2. **MDC component syntax** — Every Nuxt UI component must use the `u-` prefix (`::u-page-hero`, `:::u-button`).
+3. **Code block labels** — Code blocks that represent files need descriptive labels (` ```vue [App.vue] `, ` ```ts [config.ts] `).
+4. **Code language consistency** — Code samples should match the project's stack (for example, `:lang="ts"` in Vue `<script setup>` for TypeScript projects).
+5. **Package manager coverage** — `::code-group` install blocks must cover every package manager the project / ecosystem supports.
+6. **Code previews** — Use `::code-preview` for visually renderable examples (tables, lists, rendered Markdown).
+7. **Code group scope** — Group only equivalent alternatives (for example package managers or framework variants); do not mix unrelated steps (such as install commands + config files).
+8. **File naming** — Numbered directories/files, kebab-case, `.navigation.yml` per section.
+9. **Hidden pages** — Use `navigation: false` for pages that should exist as routes but be excluded from the sidebar.
 
-见 [references/technical-checks.md](./references/technical-checks.md) 获取完整的验证规则、示例和错误模式。
+**Common critical errors:**
+- Missing `u-` prefix: `::page-hero` → should be `::u-page-hero`.
+- Missing required frontmatter: `title`, `description`.
+- Invalid `.navigation.yml` structure.
+- Missing section `index.md` causing 404s on the section root URL.
 
-### 针对通用 Markdown 项目（类型 B）
+See [references/technical-checks.md](./references/technical-checks.md) for the full validation rules, examples, and error patterns.
 
-**简化的验证** - 跳过 Movk Nuxt Docs 特定的检查：
+### For Generic Markdown Projects (Type B)
 
-**基础 Frontmatter 验证：**
-- 检查常见字段：`title`、`description`、`date`、`author`、`tags`
-- 无严格要求 - 只是建议
-- 如果完全缺失 frontmatter，则标记
+**Simplified validation** — skip Movk Nuxt Docs specific checks:
 
-**标准 Markdown 语法：**
-- 验证基础 markdown（标题、列表、链接、代码块）
-- 检查损坏的内部链接
-- 验证图像路径存在
+**Basic frontmatter validation:**
+- Check common fields: `title`, `description`, `date`, `author`, `tags`.
+- No strict requirements — these are recommendations.
+- Flag completely missing frontmatter.
 
-**跳过：**
-- MDC 组件语法（不适用）
-- Nuxt Content frontmatter 结构
-- `.navigation.yml` 文件
-- Movk Nuxt Docs 特定的约定
+**Standard Markdown syntax:**
+- Validate basic Markdown (headings, lists, links, code blocks).
+- Check for broken internal links.
+- Verify image paths exist.
 
-**重点：**
-- 内容质量（下一步）
-- SEO 优化
-- 清晰度和可读性
-- 一般结构
+**Skip:**
+- MDC component syntax (not applicable).
+- Nuxt Content frontmatter structure.
+- `.navigation.yml` files.
+- Movk Nuxt Docs specific conventions.
 
----
-
-## 步骤 4：内容质量审查
-
-**此步骤适用于所有项目类型**（Movk Nuxt Docs 和通用 Markdown）。
-
-根据四个维度评估内容质量。有关详细的清单，请参考参考文件。
-
-### 清晰度审查
-
-使用 [references/clarity-checks.md](./references/clarity-checks.md) 检查：
-- **语气与声调：** 主动语态、现在时、第二人称
-- **句子结构：** 目标 15-20 字，避免冗长短语
-- **段落结构：** 2-5 句，200-400 字在标题之间
-- **基于动作的标题：** 页面标题（H1）和标题（H2/H3）在指南中使用动作动词（Nuxt 模式）
-  - 示例："创建你的第一个模块"、"配置你的应用"、"构建插件"
-  - 例外：开始使用（名词）、API（函数名）、概念（描述性）
-- **术语** - 一致的命名、定义的技术术语
-- **代码示例：** 完整、可复制粘贴、逼真、带文件标签
-
-### SEO 审查
-
-使用 [references/seo-checks.md](./references/seo-checks.md) 检查：
-- **标题：** 50-60 字符、关键字、独特
-- **描述：** 120-160 字符、引人注目、独特
-- **标题：** 单一 H1、逻辑层级（H1→H2→H3）、描述性
-- **URL：** Kebab-case、描述性、稳定
-- **链接：** 描述性锚点、"后续步骤"部分
-- **内容长度：** 登陆 300+ 字、指南 400+ 字、200-400 字在部分之间
-- **图像：** Alt 文本、颜色模式变体
-
-### 结构审查
-
-使用 [references/structure-checks.md](./references/structure-checks.md) 检查：
-- **层级：** 最多 3 级、逻辑进展
-- **组织：** 2-15 页/部分、`.navigation.yml` 存在、合适的图标
-- **流程：** 逻辑进展、"后续步骤"链接、无孤立页面
-- **登陆页：** 英雄、功能、快速开始
-- **一致性：** 页面之间的相似结构
+**Focus on:**
+- Content quality (next step).
+- SEO optimization.
+- Clarity and readability.
+- General structure.
 
 ---
 
-## 步骤 5：生成报告
+## Step 4: Content Quality Review
 
-使用 [assets/report-template.md](assets/report-template.md) 创建全面的审查报告。
+**This step applies to all project types** (Movk Nuxt Docs and generic Markdown).
 
-**根据项目类型调整报告：**
-- **Movk Nuxt Docs/Nuxt Content：** 包含所有部分（技术、SEO、清晰度、结构）
-- **通用 Markdown：** 专注于内容质量（SEO、清晰度、结构），省略 Movk Nuxt Docs 特定的技术问题
+Evaluate content quality across four dimensions. Refer to the reference files for detailed checklists.
 
-### 报告结构
+### Clarity Review
+
+Use [references/clarity-checks.md](./references/clarity-checks.md) to check:
+- **Tone and voice:** active voice, present tense, second person.
+- **Sentence structure:** target 15–20 words, avoid wordy phrases.
+- **Paragraph structure:** 2–5 sentences, 200–400 words between headings.
+- **Action-based headings:** page titles (H1) and headings (H2/H3) in guides use action verbs (Nuxt convention).
+  - Examples: "Create your first module", "Configure your app", "Build a plugin".
+  - Exceptions: getting started (nouns), API (function names), concepts (descriptive).
+- **Terminology** — consistent naming, defined technical terms.
+- **Code examples:** complete, copy-paste-ready, realistic, with file labels.
+
+### SEO Review
+
+Use [references/seo-checks.md](./references/seo-checks.md) to check:
+- **Title:** 50–60 characters, contains keywords, unique.
+- **Description:** 120–160 characters, compelling, unique.
+- **Headings:** single H1, logical hierarchy (H1 → H2 → H3), descriptive.
+- **URLs:** kebab-case, descriptive, stable.
+- **Links:** descriptive anchors, "Next steps" sections.
+- **Content length:** landing 300+ words, guide 400+ words, 200–400 words between sections.
+- **Images:** alt text, color-mode variants.
+
+### Structure Review
+
+Use [references/structure-checks.md](./references/structure-checks.md) to check:
+- **Hierarchy:** at most 3 levels, logical progression.
+- **Organization:** 2–15 pages per section, `.navigation.yml` present, appropriate icons.
+- **Flow:** logical progression, "Next steps" links, no orphan pages.
+- **Landing page:** hero, features, quick start.
+- **Consistency:** similar structure across pages.
+
+---
+
+## Step 5: Generate the Report
+
+Use [assets/report-template.md](assets/report-template.md) to create a comprehensive review report.
+
+**Tailor the report to the project type:**
+- **Movk Nuxt Docs / Nuxt Content:** include every section (technical, SEO, clarity, structure).
+- **Generic Markdown:** focus on content quality (SEO, clarity, structure) and omit Movk Nuxt Docs specific technical issues.
+
+### Report Structure
 
 ```markdown
-# 文档审查报告
+# Documentation Review Report
 
-**生成时间：** [当前日期和时间]
-**项目：** [来自 package.json 或目录的项目名称]
-**已审查：** 跨 [Y] 部分中的 [X] 页面
-
----
-
-## 执行摘要
-
-- **严重问题：** [计数]（必须修复 - 阻止部署/导致错误）
-- **重要问题：** [计数]（对 UX/SEO 的显著影响）
-- **建议优化：** [计数]（润色和优化建议）
-
-**总体评估：** [1-2 句话总结文档质量]
+**Generated:** [current date and time]
+**Project:** [project name from package.json or directory]
+**Reviewed:** [X] pages across [Y] sections
 
 ---
 
-## 严重问题
+## Executive Summary
 
-[按类别分组的所有严重问题列表]
+- **Critical issues:** [count] (must fix — block deployment / cause errors)
+- **Important issues:** [count] (significant impact on UX/SEO)
+- **Suggested optimizations:** [count] (polish and optimization suggestions)
 
-### 技术：MDC 语法错误
+**Overall assessment:** [1–2 sentence summary of documentation quality]
 
-#### Nuxt UI 组件缺少 u- 前缀
+---
 
-**文件：** `/content/1.getting-started/1.introduction.md:15`
+## Critical Issues
 
-**问题：** 页面英雄组件缺少 `u-` 前缀
+[All critical issues, grouped by category]
 
-**当前：**
+### Technical: MDC syntax errors
+
+#### Nuxt UI component missing the u- prefix
+
+**File:** `/content/1.getting-started/1.introduction.md:15`
+
+**Issue:** the page hero component is missing the `u-` prefix.
+
+**Current:**
 \`\`\`markdown
 ::page-hero
 #title
-欢迎
+Welcome
 ::
 \`\`\`
 
-**应该是：**
+**Should be:**
 \`\`\`markdown
 ::u-page-hero
 #title
-欢迎
+Welcome
 ::
 \`\`\`
 
-**影响：** 组件将不会呈现，导致构建错误
+**Impact:** the component will not render, causing a build error.
 
 ---
 
-### 技术：缺少 Frontmatter
+### Technical: Missing frontmatter
 
-[每个问题的类似格式]
-
----
-
-## 重要问题
-
-[按类别分组的所有重要问题列表：SEO、清晰度、结构]
-
-### SEO：次优元数据
-
-[文件路径和建议的详细信息]
-
-### 清晰度：被动语态
-
-[示例和建议的改写详细信息]
-
-### 结构：糟糕的导航
-
-[组织建议的详细信息]
+[Use the same format for each issue]
 
 ---
 
-## 建议优化
+## Important Issues
 
-[按类别列出的优化建议]
+[All important issues, grouped by category: SEO, clarity, structure]
 
-### SEO 优化
-- **[文件]**: [建议]
+### SEO: Suboptimal metadata
 
-### 清晰度改进
-- **[文件]**: 考虑为 [特定内容] 添加 `::tip` 标注
+[File path and recommended changes]
 
-### 结构增强
-- **[部分]**: 考虑分割成小节
+### Clarity: Passive voice
+
+[Examples and recommended rewrites]
+
+### Structure: Poor navigation
+
+[Organizational recommendations]
 
 ---
 
-## 统计
+## Suggested Optimizations
 
-### 内容概览
+[Optimization suggestions, grouped by category]
 
-| 部分 | 页面 | 平均字数/页 |
-|---------|------------|----------------|
-| 开始使用 | [X] | ~[XXX] |
-| 指南 | [X] | ~[XXX] |
+### SEO optimizations
+- **[file]**: [suggestion]
 
-### 问题分析
+### Clarity improvements
+- **[file]**: consider adding a `::tip` callout for [specific content].
 
-| 类别 | 严重 | 重要 | 建议 | 总计 |
-|----------|------|---------|------|-------|
-| 技术 | [X] | [X] | [X] | [X] |
+### Structural enhancements
+- **[section]**: consider splitting into subsections.
+
+---
+
+## Statistics
+
+### Content Overview
+
+| Section | Pages | Avg. words/page |
+|---------|-------|-----------------|
+| Getting started | [X] | ~[XXX] |
+| Guide | [X] | ~[XXX] |
+
+### Issue Breakdown
+
+| Category | Critical | Important | Suggested | Total |
+|----------|----------|-----------|-----------|-------|
+| Technical | [X] | [X] | [X] | [X] |
 | SEO | [X] | [X] | [X] | [X] |
-| 清晰度 | [X] | [X] | [X] | [X] |
-| 结构 | [X] | [X] | [X] | [X] |
-| **总计** | **[X]** | **[X]** | **[X]** | **[X]** |
+| Clarity | [X] | [X] | [X] | [X] |
+| Structure | [X] | [X] | [X] | [X] |
+| **Total** | **[X]** | **[X]** | **[X]** | **[X]** |
 
 ---
 
-## 正面亮点
+## Positive Highlights
 
-[指出做得很好的 2-3 个地方]
-- 很好地使用标注和代码示例
-- 一致的 MDC 组件使用
-- 组织良好的部分结构
-
----
-
-## 推荐操作计划
-
-### 优先级 1：修复严重问题（今天）
-1. [具体可操作的项目]
-
-**估计修复：** [X] 文件
-
-### 优先级 2：重要问题（本周）
-1. [具体可操作的项目]
-
-**估计修复：** [X] 文件
-
-### 优先级 3：建议优化（下一个冲刺）
-1. [具体可操作的项目]
-
-**估计修复：** [X] 文件
+[Call out 2–3 things done well]
+- Effective use of callouts and code examples.
+- Consistent MDC component usage.
+- Well-organized section structure.
 
 ---
 
-## 后续步骤
+## Recommended Action Plan
 
-**你想要我：**
+### Priority 1: Fix Critical Issues (today)
+1. [Specific actionable item]
 
-1. **修复所有严重问题** - 我可以自动纠正 MDC 语法和 frontmatter 问题
-2. **重写特定部分** - 指出哪些页面需要清晰度改进，我会重写
-3. **优化 SEO 元数据** - 我可以更新所有标题和描述为最优长度
-4. **重组内容** - 如果部分需要重新组织，我可以帮助重组
+**Estimated fix:** [X] files.
 
-**或指定你想首先关注什么。**
+### Priority 2: Important Issues (this week)
+1. [Specific actionable item]
+
+**Estimated fix:** [X] files.
+
+### Priority 3: Suggested Optimizations (next sprint)
+1. [Specific actionable item]
+
+**Estimated fix:** [X] files.
+
+---
+
+## Next Steps
+
+**Would you like me to:**
+
+1. **Fix all critical issues** — I can auto-correct MDC syntax and frontmatter issues.
+2. **Rewrite specific sections** — point me at the pages that need clarity improvements and I'll rewrite them.
+3. **Optimize SEO metadata** — I can update every title and description to optimal length.
+4. **Reorganize content** — if sections need restructuring, I can help reshape them.
+
+**Or tell me which area you'd like to focus on first.**
 ```
 
-### 报告生成指南
+### Report Generation Guidelines
 
-**要具体：**
-- 包括确切的文件路径和行号
-- 显示当前 vs 推荐代码
-- 解释每个问题为什么重要（影响）
+**Be specific:**
+- Include exact file paths and line numbers.
+- Show current vs. recommended code.
+- Explain why each issue matters (the impact).
 
-**要可操作：**
-- 提供清晰的修复说明
-- 包括代码示例
-- 按影响排定优先级
+**Be actionable:**
+- Provide clear fix instructions.
+- Include code examples.
+- Prioritize by impact.
 
-**要平衡：**
-- 突出正面方面
-- 不要用次要问题压垮
-- 专注于高影响力的改进
+**Be balanced:**
+- Highlight positives.
+- Don't overwhelm with minor issues.
+- Focus on high-impact improvements.
 
-**生成报告后：**
-- 如果用户请求，提供修复问题的帮助
-- 准备好处理特定的类别或文件
-- 建议从严重问题开始
+**After the report is generated:**
+- Offer help fixing issues if requested.
+- Be ready to handle specific categories or files.
+- Suggest starting with critical issues.
 
 ---
 
-## 快速参考
+## Quick Reference
 
-**最常见的问题：**
-- Nuxt UI 组件上缺少 `u-` 前缀（`::page-hero` → `::u-page-hero`）
-- SEO 描述太短（需要 120-160 字)
-- 说明中的被动语态（"可以完成" → "完成")
-- 泛型标题（"配置" → "配置你的应用"）
-- 代码块缺少文件名标签（代表文件的每个块都应该有一个）
-- 代码语言与项目栈不匹配（例如，缺少 `lang="ts"` 在 Vue `<script setup>` 在 TypeScript 项目中）
-- 在 `::code-group` 安装块中不完整的包管理器覆盖（根据生态系统/项目检查）
-- 无关步骤分组在 `::code-group` 中（例如，安装命令 + 配置文件）—— 保持为单独的块
-- `::code-preview` 缺失，其中呈现预览会增加清晰度（表格、列表等）
-- 缺少部分登陆页 → 部分根 URL 上的 404（如果需要，添加带有 `navigation: false` 的 `index.md`）
+**Most common issues:**
+- Missing `u-` prefix on Nuxt UI components (`::page-hero` → `::u-page-hero`).
+- SEO descriptions too short (need 120–160 characters).
+- Passive voice in instructions ("can be done" → "do").
+- Generic headings ("Configuration" → "Configure your app").
+- Code blocks missing file labels (every block representing a file should have one).
+- Code language doesn't match the project stack (for example, missing `lang="ts"` on Vue `<script setup>` in a TypeScript project).
+- Incomplete package manager coverage in `::code-group` install blocks (check by ecosystem/project).
+- Unrelated steps grouped together in `::code-group` (for example, install command + config file) — keep them as separate blocks.
+- Missing `::code-preview` where a rendered preview adds clarity (tables, lists, etc.).
+- Missing section landing page → 404 on the section root URL (add an `index.md` with `navigation: false` if needed).
 
-**完整的清单和示例见参考文件。**
+**See the reference files for full checklists and examples.**

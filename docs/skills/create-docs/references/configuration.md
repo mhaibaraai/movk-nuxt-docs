@@ -1,10 +1,10 @@
-# 配置参考
+# Configuration Reference
 
-Movk Nuxt Docs 通过 `nuxt.config.ts` 和 `app/app.config.ts` 两个文件进行配置。
+Movk Nuxt Docs is configured through two files: `nuxt.config.ts` and `app/app.config.ts`.
 
 ## nuxt.config.ts
 
-### 最小配置
+### Minimal Configuration
 
 ```ts [nuxt.config.ts]
 export default defineNuxtConfig({
@@ -12,21 +12,21 @@ export default defineNuxtConfig({
 })
 ```
 
-### 完整配置
+### Full Configuration
 
 ```ts [nuxt.config.ts]
 export default defineNuxtConfig({
   extends: ['@movk/nuxt-docs'],
 
-  // 自定义 CSS
+  // Custom CSS
   css: ['~/assets/css/main.css'],
 
-  // 站点信息（用于 SEO）
+  // Site information (used for SEO)
   site: {
     name: 'My Docs',
   },
 
-  // AI 聊天配置
+  // AI Chat configuration
   aiChat: {
     model: 'openai/gpt-5-nano',
     models: [
@@ -35,18 +35,18 @@ export default defineNuxtConfig({
     ],
   },
 
-  // MCP Server 配置
+  // MCP Server configuration
   mcp: {
     name: 'My Docs',
   },
 
-  // Layer 功能开关
+  // Layer feature flags
   movkNuxtDocs: {
     a11y: true,
     mermaid: false
   },
 
-  // 组件元数据（用于自动生成组件文档）
+  // Component metadata (for auto-generated component docs)
   componentMeta: {
     include: [
       'Button',
@@ -56,32 +56,32 @@ export default defineNuxtConfig({
 })
 ```
 
-### Layer 功能开关
+### Layer Feature Flags
 
-| 选项 | 类型 | 默认值 | 描述 |
+| Option | Type | Default | Description |
 |------|------|--------|------|
-| `movkNuxtDocs.a11y` | `boolean` | `true` | 是否启用 `@nuxt/a11y` 无障碍模块 |
-| `movkNuxtDocs.mermaid` | `boolean` | `false` | 是否启用 Mermaid 图表渲染（需安装 `mermaid` 与 `dompurify`） |
+| `movkNuxtDocs.a11y` | `boolean` | `true` | Enable the `@nuxt/a11y` accessibility module |
+| `movkNuxtDocs.mermaid` | `boolean` | `false` | Enable Mermaid diagram rendering (requires `mermaid` and `dompurify`) |
 
-### AI 聊天
+### AI Chat
 
-| 选项 | 类型 | 描述 |
+| Option | Type | Description |
 |------|------|------|
-| `aiChat.model` | `string` | 默认模型 |
-| `aiChat.models` | `string[]` | 可选模型列表 |
+| `aiChat.model` | `string` | Default model |
+| `aiChat.models` | `string[]` | List of selectable models |
 
-模型格式为 `provider/model-name`，例如 `openai/gpt-5-nano`、`deepseek/deepseek-v3.2`。
+The model format is `provider/model-name`, for example `openai/gpt-5-nano` or `deepseek/deepseek-v3.2`.
 
-### 组件元数据
+### Component Metadata
 
 ```ts [nuxt.config.ts]
 export default defineNuxtConfig({
   componentMeta: {
-    // 支持字符串 glob、正则、函数
+    // Supports string globs, regular expressions, and functions
     include: [
-      'Button',                // 精确匹配
-      'Card*',                 // 通配符
-      /^Modal/,                // 正则
+      'Button',                // Exact match
+      'Card*',                 // Wildcard
+      /^Modal/,                // Regular expression
     ],
     exclude: ['Internal*'],
   },
@@ -90,36 +90,36 @@ export default defineNuxtConfig({
 
 ## app/app.config.ts
 
-### 主题
+### Theme
 
 ```ts [app/app.config.ts]
 export default defineAppConfig({
   theme: {
-    radius: 0.25,           // 圆角大小（rem）
-    blackAsPrimary: false,   // 是否使用黑色作为主色调
-    icons: 'lucide',         // 图标集（lucide）
-    font: 'Alibaba PuHuiTi',     // 字体
+    radius: 0.25,            // Border radius (rem)
+    blackAsPrimary: false,   // Use black as the primary color
+    icons: 'lucide',         // Icon set (lucide)
+    font: 'Alibaba PuHuiTi', // Font
   },
   ui: {
     colors: {
-      primary: 'green',      // 主色调
-      neutral: 'slate',      // 中性色
+      primary: 'green',      // Primary color
+      neutral: 'slate',      // Neutral color
     },
   },
 })
 ```
 
-### Header 头部
+### Header
 
 ```ts [app/app.config.ts]
 export default defineAppConfig({
   header: {
-    title: 'My Docs',           // 标题
-    avatar: '/avatar.png',      // 头像
-    to: '/',                     // 标题链接
-    search: true,                // 搜索栏
-    colorMode: true,             // 颜色模式切换
-    links: [                     // 头部链接
+    title: 'My Docs',           // Title
+    avatar: '/avatar.png',      // Avatar
+    to: '/',                    // Title link
+    search: true,               // Search bar
+    colorMode: true,            // Color mode toggle
+    links: [                    // Header links
       {
         icon: 'i-simple-icons-github',
         to: 'https://github.com/my/repo',
@@ -131,7 +131,7 @@ export default defineAppConfig({
 })
 ```
 
-### Footer 页脚
+### Footer
 
 ```ts [app/app.config.ts]
 export default defineAppConfig({
@@ -149,18 +149,18 @@ export default defineAppConfig({
 })
 ```
 
-### TOC 目录
+### TOC
 
 ```ts [app/app.config.ts]
 export default defineAppConfig({
   toc: {
-    title: '本页内容',
+    title: 'On this page',
     bottom: {
-      title: '社区',
+      title: 'Community',
       links: [
         {
           icon: 'i-lucide-book-open',
-          label: 'Nuxt UI 文档',
+          label: 'Nuxt UI Docs',
           to: 'https://ui.nuxt.com',
           target: '_blank',
         },
@@ -175,22 +175,22 @@ export default defineAppConfig({
 ```ts [app/app.config.ts]
 export default defineAppConfig({
   seo: {
-    titleTemplate: '',      // 标题模板，默认 '%s - ${site.name}'
-    title: '',              // 默认标题
-    description: '',        // 默认描述
+    titleTemplate: '',      // Title template, defaults to '%s - ${site.name}'
+    title: '',              // Default title
+    description: '',        // Default description
   },
 })
 ```
 
-### GitHub 集成
+### GitHub Integration
 
 ```ts [app/app.config.ts]
 export default defineAppConfig({
   github: {
     branch: 'main',
-    rootDir: 'docs',         // 文档根目录（monorepo 场景）
+    rootDir: 'docs',         // Docs root directory (for monorepos)
     dateFormat: {
-      locale: 'zh-CN',
+      locale: 'en-US',
       options: {
         year: 'numeric',
         month: 'numeric',
@@ -201,32 +201,32 @@ export default defineAppConfig({
 })
 ```
 
-禁用 GitHub 集成：`github: false`
+Disable the GitHub integration: `github: false`.
 
-### AI 聊天界面
+### AI Chat UI
 
 ```ts [app/app.config.ts]
 export default defineAppConfig({
   aiChat: {
-    floatingInput: true,       // 浮动输入框
-    explainWithAi: true,       // AI 解释按钮
+    floatingInput: true,       // Floating input
+    explainWithAi: true,       // "Explain with AI" button
     shortcuts: {
-      focusInput: 'meta_i',   // 快捷键
+      focusInput: 'meta_i',    // Keyboard shortcut
     },
-    // FAQ 问题列表
+    // FAQ questions
     faqQuestions: [
       {
-        category: '快速开始',
-        items: ['如何安装？', '如何配置？'],
+        category: 'Quick start',
+        items: ['How do I install?', 'How do I configure it?'],
       },
     ],
-    // 自定义界面文本
+    // Customize UI text
     texts: {
-      title: 'AI 助手',
-      placeholder: '输入你的问题...',
-      trigger: '与 AI 聊天',
+      title: 'AI Assistant',
+      placeholder: 'Type your question...',
+      trigger: 'Chat with AI',
     },
-    // 自定义图标
+    // Customize icons
     icons: {
       trigger: 'i-custom-ai',
     },
@@ -234,9 +234,9 @@ export default defineAppConfig({
 })
 ```
 
-## 路由规则
+## Route Rules
 
-在 `nuxt.config.ts` 中配置重定向和预渲染规则：
+Configure redirects and prerender rules in `nuxt.config.ts`:
 
 ```ts [nuxt.config.ts]
 export default defineNuxtConfig({
@@ -246,37 +246,37 @@ export default defineNuxtConfig({
 })
 ```
 
-## 内容集合
+## Content Collections
 
-Movk Nuxt Docs 预定义了三种内容集合：
+Movk Nuxt Docs predefines three content collections:
 
-| 集合 | 路径 | 说明 |
+| Collection | Path | Description |
 |------|------|------|
-| `docs` | `content/docs/` | 文档页面 |
-| `landing` | `content/index.md` | 首页 |
-| `releases` | `content/releases.yml` | 发布日志 |
+| `docs` | `content/docs/` | Documentation pages |
+| `landing` | `content/index.md` | Landing page |
+| `releases` | `content/releases.yml` | Release log |
 
-`releases.yml` 或 `releases.md` 会被自动检测并创建 `/releases` 路由。
+`releases.yml` or `releases.md` is auto-detected and exposes a `/releases` route.
 
-## 组件覆盖
+## Component Overrides
 
-在 `app/components/` 下创建同名文件即可覆盖 Layer 默认组件：
+Create a same-named file under `app/components/` to override the Layer default component:
 
-| 组件 | 文件路径 | 说明 |
+| Component | File path | Description |
 |------|----------|------|
-| Header | `components/header/Header.vue` | 完整头部 |
-| HeaderLogo | `components/header/HeaderLogo.vue` | Logo 和标题 |
-| HeaderCTA | `components/header/HeaderCTA.vue` | 头部右侧操作区 |
-| Footer | `components/footer/Footer.vue` | 完整页脚 |
-| DocsAsideLeftTop | `components/DocsAsideLeftTop.vue` | 左侧导航上方 |
-| DocsAsideLeftBody | `components/DocsAsideLeftBody.vue` | 左侧导航主体 |
-| DocsAsideRightBottom | `components/DocsAsideRightBottom.vue` | 右侧目录下方 |
-| PageHeaderLinks | `components/PageHeaderLinks.vue` | 页面标题右侧操作 |
-| ThemePicker | `components/theme-picker/ThemePicker.vue` | 主题选择器 |
+| Header | `components/header/Header.vue` | Full header |
+| HeaderLogo | `components/header/HeaderLogo.vue` | Logo and title |
+| HeaderCTA | `components/header/HeaderCTA.vue` | Right-side header actions |
+| Footer | `components/footer/Footer.vue` | Full footer |
+| DocsAsideLeftTop | `components/DocsAsideLeftTop.vue` | Top of the left sidebar |
+| DocsAsideLeftBody | `components/DocsAsideLeftBody.vue` | Body of the left sidebar |
+| DocsAsideRightBottom | `components/DocsAsideRightBottom.vue` | Bottom of the right TOC sidebar |
+| PageHeaderLinks | `components/PageHeaderLinks.vue` | Right-side actions on the page header |
+| ThemePicker | `components/theme-picker/ThemePicker.vue` | Theme picker |
 
-## 环境变量
+## Environment Variables
 
-根据启用的功能配置环境变量：
+Configure environment variables according to the features you enable:
 
 ```bash [.env]
 # Used to fetch docs content

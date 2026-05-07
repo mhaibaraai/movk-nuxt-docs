@@ -1,52 +1,50 @@
-# 写作指南
+# Writing Guide
 
-有效编写文档内容的指南。
+Guidelines for authoring documentation content effectively.
 
-## 中文写作规范
+## Writing Conventions
 
-### 标点符号
+### Punctuation
 
-使用全角中文标点：
+Use straight ASCII punctuation in English documentation:
 
-| 场景 | 正确 | 错误 |
-|------|------|------|
-| 逗号 | 内容，说明 | 内容,说明 |
-| 句号 | 完成。 | 完成. |
-| 冒号 | 配置：| 配置: |
-| 分号 | 第一；第二 | 第一;第二 |
-| 问号 | 如何使用？ | 如何使用? |
-| 感叹号 | 注意！ | 注意! |
-| 顿号 | 主题、布局、组件 | 主题,布局,组件 |
-| 引号 | 「配置」或 "配置" | '配置' |
+| Case | Correct | Incorrect |
+|------|---------|-----------|
+| Comma | Content, description | Content，description |
+| Period | Done. | Done。 |
+| Colon | Configure: | Configure： |
+| Semicolon | First; second | First；second |
+| Question mark | How do I use it? | How do I use it？ |
+| Exclamation mark | Note! | Note！ |
+| Quotes | Use straight `"quotes"` or `'apostrophes'` | Curly “quotes” mixed with straight |
 
-### 中英文混排
+Use the Oxford comma in lists of three or more items: `themes, layouts, and components`.
 
-中文与英文、数字之间加空格：
+### Spacing
 
-```markdown
-✅ 使用 Nuxt 4 构建文档站点
-❌ 使用Nuxt 4构建文档站点
-
-✅ 安装 @movk/nuxt-docs 包
-❌ 安装@movk/nuxt-docs包
-
-✅ 端口默认为 3000
-❌ 端口默认为3000
-```
-
-数字和单位之间不加空格：
+Add a single space after sentence-ending punctuation. No space between numbers and units:
 
 ```markdown
-✅ 宽度为 16px
-❌ 宽度为 16 px
+Correct: Width is 16px
+Incorrect: Width is 16 px
+
+Correct: Port defaults to 3000
+Incorrect: Port defaults to 3 000
 ```
 
-### 专有名词
+Add a space between an inline code identifier and surrounding text:
 
-保持正确大小写：
+```markdown
+Correct: Install the `@movk/nuxt-docs` package.
+Incorrect: Install the`@movk/nuxt-docs`package.
+```
 
-| 正确 | 错误 |
-|------|------|
+### Proper Nouns
+
+Preserve correct capitalization:
+
+| Correct | Incorrect |
+|---------|-----------|
 | Nuxt | nuxt / NUXT |
 | TypeScript | typescript / Typescript |
 | Vue.js | vue.js / VueJS |
@@ -55,78 +53,82 @@
 | Markdown | markdown |
 | MDC | mdc |
 
----
+### Contractions
 
-## 目录
-
-- [基于动作的内容](#基于动作的内容)
-- [页面标题](#页面标题)
-- [语气和声调](#语气和声调)
-- [代码示例](#代码示例)
+Use contractions for a natural, friendly tone (`it's`, `you're`, `don't`). Avoid them in formal API references where precision matters.
 
 ---
 
-## 基于动作的内容
+## Table of Contents
 
-在 **H2/H3 标题** 中使用动作动词使页面易读且任务导向。
-
-| 静态标题 | 基于动作的标题 |
-|----------------|---------------------|
-| 配置 | 配置你的应用 |
-| 数据库设置 | 连接数据库 |
-| 路由保护 | 保护你的路由 |
-| 会话管理 | 处理用户会话 |
-| 错误处理 | 优雅地处理错误 |
-| 部署 | 部署你的应用 |
-
-### 要使用的动作动词
-
-**主要：** 添加、配置、创建、设置、启用、连接、处理、自定义、部署、使用
-
-**次要：** 构建、实现、集成、安装、定义、编写、运行、测试、调试、更新
+- [Action-Based Content](#action-based-content)
+- [Page Titles](#page-titles)
+- [Tone and Voice](#tone-and-voice)
+- [Code Examples](#code-examples)
 
 ---
 
-## 页面标题
+## Action-Based Content
 
-不同的部分使用不同的标题风格：
+Use action verbs in **H2/H3 headings** to make pages scannable and task-oriented.
 
-| 部分 | 风格 | 示例 |
-|---------|-------|----------|
-| 开始使用 | 名词 | 介绍、安装、快速开始 |
-| 指南 | 主题 | 身份验证、配置、部署 |
-| API | 函数/组件名称 | useSession、fetchData、Button |
-| 食谱 | 动作短语 | 添加深色模式、部署到 Vercel |
+| Static heading | Action-based heading |
+|----------------|----------------------|
+| Configuration | Configure your app |
+| Database setup | Connect to a database |
+| Route protection | Protect your routes |
+| Session management | Handle user sessions |
+| Error handling | Handle errors gracefully |
+| Deployment | Deploy your app |
 
-动作风格存在于 **内容标题** 中，而不是页面标题或文件名中。
+### Action Verbs to Use
 
----
+**Primary:** add, configure, create, set up, enable, connect, handle, customize, deploy, use
 
-## 语气和声调
-
-### 要做的事
-
-- 使用 **主动语态** 和 **现在时**
-- 用 **第二人称** 撰写（"你可以"、"你的项目"）
-- 要 **直接** 和 **可操作**
-- 尽可能用 **动作动词** 开始句子
-
-### 示例
-
-| 被动/冗长 | 主动/直接 |
-|---------------|---------------|
-| 配置可以通过... | 通过... 配置你的应用 |
-| 建议你... | 我们建议... |
-| 应该在...中创建文件 | 在...中创建文件 |
-| 身份验证由...处理 | 用...处理身份验证 |
+**Secondary:** build, implement, integrate, install, define, write, run, test, debug, update
 
 ---
 
-## 代码示例
+## Page Titles
 
-### 文件路径标签
+Different sections use different title styles:
 
-始终为代码块添加文件路径标签：
+| Section | Style | Example |
+|---------|-------|---------|
+| Getting started | Noun | Introduction, Installation, Quick start |
+| Guide | Topic | Authentication, Configuration, Deployment |
+| API | Function / component name | useSession, fetchData, Button |
+| Recipe | Action phrase | Add dark mode, Deploy to Vercel |
+
+Action style lives in **content headings**, not in page titles or file names.
+
+---
+
+## Tone and Voice
+
+### Do
+
+- Use the **active voice** and **present tense**.
+- Write in the **second person** ("you can", "your project").
+- Be **direct** and **actionable**.
+- Start sentences with **action verbs** when possible.
+
+### Examples
+
+| Passive / verbose | Active / direct |
+|-------------------|-----------------|
+| Configuration can be done by... | Configure your app via... |
+| It is recommended to... | We recommend... |
+| The file should be created in... | Create the file in... |
+| Authentication is handled by... | Handle authentication with... |
+
+---
+
+## Code Examples
+
+### File Path Labels
+
+Always add a file path label to code blocks:
 
 ```ts [nuxt.config.ts]
 export default defineNuxtConfig({
@@ -134,9 +136,9 @@ export default defineNuxtConfig({
 })
 ```
 
-### 多包管理器示例
+### Multi-Package-Manager Examples
 
-使用 `::code-group` 并显示 **首先检测到的包管理器**：
+Use `::code-group` and put the **detected package manager first**:
 
 ```md
 ::code-group
@@ -158,9 +160,9 @@ bun add package-name
 ::
 ```
 
-### 最佳实践
+### Best Practices
 
-- 包含 **有效、可复制粘贴** 的示例
-- 显示 **完整** 代码，而不是片段
-- 对复杂逻辑添加 **注释**
-- 使用 **现实的** 变量名称
+- Include **valid, copy-paste-ready** examples.
+- Show **complete** code, not snippets.
+- Add **comments** for non-obvious logic.
+- Use **realistic** variable names.
