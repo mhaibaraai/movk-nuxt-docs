@@ -55,6 +55,7 @@ See the [Agent Skills documentation](https://docs.mhaibaraai.cn/docs/getting-sta
 - **Interactive examples** - Use the `ComponentExample` component to load and render examples with code highlighting and live previews.
 - **Git commit history integration** - Use `CommitChangelog` and `PageLastCommit` to show commit history for documentation files.
 - **Type definition highlighting** - Parse TypeScript type definitions intelligently, with inline type highlighting and type navigation.
+- **Twoslash type hovers** - Show TypeScript type signatures, compile errors, and `^?` query snapshots in ts/vue code blocks via `nuxt-content-twoslash`. Resolved at build time, zero runtime cost.
 
 ### Developer experience
 

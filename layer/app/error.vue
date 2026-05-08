@@ -10,7 +10,9 @@ const route = useRoute()
 const { style, link, color } = useTheme()
 
 const { data: navigation } = await useFetch('/api/navigation.json')
-const { data: files } = useLazyAsyncData('search', () => queryCollectionSearchSections('docs'), {
+const { data: files } = useLazyAsyncData('search', () => queryCollectionSearchSections('docs', {
+  ignoredTags: ['style']
+}), {
   server: false
 })
 

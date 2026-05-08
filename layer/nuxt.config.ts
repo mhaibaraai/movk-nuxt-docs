@@ -17,6 +17,7 @@ export default defineNuxtConfig({
       })
     },
     '@nuxt/ui',
+    'nuxt-content-twoslash',
     '@nuxt/content',
     '@nuxt/image',
     '@nuxtjs/robots',
@@ -124,7 +125,9 @@ export default defineNuxtConfig({
       // tailwindcss/colors is a peer dep resolved in the consumer project directly.
       cfg.optimizeDeps.include.push(
         'tailwindcss/colors',
-        '@movk/nuxt-docs > prettier'
+        '@movk/nuxt-docs > prettier',
+        '@movk/nuxt-docs > @shikijs/vitepress-twoslash/client',
+        '@movk/nuxt-docs > floating-vue'
       )
 
       // AI Chat static deps — only pre-bundle when the feature is actually enabled.
@@ -229,5 +232,13 @@ export default defineNuxtConfig({
       { userAgent: 'cohere-ai', allow: '/' }
     ],
     sitemap: '/sitemap.xml'
+  },
+
+  twoslash: {
+    includeNuxtTypes: true,
+    // Skip Twoslash in dev to improve performance. Turn this on when you want to explicitly test twoslash in dev.
+    enableInDev: true,
+    // Do not throw when twoslash fails, the typecheck should be down in github.com/nuxt/nuxt's CI
+    throws: false
   }
 })

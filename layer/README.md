@@ -55,6 +55,7 @@ npx skills add https://docs.mhaibaraai.cn
 - **交互式示例展示** - 通过 `ComponentExample` 组件自动加载和渲染组件示例，支持代码高亮和实时预览
 - **Git 提交历史集成** - 使用 `CommitChangelog` 和 `PageLastCommit` 组件自动展示文件的提交历史记录
 - **类型定义高亮** - 智能解析 TypeScript 类型定义，支持内联类型高亮和类型导航
+- **Twoslash 类型悬浮** - 通过 `nuxt-content-twoslash` 在 ts/vue 代码块中显示类型签名、编译错误与 `^?` 查询快照，构建期解析、运行时零成本
 
 ### 🎨 开发者体验
 
