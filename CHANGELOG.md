@@ -1,5 +1,21 @@
 # 📋 Changelog
 
+## [1.18.5](https://github.com/mhaibaraai/movk-nuxt-docs/compare/v1.18.4...v1.18.5) (2026-05-08)
+
+### 🐛 Bug Fixes
+
+* **docs:** 修复 Mermaid 图表页 component-props 元数据查找失败的警告 ([5a1c71c](https://github.com/mhaibaraai/movk-nuxt-docs/commit/5a1c71cef8b002a5cba81165d6cf4fc6fb65c795))
+* **layer:** 关闭 axe-core preload 避免 dev 控制台告警 ([ac7d401](https://github.com/mhaibaraai/movk-nuxt-docs/commit/ac7d401613bea5bb17268e6350b5c579903431fa))
+* **layer:** 对齐 error.vue 与 app.vue 的 search handler ([e0afe82](https://github.com/mhaibaraai/movk-nuxt-docs/commit/e0afe8280cf8686c7f13cee886e3fd66245c9f0f))
+
+### ♻️ Code Refactoring
+
+* **layer:** 抽离导航接口并复用 useTheme 头部配置 ([ce2fa7a](https://github.com/mhaibaraai/movk-nuxt-docs/commit/ce2fa7a06413bfa3c627a6068085efc50f737315))
+
+### 🔧 Chores
+
+* **deps:** 更新 pnpm-lock.yaml 依赖锁定版本 ([fbcdd3c](https://github.com/mhaibaraai/movk-nuxt-docs/commit/fbcdd3c162cc9b657e0165ce442c49b5c3df3187))
+
 ## [1.18.4](https://github.com/mhaibaraai/movk-nuxt-docs/compare/v1.18.3...v1.18.4) (2026-05-07)
 
 ### ✨ Features
