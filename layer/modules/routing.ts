@@ -17,7 +17,7 @@ export default defineNuxtModule({
       Vary: 'Accept, User-Agent'
     }
 
-    const mergeRouteHeaders = (path: string, headers: Record<string, string>) => {
+    const mergeRouteHeaders = (path: string, headers: Record<string, any>) => {
       const routeRule = routeRules[path] || {}
 
       routeRules[path] = {
@@ -28,6 +28,8 @@ export default defineNuxtModule({
         }
       }
     }
+
+    mergeRouteHeaders('/api/navigation.json', { prerender: true })
 
     mergeRouteHeaders('/docs/**', varyHeaders)
 

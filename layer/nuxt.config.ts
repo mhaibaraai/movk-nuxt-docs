@@ -30,6 +30,11 @@ export default defineNuxtConfig({
   ],
 
   app: {
+    head: {
+      htmlAttrs: {
+        lang: 'zh-CN'
+      }
+    },
     rootAttrs: {
       'data-vaul-drawer-wrapper': '',
       'class': 'bg-default'

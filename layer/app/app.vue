@@ -1,36 +1,26 @@
 <script setup lang="ts">
-import colors from 'tailwindcss/colors'
 import { zh_cn } from '@nuxt/ui/locale'
 
 const site = useSiteConfig()
 const appConfig = useAppConfig()
-const colorMode = useColorMode()
 const route = useRoute()
-const { style, link } = useTheme()
+
+const { style, link, color } = useTheme()
 const { isEnabled: isAiChatEnabled } = useAIChat()
 
-const { data: navigation } = await useAsyncData('navigation', () => queryCollectionNavigation('docs', ['category', 'description']))
+const { data: navigation } = await useFetch('/api/navigation.json')
 const { data: files } = useLazyAsyncData('search', () => queryCollectionSearchSections('docs', {
   ignoredTags: ['style']
 }), {
   server: false
 })
 
-const color = computed(() => colorMode.value === 'dark' ? (colors as any)[appConfig.ui.colors.neutral][900] : 'white')
-
 useHead({
   meta: [
     { name: 'viewport', content: 'width=device-width, initial-scale=1' },
     { key: 'theme-color', name: 'theme-color', content: color }
   ],
-  link: computed(() => [
-    { rel: 'icon', href: '/favicon.ico' },
-    ...link.value
-  ]),
-  htmlAttrs: {
-    lang: 'zh-CN',
-    dir: 'ltr'
-  },
+  link,
   style
 })
 

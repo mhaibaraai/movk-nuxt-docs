@@ -9,6 +9,8 @@ export function useTheme() {
   const site = useSiteConfig()
   const name = kebabCase(site.name)
 
+  const color = computed(() => colorMode.value === 'dark' ? (colors as any)[appConfig.ui.colors.neutral][900] : 'white')
+
   const _radius = useLocalStorage(`${name}-ui-radius`, 0.25)
   const _font = useLocalStorage(`${name}-ui-font`, 'Alibaba PuHuiTi')
   const _iconSet = useLocalStorage(`${name}-ui-icons`, 'lucide')
@@ -202,6 +204,7 @@ export function useTheme() {
   }
 
   return {
+    color,
     style,
     link,
     neutralColors,
