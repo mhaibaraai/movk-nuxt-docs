@@ -54,6 +54,13 @@ const movkNuxtDocsModule: NuxtModule<ModuleOptions> = defineNuxtModule<ModuleOpt
 
     nuxt.options.alias['#ai-chat'] = resolve('./ai-chat/runtime')
 
+    if (options.a11y !== false) {
+      const a11yOptions = (nuxt.options as Record<string, any>).a11y ??= {}
+      a11yOptions.axe = defu(a11yOptions.axe, {
+        runOptions: { preload: false }
+      })
+    }
+
     if (options.mermaid) {
       let mermaidAvailable = true
       try {
