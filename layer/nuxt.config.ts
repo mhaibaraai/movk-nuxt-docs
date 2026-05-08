@@ -237,7 +237,7 @@ export default defineNuxtConfig({
   twoslash: {
     includeNuxtTypes: true,
     // Skip Twoslash in dev to improve performance. Turn this on when you want to explicitly test twoslash in dev.
-    enableInDev: true,
+    enableInDev: false,
     // Do not throw when twoslash fails, the typecheck should be down in github.com/nuxt/nuxt's CI
     throws: false
   }
