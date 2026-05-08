@@ -174,6 +174,17 @@ ui:
   #description
   基于 Nuxt Content 的 `ContentSearch` 组件，支持键盘快捷键（⌘K）快速搜索文档内容。
   :::
+
+  :::u-page-feature
+  ---
+  icon: i-lucide-mouse-pointer-click
+  ---
+  #title
+  Twoslash 类型悬浮
+
+  #description
+  通过 `nuxt-content-twoslash` 在 ts/vue 代码块中显示类型签名、编译错误与 `^?` 查询快照，构建期解析、运行时零成本。
+  :::
 ::
 
 ::u-page-section{class="dark:bg-neutral-950"}
