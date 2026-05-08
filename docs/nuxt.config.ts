@@ -51,8 +51,7 @@ export default defineNuxtConfig({
       'MDC 语法',
       'SEO 优化',
       '暗黑模式',
-      '全文搜索',
-      'Twoslash 类型悬浮'
+      '全文搜索'
     ],
     full: {
       title: 'Movk Nuxt Docs - 现代化 Nuxt 文档主题',
