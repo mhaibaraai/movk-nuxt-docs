@@ -223,7 +223,7 @@ export function useTheme() {
     mode,
     hasCSSChanges,
     hasConfigChanges,
-    configLabel: 'vite.config.ts',
+    configLabel: 'app.config.ts',
     exportCSS,
     exportConfig,
     resetTheme
