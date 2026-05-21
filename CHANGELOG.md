@@ -1,5 +1,21 @@
 # 📋 Changelog
 
+## [1.18.6](https://github.com/mhaibaraai/movk-nuxt-docs/compare/v1.18.5...v1.18.6) (2026-05-21)
+
+### 🐛 Bug Fixes
+
+* **theme:** 修复配置标签名称错误 ([b5f9f5b](https://github.com/mhaibaraai/movk-nuxt-docs/commit/b5f9f5bc8f51be9e1def292753e277efa022da7d))
+
+### 🔧 Chores
+
+* **deps:** lock file maintenance ([743132c](https://github.com/mhaibaraai/movk-nuxt-docs/commit/743132caef1bfed2b73f7011b0a5602b96a037b8))
+* **deps:** update all non-major dependencies ([b39fccf](https://github.com/mhaibaraai/movk-nuxt-docs/commit/b39fccf94e67d59f5fa38022a379e2c2d75d7d6e))
+* **deps:** update all non-major dependencies ([294ea6b](https://github.com/mhaibaraai/movk-nuxt-docs/commit/294ea6b3f9e252d55efd6379438d68130327708d))
+* **deps:** update nuxt framework to ^4.4.5 ([8519197](https://github.com/mhaibaraai/movk-nuxt-docs/commit/8519197dd006eeb01ecb145ae236d00a02d32609))
+* **deps:** update nuxt framework to ^4.4.6 ([bd47765](https://github.com/mhaibaraai/movk-nuxt-docs/commit/bd477658e02ac249f6dc5185ef26ee557a870a46))
+* **deps:** update pnpm to v11 ([898dc7f](https://github.com/mhaibaraai/movk-nuxt-docs/commit/898dc7f24f909d5ac2b987d0d713982acf8668b8))
+* **deps:** 升级 AI SDK 及 @movk/core 依赖版本 ([a3763e9](https://github.com/mhaibaraai/movk-nuxt-docs/commit/a3763e9b1e2d9c2b268f7f5ec4251adda3201d7c))
+
 ## [1.18.5](https://github.com/mhaibaraai/movk-nuxt-docs/compare/v1.18.4...v1.18.5) (2026-05-08)
 
 ### 🐛 Bug Fixes
