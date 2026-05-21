@@ -11,14 +11,14 @@
   },
   "dependencies": {
     "@movk/nuxt-docs": "latest",
-    "better-sqlite3": "^12.9.0",
+    "better-sqlite3": "^12.10.0",
     "nuxt": "^4.4.5",
     "tailwindcss": "^4.3.0"
   },
   "devDependencies": {
     "@nuxt/eslint": "^1.15.2",
-    "eslint": "^10.3.0",
+    "eslint": "^10.4.0",
     "typescript": "^6.0.3",
-    "vue-tsc": "^3.2.8"
+    "vue-tsc": "^3.3.1"
   }
 }
