@@ -1,5 +1,12 @@
 # 📋 Changelog
 
+## [1.19.0](https://github.com/mhaibaraai/movk-nuxt-docs/compare/v1.18.6...v1.19.0) (2026-05-22)
+
+### 🔧 Chores
+
+* **deps:** lock file maintenance ([f95de71](https://github.com/mhaibaraai/movk-nuxt-docs/commit/f95de715dce78c147ddbbb729facd647f70298de))
+* **deps:** 更新依赖并锁定文件维护 ([c99ec03](https://github.com/mhaibaraai/movk-nuxt-docs/commit/c99ec03d9d71d32ff03e753533c131e65d92ba0b))
+
 ## [1.18.6](https://github.com/mhaibaraai/movk-nuxt-docs/compare/v1.18.5...v1.18.6) (2026-05-21)
 
 ### 🐛 Bug Fixes
