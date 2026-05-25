@@ -1,5 +1,20 @@
 # 📋 Changelog
 
+## [1.19.1](https://github.com/mhaibaraai/movk-nuxt-docs/compare/v1.19.0...v1.19.1) (2026-05-25)
+
+### ✨ Features
+
+* **layer:** 新增 ComponentExampleExtras 扩展槽位 ([d97cfcc](https://github.com/mhaibaraai/movk-nuxt-docs/commit/d97cfcc5db68eb88ecf1bec19e1d55c33e122f4b))
+
+### 📝 Documentation
+
+* **skills:** 补充内置 Skills 说明 ([9e7f10e](https://github.com/mhaibaraai/movk-nuxt-docs/commit/9e7f10e3cd71060651ea24575aecb94e5528ff20))
+
+### 🔧 Chores
+
+* **deps:** lock file maintenance ([81694c8](https://github.com/mhaibaraai/movk-nuxt-docs/commit/81694c81eccbbfb6c439b38078cb3c1de8177893))
+* **deps:** update all non-major dependencies ([4c09659](https://github.com/mhaibaraai/movk-nuxt-docs/commit/4c09659fde9598239d01fdccfec5d69d60b000ef))
+
 ## [1.19.0](https://github.com/mhaibaraai/movk-nuxt-docs/compare/v1.18.6...v1.19.0) (2026-05-22)
 
 ### 🔧 Chores
