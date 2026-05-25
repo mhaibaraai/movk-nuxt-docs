@@ -11,6 +11,5 @@ defineProps<{
 </script>
 
 <template>
-  <!-- Fallback: 消费方未自定义 ComponentExampleExtras 时由 layer 模块注册。 -->
   <slot />
 </template>

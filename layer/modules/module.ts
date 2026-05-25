@@ -60,14 +60,12 @@ const movkNuxtDocsModule: NuxtModule<ModuleOptions> = defineNuxtModule<ModuleOpt
       join(nuxt.options.srcDir, 'components/content/ComponentExampleExtras.vue'),
       join(nuxt.options.rootDir, 'app/components/content/ComponentExampleExtras.vue')
     ]
-    const hasConsumerExtras = consumerExtrasCandidates.some(existsSync)
+    const consumerExtrasPath = consumerExtrasCandidates.find(existsSync)
 
-    if (!hasConsumerExtras) {
-      addComponent({
-        name: 'ComponentExampleExtras',
-        filePath: resolve('./components/content/ComponentExampleExtras.vue')
-      })
-    }
+    addComponent({
+      name: 'ComponentExampleExtras',
+      filePath: consumerExtrasPath ?? resolve('./components/content/ComponentExampleExtras.vue')
+    })
 
     if (options.a11y !== false) {
       const a11yOptions = (nuxt.options as Record<string, any>).a11y ??= {}
