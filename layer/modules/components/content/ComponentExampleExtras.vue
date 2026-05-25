@@ -1,4 +1,5 @@
 <script setup lang="ts">
+// Fallback：消费方在 app/components/content/ComponentExampleExtras.vue 提供同名文件即可整体覆盖。
 defineProps<{
   name: string
   camelName: string

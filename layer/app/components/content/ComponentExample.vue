@@ -260,7 +260,7 @@ const urlSearchParams = computed(() => {
             class="flex justify-center p-4"
             :class="[props.class, { 'dark:bg-neutral-950/50 rounded-t-md': props.elevated }]"
           >
-            <component :is="resolvedComponent" v-bind="{ ...componentProps, ...optionsValues }" />
+            <component :is="resolvedComponent" v-bind="effectiveProps" />
           </div>
         </div>
 
