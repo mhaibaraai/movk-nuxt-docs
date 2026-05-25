@@ -4,6 +4,9 @@ import { camelCase, upperFirst } from 'scule'
 import { hash } from 'ohash'
 import { useElementSize } from '@vueuse/core'
 import { get, set } from '#ui/utils'
+import * as nuxtComponents from '#components'
+
+const ComponentExampleExtras = (nuxtComponents as Record<string, any>).ComponentExampleExtras ?? null
 
 const props = withDefaults(defineProps<{
   name: string
@@ -264,8 +267,9 @@ const urlSearchParams = computed(() => {
           </div>
         </div>
 
-        <ClientOnly>
-          <ComponentExampleExtras
+        <ClientOnly v-if="ComponentExampleExtras">
+          <component
+            :is="ComponentExampleExtras"
             :name="name"
             :camel-name="camelName"
             :pascal-name="data?.pascalName ?? ''"
