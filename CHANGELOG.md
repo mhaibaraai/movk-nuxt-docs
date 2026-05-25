@@ -1,5 +1,15 @@
 # 📋 Changelog
 
+## [1.19.2](https://github.com/mhaibaraai/movk-nuxt-docs/compare/v1.19.1...v1.19.2) (2026-05-25)
+
+### ✨ Features
+
+* **layer:** 新增 ComponentCode 组件与 component-code MDC 块 ([d321385](https://github.com/mhaibaraai/movk-nuxt-docs/commit/d321385bc6562ad4e2f9120ef3287a83be51d0dd))
+
+### 🐛 Bug Fixes
+
+* **layer:** 将 skills NitroRuntimeConfig 类型增强迁出模块入口 ([1aac952](https://github.com/mhaibaraai/movk-nuxt-docs/commit/1aac952d5d89bb6a8bbbeea5e45c700fe9d21a5e))
+
 ## [1.19.1](https://github.com/mhaibaraai/movk-nuxt-docs/compare/v1.19.0...v1.19.1) (2026-05-25)
 
 ### ✨ Features
