@@ -88,6 +88,8 @@ const slots = defineSlots<{
 }>()
 
 const el = ref<HTMLElement | null>(null)
+const wrapperContainer = ref<HTMLElement | null>(null)
+const componentContainer = ref<HTMLElement | null>(null)
 const { $prettier } = useNuxtApp()
 
 const { width } = useElementSize(el)
@@ -168,6 +170,8 @@ const optionsValues = ref(props.options?.reduce((acc, option) => {
   return acc
 }, {} as Record<string, any>) || {})
 
+const effectiveProps = computed(() => ({ ...componentProps, ...optionsValues.value }))
+
 const urlSearchParams = computed(() => {
   const params = {
     ...optionsValues.value,
@@ -186,7 +190,10 @@ const urlSearchParams = computed(() => {
   <div ref="el" class="my-5" :style="{ '--ui-header-height': '4rem' }">
     <template v-if="preview">
       <div ref="wrapperContainer" class="relative group/component">
-        <div class="border border-muted relative z-1" :class="[{ 'border-b-0 rounded-t-md': props.source, 'rounded-md': !props.source, 'overflow-hidden': props.overflowHidden }]">
+        <div
+          class="border border-muted relative z-1"
+          :class="[{ 'border-b-0 rounded-t-md': props.source, 'rounded-md': !props.source, 'overflow-hidden': props.overflowHidden }]"
+        >
           <div v-if="props.options?.length || !!slots.options" class="flex gap-4 p-4 border-b border-muted">
             <slot name="options" />
 
@@ -246,6 +253,7 @@ const urlSearchParams = computed(() => {
             class="relative w-full"
             :class="[props.class, { 'dark:bg-neutral-950/50 rounded-t-md': props.elevated }, !iframeMobile && 'lg:left-1/2 lg:-translate-x-1/2 lg:w-[1024px]']"
           />
+
           <div
             v-else-if="resolvedComponent"
             ref="componentContainer"
@@ -255,6 +263,18 @@ const urlSearchParams = computed(() => {
             <component :is="resolvedComponent" v-bind="{ ...componentProps, ...optionsValues }" />
           </div>
         </div>
+
+        <ClientOnly>
+          <ComponentExampleExtras
+            :name="name"
+            :camel-name="camelName"
+            :pascal-name="data?.pascalName ?? ''"
+            :effective-props="effectiveProps"
+            :options="props.options"
+            :wrapper-container="wrapperContainer"
+            :component-container="componentContainer"
+          />
+        </ClientOnly>
       </div>
     </template>
 
