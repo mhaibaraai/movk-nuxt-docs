@@ -48,6 +48,7 @@ export function createComponentMetaExcludeFilters(
   const allowedComponents = [
     resolve('../app/components/content/CommitChangelog.vue'),
     resolve('../app/components/content/ComponentEmits.vue'),
+    resolve('../app/components/content/ComponentCode.vue'),
     resolve('../app/components/content/ComponentExample.vue'),
     resolve('../app/components/content/ComponentProps.vue'),
     resolve('../app/components/content/ComponentSlots.vue'),

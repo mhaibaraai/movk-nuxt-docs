@@ -174,6 +174,119 @@ function replaceNodeWithPre(node: any[], language: string, code: string, filenam
   if (filename) node[1].filename = filename
 }
 
+function parseAttrAsObject<T>(value: unknown, fallback: T): T {
+  if (value === undefined || value === null || value === '') return fallback
+  if (typeof value !== 'string') return value as T
+  try {
+    return JSON.parse(value) as T
+  } catch {
+    return fallback
+  }
+}
+
+function readMdcAttr(attrs: MDCAttributes, key: string): unknown {
+  return attrs[`:${key}`] ?? attrs[key]
+}
+
+type ComponentCodeConfig = {
+  props: Record<string, any>
+  external: string[]
+  hide: string[]
+  componentName: string
+  slots?: Record<string, string>
+  model?: string[]
+}
+
+function generateComponentCode({
+  props,
+  external,
+  hide,
+  componentName,
+  slots,
+  model
+}: ComponentCodeConfig): string {
+  const pascalName = upperFirst(componentName)
+  const externalSet = new Set(external)
+  const modelSet = new Set(model || [])
+
+  const propAttributes: string[] = []
+  for (const [key, value] of Object.entries(props)) {
+    if (hide.includes(key)) continue
+    if (value === undefined || value === null || value === '') continue
+
+    if (key === 'modelValue') {
+      propAttributes.push(`v-model="value"`)
+      continue
+    }
+    if (modelSet.has(key)) {
+      propAttributes.push(`v-model:${kebabCase(key)}="${key}"`)
+      continue
+    }
+
+    const attr = kebabCase(key)
+
+    if (typeof value === 'boolean') {
+      propAttributes.push(value ? attr : `:${attr}="false"`)
+      continue
+    }
+    if (typeof value === 'object') {
+      if (externalSet.has(key)) {
+        propAttributes.push(`:${attr}="${key}"`)
+      } else {
+        propAttributes.push(`:${attr}='${JSON.stringify(value)}'`)
+      }
+      continue
+    }
+    if (typeof value === 'number') {
+      propAttributes.push(`:${attr}="${value}"`)
+      continue
+    }
+    propAttributes.push(`${attr}="${value}"`)
+  }
+
+  const refDeclarations: string[] = []
+  for (const key of external) {
+    if (!(key in props)) continue
+    const varName = key === 'modelValue' ? 'value' : key
+    refDeclarations.push(`const ${varName} = ref(${JSON.stringify(props[key])})`)
+  }
+
+  let scriptSetup = ''
+  if (refDeclarations.length) {
+    scriptSetup = `<script setup lang="ts">\n${refDeclarations.join('\n')}\n</script>\n\n`
+  }
+
+  let defaultSlotContent = ''
+  let namedSlotsContent = ''
+  if (slots && Object.keys(slots).length) {
+    const defaultSlot = slots.default?.trim()
+    if (defaultSlot) {
+      const indented = defaultSlot
+        .split('\n')
+        .map(line => line.trim() ? `    ${line}` : line)
+        .join('\n')
+      defaultSlotContent = `\n${indented}\n  `
+    }
+    for (const [slotName, content] of Object.entries(slots)) {
+      if (slotName === 'default' || !content?.trim?.()) continue
+      const indented = content.trim()
+        .split('\n')
+        .map((line: string) => line.trim() ? `      ${line}` : line)
+        .join('\n')
+      namedSlotsContent += `\n    <template #${slotName}>\n${indented}\n    </template>`
+    }
+  }
+
+  const formattedProps = propAttributes.length ? ` ${propAttributes.join(' ')}` : ''
+  const componentTemplate = (defaultSlotContent || namedSlotsContent)
+    ? `<${pascalName}${formattedProps}>${defaultSlotContent}${namedSlotsContent}</${pascalName}>`
+    : `<${pascalName}${formattedProps} />`
+
+  return `${scriptSetup}<template>
+  ${componentTemplate}
+</template>`
+}
+
 function visitAndReplace(doc: Document, type: string, handler: (node: any[]) => void) {
   visit(doc.body, (node) => {
     if (Array.isArray(node) && node[0] === type) {
@@ -288,6 +401,22 @@ export async function transformMDC(event: H3Event, doc: Document): Promise<Docum
       node[1] = {}
       node[2] = 'No events available for this component.'
     }
+  })
+
+  visitAndReplace(doc, 'component-code', (node) => {
+    const attrs = (node[1] || {}) as MDCAttributes
+    const targetName = camelCase(String(attrs.slug ?? attrs.name ?? doc.title ?? ''))
+    if (!targetName) return
+
+    const code = generateComponentCode({
+      props: parseAttrAsObject<Record<string, any>>(readMdcAttr(attrs, 'props'), {}),
+      external: parseAttrAsObject<string[]>(readMdcAttr(attrs, 'external'), []),
+      hide: parseAttrAsObject<string[]>(readMdcAttr(attrs, 'hide'), []),
+      componentName: targetName,
+      slots: parseAttrAsObject<Record<string, string>>(readMdcAttr(attrs, 'slots'), {}),
+      model: parseAttrAsObject<string[]>(readMdcAttr(attrs, 'model'), [])
+    })
+    replaceNodeWithPre(node, 'vue', code)
   })
 
   const exampleNodes: any[][] = []
