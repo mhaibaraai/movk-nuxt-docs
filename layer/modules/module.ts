@@ -56,7 +56,7 @@ const movkNuxtDocsModule: NuxtModule<ModuleOptions> = defineNuxtModule<ModuleOpt
 
     addComponent({
       name: 'ComponentExampleExtras',
-      filePath: resolve('./components/ComponentExampleExtras.vue'),
+      filePath: resolve('./components/content/ComponentExampleExtras.vue'),
       priority: -10
     })
 
