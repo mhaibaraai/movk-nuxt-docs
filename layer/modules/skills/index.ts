@@ -142,11 +142,3 @@ declare module 'nuxt/schema' {
     }
   }
 }
-
-declare module 'nitropack/types' {
-  interface NitroRuntimeConfig {
-    skills: {
-      catalog: SkillEntry[]
-    }
-  }
-}
