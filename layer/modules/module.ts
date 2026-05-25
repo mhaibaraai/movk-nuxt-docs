@@ -1,4 +1,4 @@
-import { addComponent, addComponentsDir, createResolver, defineNuxtModule, logger } from '@nuxt/kit'
+import { addComponentsDir, createResolver, defineNuxtModule, logger } from '@nuxt/kit'
 import type { ModuleDependencies, NuxtModule } from 'nuxt/schema'
 import { defu } from 'defu'
 import { getGitBranch, getGitEnv, getLocalGitInfo } from '../utils/git'
@@ -53,12 +53,6 @@ const movkNuxtDocsModule: NuxtModule<ModuleOptions> = defineNuxtModule<ModuleOpt
     const { resolve } = createResolver(import.meta.url)
 
     nuxt.options.alias['#ai-chat'] = resolve('./ai-chat/runtime')
-
-    addComponent({
-      name: 'ComponentExampleExtras',
-      filePath: resolve('./components/content/ComponentExampleExtras.vue'),
-      priority: -10
-    })
 
     if (options.a11y !== false) {
       const a11yOptions = (nuxt.options as Record<string, any>).a11y ??= {}
