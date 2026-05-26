@@ -1,4 +1,4 @@
-interface SkillEntry {
+export interface SkillEntry {
   name: string
   description: string
   files: string[]
@@ -11,5 +11,3 @@ declare module 'nitropack/types' {
     }
   }
 }
-
-export {}

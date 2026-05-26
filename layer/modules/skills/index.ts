@@ -3,12 +3,7 @@ import { existsSync } from 'node:fs'
 import { readdir, readFile } from 'node:fs/promises'
 import { join } from 'node:path'
 import { parse as parseYaml } from 'yaml'
-
-interface SkillEntry {
-  name: string
-  description: string
-  files: string[]
-}
+import type { SkillEntry } from './runtime/types'
 
 const SKILL_NAME_REGEX = /^[a-z0-9](?:[a-z0-9-]*[a-z0-9])?$/
 const MAX_NAME_LENGTH = 64
@@ -35,6 +30,11 @@ export default defineNuxtModule({
     nuxt.hook('nitro:config', (nitroConfig) => {
       nitroConfig.serverAssets ||= []
       nitroConfig.serverAssets.push({ baseName: 'skills', dir: skillsDir })
+
+      nitroConfig.typescript ||= {}
+      nitroConfig.typescript.tsConfig ||= {}
+      nitroConfig.typescript.tsConfig.include ||= []
+      nitroConfig.typescript.tsConfig.include.push(resolve('./runtime/types.d.ts'))
 
       nitroConfig.prerender ||= {}
       nitroConfig.prerender.routes ||= []
@@ -133,12 +133,4 @@ async function scanSkills(skillsDir: string): Promise<SkillEntry[]> {
   }
 
   return catalog
-}
-
-declare module 'nuxt/schema' {
-  interface RuntimeConfig {
-    skills: {
-      catalog: SkillEntry[]
-    }
-  }
 }

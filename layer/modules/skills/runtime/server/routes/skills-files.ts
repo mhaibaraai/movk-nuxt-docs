@@ -1,3 +1,5 @@
+import type { SkillEntry } from '../../types'
+
 const CONTENT_TYPES: Record<string, string> = {
   '.md': 'text/markdown; charset=utf-8',
   '.json': 'application/json; charset=utf-8',
@@ -30,8 +32,9 @@ export default defineEventHandler(async (event) => {
   }
 
   const { skills } = useRuntimeConfig(event)
+  const catalog = (skills as { catalog: SkillEntry[] }).catalog
   const skillName = filePath.split('/')[0]
-  if (!skills.catalog.some((s: { name: string }) => s.name === skillName)) {
+  if (!catalog.some(s => s.name === skillName)) {
     throw createError({ statusCode: 404, statusMessage: 'Not Found' })
   }
 
