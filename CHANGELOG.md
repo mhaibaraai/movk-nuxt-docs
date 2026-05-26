@@ -1,5 +1,11 @@
 # 📋 Changelog
 
+## [1.19.3](https://github.com/mhaibaraai/movk-nuxt-docs/compare/v1.19.2...v1.19.3) (2026-05-26)
+
+### 🐛 Bug Fixes
+
+* **skills:** 修复 server routes 类型推断导致消费工程 typecheck 失败 ([f8a3362](https://github.com/mhaibaraai/movk-nuxt-docs/commit/f8a336204fc4a067207f03181c24bb3dbc0eb08e))
+
 ## [1.19.2](https://github.com/mhaibaraai/movk-nuxt-docs/compare/v1.19.1...v1.19.2) (2026-05-25)
 
 ### ✨ Features
