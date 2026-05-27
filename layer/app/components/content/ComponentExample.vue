@@ -65,6 +65,11 @@ const { preview = true, source = true, prettier = false, ...props } = defineProp
    * 是否在包装器上添加 overflow-hidden
    */
   overflowHidden?: boolean
+  /**
+   * 是否只在客户端渲染预览区域，适用于依赖 window / setInterval 等浏览器 API 的示例
+   * @defaultValue false
+   */
+  clientOnly?: boolean
 }>()
 
 const slots = defineSlots<{
@@ -167,69 +172,139 @@ const urlSearchParams = computed(() => {
 <template>
   <div ref="el" class="my-5" :style="{ '--ui-header-height': '4rem' }">
     <template v-if="preview">
-      <div class="border border-muted relative z-1" :class="{ 'border-b-0 rounded-t-md': source, 'rounded-md': !source, 'overflow-hidden': props.overflowHidden }">
-        <div v-if="props.options?.length || !!slots.options" class="flex gap-4 p-4 border-b border-muted">
-          <slot name="options" />
+      <template v-if="props.clientOnly">
+        <ClientOnly>
+          <div class="border border-muted relative z-1" :class="{ 'border-b-0 rounded-t-md': source, 'rounded-md': !source, 'overflow-hidden': props.overflowHidden }">
+            <div v-if="props.options?.length || !!slots.options" class="flex gap-4 p-4 border-b border-muted">
+              <slot name="options" />
 
-          <UFormField
-            v-for="option in props.options"
-            :key="option.name"
-            :label="option.label"
-            :name="option.name"
-            size="sm"
-            class="inline-flex ring ring-accented rounded-sm"
-            :ui="{
-              wrapper: 'bg-elevated/50 rounded-l-sm flex border-r border-accented',
-              label: 'text-muted px-2 py-1.5',
-              container: 'mt-0'
-            }"
-          >
-            <USelectMenu
-              v-if="option.items?.length"
-              :model-value="get(optionsValues, option.name)"
-              :items="option.items"
-              :search-input="false"
-              :value-key="option.name.toLowerCase().endsWith('color') ? 'value' : undefined"
-              color="neutral"
-              variant="soft"
-              class="rounded-sm rounded-l-none min-w-12"
-              :multiple="option.multiple"
-              :class="{ 'pl-6': option.name.toLowerCase().endsWith('color') }"
-              :ui="{ itemLeadingChip: 'w-2' }"
-              @update:model-value="set(optionsValues, option.name, $event)"
-            >
-              <template v-if="option.name.toLowerCase().endsWith('color')" #leading="{ modelValue, ui }">
-                <UChip
-                  inset
-                  standalone
-                  :color="(modelValue as any)"
-                  :size="(ui.itemLeadingChipSize() as ChipProps['size'])"
-                  class="size-2"
+              <UFormField
+                v-for="option in props.options"
+                :key="option.name"
+                :label="option.label"
+                :name="option.name"
+                size="sm"
+                class="inline-flex ring ring-accented rounded-sm"
+                :ui="{
+                  wrapper: 'bg-elevated/50 rounded-l-sm flex border-r border-accented',
+                  label: 'text-muted px-2 py-1.5',
+                  container: 'mt-0'
+                }"
+              >
+                <USelectMenu
+                  v-if="option.items?.length"
+                  :model-value="get(optionsValues, option.name)"
+                  :items="option.items"
+                  :search-input="false"
+                  :value-key="option.name.toLowerCase().endsWith('color') ? 'value' : undefined"
+                  color="neutral"
+                  variant="soft"
+                  class="rounded-sm rounded-l-none min-w-12"
+                  :multiple="option.multiple"
+                  :class="{ 'pl-6': option.name.toLowerCase().endsWith('color') }"
+                  :ui="{ itemLeadingChip: 'w-2' }"
+                  @update:model-value="set(optionsValues, option.name, $event)"
+                >
+                  <template v-if="option.name.toLowerCase().endsWith('color')" #leading="{ modelValue, ui }">
+                    <UChip
+                      inset
+                      standalone
+                      :color="(modelValue as any)"
+                      :size="(ui.itemLeadingChipSize() as ChipProps['size'])"
+                      class="size-2"
+                    />
+                  </template>
+                </USelectMenu>
+                <UInput
+                  v-else
+                  :model-value="get(optionsValues, option.name)"
+                  color="neutral"
+                  variant="soft"
+                  :ui="{ base: 'rounded-sm rounded-l-none min-w-12' }"
+                  @update:model-value="set(optionsValues, option.name, $event)"
                 />
-              </template>
-            </USelectMenu>
-            <UInput
-              v-else
-              :model-value="get(optionsValues, option.name)"
-              color="neutral"
-              variant="soft"
-              :ui="{ base: 'rounded-sm rounded-l-none min-w-12' }"
-              @update:model-value="set(optionsValues, option.name, $event)"
-            />
-          </UFormField>
-        </div>
+              </UFormField>
+            </div>
 
-        <iframe
-          v-if="iframe"
-          v-bind="typeof iframe === 'object' ? iframe : {}"
-          :src="`/examples/${name}?${urlSearchParams}`"
-          class="relative w-full"
-          :class="[props.class, { 'lg:left-1/2 lg:-translate-x-1/2 lg:w-[1024px]': !iframeMobile }]"
-        />
-        <div v-else class="flex justify-center p-4" :class="props.class">
-          <component :is="camelName" v-bind="{ ...componentProps, ...optionsValues }" />
+            <iframe
+              v-if="iframe"
+              v-bind="typeof iframe === 'object' ? iframe : {}"
+              :src="`/examples/${name}?${urlSearchParams}`"
+              class="relative w-full"
+              :class="[props.class, { 'lg:left-1/2 lg:-translate-x-1/2 lg:w-[1024px]': !iframeMobile }]"
+            />
+            <div v-else class="flex justify-center p-4" :class="props.class">
+              <component :is="camelName" v-bind="{ ...componentProps, ...optionsValues }" />
+            </div>
+          </div>
+        </ClientOnly>
+      </template>
+
+      <template v-else>
+        <div class="border border-muted relative z-1" :class="{ 'border-b-0 rounded-t-md': source, 'rounded-md': !source, 'overflow-hidden': props.overflowHidden }">
+          <div v-if="props.options?.length || !!slots.options" class="flex gap-4 p-4 border-b border-muted">
+            <slot name="options" />
+
+            <UFormField
+              v-for="option in props.options"
+              :key="option.name"
+              :label="option.label"
+              :name="option.name"
+              size="sm"
+              class="inline-flex ring ring-accented rounded-sm"
+              :ui="{
+                wrapper: 'bg-elevated/50 rounded-l-sm flex border-r border-accented',
+                label: 'text-muted px-2 py-1.5',
+                container: 'mt-0'
+              }"
+            >
+              <USelectMenu
+                v-if="option.items?.length"
+                :model-value="get(optionsValues, option.name)"
+                :items="option.items"
+                :search-input="false"
+                :value-key="option.name.toLowerCase().endsWith('color') ? 'value' : undefined"
+                color="neutral"
+                variant="soft"
+                class="rounded-sm rounded-l-none min-w-12"
+                :multiple="option.multiple"
+                :class="{ 'pl-6': option.name.toLowerCase().endsWith('color') }"
+                :ui="{ itemLeadingChip: 'w-2' }"
+                @update:model-value="set(optionsValues, option.name, $event)"
+              >
+                <template v-if="option.name.toLowerCase().endsWith('color')" #leading="{ modelValue, ui }">
+                  <UChip
+                    inset
+                    standalone
+                    :color="(modelValue as any)"
+                    :size="(ui.itemLeadingChipSize() as ChipProps['size'])"
+                    class="size-2"
+                  />
+                </template>
+              </USelectMenu>
+              <UInput
+                v-else
+                :model-value="get(optionsValues, option.name)"
+                color="neutral"
+                variant="soft"
+                :ui="{ base: 'rounded-sm rounded-l-none min-w-12' }"
+                @update:model-value="set(optionsValues, option.name, $event)"
+              />
+            </UFormField>
+          </div>
+
+          <iframe
+            v-if="iframe"
+            v-bind="typeof iframe === 'object' ? iframe : {}"
+            :src="`/examples/${name}?${urlSearchParams}`"
+            class="relative w-full"
+            :class="[props.class, { 'lg:left-1/2 lg:-translate-x-1/2 lg:w-[1024px]': !iframeMobile }]"
+          />
+          <div v-else class="flex justify-center p-4" :class="props.class">
+            <component :is="camelName" v-bind="{ ...componentProps, ...optionsValues }" />
+          </div>
         </div>
-      </div>
+      </template>
     </template>
 
     <template v-if="source">

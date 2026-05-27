@@ -68,6 +68,14 @@ collapse: true
 ::
 ```
 
+### 仅客户端渲染
+
+如果示例内部会直接使用 `window`、`document`、`setInterval` 这类浏览器 API，可以给 `component-example` 加上 `client-only="true"`，避免 SSR 阶段触发警告：
+
+```md
+:component-example{name="RenderAsyncBasic" client-only="true"}
+```
+
 ## API
 
 ### Props
