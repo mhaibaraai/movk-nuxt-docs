@@ -9,11 +9,3 @@ allowBuilds:
   sharp: true
   unrs-resolver: false
   vue-demi: false
-
-minimumReleaseAgeExclude:
-  - '@ai-sdk/gateway@3.0.119'
-  - '@ai-sdk/mcp@1.0.43'
-  - '@ai-sdk/vue@3.0.190'
-  - '@iconify-json/lucide@1.2.109'
-  - '@nuxt/ui@4.8.0'
-  - ai@6.0.190
