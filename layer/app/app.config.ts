@@ -73,11 +73,11 @@ export default defineAppConfig({
       close: 'i-lucide-panel-right-close',
       clearChat: 'i-lucide-list-x',
       providers: {
-        deepseek: 'i-hugeicons:deepseek',
-        alibaba: 'i-hugeicons:qwen',
-        zai: 'i-simple-icons:zig',
-        moonshotai: 'i-hugeicons:kimi-ai',
-        xai: 'i-hugeicons:grok-02'
+        deepseek: 'i-hugeicons-deepseek',
+        alibaba: 'i-hugeicons-qwen',
+        zai: 'i-custom-zai',
+        moonshotai: 'i-hugeicons-kimi-ai',
+        xai: 'i-hugeicons-grok-02'
       }
     }
   }

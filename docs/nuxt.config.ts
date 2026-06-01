@@ -23,11 +23,11 @@ export default defineNuxtConfig({
   compatibilityDate: 'latest',
 
   aiChat: {
-    model: 'anthropic/claude-sonnet-4.6',
+    model: 'zai/glm-5.1',
     models: [
       'zai/glm-5.1',
-      'openai/gpt-5.4',
-      'anthropic/claude-sonnet-4.6'
+      'openai/gpt-5.4-mini',
+      'alibaba/qwen3.6-plus'
     ]
   },
 
