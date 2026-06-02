@@ -1,4 +1,10 @@
 export default defineAppConfig({
+  aside: {
+    filter: {
+      enabled: true,
+      threshold: 1
+    }
+  },
   github: {
     rootDir: 'docs',
     commitPath: 'layer/app/components/content',
