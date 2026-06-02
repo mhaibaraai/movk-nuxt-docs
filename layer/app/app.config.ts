@@ -37,6 +37,14 @@ export default defineAppConfig({
       links: [] as ExtendedButtonProps[]
     }
   },
+  aside: {
+    filter: {
+      enabled: false,
+      placeholder: '过滤导航...',
+      threshold: 10,
+      shortcut: '/'
+    }
+  },
   github: {
     rootDir: '',
     dateFormat: {
