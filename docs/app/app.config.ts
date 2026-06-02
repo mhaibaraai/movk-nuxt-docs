@@ -1,8 +1,7 @@
 export default defineAppConfig({
   aside: {
     filter: {
-      enabled: true,
-      threshold: 1
+      enabled: true
     }
   },
   github: {
