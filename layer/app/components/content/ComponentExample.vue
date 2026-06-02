@@ -67,6 +67,11 @@ const props = withDefaults(defineProps<{
    */
   overflowHidden?: boolean
   /**
+   * 是否只在客户端渲染预览组件，适用于依赖 window / setInterval 等浏览器 API 的示例
+   * @defaultValue false
+   */
+  clientOnly?: boolean
+  /**
    * 是否添加 background-elevated 到 wrapper
    */
   elevated?: boolean
@@ -260,7 +265,10 @@ const urlSearchParams = computed(() => {
             class="flex justify-center p-4"
             :class="[props.class, { 'dark:bg-neutral-950/50 rounded-t-md': props.elevated }]"
           >
-            <component :is="resolvedComponent" v-bind="effectiveProps" />
+            <ClientOnly v-if="props.clientOnly">
+              <component :is="resolvedComponent" v-bind="effectiveProps" />
+            </ClientOnly>
+            <component :is="resolvedComponent" v-else v-bind="effectiveProps" />
           </div>
         </div>
 
