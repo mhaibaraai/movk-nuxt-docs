@@ -9,3 +9,9 @@ allowBuilds:
   sharp: true
   unrs-resolver: false
   vue-demi: false
+
+minimumReleaseAgeExclude:
+  - '@ai-sdk/gateway@3.0.122'
+  - '@ai-sdk/vue@3.0.194'
+  - '@iconify-json/simple-icons@1.2.85'
+  - ai@6.0.194

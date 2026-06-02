@@ -1,7 +1,7 @@
 {
   "name": "@movk/nuxt-docs",
   "type": "module",
-  "version": "1.19.3",
+  "version": "1.19.4",
   "private": false,
   "description": "Modern Nuxt 4 documentation theme with auto-generated component docs, AI chat assistant, MCP server, and complete developer experience optimization.",
   "author": "YiXuan <mhaibaraai@gmail.com>",
@@ -38,12 +38,12 @@
     "README.md"
   ],
   "dependencies": {
-    "@ai-sdk/gateway": "^3.0.121",
+    "@ai-sdk/gateway": "^3.0.122",
     "@ai-sdk/mcp": "^1.0.45",
-    "@ai-sdk/vue": "^3.0.193",
+    "@ai-sdk/vue": "^3.0.194",
     "@comark/vue": "^0.3.1",
     "@iconify-json/lucide": "^1.2.111",
-    "@iconify-json/simple-icons": "^1.2.84",
+    "@iconify-json/simple-icons": "^1.2.85",
     "@iconify-json/vscode-icons": "^1.2.53",
     "@movk/core": "^1.2.5",
     "@nuxt/a11y": "^1.0.0-alpha.1",
@@ -62,7 +62,7 @@
     "@takumi-rs/core": "^1.6.0",
     "@vueuse/core": "^14.3.0",
     "@vueuse/nuxt": "^14.3.0",
-    "ai": "^6.0.193",
+    "ai": "^6.0.194",
     "defu": "^6.1.7",
     "exsolve": "^1.0.8",
     "git-url-parse": "^16.1.0",

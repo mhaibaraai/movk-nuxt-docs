@@ -1,9 +1,9 @@
 {
   "name": "nuxt-docs-workspace",
   "type": "module",
-  "version": "1.19.3",
+  "version": "1.19.4",
   "private": true,
-  "packageManager": "pnpm@11.5.0",
+  "packageManager": "pnpm@11.5.1",
   "license": "MIT",
   "homepage": "https://docs.mhaibaraai.cn",
   "repository": {

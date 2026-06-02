@@ -1,5 +1,23 @@
 # 📋 Changelog
 
+## [1.19.4](https://github.com/mhaibaraai/movk-nuxt-docs/compare/v1.19.3...v1.19.4) (2026-06-02)
+
+### ✨ Features
+
+* **layer:** 为 ComponentExample 新增 clientOnly 预览选项 ([1c9947a](https://github.com/mhaibaraai/movk-nuxt-docs/commit/1c9947ab6075b0baeda9aa9321268f6433064d6d)), closes [#285](https://github.com/mhaibaraai/movk-nuxt-docs/issues/285)
+* **layer:** 新增侧边栏导航过滤功能 ([b5a609c](https://github.com/mhaibaraai/movk-nuxt-docs/commit/b5a609c8a06afb1e386fe6ae872f58c7baaf0f28)), closes [#top](https://github.com/mhaibaraai/movk-nuxt-docs/issues/top)
+
+### 📝 Documentation
+
+* 补充侧边栏过滤配置与修正 Aside 组件说明 ([a251938](https://github.com/mhaibaraai/movk-nuxt-docs/commit/a251938beb9e2e1a7e0dd467026e5b077dd0ad8e))
+
+### 🔧 Chores
+
+* **deps:** lock file maintenance ([601a8fd](https://github.com/mhaibaraai/movk-nuxt-docs/commit/601a8fddc63e4373a5a28a0c741e0200a44e7794))
+* **deps:** update all non-major dependencies ([f634d24](https://github.com/mhaibaraai/movk-nuxt-docs/commit/f634d245fc1ee7547f7572a45e1d54bf31c00ff1))
+* **deps:** 升级依赖至最新版本 ([463e20e](https://github.com/mhaibaraai/movk-nuxt-docs/commit/463e20e2190e9423feb2e9fd308ee0ed18101ba0))
+* **layer:** 更新 AI Chat 默认模型与服务商图标 ([6547fab](https://github.com/mhaibaraai/movk-nuxt-docs/commit/6547fab6ee8c25b0f36e68dfbdd1ccecc0369cbf))
+
 ## [1.19.3](https://github.com/mhaibaraai/movk-nuxt-docs/compare/v1.19.2...v1.19.3) (2026-05-26)
 
 ### 🐛 Bug Fixes
