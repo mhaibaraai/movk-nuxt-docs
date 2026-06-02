@@ -1,4 +1,9 @@
 export default defineAppConfig({
+  aside: {
+    filter: {
+      enabled: true
+    }
+  },
   github: {
     rootDir: 'docs',
     commitPath: 'layer/app/components/content',

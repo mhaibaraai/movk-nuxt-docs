@@ -176,6 +176,49 @@ export default defineNuxtSchema({
       }
     }),
 
+    aside: group({
+      title: '侧边栏',
+      description: '文档侧边栏配置',
+      icon: 'i-lucide-panel-left',
+      fields: {
+        filter: group({
+          title: '导航过滤',
+          description: '侧边栏导航过滤框配置',
+          icon: 'i-lucide-list-filter',
+          fields: {
+            enabled: field({
+              type: 'boolean',
+              title: '启用过滤',
+              description: '在侧边栏顶部显示导航过滤框',
+              icon: 'i-lucide-toggle-right',
+              default: false
+            }),
+            placeholder: field({
+              type: 'string',
+              title: '占位文本',
+              description: '过滤框的占位提示文本',
+              icon: 'i-lucide-text-cursor-input',
+              default: '过滤导航...'
+            }),
+            threshold: field({
+              type: 'number',
+              title: '显示阈值',
+              description: '当前分组导航项总数达到该值时才显示过滤框',
+              icon: 'i-lucide-hash',
+              default: 10
+            }),
+            shortcut: field({
+              type: 'string',
+              title: '聚焦快捷键',
+              description: '聚焦过滤框的键盘快捷键，留空则禁用',
+              icon: 'i-lucide-keyboard',
+              default: '/'
+            })
+          }
+        })
+      }
+    }),
+
     github: group({
       title: 'GitHub',
       description: 'GitHub 仓库配置',
