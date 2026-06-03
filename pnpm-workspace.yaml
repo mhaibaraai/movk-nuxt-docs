@@ -2,6 +2,12 @@ packages:
   - layer
   - docs
 
+ignoreWorkspaceRootCheck: true
+
+linkWorkspacePackages: true
+
+minimumReleaseAge: 0
+
 allowBuilds:
   '@parcel/watcher': false
   better-sqlite3: true
@@ -10,8 +16,3 @@ allowBuilds:
   unrs-resolver: false
   vue-demi: false
 
-minimumReleaseAgeExclude:
-  - '@ai-sdk/gateway@3.0.122'
-  - '@ai-sdk/vue@3.0.194'
-  - '@iconify-json/simple-icons@1.2.85'
-  - ai@6.0.194
