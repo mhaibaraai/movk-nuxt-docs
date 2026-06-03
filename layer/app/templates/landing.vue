@@ -32,6 +32,5 @@ if (import.meta.server) {
   <ContentRenderer
     v-if="page"
     :value="page"
-    :prose="false"
   />
 </template>
