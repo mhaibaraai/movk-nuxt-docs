@@ -60,22 +60,7 @@ ui:
   ---
   transition: { duration: 0.6, delay: 0.1 }
   ---
-    ::::prose-pre
-    ---
-    code: |
-      export default defineNuxtConfig({
-        extends: ['@movk/nuxt-docs'],
-        aiChat: {
-          model: 'zai/glm-4.7',
-          models: ['zai/glm-4.7', 'anthropic/claude-sonnet-4.6']
-        },
-        mcp: {
-          name: 'My Docs'
-        }
-      })
-    filename: nuxt.config.ts
-    ---
-
+    ::::code-group
     ```ts [nuxt.config.ts]
     export default defineNuxtConfig({
       extends: ['@movk/nuxt-docs'],
