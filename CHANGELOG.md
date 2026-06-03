@@ -1,5 +1,16 @@
 # 📋 Changelog
 
+## [1.19.5](https://github.com/mhaibaraai/movk-nuxt-docs/compare/v1.19.4...v1.19.5) (2026-06-03)
+
+### 🐛 Bug Fixes
+
+* **layer:** 移除 landing 模板的 prose=false 以恢复默认排版 ([6b06671](https://github.com/mhaibaraai/movk-nuxt-docs/commit/6b0667181db841f7a5ce505f6c6064c391b16b9f))
+
+### 🔧 Chores
+
+* **deps:** 关闭最小发布时长策略并更新锁定文件 ([5e6406c](https://github.com/mhaibaraai/movk-nuxt-docs/commit/5e6406c72df778a5e51060e608344fb7f4902d0e))
+* **deps:** 升级 nuxt、@movk/core、ai-sdk 及 shikijs 等依赖 ([21ee049](https://github.com/mhaibaraai/movk-nuxt-docs/commit/21ee049c40543a5d3f902284e64ca249301be608))
+
 ## [1.19.4](https://github.com/mhaibaraai/movk-nuxt-docs/compare/v1.19.3...v1.19.4) (2026-06-02)
 
 ### ✨ Features
