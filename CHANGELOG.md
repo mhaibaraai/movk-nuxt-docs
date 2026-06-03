@@ -1,5 +1,12 @@
 # 📋 Changelog
 
+## [1.19.6](https://github.com/mhaibaraai/movk-nuxt-docs/compare/v1.19.4...v1.19.6) (2026-06-03)
+
+### 🐛 Bug Fixes
+
+* **layer:** 修复侧边栏长菜单滚动穿透并提层 Hero 背景 ([d12b49f](https://github.com/mhaibaraai/movk-nuxt-docs/commit/d12b49f7c10e9f5ebc338b5e36314caf69538ca8))
+* **layer:** 移除 landing 模板的 prose=false 以恢复默认排版 ([6b06671](https://github.com/mhaibaraai/movk-nuxt-docs/commit/6b0667181db841f7a5ce505f6c6064c391b16b9f))
+
 ## [1.19.5](https://github.com/mhaibaraai/movk-nuxt-docs/compare/v1.19.4...v1.19.5) (2026-06-03)
 
 ### 🐛 Bug Fixes
