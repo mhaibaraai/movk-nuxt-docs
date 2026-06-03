@@ -18,7 +18,7 @@ onMounted(() => {
 
 <template>
   <div
-    class="absolute w-full -top-px transition-all text-primary shrink-0"
+    class="absolute w-full -top-px transition-all text-primary shrink-0 z-10 pointer-events-none"
     :class="[
       isLoading ? 'animate-pulse' : (appear ? heroBackgroundClass : 'opacity-0'),
       appeared ? 'duration-400' : 'duration-1000'

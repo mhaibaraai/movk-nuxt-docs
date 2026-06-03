@@ -17,7 +17,7 @@ watch(() => route.path, () => {
     <UContainer>
       <UPage>
         <template #left>
-          <UPageAside :ui="{ topHeader: 'bg-transparent', topBody: 'bg-transparent', topFooter: 'bg-transparent' }">
+          <UPageAside>
             <template v-if="showFilter" #top>
               <DocsAsideLeftTop />
             </template>
