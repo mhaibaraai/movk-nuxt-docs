@@ -31,11 +31,11 @@ export default defineNuxtConfig({
   compatibilityDate: 'latest',
 
   aiChat: {
-    model: 'zai/glm-5.1',
+    model: 'alibaba/qwen3.7-plus',
     models: [
-      'zai/glm-5.1',
-      'openai/gpt-5.4-mini',
-      'alibaba/qwen3.6-plus'
+      'alibaba/qwen3.7-plus',
+      'alibaba/glm-5.1',
+      'alibaba/deepseek-v3.2'
     ]
   },
 

@@ -81,6 +81,8 @@ export default defineAppConfig({
       close: 'i-lucide-panel-right-close',
       clearChat: 'i-lucide-list-x',
       providers: {
+        openai: 'i-simple-icons-openai',
+        anthropic: 'i-simple-icons-anthropic',
         deepseek: 'i-hugeicons-deepseek',
         alibaba: 'i-hugeicons-qwen',
         zai: 'i-custom-zai',

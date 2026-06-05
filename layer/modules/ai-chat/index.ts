@@ -8,6 +8,7 @@ import {
   defineNuxtModule,
   logger
 } from '@nuxt/kit'
+import { hasAnyAiKey } from './keys'
 
 export interface AiChatModuleOptions {
   /**
@@ -45,7 +46,7 @@ export default defineNuxtModule<AiChatModuleOptions>({
     models: []
   },
   setup(options, nuxt) {
-    const hasApiKey = !!process.env.AI_GATEWAY_API_KEY
+    const hasApiKey = hasAnyAiKey()
 
     const { resolve } = createResolver(import.meta.url)
 
