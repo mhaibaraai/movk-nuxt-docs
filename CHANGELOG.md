@@ -1,5 +1,11 @@
 # 📋 Changelog
 
+## [1.19.7](https://github.com/mhaibaraai/movk-nuxt-docs/compare/v1.19.6...v1.19.7) (2026-06-05)
+
+### 🐛 Bug Fixes
+
+* **layer:** 移除 layer 注入版本号，改由消费方提供 ([80cfd66](https://github.com/mhaibaraai/movk-nuxt-docs/commit/80cfd665ec9563bda9e673f75a942aefa2bb968e))
+
 ## [1.19.6](https://github.com/mhaibaraai/movk-nuxt-docs/compare/v1.19.4...v1.19.6) (2026-06-03)
 
 ### 🐛 Bug Fixes
