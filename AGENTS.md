@@ -72,8 +72,8 @@ AI 聊天通过自定义 Nuxt 模块实现：
 
 - **服务端 API** — `runtime/server/api/ai-chat.ts` 使用 Vercel AI SDK 的 `streamText`，通过 MCP 客户端连接文档 MCP Server 获取工具，再路由到 AI Gateway 调用 LLM。
 - **组件** — `AiChatPanel.vue` 使用 `@ai-sdk/vue` 的 `Chat` 类管理对话状态，支持流式输出与推理内容展示。
-- **模型路由** — `@ai-sdk/gateway` 统一调用，可切换 Anthropic / OpenAI / Google / DeepSeek / GLM 等。
-- **条件编译** — `layer/nuxt.config.ts` 的 `vite:extendConfig` 钩子读取 `process.env.AI_GATEWAY_API_KEY`：缺失时 `@ai-sdk/vue`、`ai`、`shiki-stream/vue`、`@shikijs/core` 等不会被预打包，AiChat 组件全部降级为禁用版本。
+- **模型路由** — `runtime/server/utils/getModel.ts` 按「用户注册的 provider > 内置直连 provider > AI Gateway 兜底」三级优先级解析模型 id。内置 provider 覆盖 OpenAI / Anthropic / DeepSeek / 阿里云通义千问（`alibaba`）/ 智谱 GLM（`zai`），前缀与环境变量映射集中在 `layer/modules/ai-chat/keys.ts` 的 `AI_BUILTIN_PROVIDERS`。`modelProviderRegistry`（`modelProviders.ts`）仅作为消费方扩展/覆盖入口。
+- **条件编译** — `layer/nuxt.config.ts` 的 `vite:extendConfig` 钩子调用 `hasAnyAiKey()`（读取 `AI_GATEWAY_API_KEY` 或任一 provider key）：全部缺失时 `@ai-sdk/vue`、`ai`、`shiki-stream/vue`、`@shikijs/core` 等不会被预打包，AiChat 组件全部降级为禁用版本。同一判定同时驱动模块启用、handler 注册与前端 `aiChat.enabled`。
 
 ### Skills 模块（`layer/modules/skills/`）
 
@@ -129,7 +129,14 @@ description: |            # 功能描述 + 触发词列表
 | 变量 | 必需 | 说明 |
 |------|------|------|
 | `NUXT_GITHUB_TOKEN` | 生产环境必需 | 获取 GitHub Releases、提交历史等数据 |
-| `AI_GATEWAY_API_KEY` | 否 | 启用 AI Chat 功能。缺失时 AI 相关依赖不会被打包，所有 AiChat 组件降级为禁用态 |
+| `AI_GATEWAY_API_KEY` | 否 | AI Gateway 兜底密钥，统一代理多家模型 |
+| `OPENAI_API_KEY` | 否 | 存在则 `openai/*` 模型直连官方 SDK，否则走 Gateway |
+| `ANTHROPIC_API_KEY` | 否 | 存在则 `anthropic/*` 模型直连官方 SDK，否则走 Gateway |
+| `DEEPSEEK_API_KEY` | 否 | 存在则 `deepseek/*` 模型直连官方 SDK，否则走 Gateway |
+| `ALIBABA_API_KEY` | 否 | 存在则 `alibaba/*`（通义千问）模型直连官方 SDK，否则走 Gateway |
+| `ZHIPU_API_KEY` | 否 | 存在则 `zai/*`（智谱 GLM）模型直连官方 SDK，否则走 Gateway |
+
+> 以上任一密钥存在即启用 AI Chat；全部缺失时 AI 相关依赖不会被打包，所有 AiChat 组件降级为禁用态。可选 `<PROVIDER>_BASE_URL`（约定为 `*_API_KEY` → `*_BASE_URL`，如 `ALIBABA_BASE_URL`）覆盖对应 provider 的端点/区域，如阿里云国内百炼端点。
 
 ## CI/CD
 
