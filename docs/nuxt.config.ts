@@ -1,3 +1,5 @@
+import pkg from '../package.json'
+
 export default defineNuxtConfig({
   extends: ['@movk/nuxt-docs'],
 
@@ -10,6 +12,12 @@ export default defineNuxtConfig({
   $production: {
     site: {
       url: 'https://docs.mhaibaraai.cn'
+    }
+  },
+
+  runtimeConfig: {
+    public: {
+      version: pkg.version
     }
   },
 

@@ -1,5 +1,4 @@
 import { defineNuxtConfig } from 'nuxt/config'
-import pkg from './package.json'
 import { createResolver, useNuxt } from '@nuxt/kit'
 import { join } from 'pathe'
 
@@ -78,12 +77,6 @@ export default defineNuxtConfig({
         'ChatReasoning',
         'ChatTool'
       ]
-    }
-  },
-
-  runtimeConfig: {
-    public: {
-      version: pkg.version
     }
   },
 
