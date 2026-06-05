@@ -1,6 +1,7 @@
 import { streamText, convertToModelMessages, stepCountIs, smoothStream } from 'ai'
 import { createMCPClient } from '@ai-sdk/mcp'
 import { getModel } from '../utils/getModel'
+import { hasAnyAiKey } from '../../../keys'
 
 function getMainAgentSystemPrompt(siteName: string, currentPage?: string | null) {
   return `You are a helpful assistant for ${siteName}, the official documentation site. Treat the documentation and MCP tool results as the source of truth. Use your knowledge base tools to search for relevant information before answering documentation questions.
@@ -26,7 +27,7 @@ ${currentPage ? `The user is currently viewing the documentation page at \`${cur
 }
 
 export default defineEventHandler(async (event) => {
-  if (!process.env.AI_GATEWAY_API_KEY) {
+  if (!hasAnyAiKey()) {
     throw createError({ statusCode: 503, message: 'AI Chat is not configured.' })
   }
 

@@ -1,6 +1,7 @@
 import { defineNuxtConfig } from 'nuxt/config'
 import { createResolver, useNuxt } from '@nuxt/kit'
 import { join } from 'pathe'
+import { hasAnyAiKey } from './modules/ai-chat/keys'
 
 const { resolve } = createResolver(import.meta.url)
 
@@ -122,7 +123,7 @@ export default defineNuxtConfig({
 
       // AI Chat static deps — only pre-bundle when the feature is actually enabled.
       // @shikijs/langs/* and @shikijs/themes/* are dynamically imported in useHighlighter.ts
-      if (process.env.AI_GATEWAY_API_KEY) {
+      if (hasAnyAiKey()) {
         cfg.optimizeDeps.include.push(
           '@movk/nuxt-docs > @ai-sdk/vue',
           '@movk/nuxt-docs > ai',
