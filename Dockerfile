@@ -14,7 +14,7 @@ WORKDIR /app
 ENV NODE_OPTIONS="--max-old-space-size=8192"
 COPY . .
 RUN --mount=type=secret,id=NUXT_GITHUB_TOKEN \
-    --mount=type=secret,id=AI_GATEWAY_API_KEY \
+    --mount=type=secret,id=ALIBABA_API_KEY \
     for f in /run/secrets/*; do echo "$(basename $f)=$(cat $f)"; done > docs/.env && \
     pnpm dev:prepare && pnpm build && rm -f docs/.env
 
