@@ -1,5 +1,15 @@
 # 📋 Changelog
 
+## [1.19.8](https://github.com/mhaibaraai/movk-nuxt-docs/compare/v1.19.7...v1.19.8) (2026-06-06)
+
+### ✨ Features
+
+* **ai-chat:** 新增内置模型提供商直连 ([53f84c3](https://github.com/mhaibaraai/movk-nuxt-docs/commit/53f84c394a0bb4cd9715a6f9508324f40adf318d))
+
+### 📝 Documentation
+
+* **ai-chat:** 补充内置提供商与环境变量说明 ([0e1bcfc](https://github.com/mhaibaraai/movk-nuxt-docs/commit/0e1bcfc2ce54434bffc21b84885bfa826df2a9c6))
+
 ## [1.20.0](https://github.com/mhaibaraai/movk-nuxt-docs/compare/v1.19.7...v1.20.0) (2026-06-06)
 
 ### ✨ Features
