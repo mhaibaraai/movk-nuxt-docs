@@ -41,9 +41,22 @@ jobs:
       - name: Install dependencies
         run: pnpm install --frozen-lockfile
 
+      # Standard GitHub runners only have ~7GB RAM; the Nuxt prerender peaks
+      # above that, so provision swap to let V8 use the full heap without thrashing.
+      - name: Provision swap space
+        run: |
+          sudo swapoff -a || true
+          sudo rm -f /mnt/swapfile
+          sudo fallocate -l 12G /mnt/swapfile
+          sudo chmod 600 /mnt/swapfile
+          sudo mkswap /mnt/swapfile
+          sudo swapon /mnt/swapfile
+          sudo sysctl -w vm.swappiness=80
+          free -h
+
       - name: Build docs site
         env:
-          NODE_OPTIONS: --max-old-space-size=8192
+          NODE_OPTIONS: --max-old-space-size=10240
           NUXT_GITHUB_TOKEN: ${{ secrets.NUXT_GITHUB_TOKEN }}
           ALIBABA_API_KEY: ${{ secrets.ALIBABA_API_KEY }}
         run: pnpm build
