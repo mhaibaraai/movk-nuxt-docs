@@ -1,28 +1,6 @@
-# VCS
-.github
-
-# Dependencies (matched at any depth)
-node_modules
-
-# Build artifacts (matched at any depth)
-dist
-.output
-.nuxt
-
-# Cache & temp
-.cache
-.temp
-.tmp
-.data
-
-# Tests
-test
-coverage
-reports
-*.lcov
-
-# Logs
-*.log
-
-# Config not needed for build
-renovate.json
+# Build happens on the CI runner; the image only packages docs/.output.
+# Ignore everything except that runtime payload to keep the build context tiny.
+*
+!docs
+docs/*
+!docs/.output

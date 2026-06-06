@@ -20,6 +20,34 @@ jobs:
 
     steps:
       - uses: actions/checkout@v6
+      - uses: pnpm/action-setup@v6
+      - uses: actions/setup-node@v6
+        with:
+          node-version: lts/*
+          cache: pnpm
+
+      - name: Restore Nuxt build cache
+        uses: actions/cache@v5
+        with:
+          path: |
+            docs/.nuxt
+            layer/.nuxt
+            node_modules/.cache
+          key: nuxt-${{ runner.os }}-${{ hashFiles('pnpm-lock.yaml') }}-${{ hashFiles('docs/content/**') }}
+          restore-keys: |
+            nuxt-${{ runner.os }}-${{ hashFiles('pnpm-lock.yaml') }}-
+            nuxt-${{ runner.os }}-
+
+      - name: Install dependencies
+        run: pnpm install --frozen-lockfile
+
+      - name: Build docs site
+        env:
+          NODE_OPTIONS: --max-old-space-size=8192
+          NUXT_GITHUB_TOKEN: ${{ secrets.NUXT_GITHUB_TOKEN }}
+          ALIBABA_API_KEY: ${{ secrets.ALIBABA_API_KEY }}
+        run: pnpm build
+
       - uses: docker/setup-buildx-action@v4
 
       - name: Log in to GHCR
@@ -37,8 +65,5 @@ jobs:
           tags: |
             ${{ env.IMAGE }}:latest
             ${{ env.IMAGE }}:${{ github.sha }}
-          secrets: |
-            NUXT_GITHUB_TOKEN=${{ secrets.NUXT_GITHUB_TOKEN }}
-            ALIBABA_API_KEY=${{ secrets.ALIBABA_API_KEY }}
           cache-from: type=gha
           cache-to: type=gha,mode=max
