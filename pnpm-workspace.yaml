@@ -15,6 +15,3 @@ allowBuilds:
   sharp: true
   unrs-resolver: false
   vue-demi: false
-
-overrides:
-  'nuxt': 4.4.6

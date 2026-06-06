@@ -74,7 +74,7 @@
     "nuxt-component-meta": "^0.17.2",
     "nuxt-llms": "^0.2.0",
     "nuxt-og-image": "^6.5.2",
-    "nuxt-schema-org": "^6.1.0",
+    "nuxt-schema-org": "~6.0.4",
     "nuxt-site-config": "^4.0.8",
     "ohash": "^2.0.11",
     "pathe": "^2.0.3",
