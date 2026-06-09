@@ -14,7 +14,7 @@
   "scripts": {
     "postinstall": "pnpm dev:prepare",
     "build": "nuxt build docs --extends ../layer",
-    "dev": "cross-env TMPDIR=/tmp nuxt dev docs --extends ../layer",
+    "dev": "nuxt dev docs --extends ../layer",
     "dev:prepare": "nuxt prepare layer && nuxt prepare docs --extends ../layer",
     "release": "pnpm release:layer && release-it",
     "release:layer": "release-it --config .release-it.layer.json && cd layer && npm publish",
@@ -29,11 +29,10 @@
     "@nuxt/eslint-config": "^1.15.2",
     "@release-it/bumper": "^7.0.6",
     "@release-it/conventional-changelog": "^11.0.1",
-    "cross-env": "^10.1.0",
     "eslint": "^10.4.1",
-    "nuxt": "^4.4.7",
+    "nuxt": "^4.4.8",
     "release-it": "^20.2.0",
     "typescript": "^6.0.3",
-    "vue-tsc": "^3.3.3"
+    "vue-tsc": "^3.3.4"
   }
 }
