@@ -6,7 +6,7 @@ import { resolveModulePath } from 'exsolve'
 
 export default defineNuxtModule({
   meta: {
-    name: 'css'
+    name: 'movk-nuxt-docs-css'
   },
   setup(_options, nuxt) {
     const currentDir = dirname(fileURLToPath(import.meta.url))
