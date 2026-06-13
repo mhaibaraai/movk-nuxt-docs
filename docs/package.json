@@ -10,7 +10,7 @@
     "@movk/nuxt-docs": "workspace:*",
     "@nuxt/ui": "^4.8.2",
     "better-sqlite3": "^12.10.0",
-    "dompurify": "^3.4.8",
+    "dompurify": "^3.4.9",
     "mermaid": "^11.15.0",
     "nuxt": "^4.4.8",
     "tailwindcss": "^4.3.0"
