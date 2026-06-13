@@ -1,5 +1,27 @@
 # 📋 Changelog
 
+## [1.19.9](https://github.com/mhaibaraai/movk-nuxt-docs/compare/v1.19.8...v1.19.9) (2026-06-13)
+
+### ⚠ BREAKING CHANGES
+
+* **layer:** @nuxt/content 改为 peerDependency，消费方需显式安装 @nuxt/content
+
+### 🐛 Bug Fixes
+
+* **css:** 重命名 CSS 模块名称避免命名冲突 ([2f7f9de](https://github.com/mhaibaraai/movk-nuxt-docs/commit/2f7f9de83488f01da1f6181a2bbb9e9fbf6278b4))
+* **layer:** 将 @nuxt/content 移至 peerDependencies ([ac928a4](https://github.com/mhaibaraai/movk-nuxt-docs/commit/ac928a4dd8c7d828b9dca318771e8e50b5081667))
+
+### 📝 Documentation
+
+* **installation:** Layer 集成补充 @nuxt/content 安装与说明 ([5d55a96](https://github.com/mhaibaraai/movk-nuxt-docs/commit/5d55a965acbf3afc44ae8c158849d7ca0147acc2))
+
+### 🔧 Chores
+
+* **deps:** update all non-major dependencies ([1efa034](https://github.com/mhaibaraai/movk-nuxt-docs/commit/1efa0340a9f5328170585279ba9fee8597c30226))
+* **deps:** update nuxt framework to ^4.4.8 ([03d8e08](https://github.com/mhaibaraai/movk-nuxt-docs/commit/03d8e08eecda580662f6fecda7d6be242256140e))
+* **deps:** 升级依赖版本 ([a1b4d14](https://github.com/mhaibaraai/movk-nuxt-docs/commit/a1b4d145c87deb930a73314030048ca9e862e49e))
+* **deps:** 升级依赖版本并简化区块提取逻辑 ([96a9328](https://github.com/mhaibaraai/movk-nuxt-docs/commit/96a9328f713d4e7a2ca04c06111b55b17095841c))
+
 ## [1.19.8](https://github.com/mhaibaraai/movk-nuxt-docs/compare/v1.19.7...v1.19.8) (2026-06-06)
 
 ### ✨ Features
