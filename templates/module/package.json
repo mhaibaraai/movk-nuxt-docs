@@ -8,6 +8,6 @@
     "@movk/nuxt-docs": "latest",
     "better-sqlite3": "^12.10.0",
     "nuxt": "^4.4.8",
-    "tailwindcss": "^4.3.0"
+    "tailwindcss": "^4.3.1"
   }
 }
