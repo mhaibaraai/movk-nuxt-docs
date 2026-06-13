@@ -13,6 +13,7 @@
   },
   "main": "./nuxt.config.ts",
   "peerDependencies": {
+    "@nuxt/content": "^3.14.0",
     "better-sqlite3": "12.x",
     "dompurify": "3.x",
     "mermaid": "11.x",
@@ -51,7 +52,6 @@
     "@iconify-json/vscode-icons": "^1.2.56",
     "@movk/core": "^1.3.0",
     "@nuxt/a11y": "^1.0.0-alpha.1",
-    "@nuxt/content": "^3.14.0",
     "@nuxt/image": "^2.0.0",
     "@nuxt/kit": "^4.4.8",
     "@nuxt/ui": "^4.8.2",
@@ -88,5 +88,8 @@
     "yaml": "^2.9.0",
     "zhipu-ai-provider": "^0.3.1",
     "zod": "^4.4.3"
+  },
+  "devDependencies": {
+    "@nuxt/content": "^3.14.0"
   }
 }

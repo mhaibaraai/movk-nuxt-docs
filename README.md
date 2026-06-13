@@ -103,8 +103,10 @@ pnpm dev
 在现有 Nuxt 项目中使用 Movk Nuxt Docs 作为 layer：
 
 ```bash [Terminal]
-pnpm add @movk/nuxt-docs better-sqlite3 tailwindcss
+pnpm add @movk/nuxt-docs @nuxt/content better-sqlite3 tailwindcss
 ```
+
+> `@nuxt/content` 为 peerDependency，必须安装在应用自身依赖中，否则内容集合类型增强无法解析。
 
 在 `nuxt.config.ts` 中配置：
 
