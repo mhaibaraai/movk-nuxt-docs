@@ -107,7 +107,7 @@ npx nuxi init -t gh:mhaibaraai/movk-nuxt-docs/templates/module my-module-docs
 │           └── 2.installation.md
 ├── public/
 │   ├── favicon.ico
-│   └── logo.svg
+│   └── icon.svg
 ├── .editorconfig
 ├── .env.example
 ├── .gitignore
@@ -138,7 +138,7 @@ npx nuxi init -t gh:mhaibaraai/movk-nuxt-docs/templates/module my-module-docs
 │           └── 2.installation.md
 ├── public/
 │   ├── favicon.ico
-│   └── logo.svg
+│   └── icon.svg
 ├── .env.example
 ├── nuxt.config.ts
 ├── package.json

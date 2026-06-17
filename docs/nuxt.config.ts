@@ -30,6 +30,18 @@ export default defineNuxtConfig({
 
   compatibilityDate: 'latest',
 
+  vite: {
+    optimizeDeps: {
+      include: [
+        '@comark/vue',
+        '@comark/vue/plugins/highlight',
+        '@movk/core',
+        '@unhead/schema-org/vue',
+        'shiki-transformer-color-highlight'
+      ]
+    }
+  },
+
   aiChat: {
     model: 'alibaba/qwen3.7-plus',
     models: [
