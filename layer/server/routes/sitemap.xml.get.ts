@@ -12,9 +12,8 @@ export default defineEventHandler(async (event) => {
     .order('path', 'ASC')
     .all()
 
-  const today = new Date().toISOString().split('T')[0]
   const urls = pages.map(page =>
-    `  <url>\n    <loc>${xmlEscape(createSiteURL(event, page.path))}</loc>\n    <lastmod>${today}</lastmod>\n  </url>`
+    `  <url>\n    <loc>${xmlEscape(createSiteURL(event, page.path))}</loc>\n  </url>`
   ).join('\n')
 
   const xml = `<?xml version="1.0" encoding="UTF-8"?>

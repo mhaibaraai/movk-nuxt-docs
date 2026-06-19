@@ -46,7 +46,6 @@ export default defineCachedEventHandler(async (event) => {
     `seo_title: ${JSON.stringify(seoTitle)}`,
     `seo_description: ${JSON.stringify(seoDescription)}`,
     `canonical_url: ${JSON.stringify(canonicalUrl)}`,
-    `last_updated: ${JSON.stringify(new Date().toISOString().split('T')[0])}`,
     '---',
     '\n'
   ].join('\n')
