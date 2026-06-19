@@ -3,9 +3,7 @@ packages:
   - docs
 
 ignoreWorkspaceRootCheck: true
-
 linkWorkspacePackages: true
-
 minimumReleaseAge: 0
 
 allowBuilds:
