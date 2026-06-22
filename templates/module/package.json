@@ -7,7 +7,7 @@
   "dependencies": {
     "@movk/nuxt-docs": "latest",
     "@nuxt/content": "^3.14.0",
-    "better-sqlite3": "^12.10.0",
+    "better-sqlite3": "^12.10.1",
     "nuxt": "^4.4.8",
     "tailwindcss": "^4.3.1"
   }

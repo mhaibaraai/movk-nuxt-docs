@@ -1,5 +1,25 @@
 # 📋 Changelog
 
+## [1.19.10](https://github.com/mhaibaraai/movk-nuxt-docs/compare/v1.19.9...v1.19.10) (2026-06-22)
+
+### ✨ Features
+
+* **logo:** 替换站点 Logo 为可复制的 SVG 组件并动态生成 favicon ([b9f9a50](https://github.com/mhaibaraai/movk-nuxt-docs/commit/b9f9a500eb3b038e7c1c96c9dab1d085f9457dc4))
+
+### 🐛 Bug Fixes
+
+* **raw:** 移除 raw 与 sitemap 路由中的动态时间戳字段 ([33457ff](https://github.com/mhaibaraai/movk-nuxt-docs/commit/33457ffa48ed9e292b4d2c0d1c7729c2ae464db5))
+
+### 📝 Documentation
+
+* **getting-started:** 在介绍页新增 @movk/mapbox 生态卡片 ([f225952](https://github.com/mhaibaraai/movk-nuxt-docs/commit/f2259522effdb3dd8308dd84d657336504594c4a))
+
+### 🔧 Chores
+
+* **deps:** lock file maintenance ([33abd0f](https://github.com/mhaibaraai/movk-nuxt-docs/commit/33abd0f4aaa7e1e2dc97bef5322106db4367f133))
+* **deps:** update actions/checkout action to v7 ([17d35ec](https://github.com/mhaibaraai/movk-nuxt-docs/commit/17d35ec7a71f852000ce01dcc14c4a73ce64ae1d))
+* **deps:** 升级依赖版本并更新 pnpm 至 11.8.0 ([238d8fd](https://github.com/mhaibaraai/movk-nuxt-docs/commit/238d8fdb8eceead095e612a53a82d23ffc3ac125))
+
 ## [1.19.9](https://github.com/mhaibaraai/movk-nuxt-docs/compare/v1.19.8...v1.19.9) (2026-06-13)
 
 ### ⚠ BREAKING CHANGES
