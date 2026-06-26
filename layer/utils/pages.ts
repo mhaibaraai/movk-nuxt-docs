@@ -25,3 +25,12 @@ export function releasesFileExists(rootDir: string): boolean {
     existsSync(joinURL(rootDir, 'content', file))
   )
 }
+
+/**
+ * 检查是否存在 templates 文件，即 content/templates.md 或 content/templates.yml
+ */
+export function templatesFileExists(rootDir: string): boolean {
+  return ['templates.md', 'templates.yml'].some(file =>
+    existsSync(joinURL(rootDir, 'content', file))
+  )
+}

@@ -1,0 +1,64 @@
+title: 案例展示
+description: 这些站点均由 Movk Nuxt Docs 构建，展示该主题在真实项目中的应用。
+navigation: false
+hero:
+  title: 案例展示
+  description: 这些站点均由 Movk Nuxt Docs 构建，展示该主题在真实项目中的应用。
+  links:
+    - label: 在 GitHub 上标星
+      color: neutral
+      variant: outline
+      to: https://github.com/mhaibaraai/movk-nuxt-docs
+      target: _blank
+      icon: i-lucide-star
+items:
+  - title: mhaibaraai.cn
+    description: 技术博客和知识库站点。
+    features:
+      - title: 技术博客
+        icon: i-lucide-notebook
+      - title: 知识库
+        icon: i-lucide-library
+    links:
+      - label: 访问站点
+        to: https://mhaibaraai.cn
+        target: _blank
+        icon: i-lucide-link
+  - title: '@movk/core'
+    description: Vue.js 实用工具和 Composables 库。
+    features:
+      - title: 实用工具
+        icon: i-lucide-wrench
+      - title: Composables
+        icon: i-lucide-package
+    links:
+      - label: 访问站点
+        to: https://core.mhaibaraai.cn
+        target: _blank
+        icon: i-lucide-link
+  - title: '@movk/nuxt'
+    description: Nuxt 4 模块化工程套件，提供 Schema 驱动表单、UI 组件和工具函数。
+    features:
+      - title: Schema 驱动表单
+        icon: i-lucide-form-input
+      - title: UI 组件
+        icon: i-lucide-shapes
+      - title: 工具函数
+        icon: i-lucide-wrench
+    links:
+      - label: 访问站点
+        to: https://nuxt.mhaibaraai.cn
+        target: _blank
+        icon: i-lucide-link
+  - title: '@movk/mapbox'
+    description: 声明式 Mapbox GL v3 封装库，组件化组合地图、图层、标记与控件。
+    features:
+      - title: 声明式封装
+        icon: i-lucide-code-xml
+      - title: 地图组件
+        icon: i-lucide-map
+    links:
+      - label: 访问站点
+        to: https://mapbox.mhaibaraai.cn
+        target: _blank
+        icon: i-lucide-link

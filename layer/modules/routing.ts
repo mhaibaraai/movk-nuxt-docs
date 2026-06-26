@@ -1,5 +1,5 @@
 import { defineNuxtModule, extendPages, createResolver } from '@nuxt/kit'
-import { landingPageExists, releasesFileExists } from '../utils/pages'
+import { landingPageExists, releasesFileExists, templatesFileExists } from '../utils/pages'
 
 export default defineNuxtModule({
   meta: {
@@ -10,6 +10,7 @@ export default defineNuxtModule({
     const rootDir = nuxt.options.rootDir
 
     const hasReleasesFile = releasesFileExists(rootDir)
+    const hasTemplatesFile = templatesFileExists(rootDir)
     const hasLandingPage = landingPageExists(rootDir)
     const routeRules = nuxt.options.routeRules ||= {}
 
@@ -64,6 +65,14 @@ export default defineNuxtModule({
           name: 'releases',
           path: '/releases',
           file: resolve('../app/templates/releases.vue')
+        })
+      }
+
+      if (hasTemplatesFile) {
+        pages.push({
+          name: 'templates',
+          path: '/templates',
+          file: resolve('../app/templates/templates.vue')
         })
       }
     })
