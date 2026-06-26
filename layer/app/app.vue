@@ -86,7 +86,12 @@ provide('navigation', rootNavigation)
 
             <AiChatFloatingInput />
 
-            <UContentSearch :files="files" :navigation="rootNavigation" :fuse="fuse" />
+            <UContentSearch
+              :files="files"
+              :navigation="rootNavigation"
+              :fuse="fuse"
+              :unmount-on-hide="false"
+            />
           </ClientOnly>
         </template>
       </div>
