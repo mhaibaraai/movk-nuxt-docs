@@ -184,6 +184,15 @@ const faqQuestions = computed<FaqCategory[]>(() => {
 
   return normalizeFaqQuestions(faqConfig)
 })
+
+const promptRef = useTemplateRef('promptRef')
+watch(open, (value) => {
+  if (value) {
+    nextTick(() => {
+      promptRef.value?.textareaRef?.focus()
+    })
+  }
+})
 </script>
 
 <template>
@@ -297,6 +306,7 @@ const faqQuestions = computed<FaqCategory[]>(() => {
 
     <template #footer>
       <UChatPrompt
+        ref="promptRef"
         v-model="input"
         :error="chat.error"
         :placeholder="aiChat.texts?.placeholder ?? ''"
