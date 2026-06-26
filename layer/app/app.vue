@@ -57,7 +57,7 @@ provide('navigation', rootNavigation)
       :ui="{
         contentNavigation: {
           linkLeadingIcon: 'size-4 mr-1',
-          linkTrailing: 'hidden'
+          linkTrailingIcon: 'hidden'
         },
         pageLinks: {
           linkLeadingIcon: 'size-4',
@@ -86,7 +86,12 @@ provide('navigation', rootNavigation)
 
             <AiChatFloatingInput />
 
-            <UContentSearch :files="files" :navigation="rootNavigation" :fuse="fuse" />
+            <UContentSearch
+              :files="files"
+              :navigation="rootNavigation"
+              :fuse="fuse"
+              :unmount-on-hide="false"
+            />
           </ClientOnly>
         </template>
       </div>

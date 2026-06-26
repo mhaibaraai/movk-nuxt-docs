@@ -6,6 +6,9 @@ ignoreWorkspaceRootCheck: true
 linkWorkspacePackages: true
 minimumReleaseAge: 0
 
+overrides:
+  h3: 1.15.11
+
 allowBuilds:
   '@parcel/watcher': false
   better-sqlite3: true
