@@ -68,6 +68,27 @@ const collections: Record<string, DefinedCollection> = {
       releases: z.string().optional(),
       hero: PageHero.optional()
     })
+  }),
+  templates: defineCollection({
+    type: 'page',
+    source: {
+      cwd,
+      include: 'templates.{md,yml}'
+    },
+    schema: z.object({
+      title: z.string(),
+      description: z.string(),
+      hero: PageHero.optional(),
+      items: z.array(z.object({
+        title: z.string(),
+        description: z.string(),
+        features: z.array(z.object({
+          title: z.string(),
+          icon: z.string().optional()
+        })).optional(),
+        links: z.array(Button).optional()
+      }))
+    })
   })
 }
 

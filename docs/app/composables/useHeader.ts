@@ -6,6 +6,9 @@ export function useHeader() {
     to: '/docs/getting-started',
     active: route.path.startsWith('/docs/')
   }, {
+    label: '案例',
+    to: '/templates'
+  }, {
     label: '版本发布',
     to: '/releases'
   }])
@@ -30,6 +33,10 @@ export function useHeader() {
     icon: 'i-lucide-square-function',
     to: '/docs/composables',
     active: route.path.startsWith('/docs/composables')
+  }, {
+    label: '案例',
+    icon: 'i-lucide-layout-template',
+    to: '/templates'
   }, {
     label: '发布版本',
     icon: 'i-lucide-newspaper',
