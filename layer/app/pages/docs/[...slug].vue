@@ -128,9 +128,21 @@ useSeoMeta({
       right: 'lg:hidden'
     } : undefined"
   >
-    <UPageHeader :title="page.title">
+    <UPageHeader>
       <template #headline>
         <UBreadcrumb :items="breadcrumb" />
+      </template>
+
+      <template #title>
+        {{ page.title }}
+
+        <UBadge
+          v-if="page.navigation?.badge"
+          :label="page.navigation?.badge"
+          variant="subtle"
+          size="lg"
+          class="rounded-full align-middle"
+        />
       </template>
 
       <template #description>

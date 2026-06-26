@@ -20,5 +20,13 @@ const navigationKey = computed(() =>
 </script>
 
 <template>
-  <UContentNavigation :key="navigationKey" :navigation="filteredNavigation" highlight />
+  <UContentNavigation
+    :key="navigationKey"
+    :collapsible="false"
+    :navigation="filteredNavigation"
+    highlight
+    :ui="{
+      linkTrailingBadge: 'font-semibold uppercase'
+    }"
+  />
 </template>

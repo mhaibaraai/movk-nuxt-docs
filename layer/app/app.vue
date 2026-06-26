@@ -57,7 +57,7 @@ provide('navigation', rootNavigation)
       :ui="{
         contentNavigation: {
           linkLeadingIcon: 'size-4 mr-1',
-          linkTrailing: 'hidden'
+          linkTrailingIcon: 'hidden'
         },
         pageLinks: {
           linkLeadingIcon: 'size-4',

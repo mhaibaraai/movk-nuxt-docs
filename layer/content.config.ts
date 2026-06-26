@@ -51,7 +51,8 @@ const collections: Record<string, DefinedCollection> = {
       links: z.array(Button),
       category: z.string().optional(),
       navigation: z.object({
-        title: z.string().optional()
+        title: z.string().optional(),
+        badge: z.string().optional()
       })
     })
   }),
