@@ -1,0 +1,15 @@
+{
+  "nav": {
+    "docs": "文档",
+    "examples": "案例",
+    "releases": "版本发布",
+    "gettingStarted": "快速开始",
+    "typography": "排版",
+    "components": "组件",
+    "composables": "组合式函数"
+  },
+  "category": {
+    "core-concepts": "核心概念",
+    "ai": "AI 集成"
+  }
+}

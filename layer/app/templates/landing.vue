@@ -1,5 +1,10 @@
 <script setup lang="ts">
-const { data: page } = await useAsyncData('landing', () => queryCollection('landing').path('/').first())
+const route = useRoute()
+const { landingCollection } = useMovkI18n()
+
+const collection = landingCollection.value as 'landing'
+
+const { data: page } = await useAsyncData(`landing-${route.path}`, () => queryCollection(collection).path(route.path).first())
 if (!page.value) {
   throw createError({ status: 404, statusText: 'Page not found', fatal: true })
 }

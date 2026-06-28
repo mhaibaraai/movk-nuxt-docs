@@ -88,6 +88,9 @@ npx nuxi init -t gh:mhaibaraai/movk-nuxt-docs/templates/default my-docs
 
 # Module documentation template
 npx nuxi init -t gh:mhaibaraai/movk-nuxt-docs/templates/module my-module-docs
+
+# Multilingual template (zh-CN + en, preconfigured @nuxtjs/i18n)
+npx nuxi init -t gh:mhaibaraai/movk-nuxt-docs/templates/i18n my-docs
 ```
 
 **Full template**
@@ -142,6 +145,36 @@ npx nuxi init -t gh:mhaibaraai/movk-nuxt-docs/templates/module my-module-docs
 ├── .env.example
 ├── nuxt.config.ts
 ├── package.json
+└── tsconfig.json
+```
+
+**Multilingual (i18n) template**
+
+Default locale content stays at the `content/` root (no prefix); other locales live under `content/{locale}/` (prefixed). `@nuxtjs/i18n` is preconfigured with `zh-CN` (default) and `en`.
+
+```
+[docs-location]/
+├── app/
+│   └── composables/
+│       ├── useCategory.ts
+│       └── useHeader.ts         # Uses localePath() for locale-aware links
+├── content/
+│   ├── index.md                 # Default locale (zh-CN) home → /
+│   ├── docs/                    # Default locale docs → /docs/*
+│   │   └── 1.getting-started/
+│   │       ├── .navigation.yml
+│   │       ├── 1.index.md
+│   │       └── 2.installation.md
+│   └── en/                      # English content
+│       ├── index.md             # English home → /en
+│       └── docs/                # English docs → /en/docs/*
+│           └── 1.getting-started/
+│               ├── .navigation.yml
+│               ├── 1.index.md
+│               └── 2.installation.md
+├── public/
+├── nuxt.config.ts               # modules: ['@nuxtjs/i18n'] + i18n.locales
+├── package.json                 # includes @nuxtjs/i18n
 └── tsconfig.json
 ```
 

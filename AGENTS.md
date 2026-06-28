@@ -115,6 +115,21 @@ description: |            # 功能描述 + 触发词列表
 - MDC 块 / 行内组件语法（`::ComponentName` 或 `:component-name{prop="value"}`）
 - 文件名数字前缀（如 `1.index.md`）控制排序，不影响最终路由
 
+### 国际化（i18n）
+
+i18n 基于 `@nuxtjs/i18n` v10，采用 **opt-in** 设计：layer 仅将其列为依赖，**消费方**在自己的 `nuxt.config.ts` 的 `modules` 中加入 `@nuxtjs/i18n` 并配置 `i18n.locales` 后才激活；未配置时一切按单语言现状运行，不影响现有模板与消费方。
+
+激活后的关键约定：
+
+- **条件激活模块** `layer/modules/i18n.ts` — 读取 `nuxt.options.i18n`，过滤掉缺少翻译文件或内容目录的 locale，强制 `strategy: 'prefix_except_default'`，通过 `i18n:registerModule` hook 注册内置翻译，并把有效 locale 暴露到 `runtimeConfig.public.movkDocs.filteredLocales`。
+- **URL 策略** `prefix_except_default` — 默认语言保持无前缀（`/docs/*`），其余语言加前缀（`/en/docs/*`）。因此默认语言内容**原地不动**位于 `content/docs`，其他语言放在 `content/{locale}/docs`。
+- **内容集合** `layer/content.config.ts` 按 locale 生成集合：默认语言为 `docs` / `landing`，其余为 `docs_{code}` / `landing_{code}`（code 的 `-` 替换为 `_`）。`releases`、`templates` 暂不本地化。
+- **翻译文件** 内置于 `layer/i18n/locales/{zh-CN,en}.json`。新增语言＝补一个 `{code}.json` + 一个 `content/{code}/` 目录，并在消费方 `i18n.locales` 注册；二者缺一即被构建期过滤并告警。
+- **UI 文案解析顺序** `appConfig 覆盖 ?? i18n 翻译`。`app.config.ts` 的文案字段默认留空，由 `useMovkI18n().t()` 提供当前语言文案；消费方仍可用 appConfig 覆盖单个词。未启用 i18n 时 `t()` 回退到 `appConfig.i18n.locale`（默认 `zh-CN`）的内置文案。
+- **统一入口** `useMovkI18n()` 暴露 `isEnabled / locale / defaultLocale / locales / t / localePath / switchLocalePath / docsRoot / docsCollection / landingCollection`，在 i18n 开关两态下行为一致；页面/导航/搜索据此选择 locale 对应的集合与路径。
+- **SEO** `useLocaleSeo()`（在 `app.vue` 全局调用）注入 hreflang alternates、x-default 与 `og:locale`；`<html lang/dir>` 与 `UApp :locale` 由 `@nuxt/ui/locale` 按当前 locale 驱动。
+- **浏览器语言重定向** 由 `@nuxtjs/i18n` 默认的 `detectBrowserLanguage` 控制；如需固定首页语言可在消费方 `i18n` 配置中关闭。
+
 ### 配置层级
 
 消费此 Layer 的项目通过两处自定义行为：

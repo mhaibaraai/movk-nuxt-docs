@@ -10,6 +10,7 @@
     "@movk/nuxt-docs": "workspace:*",
     "@nuxt/content": "^3.14.0",
     "@nuxt/ui": "^4.9.0",
+    "@nuxtjs/i18n": "^10.4.0",
     "better-sqlite3": "^12.11.1",
     "dompurify": "^3.4.11",
     "mermaid": "^11.16.0",

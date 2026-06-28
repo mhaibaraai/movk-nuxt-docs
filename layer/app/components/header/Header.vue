@@ -1,8 +1,8 @@
 <script setup lang="ts">
 import type { ButtonProps } from '@nuxt/ui'
 
-const route = useRoute()
 const { header, github } = useAppConfig()
+const isDocsRoute = useDocsRoute()
 
 const links = computed<ButtonProps[]>(() => (github && github.url
   ? [
@@ -27,6 +27,8 @@ const links = computed<ButtonProps[]>(() => (github && github.url
 
     <template #right>
       <HeaderCTA />
+
+      <LanguageSwitcher />
 
       <ThemePicker />
 
@@ -58,7 +60,7 @@ const links = computed<ButtonProps[]>(() => (github && github.url
       <HeaderBody />
     </template>
 
-    <template v-if="route.path.startsWith('/docs/')" #bottom>
+    <template v-if="isDocsRoute" #bottom>
       <HeaderBottom />
     </template>
   </UHeader>

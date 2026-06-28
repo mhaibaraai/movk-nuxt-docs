@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import type { FaqCategory, FaqQuestions, ToolPart, ToolState } from '../types'
+import type { FaqCategory, FaqQuestions, LocalizedFaqQuestions, ToolPart, ToolState } from '../types'
 import { Chat } from '@ai-sdk/vue'
 import { DefaultChatTransport, getToolName, isReasoningUIPart, isTextUIPart, isToolUIPart } from 'ai'
 import { computed } from 'vue'
@@ -14,8 +14,18 @@ const route = useRoute()
 const config = useRuntimeConfig()
 const { aiChat } = useAppConfig()
 const { model } = useModels()
+const { t, locale, defaultLocale } = useMovkI18n()
 
 const canClear = computed(() => messages.value.length > 0)
+
+const texts = computed(() => ({
+  title: aiChat.texts?.title || t('assistant.title'),
+  clearChat: aiChat.texts?.clearChat || t('assistant.clearChat'),
+  close: aiChat.texts?.close || t('assistant.close'),
+  placeholder: aiChat.texts?.placeholder || t('assistant.placeholder'),
+  lineBreak: aiChat.texts?.lineBreak || t('assistant.lineBreak'),
+  thinking: t('assistant.thinking')
+}))
 
 const input = ref('')
 let _skipSync = false
@@ -68,41 +78,44 @@ function upperName(name: string) {
 type ToolDisplayInput = Record<string, string | undefined>
 type ToolMessageBuilder = (state: ToolState, input: ToolDisplayInput) => string
 
-const getSearchVerb = (state: ToolState) => state === 'output-available' ? '已搜索' : '搜索中'
-const getReadVerb = (state: ToolState) => state === 'output-available' ? '已读取' : '读取中'
+const getSearchVerb = (state: ToolState) => t(state === 'output-available' ? 'assistant.verb.searched' : 'assistant.verb.searching')
+const getReadVerb = (state: ToolState) => t(state === 'output-available' ? 'assistant.verb.read' : 'assistant.verb.reading')
+
+const sectionSuffix = (value?: string) => value ? t('assistant.fmt.section', { value }) : ''
+const searchSuffix = (value?: string) => value ? t('assistant.fmt.search', { value }) : ''
 
 const builtinToolDisplayConfig: Record<string, { icon: string, message: ToolMessageBuilder }> = {
   'search-documentation': {
     icon: 'i-lucide-book-search',
-    message: (state, input) => `${getSearchVerb(state)} 文档页面${input.section ? `（${input.section}）` : ''}${input.search ? `：${input.search}` : ''}`
+    message: (state, input) => `${getSearchVerb(state)} ${t('assistant.tool.searchDocs')}${sectionSuffix(input.section)}${searchSuffix(input.search)}`
   },
   'get-documentation-page': {
     icon: 'i-lucide-book-open',
-    message: (state, input) => `${getReadVerb(state)} ${input.path || ''} 页面`
+    message: (state, input) => `${getReadVerb(state)} ${t('assistant.tool.readPage', { path: input.path || '' })}`
   },
   'search-composables': {
     icon: 'i-lucide-braces',
-    message: (state, input) => `${getSearchVerb(state)} 组合函数${input.search ? `：${input.search}` : ''}`
+    message: (state, input) => `${getSearchVerb(state)} ${t('assistant.tool.searchComposables')}${searchSuffix(input.search)}`
   },
   'search-icons': {
     icon: 'i-lucide-search',
-    message: (state, input) => `${getSearchVerb(state)} 图标${input.query ? `：${input.query}` : ''}`
+    message: (state, input) => `${getSearchVerb(state)} ${t('assistant.tool.searchIcons')}${searchSuffix(input.query)}`
   },
   'list-examples': {
     icon: 'i-lucide-codesandbox',
-    message: state => `${getSearchVerb(state)} 示例`
+    message: state => `${getSearchVerb(state)} ${t('assistant.tool.listExamples')}`
   },
   'get-example': {
     icon: 'i-lucide-codepen',
-    message: (state, input) => `${getReadVerb(state)} ${upperName(input.exampleName || '')} 示例`
+    message: (state, input) => `${getReadVerb(state)} ${t('assistant.tool.getExample', { name: upperName(input.exampleName || '') })}`
   },
   'get-component': {
     icon: 'i-lucide-box',
-    message: (state, input) => `${getReadVerb(state)} ${upperName(input.componentName || '')} 组件文档`
+    message: (state, input) => `${getReadVerb(state)} ${t('assistant.tool.getComponent', { name: upperName(input.componentName || '') })}`
   },
   'get-component-metadata': {
     icon: 'i-lucide-file-code',
-    message: (state, input) => `${getReadVerb(state)} ${upperName(input.componentName || '')} 组件元数据`
+    message: (state, input) => `${getReadVerb(state)} ${t('assistant.tool.getComponentMeta', { name: upperName(input.componentName || '') })}`
   }
 }
 
@@ -120,12 +133,12 @@ function getToolMessage(state: ToolState, toolName: string, input: Record<string
   }[toolName] || `${getSearchVerb(state)} ${toolName}`
 }
 
-const getCachedToolMessage = useMemoize((state: ToolState, toolName: string, input: string) =>
+const getCachedToolMessage = useMemoize((state: ToolState, toolName: string, input: string, _locale: string) =>
   getToolMessage(state, toolName, JSON.parse(input))
 )
 
 function getToolText(part: ToolPart) {
-  return getCachedToolMessage(part.state, getToolName(part), JSON.stringify(part.input || {}))
+  return getCachedToolMessage(part.state, getToolName(part), JSON.stringify(part.input || {}), locale.value)
 }
 
 function getToolIcon(part: ToolPart): string {
@@ -170,7 +183,7 @@ function normalizeFaqQuestions(questions: FaqQuestions): FaqCategory[] {
 
   if (typeof questions[0] === 'string') {
     return [{
-      category: '问题',
+      category: t('assistant.faqCategory'),
       items: questions as string[]
     }]
   }
@@ -181,6 +194,12 @@ function normalizeFaqQuestions(questions: FaqQuestions): FaqCategory[] {
 const faqQuestions = computed<FaqCategory[]>(() => {
   const faqConfig = aiChat?.faqQuestions
   if (!faqConfig) return []
+
+  if (!Array.isArray(faqConfig)) {
+    const localized = faqConfig as LocalizedFaqQuestions
+    const questions = localized[locale.value] || localized[defaultLocale] || Object.values(localized)[0]
+    return normalizeFaqQuestions(questions || [])
+  }
 
   return normalizeFaqQuestions(faqConfig)
 })
@@ -199,30 +218,30 @@ watch(open, (value) => {
   <USidebar
     v-model:open="isOpen"
     side="right"
-    :title="aiChat.texts?.title ?? ''"
+    :title="texts.title"
     rail
     :style="{ '--sidebar-width': '24rem' }"
     :ui="{ footer: 'p-0', actions: 'gap-0.5' }"
   >
     <template #actions>
-      <UTooltip v-if="canClear" :text="aiChat.texts?.clearChat ?? ''">
+      <UTooltip v-if="canClear" :text="texts.clearChat">
         <UButton
           :icon="aiChat.icons?.clearChat ?? ''"
           color="neutral"
           variant="ghost"
-          :aria-label="aiChat.texts?.clearChat ?? ''"
+          :aria-label="texts.clearChat"
           @click="clearMessages"
         />
       </UTooltip>
     </template>
 
     <template #close>
-      <UTooltip :text="aiChat.texts?.close ?? ''">
+      <UTooltip :text="texts.close">
         <UButton
           :icon="aiChat.icons?.close ?? ''"
           color="neutral"
           variant="ghost"
-          :aria-label="aiChat.texts?.close ?? ''"
+          :aria-label="texts.close"
           @click="isOpen = false"
         />
       </UTooltip>
@@ -256,7 +275,7 @@ watch(open, (value) => {
         :user="{ ui: { container: 'max-w-full' } }"
       >
         <template #indicator>
-          <UChatTool icon="i-lucide-brain" text="Thinking..." streaming />
+          <UChatTool icon="i-lucide-brain" :text="texts.thinking" streaming />
         </template>
 
         <template #content="{ message }">
@@ -309,7 +328,7 @@ watch(open, (value) => {
         ref="promptRef"
         v-model="input"
         :error="chat.error"
-        :placeholder="aiChat.texts?.placeholder ?? ''"
+        :placeholder="texts.placeholder"
         variant="naked"
         size="sm"
         autofocus
@@ -322,7 +341,7 @@ watch(open, (value) => {
             <AiChatModelSelect v-model="model" />
 
             <div class="flex gap-1 justify-between items-center px-1 text-xs text-muted">
-              <span>{{ aiChat.texts?.lineBreak ?? '' }}</span>
+              <span>{{ texts.lineBreak }}</span>
               <UKbd value="shift" />
               <UKbd value="enter" />
             </div>

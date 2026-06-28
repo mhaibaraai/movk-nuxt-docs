@@ -1,6 +1,9 @@
 import type { ExtendedButtonProps } from './types'
 
 export default defineAppConfig({
+  i18n: {
+    locale: 'zh-CN'
+  },
   toaster: {
     position: 'bottom-right' as const,
     duration: 5000,
@@ -31,16 +34,13 @@ export default defineAppConfig({
     socials: [] as ExtendedButtonProps[]
   },
   toc: {
-    title: '页面导航',
     bottom: {
-      title: '社区',
       links: [] as ExtendedButtonProps[]
     }
   },
   aside: {
     filter: {
       enabled: false,
-      placeholder: '过滤导航...',
       threshold: 10,
       shortcut: '/'
     }
@@ -64,15 +64,6 @@ export default defineAppConfig({
     explainWithAi: true,
     shortcuts: {
       focusInput: 'meta_i'
-    },
-    texts: {
-      title: 'AI 助手',
-      clearChat: '清除聊天记录',
-      close: '关闭',
-      placeholder: '输入你的问题...',
-      lineBreak: '换行',
-      trigger: '与 AI 聊天',
-      explainWithAi: '用 AI 解释此页面'
     },
     icons: {
       trigger: 'i-custom-ai',

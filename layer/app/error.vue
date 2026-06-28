@@ -1,22 +1,39 @@
 <script setup lang="ts">
 import type { NuxtError } from '#app'
+import * as nuxtUiLocales from '@nuxt/ui/locale'
 
 defineProps<{
   error: NuxtError
 }>()
 
-const route = useRoute()
-
 const { style, link, color } = useTheme()
+const { locale, docsRoot, docsCollection, t } = useMovkI18n()
+const isDocsRoute = useDocsRoute()
 
-const { data: navigation } = await useFetch('/api/navigation.json')
-const { data: files } = useLazyAsyncData('search', () => queryCollectionSearchSections('docs', {
-  ignoredTags: ['style']
-}), {
-  server: false
-})
+const nuxtUiLocale = computed(() =>
+  nuxtUiLocales[locale.value.replace('-', '_').toLowerCase() as keyof typeof nuxtUiLocales] || nuxtUiLocales.en
+)
+
+const { data: navigation } = await useAsyncData(
+  'docs-navigation',
+  () => queryCollectionNavigation(docsCollection.value as 'docs', ['category', 'description']),
+  {
+    transform: data => transformNavigation(data, docsRoot.value),
+    watch: [locale]
+  }
+)
+
+const { data: files } = useLazyAsyncData(
+  'docs-search',
+  () => queryCollectionSearchSections(docsCollection.value as 'docs', { ignoredTags: ['style'] }),
+  { server: false, watch: [locale] }
+)
 
 useHead({
+  htmlAttrs: {
+    lang: computed(() => nuxtUiLocale.value.code),
+    dir: computed(() => nuxtUiLocale.value.dir)
+  },
   meta: [
     { name: 'viewport', content: 'width=device-width, initial-scale=1' },
     { key: 'theme-color', name: 'theme-color', content: color }
@@ -27,8 +44,8 @@ useHead({
 
 if (import.meta.server) {
   useSeoMeta({
-    title: 'Page not found',
-    description: 'We are sorry but this page could not be found.'
+    title: t('docs.pageNotFound'),
+    description: t('docs.pageNotFoundDescription')
   })
 }
 
@@ -38,11 +55,11 @@ provide('navigation', rootNavigation)
 </script>
 
 <template>
-  <UApp>
+  <UApp :locale="nuxtUiLocale">
     <NuxtLoadingIndicator color="var(--ui-primary)" :height="2" />
 
     <div class="flex">
-      <div class="flex-1 min-w-0" :class="{ root: route.path.startsWith('/docs/') }">
+      <div class="flex-1 min-w-0" :class="{ root: isDocsRoute }">
         <Header v-if="$route.meta.header !== false" />
 
         <UError :error="error" />
@@ -55,7 +72,7 @@ provide('navigation', rootNavigation)
 
         <AiChatFloatingInput />
 
-        <UContentSearch :files="files" :navigation="navigation" />
+        <UContentSearch :files="files" :navigation="rootNavigation" />
       </ClientOnly>
     </div>
   </UApp>

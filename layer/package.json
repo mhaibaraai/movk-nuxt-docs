@@ -6,6 +6,18 @@
   "description": "Modern Nuxt 4 documentation theme with auto-generated component docs, AI chat assistant, MCP server, and complete developer experience optimization.",
   "author": "YiXuan <mhaibaraai@gmail.com>",
   "license": "MIT",
+  "keywords": [
+    "nuxt",
+    "nuxt-layer",
+    "documentation",
+    "docs",
+    "nuxt-content",
+    "nuxt-ui",
+    "i18n",
+    "multilingual",
+    "ai-chat",
+    "mcp"
+  ],
   "homepage": "https://docs.mhaibaraai.cn",
   "repository": {
     "type": "git",
@@ -30,6 +42,7 @@
   },
   "files": [
     "app",
+    "i18n",
     "modules",
     "server",
     "utils",
@@ -55,6 +68,7 @@
     "@nuxt/image": "^2.0.0",
     "@nuxt/kit": "^4.4.8",
     "@nuxt/ui": "^4.9.0",
+    "@nuxtjs/i18n": "^10.4.0",
     "@nuxtjs/mcp-toolkit": "^0.17.2",
     "@nuxtjs/mdc": "^0.22.0",
     "@nuxtjs/robots": "^6.1.1",

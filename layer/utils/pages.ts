@@ -10,10 +10,12 @@ export function landingPageExists(rootDir: string): boolean {
 }
 
 /**
- * 检查是否存在 docs 文件夹，即 content/docs
+ * 检查是否存在 docs 文件夹，即 content/docs；传入 locale 时检查 content/{locale}/docs
  */
-export function docsFolderExists(rootDir: string): boolean {
-  const docsPath = joinURL(rootDir, 'content', 'docs')
+export function docsFolderExists(rootDir: string, locale?: string): boolean {
+  const docsPath = locale
+    ? joinURL(rootDir, 'content', locale, 'docs')
+    : joinURL(rootDir, 'content', 'docs')
   return existsSync(docsPath)
 }
 

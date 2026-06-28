@@ -1,0 +1,52 @@
+{
+  "docs": {
+    "tocTitle": "On this page",
+    "community": "Community",
+    "overview": "Overview",
+    "filterPlaceholder": "Filter navigation...",
+    "viewSource": "View source",
+    "editPage": "Edit this page",
+    "copyPage": "Copy page",
+    "copyMarkdownLink": "Copy Markdown link",
+    "viewAsMarkdown": "View as Markdown",
+    "openInChatGPT": "Open in ChatGPT",
+    "openInClaude": "Open in Claude",
+    "copyMcpUrl": "Copy MCP Server URL",
+    "addMcpVscode": "Add MCP Server to VSCode",
+    "addMcpCursor": "Add MCP Server to Cursor",
+    "copied": "Copied to clipboard",
+    "pageNotFound": "Page not found",
+    "pageNotFoundDescription": "We are sorry but this page could not be found."
+  },
+  "assistant": {
+    "title": "AI Assistant",
+    "clearChat": "Clear chat history",
+    "close": "Close",
+    "placeholder": "Type your question...",
+    "lineBreak": "Line break",
+    "trigger": "Chat with AI",
+    "explainWithAi": "Explain this page with AI",
+    "faqCategory": "Questions",
+    "thinking": "Thinking...",
+    "verb": {
+      "searching": "Searching",
+      "searched": "Searched",
+      "reading": "Reading",
+      "read": "Read"
+    },
+    "tool": {
+      "searchDocs": "documentation pages",
+      "readPage": "{path} page",
+      "searchComposables": "composables",
+      "searchIcons": "icons",
+      "listExamples": "examples",
+      "getExample": "{name} example",
+      "getComponent": "{name} component docs",
+      "getComponentMeta": "{name} component metadata"
+    },
+    "fmt": {
+      "section": " ({value})",
+      "search": ": {value}"
+    }
+  }
+}

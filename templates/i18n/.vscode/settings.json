@@ -1,0 +1,26 @@
+{
+  "eslint.useFlatConfig": true,
+  "editor.quickSuggestions": {
+    "strings": "on"
+  },
+  "editor.codeActionsOnSave": {
+    "source.fixAll": "never",
+    "source.fixAll.eslint": "explicit"
+  },
+  "files.associations": {
+    "*.css": "tailwindcss"
+  },
+  "prettier.enable": false,
+  "tailwindCSS.classAttributes": ["class", "ui"],
+  "tailwindCSS.classFunctions": ["defineAppConfig"],
+  "tailwindCSS.experimental.classRegex": [
+    ["[:\\[,]\\s*['\"`]([^'\"`]*)['\"`]"]
+  ],
+  "mdc.enableComponentMetadataCompletions": true,
+  "[mdc]": {
+    "editor.tabSize": 2,
+    "editor.insertSpaces": true,
+    "editor.detectIndentation": false,
+    "editor.formatOnPaste": false
+  }
+}

@@ -66,6 +66,7 @@ See the [Agent Skills documentation](https://docs.mhaibaraai.cn/docs/getting-sta
 - **Dark mode** - Supports light and dark themes.
 - **Responsive design** - Mobile-first responsive layout.
 - **SEO optimization** - Built-in SEO features.
+- 🌍 **Internationalization** - Opt-in multilingual support based on `@nuxtjs/i18n`, with per-language content collections, a built-in language switcher, and hreflang SEO.
 - **TypeScript support** - Complete TypeScript support.
 
 ## Quick Start
@@ -254,6 +255,32 @@ export default defineNuxtConfig({
   }
 })
 ```
+
+### Internationalization
+
+Multilingual support is built on `@nuxtjs/i18n` and follows an opt-in design: without configuration, the site runs as single-language; once configured, it automatically enables localized routing, per-language content collections, a language switcher, and hreflang SEO. Install the dependency first, then configure `i18n.locales` in `nuxt.config.ts`:
+
+```bash
+pnpm add @nuxtjs/i18n
+```
+
+```ts [nuxt.config.ts]
+export default defineNuxtConfig({
+  extends: ['@movk/nuxt-docs'],
+
+  modules: ['@nuxtjs/i18n'],
+
+  i18n: {
+    defaultLocale: 'en',
+    locales: [
+      { code: 'en', name: 'English', file: 'en.json' },
+      { code: 'zh-CN', name: '简体中文', file: 'zh-CN.json' }
+    ]
+  }
+})
+```
+
+Default-language content stays in the `content/` root (no prefix, e.g. `/docs`); other languages go into `content/{locale}/` (with prefix, e.g. `/zh-CN/docs`). You can also use the official i18n template to get started immediately: `npx nuxi init -t gh:mhaibaraai/movk-nuxt-docs/templates/i18n my-docs`. See the [Internationalization documentation](https://docs.mhaibaraai.cn/docs/i18n) for details.
 
 ## Development
 

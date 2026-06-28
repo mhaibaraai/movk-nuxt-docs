@@ -12,8 +12,11 @@ const { isOpen } = useAIChat()
 const route = useRoute()
 const appConfig = useAppConfig()
 const { toc, github } = appConfig
+const { docsCollection, t } = useMovkI18n()
 
-const { data: page } = await useAsyncData(`docs-${kebabCase(route.path)}`, () => queryCollection('docs').path(route.path).first())
+const collection = docsCollection.value as 'docs'
+
+const { data: page } = await useAsyncData(`docs-${kebabCase(route.path)}`, () => queryCollection(collection).path(route.path).first())
 
 if (!page.value) {
   throw createError({ status: 404, statusText: 'Page not found', fatal: true })
@@ -22,7 +25,7 @@ if (!page.value) {
 const navigation = inject<Ref<ContentNavigationItem[]>>('navigation')
 
 const { data: surround } = await useAsyncData(`surround-${(kebabCase(route.path))}`, () => {
-  return queryCollectionItemSurroundings('docs', route.path, {
+  return queryCollectionItemSurroundings(collection, route.path, {
     fields: ['description']
   })
 })
@@ -60,7 +63,7 @@ const pageLinks = computed(() => {
   if (github && github.url) {
     links.push({
       icon: 'i-lucide-file-code',
-      label: 'View source',
+      label: t('docs.viewSource'),
       to: buildFileLink('blob'),
       target: '_blank'
     })
@@ -75,7 +78,7 @@ const communityLinks = computed(() => {
   if (github && github.url) {
     links.push({
       icon: 'i-lucide-file-pen',
-      label: 'Edit this page',
+      label: t('docs.editPage'),
       to: buildFileLink('edit'),
       target: '_blank'
     })
@@ -189,7 +192,7 @@ useSeoMeta({
 
     <template v-if="page?.body?.toc?.links?.length" #right>
       <UContentToc
-        :title="toc?.title"
+        :title="toc?.title || t('docs.tocTitle')"
         :links="page.body?.toc?.links"
         highlight
         class="z-2"
@@ -198,7 +201,7 @@ useSeoMeta({
           <div class="hidden lg:block space-y-6" :class="{ 'mt-6!': page.body?.toc?.links?.length }">
             <USeparator v-if="page.body?.toc?.links?.length" type="dashed" />
 
-            <UPageLinks v-if="communityLinks?.length" :title="toc.bottom.title" :links="communityLinks" />
+            <UPageLinks v-if="communityLinks?.length" :title="toc.bottom.title || t('docs.community')" :links="communityLinks" />
 
             <USeparator v-if="communityLinks?.length" type="dashed" />
 

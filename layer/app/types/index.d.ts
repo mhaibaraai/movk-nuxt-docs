@@ -1,4 +1,5 @@
 import type { ButtonProps } from '@nuxt/ui'
+import type { FaqQuestions, LocalizedFaqQuestions } from '../../modules/ai-chat/runtime/types'
 
 export interface ExtendedButtonProps extends ButtonProps {
   label?: string
@@ -79,8 +80,9 @@ declare module 'nuxt/schema' {
        * 显示的常见问题解答问题。
        * @example 简单格式: ['如何安装？', '如何配置？']
        * @example 分类格式: [{ category: '入门', items: ['如何安装？'] }]
+       * @example 本地化格式: { 'zh-CN': ['如何安装？'], 'en': ['How to install?'] }
        */
-      faqQuestions?: FaqQuestions
+      faqQuestions?: FaqQuestions | LocalizedFaqQuestions
       /**
        * 键盘快捷键配置。
        */

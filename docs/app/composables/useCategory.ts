@@ -1,14 +1,16 @@
 export function useCategory() {
+  const { t } = useI18n()
+
   const categories = {
     'getting-started': [
       {
         id: 'core-concepts',
-        title: '核心概念',
+        title: t('category.core-concepts'),
         icon: 'i-lucide-settings'
       },
       {
         id: 'ai',
-        title: 'AI 集成',
+        title: t('category.ai'),
         icon: 'i-lucide-bot'
       }
     ]
