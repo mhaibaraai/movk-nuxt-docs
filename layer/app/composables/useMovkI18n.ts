@@ -23,6 +23,8 @@ interface MovkI18n {
   docsRoot: ComputedRef<string>
   docsCollection: ComputedRef<string>
   landingCollection: ComputedRef<string>
+  releasesCollection: ComputedRef<string>
+  templatesCollection: ComputedRef<string>
 }
 
 type MovkNuxtApp = ReturnType<typeof useNuxtApp> & {
@@ -77,7 +79,9 @@ export function useMovkI18n(): MovkI18n {
       switchLocalePath: () => '',
       docsRoot: computed(() => '/docs'),
       docsCollection: computed(() => 'docs'),
-      landingCollection: computed(() => 'landing')
+      landingCollection: computed(() => 'landing'),
+      releasesCollection: computed(() => 'releases'),
+      templatesCollection: computed(() => 'templates')
     }
   }
 
@@ -96,6 +100,8 @@ export function useMovkI18n(): MovkI18n {
     switchLocalePath: nuxtApp.$switchLocalePath || (() => ''),
     docsRoot: computed(() => locale.value === defaultLocale ? '/docs' : `/${locale.value}/docs`),
     docsCollection: computed(() => collectionName('docs', locale.value, defaultLocale)),
-    landingCollection: computed(() => collectionName('landing', locale.value, defaultLocale))
+    landingCollection: computed(() => collectionName('landing', locale.value, defaultLocale)),
+    releasesCollection: computed(() => collectionName('releases', locale.value, defaultLocale)),
+    templatesCollection: computed(() => collectionName('templates', locale.value, defaultLocale))
   }
 }
