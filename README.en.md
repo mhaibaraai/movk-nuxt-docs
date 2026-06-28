@@ -15,13 +15,13 @@
 
 Use this theme to quickly build polished, professional, and intelligent documentation sites. It includes auto-generated component docs, an AI chat assistant, MCP Server support, SEO optimization, dark mode, full-text search, and more.
 
-- [Online documentation](https://docs.mhaibaraai.cn/)
+- 📖 [Online documentation](https://docs.mhaibaraai.cn/)
 
-## Features
+## ✨ Features
 
 This theme brings together a focused set of capabilities for a better documentation workflow.
 
-### AI-enhanced experience
+### 🤖 AI-enhanced experience
 
 <div style="padding: 40px 0; display: flex; justify-content: center;">
 <img src="https://docs.mhaibaraai.cn/ai/AiChat.png" alt="AiChat" width="400">
@@ -49,33 +49,33 @@ npx skills add https://docs.mhaibaraai.cn
 
 See the [Agent Skills documentation](https://docs.mhaibaraai.cn/docs/getting-started/skills) for details.
 
-### Automated documentation
+### 🧩 Automated documentation
 
 - **Automatic component metadata extraction** - Extract Vue component props, slots, and emits with `nuxt-component-meta`.
 - **Interactive examples** - Use the `ComponentExample` component to load and render examples with code highlighting and live previews.
 - **Git commit history integration** - Use `CommitChangelog` and `PageLastCommit` to show commit history for documentation files.
 - **Type definition highlighting** - Parse TypeScript type definitions intelligently, with inline type highlighting and type navigation.
 
-### Developer experience
+### 🎨 Developer experience
 
-- **Built on Nuxt 4** - Uses the latest Nuxt framework for strong performance and modern conventions.
-- **Powered by Nuxt UI** - Ships with a comprehensive UI component library.
-- **Enhanced MDC syntax** - Combines Markdown and Vue components seamlessly.
-- **Mermaid diagrams** - Optional on-demand diagrams for flowcharts, sequence diagrams, class diagrams, and more, with automatic theme switching and fullscreen viewing.
-- **Full-text search** - Uses Nuxt Content's `ContentSearch` component and supports the Cmd+K keyboard shortcut.
-- **Dark mode** - Supports light and dark themes.
-- **Responsive design** - Mobile-first responsive layout.
-- **SEO optimization** - Built-in SEO features.
+- ⚡ **Built on Nuxt 4** - Uses the latest Nuxt framework for strong performance and modern conventions.
+- 🎨 **Powered by Nuxt UI** - Ships with a comprehensive UI component library.
+- 📝 **Enhanced MDC syntax** - Combines Markdown and Vue components seamlessly.
+- 📊 **Mermaid diagrams** - Optional on-demand diagrams for flowcharts, sequence diagrams, class diagrams, and more, with automatic theme switching and fullscreen viewing.
+- 🔍 **Full-text search** - Uses Nuxt Content's `ContentSearch` component and supports the Cmd+K keyboard shortcut.
+- 🌙 **Dark mode** - Supports light and dark themes.
+- 📱 **Responsive design** - Mobile-first responsive layout.
+- 🚀 **SEO optimization** - Built-in SEO features.
 - 🌍 **Internationalization** - Opt-in multilingual support based on `@nuxtjs/i18n`, with per-language content collections, a built-in language switcher, and hreflang SEO.
-- **TypeScript support** - Complete TypeScript support.
+- 🎯 **TypeScript support** - Complete TypeScript support.
 
-## Quick Start
+## 🚀 Quick Start
 
 ### Create a project from a template
 
 Choose the template that fits your use case.
 
-#### Full documentation site
+#### 📚 Full documentation site
 
 Best for complete documentation sites. Includes development tooling such as ESLint and TypeScript checks.
 
@@ -86,7 +86,7 @@ cd my-docs
 pnpm dev
 ```
 
-#### Module documentation site
+#### 📦 Module documentation site
 
 Best for quickly documenting npm packages or libraries. Includes release pages for version history and keeps extra development tooling minimal.
 
@@ -117,7 +117,7 @@ export default defineNuxtConfig({
 })
 ```
 
-## Project Structure
+## 📁 Project Structure
 
 ### Template project structure
 
@@ -152,7 +152,7 @@ movk-nuxt-docs/
 `-- scripts/                     # Build scripts
 ```
 
-## Writing Content
+## 📝 Writing Content
 
 ### Basic Markdown
 
@@ -219,11 +219,11 @@ D --> E
 
 **Main features:**
 
-- Automatic theme switching for light and dark modes.
-- Lazy loading, rendering diagrams only when visible.
-- One-click copying for diagram source code.
-- Fullscreen viewing.
-- Secure rendering with DOMPurify sanitization.
+- 🎨 Automatic theme switching for light and dark modes.
+- 🔄 Lazy loading, rendering diagrams only when visible.
+- 📋 One-click copying for diagram source code.
+- 🖼️ Fullscreen viewing.
+- 🔒 Secure rendering with DOMPurify sanitization.
 
 **Supported diagram types:**
 
@@ -282,7 +282,7 @@ export default defineNuxtConfig({
 
 Default-language content stays in the `content/` root (no prefix, e.g. `/docs`); other languages go into `content/{locale}/` (with prefix, e.g. `/zh-CN/docs`). You can also use the official i18n template to get started immediately: `npx nuxi init -t gh:mhaibaraai/movk-nuxt-docs/templates/i18n my-docs`. See the [Internationalization documentation](https://docs.mhaibaraai.cn/docs/i18n) for details.
 
-## Development
+## 🛠️ Development
 
 ### Local development
 
@@ -317,7 +317,7 @@ pnpm release:layer
 pnpm release
 ```
 
-## Tech Stack
+## ⚡ Tech Stack
 
 This project is built on the following open-source projects.
 
