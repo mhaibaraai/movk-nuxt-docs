@@ -205,7 +205,7 @@ const faqQuestions = computed<FaqCategory[]>(() => {
 })
 
 const promptRef = useTemplateRef('promptRef')
-watch(open, (value) => {
+watch(isOpen, (value) => {
   if (value) {
     nextTick(() => {
       promptRef.value?.textareaRef?.focus()
