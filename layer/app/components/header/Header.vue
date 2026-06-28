@@ -59,11 +59,6 @@ const links = computed<ButtonProps[]>(() => (github && github.url
           <UButton v-bind="{ color: 'neutral', variant: 'ghost', ...link }" />
         </UTooltip>
       </template>
-
-      <USeparator
-        orientation="vertical"
-        class="h-8"
-      />
     </template>
 
     <template #toggle="{ open, toggle, ui }">
