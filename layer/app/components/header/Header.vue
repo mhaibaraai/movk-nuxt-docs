@@ -2,6 +2,7 @@
 import type { ButtonProps } from '@nuxt/ui'
 
 const { header, github } = useAppConfig()
+const { isEnabled, locales } = useMovkI18n()
 const isDocsRoute = useDocsRoute()
 
 const links = computed<ButtonProps[]>(() => (github && github.url
@@ -28,8 +29,6 @@ const links = computed<ButtonProps[]>(() => (github && github.url
     <template #right>
       <HeaderCTA />
 
-      <LanguageSwitcher />
-
       <ThemePicker />
 
       <UTooltip text="Search" :kbds="['meta', 'K']">
@@ -39,6 +38,16 @@ const links = computed<ButtonProps[]>(() => (github && github.url
       <UTooltip text="Color Mode">
         <UColorModeButton v-if="header?.colorMode" aria-label="Color Mode" />
       </UTooltip>
+
+      <template v-if="isEnabled && locales.length > 1">
+        <ClientOnly>
+          <LanguageSwitcher />
+
+          <template #fallback>
+            <div class="h-8 w-8 animate-pulse bg-neutral-200 dark:bg-neutral-800 rounded-md" />
+          </template>
+        </ClientOnly>
+      </template>
 
       <template v-if="links?.length">
         <UTooltip
@@ -50,6 +59,11 @@ const links = computed<ButtonProps[]>(() => (github && github.url
           <UButton v-bind="{ color: 'neutral', variant: 'ghost', ...link }" />
         </UTooltip>
       </template>
+
+      <USeparator
+        orientation="vertical"
+        class="h-8"
+      />
     </template>
 
     <template #toggle="{ open, toggle, ui }">
