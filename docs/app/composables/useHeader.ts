@@ -1,46 +1,48 @@
 export function useHeader() {
   const route = useRoute()
+  const { t } = useI18n()
+  const { localePath, docsRoot } = useMovkI18n()
 
   const desktopLinks = computed(() => [{
-    label: '文档',
-    to: '/docs/getting-started',
-    active: route.path.startsWith('/docs/')
+    label: t('nav.docs'),
+    to: localePath('/docs/getting-started'),
+    active: route.path.startsWith(docsRoot.value)
   }, {
-    label: '案例',
-    to: '/templates'
+    label: t('nav.examples'),
+    to: localePath('/templates')
   }, {
-    label: '版本发布',
-    to: '/releases'
+    label: t('nav.releases'),
+    to: localePath('/releases')
   }])
 
   const mobileLinks = computed(() => [{
-    label: 'Getting Started',
+    label: t('nav.gettingStarted'),
     icon: 'i-lucide-square-play',
-    to: '/docs/getting-started',
-    active: route.path.startsWith('/docs/getting-started')
+    to: localePath('/docs/getting-started'),
+    active: route.path.startsWith(localePath('/docs/getting-started'))
   }, {
-    label: 'Typography',
+    label: t('nav.typography'),
     icon: 'i-lucide-square-pilcrow',
-    to: '/docs/typography',
-    active: route.path.startsWith('/docs/typography')
+    to: localePath('/docs/typography'),
+    active: route.path.startsWith(localePath('/docs/typography'))
   }, {
-    label: 'Components',
+    label: t('nav.components'),
     icon: 'i-lucide-component',
-    to: '/docs/components',
-    active: route.path.startsWith('/docs/components')
+    to: localePath('/docs/components'),
+    active: route.path.startsWith(localePath('/docs/components'))
   }, {
-    label: 'Composables',
+    label: t('nav.composables'),
     icon: 'i-lucide-square-function',
-    to: '/docs/composables',
-    active: route.path.startsWith('/docs/composables')
+    to: localePath('/docs/composables'),
+    active: route.path.startsWith(localePath('/docs/composables'))
   }, {
-    label: '案例',
+    label: t('nav.examples'),
     icon: 'i-lucide-layout-template',
-    to: '/templates'
+    to: localePath('/templates')
   }, {
-    label: '发布版本',
+    label: t('nav.releases'),
     icon: 'i-lucide-newspaper',
-    to: '/releases'
+    to: localePath('/releases')
   }, {
     label: 'GitHub',
     to: 'https://github.com/mhaibaraai/movk-nuxt-docs',

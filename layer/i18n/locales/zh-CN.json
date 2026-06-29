@@ -1,0 +1,52 @@
+{
+  "docs": {
+    "tocTitle": "页面导航",
+    "community": "社区",
+    "overview": "概览",
+    "filterPlaceholder": "过滤导航...",
+    "viewSource": "查看源码",
+    "editPage": "编辑此页",
+    "copyPage": "复制页面",
+    "copyMarkdownLink": "复制 Markdown 链接",
+    "viewAsMarkdown": "以 Markdown 格式查看",
+    "openInChatGPT": "在 ChatGPT 中打开",
+    "openInClaude": "在 Claude 中打开",
+    "copyMcpUrl": "复制 MCP Server URL",
+    "addMcpVscode": "添加 MCP Server 到 VSCode",
+    "addMcpCursor": "添加 MCP Server 到 Cursor",
+    "copied": "已复制到剪贴板",
+    "pageNotFound": "页面未找到",
+    "pageNotFoundDescription": "很抱歉，您访问的页面未找到。"
+  },
+  "assistant": {
+    "title": "AI 助手",
+    "clearChat": "清除聊天记录",
+    "close": "关闭",
+    "placeholder": "输入你的问题...",
+    "lineBreak": "换行",
+    "trigger": "与 AI 聊天",
+    "explainWithAi": "用 AI 解释此页面",
+    "faqCategory": "问题",
+    "thinking": "思考中...",
+    "verb": {
+      "searching": "搜索中",
+      "searched": "已搜索",
+      "reading": "读取中",
+      "read": "已读取"
+    },
+    "tool": {
+      "searchDocs": "文档页面",
+      "readPage": "{path} 页面",
+      "searchComposables": "组合函数",
+      "searchIcons": "图标",
+      "listExamples": "示例",
+      "getExample": "{name} 示例",
+      "getComponent": "{name} 组件文档",
+      "getComponentMeta": "{name} 组件元数据"
+    },
+    "fmt": {
+      "section": "（{value}）",
+      "search": "：{value}"
+    }
+  }
+}

@@ -2,10 +2,12 @@ import type { ContentNavigationItem } from '@nuxt/content'
 import { findPageBreadcrumb, findPageChildren } from '@nuxt/content/utils'
 import { mapContentNavigation } from '@nuxt/ui/utils/content'
 
-function groupChildrenByCategory(items: ContentNavigationItem[], slug: string): ContentNavigationItem[] {
+type Translate = (key: string, params?: Record<string, string | number>) => string
+type Categories = Record<string, { id: string, title: string, icon: string }[]>
+
+function groupChildrenByCategory(items: ContentNavigationItem[], slug: string, docsRoot: string, t: Translate, categories: Categories): ContentNavigationItem[] {
   if (!items.length) return []
 
-  const { categories } = useCategory()
   const groups: ContentNavigationItem[] = []
 
   const categorizedMap = new Map<string, ContentNavigationItem[]>()
@@ -28,8 +30,8 @@ function groupChildrenByCategory(items: ContentNavigationItem[], slug: string): 
 
   if (withoutChildren.length) {
     groups.push({
-      title: 'Overview',
-      path: `/docs/${slug}`,
+      title: t('docs.overview'),
+      path: `${docsRoot}/${slug}`,
       icon: 'i-lucide-house',
       children: withoutChildren
     })
@@ -43,7 +45,7 @@ function groupChildrenByCategory(items: ContentNavigationItem[], slug: string): 
     if (children?.length) {
       groups.push({
         title: category.title,
-        path: `/docs/${slug}`,
+        path: `${docsRoot}/${slug}`,
         icon: category.icon,
         children
       })
@@ -62,17 +64,19 @@ function processNavigationItem(item: ContentNavigationItem, parent?: ContentNavi
 }
 
 export function useNavigation(navigation: Ref<ContentNavigationItem[] | undefined>) {
+  const route = useRoute()
+  const { docsRoot, t } = useMovkI18n()
+  const { categories } = useCategory()
+
   const rootNavigation = computed(() =>
     navigation.value?.[0]?.children?.map(item => processNavigationItem(item)) as ContentNavigationItem[]
   )
 
   const navigationByCategory = computed(() => {
-    const route = useRoute()
-
     const slug = route.params.slug?.[0] as string
-    const children = findPageChildren(navigation?.value, `/docs/${slug}`, { indexAsChild: true })
+    const children = findPageChildren(navigation?.value, `${docsRoot.value}/${slug}`, { indexAsChild: true })
 
-    return groupChildrenByCategory(children, slug)
+    return groupChildrenByCategory(children, slug, docsRoot.value, t, categories)
   })
 
   function findBreadcrumb(path: string) {

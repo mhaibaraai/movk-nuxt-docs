@@ -9,7 +9,6 @@ interface DocsFilterConfig {
 
 const DEFAULTS = {
   enabled: false,
-  placeholder: '过滤导航...',
   threshold: 10,
   shortcut: '/'
 }
@@ -18,10 +17,11 @@ type ScoreItem = (item: ContentNavigationItem, term: string, fields: string[]) =
 
 export function useDocsFilterConfig(): DocsFilterConfig {
   const appConfig = useAppConfig()
+  const { t } = useMovkI18n()
 
   return {
     enabled: computed(() => appConfig.aside?.filter?.enabled ?? DEFAULTS.enabled),
-    placeholder: computed(() => appConfig.aside?.filter?.placeholder ?? DEFAULTS.placeholder),
+    placeholder: computed(() => appConfig.aside?.filter?.placeholder || t('docs.filterPlaceholder')),
     threshold: computed(() => appConfig.aside?.filter?.threshold ?? DEFAULTS.threshold),
     shortcut: computed(() => appConfig.aside?.filter?.shortcut ?? DEFAULTS.shortcut)
   }

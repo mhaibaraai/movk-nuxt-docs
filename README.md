@@ -66,6 +66,7 @@ npx skills add https://docs.mhaibaraai.cn
 - 🌙 **暗黑模式** - 支持亮色/暗色主题切换
 - 📱 **响应式设计** - 移动优先的响应式布局
 - 🚀 **SEO 优化** - 内置 SEO 优化功能
+- 🌍 **国际化** - 基于 `@nuxtjs/i18n` 的 opt-in 多语言支持，按语言划分内容集合，内置语言切换器与 hreflang SEO
 - 🎯 **TypeScript 支持** - 完整的 TypeScript 类型支持
 
 ## 🚀 快速开始
@@ -248,6 +249,32 @@ export default defineNuxtConfig({
   }
 })
 ```
+
+### 国际化（多语言）
+
+多语言基于 `@nuxtjs/i18n`，采用 opt-in 设计：未配置时单语言运行，配置后自动启用本地化路由、按语言划分的内容集合、语言切换器与 hreflang SEO。先安装依赖，再在 `nuxt.config.ts` 配置 `i18n.locales`：
+
+```bash
+pnpm add @nuxtjs/i18n
+```
+
+```ts [nuxt.config.ts]
+export default defineNuxtConfig({
+  extends: ['@movk/nuxt-docs'],
+
+  modules: ['@nuxtjs/i18n'],
+
+  i18n: {
+    defaultLocale: 'zh-CN',
+    locales: [
+      { code: 'zh-CN', name: '简体中文', file: 'zh-CN.json' },
+      { code: 'en', name: 'English', file: 'en.json' }
+    ]
+  }
+})
+```
+
+默认语言内容保持在 `content/` 根目录（无前缀，如 `/docs`），其余语言放入 `content/{locale}/`（带前缀，如 `/en/docs`）。开箱即用可使用官方 i18n 模板：`npx nuxi init -t gh:mhaibaraai/movk-nuxt-docs/templates/i18n my-docs`。详见 [国际化文档](https://docs.mhaibaraai.cn/docs/i18n)。
 
 ## 🛠️ 开发
 

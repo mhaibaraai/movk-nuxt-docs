@@ -213,13 +213,15 @@ export default defineAppConfig({
     shortcuts: {
       focusInput: 'meta_i',    // Keyboard shortcut
     },
-    // FAQ questions
+    // FAQ questions (categorized, simple, or per-locale object)
     faqQuestions: [
       {
         category: 'Quick start',
         items: ['How do I install?', 'How do I configure it?'],
       },
     ],
+    // Localized form when i18n is enabled:
+    // faqQuestions: { 'zh-CN': [...], 'en': [...] },
     // Customize UI text
     texts: {
       title: 'AI Assistant',
@@ -246,6 +248,35 @@ export default defineNuxtConfig({
 })
 ```
 
+## Internationalization (i18n)
+
+Multilingual is opt-in via `@nuxtjs/i18n`. Without it, set the single UI language in `app.config.ts`:
+
+```ts [app/app.config.ts]
+export default defineAppConfig({
+  i18n: {
+    locale: 'en', // UI language, defaults to 'zh-CN'
+  },
+})
+```
+
+For multiple languages, install `@nuxtjs/i18n` and configure `nuxt.config.ts`. The layer forces the `prefix_except_default` strategy: the default locale has no prefix, others are prefixed.
+
+```ts [nuxt.config.ts]
+export default defineNuxtConfig({
+  modules: ['@nuxtjs/i18n'],
+  i18n: {
+    defaultLocale: 'zh-CN',
+    locales: [
+      { code: 'zh-CN', name: '简体中文', file: 'zh-CN.json' },
+      { code: 'en', name: 'English', file: 'en.json' },
+    ],
+  },
+})
+```
+
+Content layout: default-locale content stays at the `content/` root (e.g. `content/docs/`); other locales live under `content/{locale}/` (e.g. `content/en/docs/`). A locale is filtered out at build time unless it has both a translation file `{code}.json` and a `content/{code}/` directory. Built-in translations cover `zh-CN` and `en`.
+
 ## Content Collections
 
 Movk Nuxt Docs predefines three content collections:
@@ -257,6 +288,8 @@ Movk Nuxt Docs predefines three content collections:
 | `releases` | `content/releases.yml` | Release log |
 
 `releases.yml` or `releases.md` is auto-detected and exposes a `/releases` route.
+
+When i18n is enabled, the default locale keeps `docs` / `landing`, while other locales get suffixed collections such as `docs_en` / `landing_en` (the locale code's `-` becomes `_`).
 
 ## Component Overrides
 

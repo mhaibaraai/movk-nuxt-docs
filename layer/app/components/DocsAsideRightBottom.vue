@@ -1,6 +1,7 @@
 <script setup lang="ts">
 const { aiChat } = useAppConfig()
 const { isEnabled, open } = useAIChat()
+const { t } = useMovkI18n()
 
 const showExplainWithAi = computed(() => {
   return isEnabled.value && aiChat.explainWithAi !== false
@@ -12,7 +13,7 @@ const showExplainWithAi = computed(() => {
     v-if="showExplainWithAi"
     :icon="aiChat.icons?.explain ?? ''"
     target="_blank"
-    :label="aiChat.texts?.explainWithAi ?? ''"
+    :label="aiChat.texts?.explainWithAi || t('assistant.explainWithAi')"
     size="sm"
     variant="ghost"
     color="neutral"

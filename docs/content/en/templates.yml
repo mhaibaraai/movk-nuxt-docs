@@ -1,0 +1,64 @@
+title: Showcase
+description: These sites are all built with Movk Nuxt Docs, demonstrating the theme in real-world projects.
+navigation: false
+hero:
+  title: Showcase
+  description: These sites are all built with Movk Nuxt Docs, demonstrating the theme in real-world projects.
+  links:
+    - label: Star on GitHub
+      color: neutral
+      variant: outline
+      to: https://github.com/mhaibaraai/movk-nuxt-docs
+      target: _blank
+      icon: i-lucide-star
+items:
+  - title: mhaibaraai.cn
+    description: A technical blog and knowledge base site.
+    features:
+      - title: Technical Blog
+        icon: i-lucide-notebook
+      - title: Knowledge Base
+        icon: i-lucide-library
+    links:
+      - label: Visit site
+        to: https://mhaibaraai.cn
+        target: _blank
+        icon: i-lucide-link
+  - title: '@movk/core'
+    description: A library of Vue.js utilities and composables.
+    features:
+      - title: Utilities
+        icon: i-lucide-wrench
+      - title: Composables
+        icon: i-lucide-package
+    links:
+      - label: Visit site
+        to: https://core.mhaibaraai.cn
+        target: _blank
+        icon: i-lucide-link
+  - title: '@movk/nuxt'
+    description: A modular Nuxt 4 engineering toolkit with schema-driven forms, UI components, and utilities.
+    features:
+      - title: Schema-driven Forms
+        icon: i-lucide-form-input
+      - title: UI Components
+        icon: i-lucide-shapes
+      - title: Utilities
+        icon: i-lucide-wrench
+    links:
+      - label: Visit site
+        to: https://nuxt.mhaibaraai.cn
+        target: _blank
+        icon: i-lucide-link
+  - title: '@movk/mapbox'
+    description: A declarative Mapbox GL v3 wrapper that composes maps, layers, markers, and controls as components.
+    features:
+      - title: Declarative Wrapper
+        icon: i-lucide-code-xml
+      - title: Map Components
+        icon: i-lucide-map
+    links:
+      - label: Visit site
+        to: https://mapbox.mhaibaraai.cn
+        target: _blank
+        icon: i-lucide-link

@@ -159,6 +159,17 @@ ui:
   #description
   基于 Nuxt Content 的 `ContentSearch` 组件，支持键盘快捷键（⌘K）快速搜索文档内容。
   :::
+
+  :::u-page-feature
+  ---
+  icon: i-lucide-languages
+  ---
+  #title
+  国际化
+
+  #description
+  基于 `@nuxtjs/i18n` 的 opt-in 多语言支持，按语言划分内容集合，内置语言切换器与 hreflang SEO。
+  :::
 ::
 
 ::u-page-section{class="dark:bg-neutral-950"}

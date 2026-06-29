@@ -5,6 +5,7 @@ import { AnimatePresence, motion } from 'motion-v'
 const route = useRoute()
 const { aiChat } = useAppConfig()
 const { open, isOpen } = useAIChat()
+const { t } = useMovkI18n()
 
 const input = ref('')
 const isVisible = ref(true)
@@ -72,7 +73,7 @@ defineShortcuts(shortcuts)
           <UInput
             ref="inputRef"
             v-model="input"
-            :placeholder="aiChat.texts?.placeholder ?? ''"
+            :placeholder="aiChat.texts?.placeholder || t('assistant.placeholder')"
             size="lg"
             maxlength="1000"
             :ui="{

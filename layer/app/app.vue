@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { zh_cn } from '@nuxt/ui/locale'
+import * as nuxtUiLocales from '@nuxt/ui/locale'
 
 const site = useSiteConfig()
 const appConfig = useAppConfig()
@@ -7,15 +7,35 @@ const route = useRoute()
 
 const { style, link, color } = useTheme()
 const { isEnabled: isAiChatEnabled } = useAIChat()
+const { locale, docsRoot, docsCollection } = useMovkI18n()
+const isDocsRoute = useDocsRoute()
 
-const { data: navigation } = await useFetch('/api/navigation.json')
-const { data: files } = useLazyAsyncData('search', () => queryCollectionSearchSections('docs', {
-  ignoredTags: ['style']
-}), {
-  server: false
-})
+const nuxtUiLocale = computed(() =>
+  nuxtUiLocales[locale.value.replace('-', '_').toLowerCase() as keyof typeof nuxtUiLocales] || nuxtUiLocales.en
+)
+
+useLocaleSeo()
+
+const { data: navigation } = await useAsyncData(
+  'docs-navigation',
+  () => queryCollectionNavigation(docsCollection.value as 'docs', ['category', 'description']),
+  {
+    transform: data => transformNavigation(data, docsRoot.value),
+    watch: [locale]
+  }
+)
+
+const { data: files } = useLazyAsyncData(
+  'docs-search',
+  () => queryCollectionSearchSections(docsCollection.value as 'docs', { ignoredTags: ['style'] }),
+  { server: false, watch: [locale] }
+)
 
 useHead({
+  htmlAttrs: {
+    lang: computed(() => nuxtUiLocale.value.code),
+    dir: computed(() => nuxtUiLocale.value.dir)
+  },
   meta: [
     { name: 'viewport', content: 'width=device-width, initial-scale=1' },
     { key: 'theme-color', name: 'theme-color', content: color }
@@ -50,7 +70,7 @@ provide('navigation', rootNavigation)
 </script>
 
 <template>
-  <UApp :toaster="appConfig.toaster" :locale="zh_cn">
+  <UApp :toaster="appConfig.toaster" :locale="nuxtUiLocale">
     <NuxtLoadingIndicator color="var(--ui-primary)" :height="2" />
 
     <UTheme
@@ -66,7 +86,7 @@ provide('navigation', rootNavigation)
       }"
     >
       <div class="flex">
-        <div class="flex-1 min-w-0" :class="[route.path.startsWith('/docs/') && 'root']">
+        <div class="flex-1 min-w-0" :class="[isDocsRoute && 'root']">
           <template v-if="!route.path.startsWith('/examples')">
             <Header v-if="$route.meta.header !== false" />
           </template>

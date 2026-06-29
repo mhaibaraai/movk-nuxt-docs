@@ -1,0 +1,15 @@
+{
+  "nav": {
+    "docs": "Docs",
+    "examples": "Examples",
+    "releases": "Releases",
+    "gettingStarted": "Getting Started",
+    "typography": "Typography",
+    "components": "Components",
+    "composables": "Composables"
+  },
+  "category": {
+    "core-concepts": "Core Concepts",
+    "ai": "AI Integration"
+  }
+}

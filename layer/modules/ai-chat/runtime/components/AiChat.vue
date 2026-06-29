@@ -1,15 +1,18 @@
 <script setup lang="ts">
 const { aiChat } = useAppConfig()
 const { toggleChat } = useAIChat()
+const { t } = useMovkI18n()
+
+const triggerLabel = computed(() => aiChat.texts?.trigger || t('assistant.trigger'))
 </script>
 
 <template>
-  <UTooltip :text="aiChat.texts?.trigger ?? ''">
+  <UTooltip :text="triggerLabel">
     <UButton
       :icon="aiChat.icons?.trigger ?? ''"
       variant="ghost"
       class="rounded-full"
-      :aria-label="aiChat.texts?.trigger ?? ''"
+      :aria-label="triggerLabel"
       @click="toggleChat"
     />
   </UTooltip>

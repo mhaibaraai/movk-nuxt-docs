@@ -10,27 +10,27 @@ export function landingPageExists(rootDir: string): boolean {
 }
 
 /**
- * 检查是否存在 docs 文件夹，即 content/docs
+ * 检查是否存在 docs 文件夹，即 content/docs；传入 locale 时检查 content/{locale}/docs
  */
-export function docsFolderExists(rootDir: string): boolean {
-  const docsPath = joinURL(rootDir, 'content', 'docs')
+export function docsFolderExists(rootDir: string, locale?: string): boolean {
+  const docsPath = locale
+    ? joinURL(rootDir, 'content', locale, 'docs')
+    : joinURL(rootDir, 'content', 'docs')
   return existsSync(docsPath)
 }
 
 /**
- * 检查是否存在 releases 文件，即 content/releases.md 或 content/releases.yml
+ * 检查是否存在 releases 文件，即 content/releases.{md,yml}；传入 locale 时检查 content/{locale}/releases.{md,yml}
  */
-export function releasesFileExists(rootDir: string): boolean {
-  return ['releases.md', 'releases.yml'].some(file =>
-    existsSync(joinURL(rootDir, 'content', file))
-  )
+export function releasesFileExists(rootDir: string, locale?: string): boolean {
+  const dir = locale ? joinURL(rootDir, 'content', locale) : joinURL(rootDir, 'content')
+  return ['releases.md', 'releases.yml'].some(file => existsSync(joinURL(dir, file)))
 }
 
 /**
- * 检查是否存在 templates 文件，即 content/templates.md 或 content/templates.yml
+ * 检查是否存在 templates 文件，即 content/templates.{md,yml}；传入 locale 时检查 content/{locale}/templates.{md,yml}
  */
-export function templatesFileExists(rootDir: string): boolean {
-  return ['templates.md', 'templates.yml'].some(file =>
-    existsSync(joinURL(rootDir, 'content', file))
-  )
+export function templatesFileExists(rootDir: string, locale?: string): boolean {
+  const dir = locale ? joinURL(rootDir, 'content', locale) : joinURL(rootDir, 'content')
+  return ['templates.md', 'templates.yml'].some(file => existsSync(joinURL(dir, file)))
 }

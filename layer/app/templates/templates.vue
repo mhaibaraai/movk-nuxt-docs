@@ -1,7 +1,10 @@
 <script setup lang="ts">
 import type { ButtonProps } from '@nuxt/ui'
 
-const { data: page } = await useAsyncData('templates', () => queryCollection('templates').first())
+const { templatesCollection } = useMovkI18n()
+const collection = templatesCollection.value as 'templates'
+
+const { data: page } = await useAsyncData(collection, () => queryCollection(collection).first())
 if (!page.value) {
   throw createError({ status: 404, statusText: 'Page not found', fatal: true })
 }

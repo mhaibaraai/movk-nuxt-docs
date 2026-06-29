@@ -30,8 +30,6 @@ export default defineNuxtModule({
       }
     }
 
-    mergeRouteHeaders('/api/navigation.json', { prerender: true })
-
     mergeRouteHeaders('/docs/**', varyHeaders)
 
     // Agent discovery Link headers on the homepage (RFC 8288, RFC 9727)

@@ -3,9 +3,9 @@ import type { ContentNavigationItem } from '@nuxt/content'
 
 const navigation = inject<Ref<ContentNavigationItem[]>>('navigation')
 
-const route = useRoute()
 const { mobileLinks } = useHeader()
 const { navigationByCategory } = useNavigation(navigation!)
+const isDocsRoute = useDocsRoute()
 </script>
 
 <template>
@@ -16,7 +16,7 @@ const { navigationByCategory } = useNavigation(navigation!)
     aria-label="Mobile Navigation"
   />
 
-  <template v-if="route.path.startsWith('/docs/')">
+  <template v-if="isDocsRoute">
     <USeparator type="dashed" class="mt-4 mb-6" />
 
     <UContentNavigation

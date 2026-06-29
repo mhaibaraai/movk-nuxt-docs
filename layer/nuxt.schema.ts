@@ -2,6 +2,21 @@ import { field, group } from '@nuxt/content/preview'
 
 export default defineNuxtSchema({
   appConfig: {
+    i18n: group({
+      title: '国际化',
+      description: '多语言与界面语言配置',
+      icon: 'i-lucide-languages',
+      fields: {
+        locale: field({
+          type: 'string',
+          title: '界面语言',
+          description: '未启用 @nuxtjs/i18n 时的界面语言（如 zh-CN、en）',
+          icon: 'i-lucide-globe',
+          default: 'zh-CN'
+        })
+      }
+    }),
+
     theme: group({
       title: '主题',
       description: '主题相关配置',
@@ -147,9 +162,9 @@ export default defineNuxtSchema({
         title: field({
           type: 'string',
           title: '目录标题',
-          description: '目录区域的标题',
+          description: '目录区域的标题，留空则使用当前语言的内置文案',
           icon: 'i-lucide-heading',
-          default: '页面导航'
+          default: ''
         }),
 
         bottom: group({
@@ -196,9 +211,9 @@ export default defineNuxtSchema({
             placeholder: field({
               type: 'string',
               title: '占位文本',
-              description: '过滤框的占位提示文本',
+              description: '过滤框的占位提示文本，留空则使用当前语言的内置文案',
               icon: 'i-lucide-text-cursor-input',
-              default: '过滤导航...'
+              default: ''
             }),
             threshold: field({
               type: 'number',
@@ -355,9 +370,10 @@ export default defineNuxtSchema({
         faqQuestions: field({
           type: 'array',
           title: 'FAQ 问题',
-          description: '显示的常见问题解答问题。支持简单格式（字符串数组）或分类格式（对象数组）',
+          description: '显示的常见问题解答问题。支持简单格式（字符串数组）、分类格式（对象数组），或按 locale 分组的本地化对象',
           icon: 'i-lucide-help-circle',
-          default: []
+          default: [],
+          tsType: 'string[] | Array<{ category: string, items: string[] }> | Record<string, string[] | Array<{ category: string, items: string[] }>>'
         }),
 
         shortcuts: group({
@@ -377,7 +393,7 @@ export default defineNuxtSchema({
 
         texts: group({
           title: '文本配置',
-          description: 'UI 文本配置',
+          description: 'UI 文本配置，留空则使用当前语言的内置文案',
           icon: 'i-lucide-languages',
           fields: {
             title: field({
@@ -385,49 +401,49 @@ export default defineNuxtSchema({
               title: '标题',
               description: 'AI 聊天面板的标题文本',
               icon: 'i-lucide-heading',
-              default: 'AI 助手'
+              default: ''
             }),
             clearChat: field({
               type: 'string',
               title: '清除聊天记录',
               description: '清除聊天记录按钮的文本',
               icon: 'i-lucide-list-x',
-              default: '清除聊天记录'
+              default: ''
             }),
             close: field({
               type: 'string',
               title: '关闭按钮',
               description: '关闭按钮的文本',
               icon: 'i-lucide-panel-right-close',
-              default: '关闭'
+              default: ''
             }),
             placeholder: field({
               type: 'string',
               title: '输入占位符',
               description: '浮动输入框的占位符文本',
               icon: 'i-lucide-type',
-              default: '输入你的问题...'
+              default: ''
             }),
             lineBreak: field({
               type: 'string',
               title: '换行提示',
               description: '换行的提示文本',
               icon: 'i-lucide-corner-down-left',
-              default: '换行'
+              default: ''
             }),
             trigger: field({
               type: 'string',
               title: '触发按钮',
               description: 'AI 聊天面板触发按钮的提示文本',
               icon: 'i-custom-ai',
-              default: '与 AI 聊天'
+              default: ''
             }),
             explainWithAi: field({
               type: 'string',
               title: '用 AI 解释按钮',
               description: '用 AI 解释按钮的文本',
               icon: 'i-lucide-brain',
-              default: '用 AI 解释此页面'
+              default: ''
             })
           }
         }),

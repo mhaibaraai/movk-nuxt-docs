@@ -1,8 +1,9 @@
 <script setup lang="ts">
 import type { ButtonProps } from '@nuxt/ui'
 
-const route = useRoute()
 const { header, github } = useAppConfig()
+const { isEnabled, locales } = useMovkI18n()
+const isDocsRoute = useDocsRoute()
 
 const links = computed<ButtonProps[]>(() => (github && github.url
   ? [
@@ -38,6 +39,16 @@ const links = computed<ButtonProps[]>(() => (github && github.url
         <UColorModeButton v-if="header?.colorMode" aria-label="Color Mode" />
       </UTooltip>
 
+      <template v-if="isEnabled && locales.length > 1">
+        <ClientOnly>
+          <LanguageSwitcher />
+
+          <template #fallback>
+            <div class="h-8 w-8 animate-pulse bg-neutral-200 dark:bg-neutral-800 rounded-md" />
+          </template>
+        </ClientOnly>
+      </template>
+
       <template v-if="links?.length">
         <UTooltip
           v-for="(link, count) in links"
@@ -58,7 +69,7 @@ const links = computed<ButtonProps[]>(() => (github && github.url
       <HeaderBody />
     </template>
 
-    <template v-if="route.path.startsWith('/docs/')" #bottom>
+    <template v-if="isDocsRoute" #bottom>
       <HeaderBottom />
     </template>
   </UHeader>
