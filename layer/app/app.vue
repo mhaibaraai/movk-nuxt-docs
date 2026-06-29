@@ -17,18 +17,17 @@ const nuxtUiLocale = computed(() =>
 useLocaleSeo()
 
 const { data: navigation } = await useAsyncData(
-  'docs-navigation',
+  () => `docs-navigation-${locale.value}`,
   () => queryCollectionNavigation(docsCollection.value as 'docs', ['category', 'description']),
   {
-    transform: data => transformNavigation(data, docsRoot.value),
-    watch: [locale]
+    transform: data => transformNavigation(data, docsRoot.value)
   }
 )
 
 const { data: files } = useLazyAsyncData(
-  'docs-search',
+  () => `docs-search-${locale.value}`,
   () => queryCollectionSearchSections(docsCollection.value as 'docs', { ignoredTags: ['style'] }),
-  { server: false, watch: [locale] }
+  { server: false }
 )
 
 useHead({

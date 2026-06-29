@@ -73,8 +73,14 @@ export function useNavigation(navigation: Ref<ContentNavigationItem[] | undefine
   )
 
   const navigationByCategory = computed(() => {
+    const root = navigation?.value
+    if (!root?.length) return []
+
+    // 切换语言时数据与 locale 短暂不一致：避免用其他 locale 的导航树渲染当前路由
+    if (!root.some(item => item.path?.startsWith(docsRoot.value))) return []
+
     const slug = route.params.slug?.[0] as string
-    const children = findPageChildren(navigation?.value, `${docsRoot.value}/${slug}`, { indexAsChild: true })
+    const children = findPageChildren(root, `${docsRoot.value}/${slug}`, { indexAsChild: true })
 
     return groupChildrenByCategory(children, slug, docsRoot.value, t, categories)
   })
