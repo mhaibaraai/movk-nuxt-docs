@@ -1,5 +1,17 @@
 # 📋 Changelog
 
+## [2.0.1](https://github.com/mhaibaraai/movk-nuxt-docs/compare/v2.0.0...v2.0.1) (2026-06-29)
+
+### 🐛 Bug Fixes
+
+* **composables:** 修复消费方启用 i18n 后 typecheck 报错 ([c9a7667](https://github.com/mhaibaraai/movk-nuxt-docs/commit/c9a76676f25f3ccf692b87137fd33a7c40dd2797))
+* **i18n:** 修复切换语言后侧边栏导航偶发不渲染 ([07b27a7](https://github.com/mhaibaraai/movk-nuxt-docs/commit/07b27a7daab3f250c63f331adb652353159b133a))
+* **navigation:** 修复侧边栏导航跨分节切换后未完全展开 ([a1bf903](https://github.com/mhaibaraai/movk-nuxt-docs/commit/a1bf9031166eff39548cf78e0a90e2625ac1f563))
+
+### 📝 Documentation
+
+* 为文档页面添加版本标记徽章 ([47a3a1f](https://github.com/mhaibaraai/movk-nuxt-docs/commit/47a3a1fa02ba32bb36401264f91556859cbabe61))
+
 ## [2.0.0](https://github.com/mhaibaraai/movk-nuxt-docs/compare/v1.19.10...v2.0.0) (2026-06-29)
 
 ### ✨ Features
