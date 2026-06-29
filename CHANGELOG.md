@@ -1,5 +1,39 @@
 # 📋 Changelog
 
+## [2.0.0](https://github.com/mhaibaraai/movk-nuxt-docs/compare/v1.19.10...v2.0.0) (2026-06-29)
+
+### ✨ Features
+
+* **ai-chat:** 打开面板时自动聚焦输入框 ([783e0a1](https://github.com/mhaibaraai/movk-nuxt-docs/commit/783e0a15edcafb3bd8ee7234a3e3e735bf35e603))
+* **i18n:** releases/templates 内容集合支持多语言 ([693acd2](https://github.com/mhaibaraai/movk-nuxt-docs/commit/693acd29152c346180dbe365336b2b2dbeffaaae))
+* **i18n:** 新增英文 releases/templates 内容文件 ([4af5b5c](https://github.com/mhaibaraai/movk-nuxt-docs/commit/4af5b5c168f5a72d3a162895f80792eab7f8b360))
+* **nav:** 支持导航与页头徽标 ([3801865](https://github.com/mhaibaraai/movk-nuxt-docs/commit/3801865d167e9f1865bb164340343d3f4b61382d))
+* **templates:** 新增模板展示页能力 ([0a50b30](https://github.com/mhaibaraai/movk-nuxt-docs/commit/0a50b3053b5e10d61112fae56ad644fc0a132f00))
+* 添加基于 @nuxtjs/i18n 的 opt-in 多语言支持 ([2c017b9](https://github.com/mhaibaraai/movk-nuxt-docs/commit/2c017b964950ad6f975956df19235ec1b9b37f7d))
+
+### 🐛 Bug Fixes
+
+* **ai-chat:** 修复 watch 侦听源误用 window.open 导致弹出 about:blank 标签页 ([3e69809](https://github.com/mhaibaraai/movk-nuxt-docs/commit/3e69809325cc74a74311a3b89561aae86650cfc5))
+* **header:** 移除多余的垂直分隔线 ([7564fec](https://github.com/mhaibaraai/movk-nuxt-docs/commit/7564fec2fda978290a7a9c8ca0fa25ad6f0f37f8))
+* **search:** 搜索面板隐藏时不卸载以保留状态 ([61b6709](https://github.com/mhaibaraai/movk-nuxt-docs/commit/61b6709969b7685d6fe4a051d5bc14fb477bcbc4))
+
+### 📝 Documentation
+
+* **agents:** 更新 i18n 内容集合说明 ([ec8a748](https://github.com/mhaibaraai/movk-nuxt-docs/commit/ec8a748e650fb2e06dee04b9f6f8ccce013d5303))
+* 添加表情符号以增强文档可视化效果 ([960e8e3](https://github.com/mhaibaraai/movk-nuxt-docs/commit/960e8e3f45befb6d63e9c457acea339331e2ad96))
+
+### ♻️ Code Refactoring
+
+* 改进语言切换器的条件渲染和加载状态 ([06650cf](https://github.com/mhaibaraai/movk-nuxt-docs/commit/06650cf3a5a0a28bd2b6231b74af50b5915ac8a0))
+
+### 🔧 Chores
+
+* **deps:** update actions/cache action to v6 ([f220394](https://github.com/mhaibaraai/movk-nuxt-docs/commit/f22039404a9893a1e7c24cdb665036446f302b04))
+* **deps:** update devdependency eslint to ^10.6.0 ([4b5f13e](https://github.com/mhaibaraai/movk-nuxt-docs/commit/4b5f13e109cb21b6b417e71a39f2aa62f1b057c0))
+* **deps:** 升级依赖并更新 pnpm 至 11.9.0 ([5571575](https://github.com/mhaibaraai/movk-nuxt-docs/commit/557157590863ec3437073490f117b16499d4efe3))
+* 更新依赖包版本 ([9f5585d](https://github.com/mhaibaraai/movk-nuxt-docs/commit/9f5585d6cc066ac257543dcee82fb421f9d9397f))
+* 更新依赖包版本 ([6eae1ed](https://github.com/mhaibaraai/movk-nuxt-docs/commit/6eae1edbd709d0dd5af2e4dd789caf1233e026fb))
+
 ## [1.19.10](https://github.com/mhaibaraai/movk-nuxt-docs/compare/v1.19.9...v1.19.10) (2026-06-22)
 
 ### ✨ Features
