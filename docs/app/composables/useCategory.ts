@@ -1,7 +1,7 @@
 export function useCategory() {
   const { t } = useI18n()
 
-  const categories = {
+  const categories = computed(() => ({
     'getting-started': [
       {
         id: 'core-concepts',
@@ -14,7 +14,8 @@ export function useCategory() {
         icon: 'i-lucide-bot'
       }
     ]
-  }
+  }))
+
   return {
     categories
   }

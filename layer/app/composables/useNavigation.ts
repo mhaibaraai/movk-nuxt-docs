@@ -82,7 +82,7 @@ export function useNavigation(navigation: Ref<ContentNavigationItem[] | undefine
     const slug = route.params.slug?.[0] as string
     const children = findPageChildren(root, `${docsRoot.value}/${slug}`, { indexAsChild: true })
 
-    return groupChildrenByCategory(children, slug, docsRoot.value, t, categories)
+    return groupChildrenByCategory(children, slug, docsRoot.value, t, toValue(categories))
   })
 
   function findBreadcrumb(path: string) {
