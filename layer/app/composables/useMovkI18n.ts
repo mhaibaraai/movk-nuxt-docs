@@ -57,7 +57,7 @@ function resolveMessage(messages: Record<string, unknown>, key: string, params?:
  * - 未启用：回退到由 i18n 插件注入的单 locale 消息，路由不做本地化
  */
 export function useMovkI18n(): MovkI18n {
-  const publicConfig = useRuntimeConfig().public as {
+  const publicConfig = useRuntimeConfig().public as unknown as {
     i18n?: { defaultLocale?: string }
     movkDocs?: { filteredLocales?: MovkLocale[] }
   }
@@ -88,7 +88,7 @@ export function useMovkI18n(): MovkI18n {
   const i18n = nuxtApp.$i18n!
   const locale = i18n.locale
   const defaultLocale = publicConfig.i18n?.defaultLocale || i18n.defaultLocale
-  const localePath = nuxtApp.$localePath || (path => path)
+  const localePath = nuxtApp.$localePath || ((path: string) => path)
 
   return {
     isEnabled,
