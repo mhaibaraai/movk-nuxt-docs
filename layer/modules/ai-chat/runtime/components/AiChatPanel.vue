@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import type { FaqCategory, FaqQuestions, LocalizedFaqQuestions, ToolPart, ToolState } from '../types'
-import { Chat } from '@ai-sdk/vue'
+import { useChat } from '@ai-sdk/vue'
 import { DefaultChatTransport, getToolName, isReasoningUIPart, isTextUIPart, isToolUIPart } from 'ai'
 import { computed } from 'vue'
 import { isPartStreaming, isToolStreaming } from '@nuxt/ui/utils/ai'
@@ -30,7 +30,7 @@ const texts = computed(() => ({
 const input = ref('')
 let _skipSync = false
 
-const chat = new Chat({
+const { messages: chatMessages, status, error, sendMessage, regenerate, stop } = useChat({
   messages: messages.value,
   transport: new DefaultChatTransport({
     api: (config.app?.baseURL.replace(/\/$/, '') || '') + config.public.aiChat.apiPath,
@@ -55,7 +55,7 @@ const chat = new Chat({
   },
   onFinish: () => {
     _skipSync = true
-    messages.value = chat.messages
+    messages.value = chatMessages.value
     nextTick(() => {
       _skipSync = false
     })
@@ -65,9 +65,9 @@ const chat = new Chat({
 watch(messages, (newMessages) => {
   if (_skipSync) return
 
-  chat.messages = newMessages
-  if (chat.lastMessage?.role === 'user') {
-    chat.regenerate()
+  chatMessages.value = newMessages
+  if (chatMessages.value[chatMessages.value.length - 1]?.role === 'user') {
+    regenerate()
   }
 })
 
@@ -158,7 +158,7 @@ function onSubmit() {
     return
   }
 
-  chat.sendMessage({ text: input.value })
+  sendMessage({ text: input.value })
 
   input.value = ''
 }
@@ -169,11 +169,11 @@ function askQuestion(question: string) {
 }
 
 function clearMessages() {
-  if (chat.status === 'streaming') {
-    chat.stop()
+  if (status.value === 'streaming' || status.value === 'submitted') {
+    stop()
   }
   messages.value = []
-  chat.messages = []
+  chatMessages.value = []
 }
 
 function normalizeFaqQuestions(questions: FaqQuestions): FaqCategory[] {
@@ -236,13 +236,13 @@ watch(isOpen, (value) => {
     </template>
 
     <template #close>
-      <UTooltip :text="texts.close">
+      <UTooltip :text="texts.close" :kbds="['meta', 'i']">
         <UButton
           :icon="aiChat.icons?.close ?? ''"
           color="neutral"
           variant="ghost"
           :aria-label="texts.close"
-          @click="isOpen = false"
+          @click="() => { isOpen = false }"
         />
       </UTooltip>
     </template>
@@ -266,10 +266,10 @@ watch(isOpen, (value) => {
       }"
     >
       <UChatMessages
-        v-if="chat.messages.length"
+        v-if="chatMessages.length"
         should-auto-scroll
-        :messages="chat.messages"
-        :status="chat.status"
+        :messages="chatMessages"
+        :status="status"
         compact
         class="px-0 gap-2"
         :user="{ ui: { container: 'max-w-full' } }"
@@ -327,7 +327,7 @@ watch(isOpen, (value) => {
       <UChatPrompt
         ref="promptRef"
         v-model="input"
-        :error="chat.error"
+        :error="error"
         :placeholder="texts.placeholder"
         variant="naked"
         size="sm"
@@ -349,10 +349,11 @@ watch(isOpen, (value) => {
 
           <UChatPromptSubmit
             class="ml-auto"
-            size="xs"
-            :status="chat.status"
-            @stop="chat.stop()"
-            @reload="chat.regenerate()"
+            size="sm"
+            :status="status"
+            :disabled="!input.trim()"
+            @stop="stop()"
+            @reload="regenerate()"
           />
         </template>
       </UChatPrompt>

@@ -15,6 +15,6 @@
     "dompurify": "^3.4.11",
     "mermaid": "^11.16.0",
     "nuxt": "^4.4.8",
-    "tailwindcss": "^4.3.1"
+    "tailwindcss": "^4.3.2"
   }
 }
