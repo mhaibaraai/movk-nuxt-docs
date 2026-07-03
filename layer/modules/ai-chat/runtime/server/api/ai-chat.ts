@@ -1,4 +1,4 @@
-import { streamText, convertToModelMessages, stepCountIs, smoothStream } from 'ai'
+import { streamText, convertToModelMessages, smoothStream, isStepCount, toUIMessageStream, createUIMessageStreamResponse } from 'ai'
 import { createMCPClient } from '@ai-sdk/mcp'
 import { getModel } from '../utils/getModel'
 import { hasAnyAiKey } from '../../../keys'
@@ -71,14 +71,15 @@ export default defineEventHandler(async (event) => {
   const closeMcp = () => event.waitUntil(httpClient?.close())
   const model = getModel(requestModel || config.public.aiChat.model)
 
-  return streamText({
+  const result = streamText({
     model,
     maxOutputTokens: 8000,
     abortSignal: abortController.signal,
     providerOptions: {
       anthropic: {
         thinking: {
-          type: 'adaptive'
+          type: 'adaptive',
+          display: 'summarized'
         },
         effort: 'low'
       },
@@ -96,10 +97,10 @@ export default defineEventHandler(async (event) => {
         reasoningSummary: 'detailed'
       }
     },
-    system: getMainAgentSystemPrompt(siteName, currentPage),
+    instructions: getMainAgentSystemPrompt(siteName, currentPage),
     messages: await convertToModelMessages(messages),
     experimental_transform: smoothStream(),
-    stopWhen: stepCountIs(6),
+    stopWhen: isStepCount(6),
     tools: {
       ...mcpTools
     },
@@ -109,5 +110,8 @@ export default defineEventHandler(async (event) => {
       console.error('streamText error:', error)
       closeMcp()
     }
-  }).toUIMessageStreamResponse()
+  })
+
+  const stream = toUIMessageStream({ stream: result.stream })
+  return createUIMessageStreamResponse({ stream })
 })

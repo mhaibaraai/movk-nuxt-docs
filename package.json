@@ -33,6 +33,6 @@
     "nuxt": "^4.4.8",
     "release-it": "^20.2.1",
     "typescript": "^6.0.3",
-    "vue-tsc": "^3.3.5"
+    "vue-tsc": "^3.3.6"
   }
 }
