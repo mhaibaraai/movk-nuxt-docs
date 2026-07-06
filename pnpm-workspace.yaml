@@ -7,6 +7,7 @@ linkWorkspacePackages: true
 minimumReleaseAge: 0
 
 overrides:
+  '@nuxt/content': ^3.15.0
   h3: 1.15.11
 
 allowBuilds:
