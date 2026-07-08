@@ -45,6 +45,7 @@
     "i18n",
     "modules",
     "server",
+    "shared",
     "utils",
     "content.config.ts",
     "nuxt.config.ts",

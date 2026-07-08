@@ -1,11 +1,35 @@
 <script setup lang="ts">
-import { camelCase, kebabCase, upperFirst } from 'scule'
+import type { CommitCasing, CommitPathParts } from '../../../shared/commit-path'
 import { useTimeAgo } from '@vueuse/core'
+import { resolveCommitFilePath } from '../../../shared/commit-path'
 
 interface Commit {
   sha: string
   date: string
   message: string
+}
+
+interface CommitChangelogFile {
+  /**
+   * 覆盖顶层 commitPath
+   */
+  commitPath?: string
+  /**
+   * 覆盖顶层 prefix
+   */
+  prefix?: string
+  /**
+   * 覆盖顶层 suffix
+   */
+  suffix?: string
+  /**
+   * 覆盖顶层 name
+   */
+  name?: string
+  /**
+   * 覆盖顶层 casing
+   */
+  casing?: CommitCasing
 }
 
 interface Release {
@@ -54,7 +78,12 @@ const props = defineProps<{
    * - 'pascal': 转换为 PascalCase（如 UseUser.ts）
    * @defaultValue 'auto'
    */
-  casing?: 'auto' | 'kebab' | 'camel' | 'pascal'
+  casing?: CommitCasing
+  /**
+   * 关联多个文件：每一项与顶层 props 合并后各自解析出一个文件路径，
+   * 对应的提交记录会合并去重并按时间倒序展示
+   */
+  files?: CommitChangelogFile[]
 }>()
 
 const SHA_SHORT_LENGTH = 5
@@ -63,38 +92,27 @@ const { github } = useAppConfig()
 const route = useRoute()
 
 const routeName = computed(() => route.path.split('/').pop() ?? '')
-const githubUrl = computed(() => (github && typeof github === 'object' ? github.url : ''))
+const githubConfig = computed(() => (github && typeof github === 'object' ? github : undefined))
+const githubUrl = computed(() => githubConfig.value?.url ?? '')
 
-const filePath = computed(() => {
-  const basePath = props.commitPath ?? (github && typeof github === 'object' ? github.commitPath : 'src')
-  const filePrefix = props.prefix ? `${props.prefix}/` : ''
-  const fileExtension = props.suffix ?? (github && typeof github === 'object' ? github.suffix : 'vue')
-  const fileName = props.name ?? routeName.value
+function toParts(override: CommitChangelogFile): CommitPathParts {
+  return {
+    basePath: override.commitPath ?? props.commitPath ?? githubConfig.value?.commitPath ?? 'src',
+    prefix: override.prefix ?? props.prefix,
+    suffix: override.suffix ?? props.suffix ?? githubConfig.value?.suffix ?? 'vue',
+    name: override.name ?? props.name ?? routeName.value,
+    casing: override.casing ?? props.casing ?? githubConfig.value?.casing ?? 'auto'
+  }
+}
 
-  const transformedName = (() => {
-    const casing = props.casing ?? (github && typeof github === 'object' ? github.casing : undefined) ?? 'auto'
-
-    switch (casing) {
-      case 'kebab':
-        return kebabCase(fileName)
-      case 'camel':
-        return camelCase(fileName)
-      case 'pascal':
-        return upperFirst(camelCase(fileName))
-      case 'auto':
-      default:
-        return fileExtension === 'vue'
-          ? upperFirst(camelCase(fileName))
-          : camelCase(fileName)
-    }
-  })()
-
-  return `${basePath}/${filePrefix}${transformedName}.${fileExtension}`
+const filePaths = computed(() => {
+  const list = props.files?.length ? props.files : [{}]
+  return list.map(override => resolveCommitFilePath(toParts(override)))
 })
 
 const { data: commits } = useLazyFetch<Commit[]>('/api/github/commits.json', {
-  key: `commit-changelog-${props.name ?? routeName.value}-${props.author ?? 'all'}`,
-  query: { path: [filePath.value], author: props.author },
+  key: `commit-changelog-${filePaths.value.join(',')}-${props.author ?? 'all'}`,
+  query: { path: filePaths.value, author: props.author },
   server: false,
   getCachedData: (key, nuxtApp) => nuxtApp.payload.data[key]
 })
