@@ -1,5 +1,17 @@
 # 📋 Changelog
 
+## [2.0.2](https://github.com/mhaibaraai/movk-nuxt-docs/compare/v2.0.1...v2.0.2) (2026-07-08)
+
+### ♻️ Code Refactoring
+
+* **composables:** 数据驱动重构 header 导航并统一 active 判定 ([4b80009](https://github.com/mhaibaraai/movk-nuxt-docs/commit/4b800096d3e88e521097252cda4952b7aa8a663a))
+* **shiki:** 用外部包替换本地图标高亮 transformer 并升级依赖 ([a408edf](https://github.com/mhaibaraai/movk-nuxt-docs/commit/a408edf4b55030d2ebc616831e2a89ad882a26df))
+
+### 🔧 Chores
+
+* **deps:** 升级 AI SDK 相关依赖并固定 compatibilityDate ([08bac92](https://github.com/mhaibaraai/movk-nuxt-docs/commit/08bac923dfcf1f158064009e880244567f2651df))
+* **deps:** 升级 AI SDK 至 v7 并适配相关 API 变更 ([156ed2f](https://github.com/mhaibaraai/movk-nuxt-docs/commit/156ed2fa1a76eb670c2f779b45059bf92be2d391))
+
 ## [2.0.1](https://github.com/mhaibaraai/movk-nuxt-docs/compare/v2.0.0...v2.0.1) (2026-06-29)
 
 ### 🐛 Bug Fixes
