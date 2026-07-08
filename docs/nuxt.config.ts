@@ -34,7 +34,7 @@ export default defineNuxtConfig({
     '/en/docs/composables': { redirect: '/en/docs/composables/use-header', prerender: false }
   },
 
-  compatibilityDate: 'latest',
+  compatibilityDate: '2026-06-30',
 
   vite: {
     optimizeDeps: {
