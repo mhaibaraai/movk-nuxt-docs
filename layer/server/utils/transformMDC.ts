@@ -2,6 +2,7 @@ import { getRequestURL, type H3Event } from 'h3'
 import { camelCase, kebabCase, upperFirst } from 'scule'
 import { visit } from '@nuxt/content/runtime'
 import { queryCollection } from '@nuxt/content/server'
+import { resolveCommitFilePath } from '../../shared/commit-path'
 import meta from '#nuxt-component-meta'
 // @ts-expect-error - no types available
 import { getComponentExample } from '#component-example/nitro'
@@ -23,22 +24,6 @@ function getBooleanAttribute(attrs: MDCAttributes, key: string): boolean {
 function resolveComponentTargetName(attrs: MDCAttributes, fallback: string, options: { name?: boolean } = {}) {
   const target = attrs.slug ?? (options.name ? attrs.name : undefined) ?? fallback
   return camelCase(String(target || ''))
-}
-
-function resolveCommitFileName(fileName: string, fileExtension: string, casing: string) {
-  switch (casing) {
-    case 'kebab':
-      return kebabCase(fileName)
-    case 'camel':
-      return camelCase(fileName)
-    case 'pascal':
-      return upperFirst(camelCase(fileName))
-    case 'auto':
-    default:
-      return fileExtension === 'vue'
-        ? upperFirst(camelCase(fileName))
-        : camelCase(fileName)
-  }
 }
 
 function getComponentMeta(componentName: string) {
@@ -446,25 +431,35 @@ export async function transformMDC(event: H3Event, doc: Document): Promise<Docum
 
     changelogNodes.forEach((node) => {
       const attrs = node[1] || {}
-      const basePath = attrs['commit-path'] || github?.commitPath || 'src'
-      const filePrefix = attrs.prefix ? `${attrs.prefix}/` : ''
-      const fileExtension = attrs.suffix || github?.suffix || 'vue'
-      const fileName = attrs.name || doc.title || ''
-      const casing = attrs.casing || github?.casing || 'auto'
-      const transformedName = resolveCommitFileName(fileName, fileExtension, casing)
-      const filePath = `${basePath}/${filePrefix}${transformedName}.${fileExtension}`
       const githubUrl = github?.url || ''
       const branch = github?.branch || 'main'
-      const commitsUrl = githubUrl
-        ? `${githubUrl}/commits/${branch}/${filePath}`
-        : `${origin}/${filePath}`
+
+      const resolveOne = (override: Record<string, any>): string => resolveCommitFilePath({
+        basePath: override.commitPath ?? override['commit-path'] ?? attrs.commitPath ?? attrs['commit-path'] ?? github?.commitPath ?? 'src',
+        prefix: override.prefix ?? attrs.prefix,
+        suffix: override.suffix ?? attrs.suffix ?? github?.suffix ?? 'vue',
+        name: override.name ?? attrs.name ?? doc.title ?? '',
+        casing: override.casing ?? attrs.casing ?? github?.casing ?? 'auto'
+      })
+
+      // 块 frontmatter 的数组值在 AST 里以 `:files` 绑定形式存为 JSON 字符串
+      const files = parseAttrAsObject<Record<string, any>[]>(readMdcAttr(attrs, 'files'), [])
+      const overrides = Array.isArray(files) && files.length ? files : [{}]
+      const filePaths: string[] = overrides.map(resolveOne)
 
       node[0] = 'p'
       node[1] = {}
-      node[2] = 'See commit history for '
-      node[3] = ['a', { href: commitsUrl }, filePath]
-      node[4] = '.'
-      node.length = 5
+      let idx = 2
+      node[idx++] = 'See commit history for '
+      filePaths.forEach((filePath, i) => {
+        if (i > 0) node[idx++] = '、'
+        const commitsUrl = githubUrl
+          ? `${githubUrl}/commits/${branch}/${filePath}`
+          : `${origin}/${filePath}`
+        node[idx++] = ['a', { href: commitsUrl }, filePath]
+      })
+      node[idx++] = '.'
+      node.length = idx
     })
   }
 

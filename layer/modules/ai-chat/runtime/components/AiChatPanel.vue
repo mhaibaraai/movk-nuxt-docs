@@ -242,7 +242,7 @@ watch(isOpen, (value) => {
           color="neutral"
           variant="ghost"
           :aria-label="texts.close"
-          @click="() => { isOpen = false }"
+          @click="isOpen = false"
         />
       </UTooltip>
     </template>
