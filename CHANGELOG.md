@@ -1,5 +1,19 @@
 # 📋 Changelog
 
+## [2.0.3](https://github.com/mhaibaraai/movk-nuxt-docs/compare/v2.0.2...v2.0.3) (2026-07-08)
+
+### ✨ Features
+
+* **commit-changelog:** 支持关联多个源码文件 ([31ef830](https://github.com/mhaibaraai/movk-nuxt-docs/commit/31ef830856c32ed4289cc8e0516cdc8f5541b613))
+
+### ♻️ Code Refactoring
+
+* **ai-chat:** 简化关闭按钮点击处理器 ([a38143f](https://github.com/mhaibaraai/movk-nuxt-docs/commit/a38143fd33556fc18a1f9d6879d5fd3ae28c23ee))
+
+### 🔧 Chores
+
+* **deps:** 升级图标与图片渲染依赖，新增 vue-tsc 版本覆盖 ([47bda34](https://github.com/mhaibaraai/movk-nuxt-docs/commit/47bda34d44172ccfee59dcb5995b93234bf2f7de))
+
 ## [2.0.2](https://github.com/mhaibaraai/movk-nuxt-docs/compare/v2.0.1...v2.0.2) (2026-07-08)
 
 ### ♻️ Code Refactoring
