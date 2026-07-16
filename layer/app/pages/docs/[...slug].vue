@@ -194,14 +194,19 @@ useSeoMeta({
       <UContentToc
         :title="toc?.title || t('docs.tocTitle')"
         :links="page.body?.toc?.links"
-        highlight
         class="z-2"
+        highlight
+        highlight-variant="circuit"
       >
         <template v-if="toc?.bottom" #bottom>
           <div class="hidden lg:block space-y-6" :class="{ 'mt-6!': page.body?.toc?.links?.length }">
             <USeparator v-if="page.body?.toc?.links?.length" type="dashed" />
 
-            <UPageLinks v-if="communityLinks?.length" :title="toc.bottom.title || t('docs.community')" :links="communityLinks" />
+            <UPageLinks
+              v-if="communityLinks?.length"
+              :title="toc.bottom.title || t('docs.community')"
+              :links="communityLinks"
+            />
 
             <USeparator v-if="communityLinks?.length" type="dashed" />
 
