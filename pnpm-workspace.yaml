@@ -7,7 +7,6 @@ linkWorkspacePackages: true
 minimumReleaseAge: 0
 
 overrides:
-  '@nuxt/content': ^3.15.0
   vue-tsc: 3.3.5
   h3: 1.15.11
 
