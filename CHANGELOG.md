@@ -1,5 +1,11 @@
 # 📋 Changelog
 
+## [2.0.5](https://github.com/mhaibaraai/movk-nuxt-docs/compare/v2.0.4...v2.0.5) (2026-07-17)
+
+### 🐛 Bug Fixes
+
+* **theme:** 修复图标集覆盖导致 star 图标丢失 ([8d925e3](https://github.com/mhaibaraai/movk-nuxt-docs/commit/8d925e3794ba842f2b45831224f12febfa06316b))
+
 ## [2.0.4](https://github.com/mhaibaraai/movk-nuxt-docs/compare/v2.0.3...v2.0.4) (2026-07-17)
 
 ### ✨ Features
