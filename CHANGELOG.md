@@ -1,5 +1,23 @@
 # 📋 Changelog
 
+## [2.0.4](https://github.com/mhaibaraai/movk-nuxt-docs/compare/v2.0.3...v2.0.4) (2026-07-17)
+
+### ✨ Features
+
+* **docs:** TOC 高亮采用 circuit 变体 ([6a67b40](https://github.com/mhaibaraai/movk-nuxt-docs/commit/6a67b401b9fd1a6616d5becfed8bfbb338f59ad1))
+
+### 🐛 Bug Fixes
+
+* **ai-chat:** 禁用聊天面板 prose 标题锚点 ([a320e19](https://github.com/mhaibaraai/movk-nuxt-docs/commit/a320e1990d24d832bdf52c35cf652f28d4bec421))
+
+### 🔧 Chores
+
+* **deps:** update all non-major dependencies ([f2781a7](https://github.com/mhaibaraai/movk-nuxt-docs/commit/f2781a79d001d655679b1439ced679354efbade2))
+* **deps:** 升级 @nuxt/ui 至正式版 4.10.0 并更新 AI SDK ([9c6cef9](https://github.com/mhaibaraai/movk-nuxt-docs/commit/9c6cef93951ae91e623a16ba4a5bb9472b4bf91b))
+* **deps:** 升级 AI SDK 等依赖并引入 @nuxt/ui prerelease ([34fa7c7](https://github.com/mhaibaraai/movk-nuxt-docs/commit/34fa7c776c87e7ca69862137c8f321789ffbcf78))
+* **deps:** 回退 packageManager 至 pnpm 11.10.0 ([be04d22](https://github.com/mhaibaraai/movk-nuxt-docs/commit/be04d22eb333c9c614fd3cde66bf86e6e11c0f2c))
+* **deps:** 回退 vue-tsc 至 3.3.5 ([3bb08fd](https://github.com/mhaibaraai/movk-nuxt-docs/commit/3bb08fd18d03c80b77f8e8017df8cc996f4eb148))
+
 ## [2.0.3](https://github.com/mhaibaraai/movk-nuxt-docs/compare/v2.0.2...v2.0.3) (2026-07-08)
 
 ### ✨ Features
