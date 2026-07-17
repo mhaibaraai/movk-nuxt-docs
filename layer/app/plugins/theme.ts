@@ -1,4 +1,4 @@
-import { themeIcons } from '../utils/theme'
+import { resolveThemeIcons } from '../utils/theme'
 import { kebabCase } from '@movk/core'
 
 export default defineNuxtPlugin({
@@ -16,7 +16,7 @@ export default defineNuxtPlugin({
       if (neutral) appConfig.ui.colors.neutral = neutral
 
       const icons = localStorage.getItem(`${name}-ui-icons`)
-      if (icons) appConfig.ui.icons = themeIcons[icons as keyof typeof themeIcons] as any
+      if (icons) appConfig.ui.icons = resolveThemeIcons(icons, appConfig.ui.icons) as any
     }
 
     if (import.meta.server) {

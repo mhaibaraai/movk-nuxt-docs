@@ -1,4 +1,4 @@
-import { themeIcons } from '../utils/theme'
+import { resolveThemeIcons, themeIcons } from '../utils/theme'
 import { omit, kebabCase } from '@movk/core'
 import { useLocalStorage } from '@vueuse/core'
 import colors from 'tailwindcss/colors'
@@ -79,7 +79,7 @@ export function useTheme() {
     },
     set(option) {
       _iconSet.value = option
-      appConfig.ui.icons = themeIcons[option as keyof typeof themeIcons] as any
+      appConfig.ui.icons = resolveThemeIcons(option, appConfig.ui.icons) as any
     }
   })
 
@@ -199,7 +199,7 @@ export function useTheme() {
     _radius.value = 0.25
     _font.value = 'Alibaba PuHuiTi'
     _iconSet.value = 'lucide'
-    appConfig.ui.icons = themeIcons.lucide as any
+    appConfig.ui.icons = resolveThemeIcons('lucide', appConfig.ui.icons) as any
     _blackAsPrimary.value = false
   }
 
