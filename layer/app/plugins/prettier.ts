@@ -1,10 +1,7 @@
 import type { Options } from 'prettier'
+import type { SimplePrettier } from '../types'
 import { defu } from 'defu'
 import PrettierWorker from '@/workers/prettier.js?worker&inline'
-
-export interface SimplePrettier {
-  format: (source: string, options?: Options) => Promise<string>
-}
 
 function createPrettierWorkerApi(worker: Worker): SimplePrettier {
   let counter = 0

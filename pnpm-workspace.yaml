@@ -7,8 +7,8 @@ linkWorkspacePackages: true
 minimumReleaseAge: 0
 
 overrides:
-  vue-tsc: 3.3.5
   h3: 1.15.11
+  typescript: ^6.0.3
 
 allowBuilds:
   '@parcel/watcher': false
