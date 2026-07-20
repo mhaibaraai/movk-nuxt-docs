@@ -25,12 +25,12 @@ function handleMessage(message) {
 async function handleFormatMessage(message) {
   if (!_prettier) {
     const [prettierModule, ...plugins] = await Promise.all([
-      import('https://cdn.jsdelivr.net/npm/prettier@3.8.3/standalone.mjs'),
-      import('https://cdn.jsdelivr.net/npm/prettier@3.8.3/plugins/babel.mjs'),
-      import('https://cdn.jsdelivr.net/npm/prettier@3.8.3/plugins/estree.mjs'),
-      import('https://cdn.jsdelivr.net/npm/prettier@3.8.3/plugins/html.mjs'),
-      import('https://cdn.jsdelivr.net/npm/prettier@3.8.3/plugins/markdown.mjs'),
-      import('https://cdn.jsdelivr.net/npm/prettier@3.8.3/plugins/typescript.mjs')
+      import('https://cdn.jsdelivr.net/npm/prettier@3.9.5/standalone.mjs'),
+      import('https://cdn.jsdelivr.net/npm/prettier@3.9.5/plugins/babel.mjs'),
+      import('https://cdn.jsdelivr.net/npm/prettier@3.9.5/plugins/estree.mjs'),
+      import('https://cdn.jsdelivr.net/npm/prettier@3.9.5/plugins/html.mjs'),
+      import('https://cdn.jsdelivr.net/npm/prettier@3.9.5/plugins/markdown.mjs'),
+      import('https://cdn.jsdelivr.net/npm/prettier@3.9.5/plugins/typescript.mjs')
     ])
     _prettier = prettierModule
     _plugins = plugins
