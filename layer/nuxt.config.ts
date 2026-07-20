@@ -106,9 +106,10 @@ export default defineNuxtConfig({
 
   hooks: {
     'vite:extendConfig': async (config) => {
-      const cfg = config as { optimizeDeps?: { include?: string[] } }
+      const cfg = config as { optimizeDeps?: { include?: string[], exclude?: string[] } }
       cfg.optimizeDeps ||= {}
       cfg.optimizeDeps.include ||= []
+      cfg.optimizeDeps.exclude ||= []
 
       // tailwindcss/colors is a peer dep resolved in the consumer project directly.
       cfg.optimizeDeps.include.push(
@@ -116,15 +117,26 @@ export default defineNuxtConfig({
         '@movk/nuxt-docs > prettier'
       )
 
+      // shiki-transformer-color-highlight is inlined into the mdc highlighter
+      // bundle via app/mdc.config.ts; its bare specifier is discovered from a
+      // virtual module and can't be resolved from the consumer root under pnpm.
+      // Exclude it from pre-bundling so it resolves on demand instead of warning.
+      cfg.optimizeDeps.exclude.push('shiki-transformer-color-highlight')
+
       // AI Chat static deps — only pre-bundle when the feature is actually enabled.
       // @shikijs/langs/* and @shikijs/themes/* are dynamically imported in useHighlighter.ts
       if (hasAnyAiKey()) {
         cfg.optimizeDeps.include.push(
           '@movk/nuxt-docs > @ai-sdk/vue',
           '@movk/nuxt-docs > ai',
-          '@movk/nuxt-docs > shiki-stream/vue',
           '@movk/nuxt-docs > @shikijs/core',
           '@movk/nuxt-docs > @shikijs/engine-javascript'
+        )
+        // @comark/vue (+ highlight plugin) is imported by AiComark.client.ts;
+        // same bare-specifier resolution constraint as above.
+        cfg.optimizeDeps.exclude.push(
+          '@comark/vue',
+          '@comark/vue/plugins/highlight'
         )
       }
 
