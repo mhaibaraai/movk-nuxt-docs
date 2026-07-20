@@ -7,7 +7,7 @@ linkWorkspacePackages: true
 minimumReleaseAge: 0
 
 overrides:
-  vue-tsc: 3.3.5
+  vue-tsc: 3.3.7
   h3: 1.15.11
 
 allowBuilds:
