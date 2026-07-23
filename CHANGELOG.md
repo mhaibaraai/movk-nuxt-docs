@@ -1,5 +1,24 @@
 # 📋 Changelog
 
+## [2.0.6](https://github.com/mhaibaraai/movk-nuxt-docs/compare/v2.0.5...v2.0.6) (2026-07-23)
+
+### 🐛 Bug Fixes
+
+* **types:** 修复 TS 6 下 $prettier 注入类型退化为 unknown ([61b8692](https://github.com/mhaibaraai/movk-nuxt-docs/commit/61b86925ddc6107b571994103c6ddce9bb00fdeb))
+* **vite:** 消除 optimizeDeps 无法解析的启动警告（NUXT_B7002） ([6fb90b2](https://github.com/mhaibaraai/movk-nuxt-docs/commit/6fb90b20e84f6655c47e9d726c8ba91735cf50e4))
+
+### ♻️ Code Refactoring
+
+* **types:** 使用 @unhead/vue 的 Link 类型收敛 canonical 链接声明 ([0dabd85](https://github.com/mhaibaraai/movk-nuxt-docs/commit/0dabd85296292abe8a5caab2add813f165cf0071))
+* **types:** 使用 @unhead/vue 的 Link 类型收敛 hreflang 链接声明 ([108a22b](https://github.com/mhaibaraai/movk-nuxt-docs/commit/108a22b58db46e7420c902649c70aaf1ca56d98c))
+
+### 🔧 Chores
+
+* **deps:** update actions/setup-node action to v7 ([2cd3ca3](https://github.com/mhaibaraai/movk-nuxt-docs/commit/2cd3ca3b0fda0d6bc652413ac5e5d80f585f046c))
+* **deps:** update dependency nuxt to ^4.5.0 ([c2212b2](https://github.com/mhaibaraai/movk-nuxt-docs/commit/c2212b27971941767271cc1a07b343e3c69cd18e))
+* **deps:** 升级 nuxt 至 4.5、typescript 至 6.0 及相关依赖 ([45201c3](https://github.com/mhaibaraai/movk-nuxt-docs/commit/45201c3d3a1ba1aa1848d1f8a50b575e04f7c3fc))
+* **deps:** 升级依赖版本 ([268d65c](https://github.com/mhaibaraai/movk-nuxt-docs/commit/268d65c3020862cfb460b5dce1a596e5a0f66bcd))
+
 ## [2.0.5](https://github.com/mhaibaraai/movk-nuxt-docs/compare/v2.0.4...v2.0.5) (2026-07-17)
 
 ### 🐛 Bug Fixes
