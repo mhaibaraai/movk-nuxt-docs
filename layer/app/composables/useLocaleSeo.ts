@@ -1,3 +1,4 @@
+import type { Link } from '@unhead/vue'
 import { joinURL } from 'ufo'
 import { computed } from 'vue'
 
@@ -18,7 +19,7 @@ export function useLocaleSeo(): void {
 
   useHead({
     link: computed(() => {
-      const links: Array<{ rel: string, hreflang?: string, href: string }> = []
+      const links: Link[] = []
 
       for (const item of locales) {
         const path = switchLocalePath(item.code)
