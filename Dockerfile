@@ -1,4 +1,4 @@
-FROM node:24-bookworm-slim AS runtime
+FROM node:24.18.0-bookworm-slim AS runtime
 WORKDIR /app
 RUN groupadd -r app && useradd -r -g app app
 COPY --chown=app:app docs/.output ./
