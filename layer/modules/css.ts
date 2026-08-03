@@ -23,6 +23,7 @@ export default defineNuxtModule({
 
     const cssTemplate = addTemplate({
       filename: 'movk-nuxt-docs.css',
+      write: true,
       getContents: () => {
         return `@import ${JSON.stringify(tailwindPath)};
 @import ${JSON.stringify(uiPath)};
