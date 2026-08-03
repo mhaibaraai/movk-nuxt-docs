@@ -5,7 +5,7 @@
     <p>Size: {{ size }}</p>
     <p>Variant: {{ variant }}</p>
     <slot />
-    <slot name="avatar" />
+    <slot name="avatar" :src="avatar?.src ?? ''" />
   </div>
 </template>
 
@@ -39,5 +39,28 @@ interface Props {
 }
 
 defineProps<Props>()
-defineEmits(['change', 'delete'])
+
+defineSlots<{
+  /**
+   * 默认内容插槽
+   */
+  default(props?: {}): any
+  /**
+   * 头像插槽，作用域暴露头像地址
+   * @see https://ui.nuxt.com/components/avatar
+   */
+  avatar(props: { src: string }): any
+}>()
+
+defineEmits<{
+  /**
+   * 值变化时触发
+   * @see https://vuejs.org/guide/components/events.html
+   */
+  change: [value: string]
+  /**
+   * 删除时触发
+   */
+  delete: []
+}>()
 </script>

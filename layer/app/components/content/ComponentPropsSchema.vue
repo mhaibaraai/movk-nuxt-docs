@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { kebabCase } from 'scule'
-import type { PropertyMeta } from 'vue-component-meta'
+import type { PropertyMeta, PropertyMetaSchema } from 'vue-component-meta'
 import { decodeUnicodeEscapes } from '../../utils/unicode'
 
 const props = defineProps<{
@@ -10,7 +10,12 @@ const props = defineProps<{
 
 const route = useRoute()
 
-function getSchemaProps(schema: PropertyMeta['schema']): any {
+// nuxt-component-meta 的 refineMeta 会把嵌套 schema 数组序列化为数字键对象
+function toSchemaList(schema: PropertyMetaSchema[] | Record<string, PropertyMetaSchema>): PropertyMetaSchema[] {
+  return Array.isArray(schema) ? schema : Object.values(schema)
+}
+
+function getSchemaProps(schema: PropertyMeta['schema']): PropertyMeta[] {
   if (!schema || typeof schema === 'string' || schema.kind === 'literal' || !schema.schema) {
     return []
   }
@@ -19,7 +24,7 @@ function getSchemaProps(schema: PropertyMeta['schema']): any {
     return Object.values(schema.schema).filter(prop => !props.ignore?.includes(prop.name))
   }
 
-  return schema.schema.flatMap(getSchemaProps as any)
+  return toSchemaList(schema.schema).flatMap(getSchemaProps)
 }
 
 const schemaProps = computed(() => {
@@ -57,7 +62,7 @@ const schemaProps = computed(() => {
           v-if="schemaProp.description"
           :value="schemaProp.description"
           class="text-muted my-1"
-          :cache-key="`${kebabCase(route.path)}-${prop.name}-${schemaProp.name}-description`"
+          :cache-key="`${kebabCase(route.path)}-prop-${prop.name}-${schemaProp.name}-description`"
         />
       </ProseLi>
     </ProseUl>

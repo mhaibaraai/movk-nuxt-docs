@@ -122,10 +122,10 @@ const metaProps: ComputedRef<ComponentMeta['props']> = computed(() => {
             v-if="prop.description"
             :value="prop.description"
             class="text-toned mt-1"
-            :cache-key="`${kebabCase(route.path)}-${prop.name}-description`"
+            :cache-key="`${kebabCase(route.path)}-prop-${prop.name}-description`"
           />
 
-          <ComponentPropsLinks v-if="prop.tags?.length" :prop="prop" />
+          <ComponentPropsLinks v-if="prop.tags?.length" :prop="prop" kind="prop" />
           <ComponentPropsSchema v-if="prop.schema" :prop="prop" :ignore="ignore" />
         </ProseTd>
       </ProseTr>
