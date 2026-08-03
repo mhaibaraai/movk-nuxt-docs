@@ -88,6 +88,9 @@ export default defineNuxtConfig({
   compatibilityDate: '2026-06-30',
 
   nitro: {
+    // Nitro defaults to true; server source maps are useless for a docs site
+    // and generating them costs ~270 extra artifacts per build.
+    sourceMap: false,
     prerender: {
       routes: ['/', '/raw/index.md'],
       crawlLinks: true,
@@ -197,7 +200,13 @@ export default defineNuxtConfig({
   },
 
   ogImage: {
-    zeroRuntime: true
+    zeroRuntime: true,
+    // Reuse images rendered by a previous build; on memory-constrained CI the
+    // per-page takumi renders are the dominant native allocation.
+    buildCache: true,
+    security: {
+      renderTimeout: 60000
+    }
   },
 
   robots: {

@@ -156,7 +156,6 @@ i18n 基于 `@nuxtjs/i18n` v10，采用 **opt-in** 设计：layer 仅将其列�
 ## CI/CD
 
 - **`.github/workflows/ci.yml`** — push main / PR 时运行 `pnpm lint` + `pnpm typecheck`
-- **`.github/workflows/deploy.yml`** — push main 时 Docker 多阶段构建 → GHCR 镜像（`node:24-alpine`，`PORT=3000`）
 - **发布** — `pnpm release` 通过 release-it 前置运行 lint + typecheck，发布 npm 包 + GitHub Release
 
 ## 注意事项

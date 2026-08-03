@@ -3,7 +3,11 @@ import pkg from '../package.json'
 export default defineNuxtConfig({
   extends: ['@movk/nuxt-docs'],
 
-  modules: ['@nuxtjs/i18n'],
+  modules: [
+    '@nuxtjs/i18n',
+    '@vercel/analytics',
+    '@vercel/speed-insights'
+  ],
 
   $development: {
     site: {
