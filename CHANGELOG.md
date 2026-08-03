@@ -1,5 +1,40 @@
 # 📋 Changelog
 
+## [2.1.0](https://github.com/mhaibaraai/movk-nuxt-docs/compare/v2.0.6...v2.1.0) (2026-08-03)
+
+### ✨ Features
+
+* **content:** 补齐 ComponentSlots 与 ComponentEmits 的元数据渲染 ([99f9731](https://github.com/mhaibaraai/movk-nuxt-docs/commit/99f9731d91fc6449f3060712c5dfda9a026a518c))
+
+### 🐛 Bug Fixes
+
+* **content:** 恢复嵌套 schema 的数组/对象兜底 ([01a5697](https://github.com/mhaibaraai/movk-nuxt-docs/commit/01a5697e66537a748a5eee3d74df6fda4d838909))
+* **content:** 适配 vue-component-meta 3.3.9 的 PropertyMetaSchema 联合类型 ([2efc74f](https://github.com/mhaibaraai/movk-nuxt-docs/commit/2efc74f54990c619ee7ed527aa8a8f916f3cdffd))
+* **css:** 强制落盘 CSS 模板修复样式 404 ([f31fce9](https://github.com/mhaibaraai/movk-nuxt-docs/commit/f31fce9e9beacdff745f253c0205e87c64e5d2d8))
+
+### ⚡ Performance Improvements
+
+* **build:** 关闭 Nitro source map 并启用 OG 图构建缓存 ([6903c1d](https://github.com/mhaibaraai/movk-nuxt-docs/commit/6903c1dcd5f2d2a12b986ab6365df00ecda98a62))
+
+### 📝 Documentation
+
+* **test-api:** 演示组件补充 defineSlots 与类型化 emits ([f6edc23](https://github.com/mhaibaraai/movk-nuxt-docs/commit/f6edc23f4bdba41cad138520faab44490e752d7f))
+
+### ♻️ Code Refactoring
+
+* **ai-chat:** 改用构建期虚拟模块直连 MCP 工具并迁移到 ToolLoopAgent ([206f37e](https://github.com/mhaibaraai/movk-nuxt-docs/commit/206f37efb5b1d2a10c697c9ded66989845acd8c2))
+
+### 🔧 Chores
+
+* **deploy:** 迁移至 Vercel 部署并接入分析组件 ([b3a55ab](https://github.com/mhaibaraai/movk-nuxt-docs/commit/b3a55ab2d70b2fdd56bf34ab769600b846b40d09))
+* **deps:** update all non-major dependencies ([ac14b91](https://github.com/mhaibaraai/movk-nuxt-docs/commit/ac14b916df2d9de99436e74212486e5ae1b967b6))
+* **deps:** update all non-major dependencies ([e9833a8](https://github.com/mhaibaraai/movk-nuxt-docs/commit/e9833a8181847237a854bbc797a76e74130c20d2))
+* **deps:** update devdependency @release-it/bumper to v8 ([bdcf289](https://github.com/mhaibaraai/movk-nuxt-docs/commit/bdcf289844382b3a28fb004fadbc88f54d33b15a))
+* **deps:** update devdependency @release-it/conventional-changelog to v12 ([a010f7e](https://github.com/mhaibaraai/movk-nuxt-docs/commit/a010f7e1482353804ccbf8c2cbb7c27600c62185))
+* **deps:** update devdependency release-it to v21 ([6446760](https://github.com/mhaibaraai/movk-nuxt-docs/commit/6446760b203161b114aaf7dab8b8a6b418351092))
+* **deps:** update nuxt framework to ^4.5.1 ([138e685](https://github.com/mhaibaraai/movk-nuxt-docs/commit/138e685fdbab4e9d53a308d80dcbc086a1bacd32))
+* **deps:** 移除未使用的 @ai-sdk/mcp 依赖 ([2aebc03](https://github.com/mhaibaraai/movk-nuxt-docs/commit/2aebc035884c6a98b9ada058fa37916f860ffd2b))
+
 ## [2.0.6](https://github.com/mhaibaraai/movk-nuxt-docs/compare/v2.0.5...v2.0.6) (2026-07-23)
 
 ### 🐛 Bug Fixes
