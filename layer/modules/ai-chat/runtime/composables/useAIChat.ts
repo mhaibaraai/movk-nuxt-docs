@@ -1,4 +1,4 @@
-import type { UIMessage } from 'ai'
+import type { DocsChatMessage } from '../server/api/ai-chat'
 import { createSharedComposable, useLocalStorage } from '@vueuse/core'
 import { kebabCase } from '@movk/core'
 
@@ -10,7 +10,7 @@ export const useAIChat = createSharedComposable(() => {
   const isEnabled = computed(() => config.public.aiChat?.enabled ?? false)
 
   const storageOpen = useLocalStorage(`${name}-ai-chat-open`, false)
-  const messages = useLocalStorage<UIMessage[]>(`${name}-ai-chat-messages`, [])
+  const messages = useLocalStorage<DocsChatMessage[]>(`${name}-ai-chat-messages`, [])
 
   const isOpen = ref(false)
 

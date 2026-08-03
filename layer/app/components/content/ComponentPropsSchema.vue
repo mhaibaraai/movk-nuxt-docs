@@ -11,7 +11,7 @@ const props = defineProps<{
 const route = useRoute()
 
 function getSchemaProps(schema: PropertyMeta['schema']): any {
-  if (!schema || typeof schema === 'string' || !schema.schema) {
+  if (!schema || typeof schema === 'string' || schema.kind === 'literal' || !schema.schema) {
     return []
   }
 
@@ -19,7 +19,7 @@ function getSchemaProps(schema: PropertyMeta['schema']): any {
     return Object.values(schema.schema).filter(prop => !props.ignore?.includes(prop.name))
   }
 
-  return (Array.isArray(schema.schema) ? schema.schema : Object.values(schema.schema)).flatMap(getSchemaProps as any)
+  return schema.schema.flatMap(getSchemaProps as any)
 }
 
 const schemaProps = computed(() => {

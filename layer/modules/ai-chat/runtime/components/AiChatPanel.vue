@@ -7,6 +7,7 @@ import { isPartStreaming, isToolStreaming } from '@nuxt/ui/utils/ai'
 import { useModels } from '../composables/useModels'
 import { splitByCase, upperFirst } from 'scule'
 import { useMemoize } from '@vueuse/core'
+import type { DocsChatMessage } from '../server/api/ai-chat'
 
 const { isOpen, messages } = useAIChat()
 const toast = useToast()
@@ -30,9 +31,9 @@ const texts = computed(() => ({
 const input = ref('')
 let _skipSync = false
 
-const { messages: chatMessages, status, error, sendMessage, regenerate, stop } = useChat({
+const { messages: chatMessages, status, error, sendMessage, regenerate, stop } = useChat<DocsChatMessage>({
   messages: messages.value,
-  transport: new DefaultChatTransport({
+  transport: new DefaultChatTransport<DocsChatMessage>({
     api: (config.app?.baseURL.replace(/\/$/, '') || '') + config.public.aiChat.apiPath,
     body: () => ({ model: model.value, currentPage: route.path.startsWith('/docs/') ? route.path : null })
   }),
