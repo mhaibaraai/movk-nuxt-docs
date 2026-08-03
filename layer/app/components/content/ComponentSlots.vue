@@ -41,8 +41,10 @@ const { data: meta } = await useFetchComponentMeta(componentName as any)
             v-if="slot.description"
             :value="slot.description"
             class="text-toned mt-1"
-            :cache-key="`${kebabCase(route.path)}-${slot.name}-description`"
+            :cache-key="`${kebabCase(route.path)}-slot-${slot.name}-description`"
           />
+
+          <ComponentPropsLinks v-if="slot.tags?.length" :prop="slot" kind="slot" />
         </ProseTd>
       </ProseTr>
     </ProseTbody>

@@ -62,7 +62,7 @@ const schemaProps = computed(() => {
           v-if="schemaProp.description"
           :value="schemaProp.description"
           class="text-muted my-1"
-          :cache-key="`${kebabCase(route.path)}-${prop.name}-${schemaProp.name}-description`"
+          :cache-key="`${kebabCase(route.path)}-prop-${prop.name}-${schemaProp.name}-description`"
         />
       </ProseLi>
     </ProseUl>

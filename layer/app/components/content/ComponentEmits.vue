@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { camelCase } from 'scule'
+import { camelCase, kebabCase } from 'scule'
 
 const props = defineProps<{
   /**
@@ -36,6 +36,19 @@ const { data: meta } = await useFetchComponentMeta(componentName as any)
         </ProseTd>
         <ProseTd>
           <HighlightInlineType v-if="event.type" :type="event.type" />
+
+          <div v-if="event.signature" class="mt-1">
+            <HighlightInlineType :type="event.signature" />
+          </div>
+
+          <MDC
+            v-if="event.description"
+            :value="event.description"
+            class="text-toned mt-1"
+            :cache-key="`${kebabCase(route.path)}-event-${event.name}-description`"
+          />
+
+          <ComponentPropsLinks v-if="event.tags?.length" :prop="event" kind="event" />
         </ProseTd>
       </ProseTr>
     </ProseTbody>
