@@ -1,6 +1,0 @@
-# Build happens on the CI runner; the image only packages docs/.output.
-# Ignore everything except that runtime payload to keep the build context tiny.
-*
-!docs
-docs/*
-!docs/.output

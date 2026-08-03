@@ -11,6 +11,8 @@
     "@nuxt/content": "^3.15.2",
     "@nuxt/ui": "^4.10.0",
     "@nuxtjs/i18n": "^10.6.0",
+    "@vercel/analytics": "^2.0.1",
+    "@vercel/speed-insights": "^2.0.0",
     "better-sqlite3": "^13.0.2",
     "dompurify": "^3.4.12",
     "mermaid": "^11.16.0",

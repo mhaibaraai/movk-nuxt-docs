@@ -197,7 +197,10 @@ export default defineNuxtConfig({
   },
 
   ogImage: {
-    zeroRuntime: true
+    zeroRuntime: true,
+    security: {
+      renderTimeout: 60000
+    }
   },
 
   robots: {
