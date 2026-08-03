@@ -1,6 +1,6 @@
 {
   "name": "movk-nuxt-docs-i18n-template",
-  "packageManager": "pnpm@11.17.0",
+  "packageManager": "pnpm@11.18.0",
   "scripts": {
     "build": "nuxt build",
     "dev": "nuxt dev",
@@ -12,8 +12,8 @@
   "dependencies": {
     "@movk/nuxt-docs": "latest",
     "@nuxt/content": "^3.15.2",
-    "@nuxtjs/i18n": "^10.5.0",
-    "better-sqlite3": "^13.0.1",
+    "@nuxtjs/i18n": "^10.6.0",
+    "better-sqlite3": "^13.0.2",
     "nuxt": "^4.5.1",
     "tailwindcss": "^4.3.3"
   },
@@ -21,6 +21,6 @@
     "@nuxt/eslint": "^1.16.0",
     "eslint": "^10.8.0",
     "typescript": "^6.0.3",
-    "vue-tsc": "^3.3.8"
+    "vue-tsc": "^3.3.9"
   }
 }
