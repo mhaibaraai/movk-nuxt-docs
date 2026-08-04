@@ -4,7 +4,8 @@
 @theme static {
   --container-8xl: 90rem;
 
-  --font-sans: 'Alibaba PuHuiTi', sans-serif;
+  /* 首选字体缺字或加载失败时，依次回退到 macOS、Windows 与 Linux 的系统中文字体 */
+  --font-sans: 'Alibaba PuHuiTi', ui-sans-serif, system-ui, -apple-system, 'PingFang SC', 'Hiragino Sans GB', 'Microsoft YaHei', 'Noto Sans CJK SC', sans-serif;
 
   --color-green-50: #EFFDF5;
   --color-green-100: #D9FBE8;

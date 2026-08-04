@@ -13,8 +13,7 @@ export default defineAppConfig({
   theme: {
     radius: 0.25,
     blackAsPrimary: false,
-    icons: 'lucide',
-    font: 'Alibaba PuHuiTi'
+    icons: 'lucide'
   },
   ui: {
     colors: {

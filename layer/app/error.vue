@@ -6,7 +6,7 @@ defineProps<{
   error: NuxtError
 }>()
 
-const { style, link, color } = useTheme()
+const { style, color } = useTheme()
 const { locale, docsRoot, docsCollection, t } = useMovkI18n()
 const isDocsRoute = useDocsRoute()
 
@@ -37,7 +37,6 @@ useHead({
     { name: 'viewport', content: 'width=device-width, initial-scale=1' },
     { key: 'theme-color', name: 'theme-color', content: color }
   ],
-  link,
   style
 })
 

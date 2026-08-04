@@ -12,7 +12,6 @@ export function useTheme() {
   const color = computed(() => colorMode.value === 'dark' ? (colors as any)[appConfig.ui.colors.neutral][900] : 'white')
 
   const _radius = useLocalStorage(`${name}-ui-radius`, 0.25)
-  const _font = useLocalStorage(`${name}-ui-font`, 'Alibaba PuHuiTi')
   const _iconSet = useLocalStorage(`${name}-ui-icons`, 'lucide')
   const _blackAsPrimary = useLocalStorage(`${name}-ui-black-as-primary`, false)
 
@@ -47,16 +46,6 @@ export function useTheme() {
     },
     set(option) {
       _radius.value = option
-    }
-  })
-
-  const fonts = ['Alibaba PuHuiTi', 'Public Sans', 'DM Sans', 'Geist', 'Inter', 'Poppins', 'Outfit', 'Raleway']
-  const font = computed({
-    get() {
-      return _font.value
-    },
-    set(option) {
-      _font.value = option
     }
   })
 
@@ -105,27 +94,15 @@ export function useTheme() {
 
   const radiusStyle = computed(() => `:root { --ui-radius: ${_radius.value}rem; }`)
   const blackAsPrimaryStyle = computed(() => _blackAsPrimary.value ? `:root { --ui-primary: black; } .dark { --ui-primary: white; }` : ':root {}')
-  const fontStyle = computed(() => `:root { --font-sans: '${_font.value}', sans-serif; }`)
-
-  const link = computed(() => {
-    const name = _font.value
-    return [{
-      rel: 'stylesheet' as const,
-      href: name === 'Alibaba PuHuiTi' ? 'https://cdn.mhaibaraai.cn/fonts/alibaba-puhuiti.css' : `https://fonts.googleapis.com/css2?family=${encodeURIComponent(name)}:wght@400;500;600;700&display=swap`,
-      id: `font-${name.toLowerCase().replace(/\s+/g, '-')}`
-    }]
-  })
 
   const style = [
     { innerHTML: radiusStyle, id: `nuxt-ui-radius`, tagPriority: -2 },
-    { innerHTML: blackAsPrimaryStyle, id: `nuxt-ui-black-as-primary`, tagPriority: -2 },
-    { innerHTML: fontStyle, id: `nuxt-ui-font`, tagPriority: -2 }
+    { innerHTML: blackAsPrimaryStyle, id: `nuxt-ui-black-as-primary`, tagPriority: -2 }
   ]
 
   const hasCSSChanges = computed(() => {
     return _radius.value !== 0.25
       || _blackAsPrimary.value
-      || _font.value !== 'Alibaba PuHuiTi'
   })
 
   const hasConfigChanges = computed(() => {
@@ -139,10 +116,6 @@ export function useTheme() {
       '@import "tailwindcss";',
       '@import "@nuxt/ui";'
     ]
-
-    if (_font.value !== 'Alibaba PuHuiTi') {
-      lines.push('', '@theme {', `  --font-sans: '${_font.value}', sans-serif;`, '}')
-    }
 
     const rootLines: string[] = []
     if (_radius.value !== 0.25) {
@@ -197,7 +170,6 @@ export function useTheme() {
     window.localStorage.removeItem(`${name}-ui-neutral`)
 
     _radius.value = 0.25
-    _font.value = 'Alibaba PuHuiTi'
     _iconSet.value = 'lucide'
     appConfig.ui.icons = resolveThemeIcons('lucide', appConfig.ui.icons) as any
     _blackAsPrimary.value = false
@@ -206,7 +178,6 @@ export function useTheme() {
   return {
     color,
     style,
-    link,
     neutralColors,
     neutral,
     primaryColors,
@@ -215,8 +186,6 @@ export function useTheme() {
     setBlackAsPrimary,
     radiuses,
     radius,
-    fonts,
-    font,
     icon,
     icons,
     modes,
