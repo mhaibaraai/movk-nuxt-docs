@@ -79,19 +79,6 @@ export default defineNuxtPlugin({
               document.documentElement.style.setProperty('--ui-primary', isDark ? 'white' : 'black');
             }
           `.replace(/\s+/g, ' ')
-        }, {
-          innerHTML: [
-            `if (localStorage.getItem('${name}-ui-font')) {`,
-            `var font = localStorage.getItem('${name}-ui-font');`,
-            `var fontEl = document.querySelector('style#nuxt-ui-font');`,
-            `if (fontEl) { fontEl.innerHTML = ':root { --font-sans: \\'' + font + '\\', sans-serif; }'; }`,
-            `var lnk = document.createElement('link');`,
-            `lnk.rel = 'stylesheet';`,
-            `lnk.href = font === 'Alibaba PuHuiTi' ? 'https://cdn.mhaibaraai.cn/fonts/alibaba-puhuiti.css' : 'https://fonts.googleapis.com/css2?family=' + encodeURIComponent(font) + ':wght@400;500;600;700&display=swap';`,
-            `lnk.id = 'font-' + font.toLowerCase().replace(/\\s+/g, '-');`,
-            `document.head.appendChild(lnk);`,
-            `}`
-          ].join(' ')
         }]
       })
     }

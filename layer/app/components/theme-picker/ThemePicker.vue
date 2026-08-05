@@ -17,8 +17,6 @@ const {
   setBlackAsPrimary,
   radiuses,
   radius,
-  fonts,
-  font,
   icon,
   icons,
   modes,
@@ -133,34 +131,6 @@ const {
             class="justify-center px-0"
             :selected="radius === r"
             @click="radius = r"
-          />
-        </div>
-      </fieldset>
-
-      <fieldset>
-        <legend class="text-[11px] leading-none font-semibold mb-2 select-none flex items-center gap-1">
-          Font
-
-          <UButton
-            to="https://ui.nuxt.com/docs/getting-started/integrations/fonts"
-            size="xs"
-            color="neutral"
-            variant="link"
-            icon="i-lucide-help-circle"
-            class="p-0 -my-0.5"
-            :ui="{ leadingIcon: 'size-3' }"
-          />
-        </legend>
-
-        <div class="-mx-2">
-          <USelect
-            v-model="font"
-            size="sm"
-            color="neutral"
-            icon="i-lucide-type"
-            :items="fonts"
-            class="w-full ring-default rounded-sm hover:bg-elevated/50 text-[11px] data-[state=open]:bg-elevated/50"
-            :ui="{ trailingIcon: 'group-data-[state=open]:rotate-180 transition-transform duration-200' }"
           />
         </div>
       </fieldset>

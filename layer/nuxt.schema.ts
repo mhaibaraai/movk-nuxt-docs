@@ -42,13 +42,6 @@ export default defineNuxtSchema({
           description: '全局图标集名称',
           icon: 'i-lucide-icon',
           default: 'lucide'
-        }),
-        font: field({
-          type: 'string',
-          title: '字体',
-          description: '全局字体名称',
-          icon: 'i-lucide-type',
-          default: 'Alibaba PuHuiTi'
         })
       }
     }),

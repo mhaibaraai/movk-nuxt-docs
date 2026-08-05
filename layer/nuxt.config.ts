@@ -33,6 +33,14 @@ export default defineNuxtConfig({
     rootAttrs: {
       'data-vaul-drawer-wrapper': '',
       'class': 'bg-default'
+    },
+    head: {
+      // 字体在构建期静态声明，随 SSR 直出。crossorigin 不可省：
+      // woff2 经 CSS 加载是 anonymous CORS 请求，属性不匹配的预热连接不会被复用
+      link: [
+        { rel: 'preconnect', href: 'https://cdn.mhaibaraai.cn', crossorigin: '' },
+        { rel: 'stylesheet', href: 'https://cdn.mhaibaraai.cn/fonts/alibaba-puhuiti.css' }
+      ]
     }
   },
 
@@ -61,6 +69,9 @@ export default defineNuxtConfig({
   },
 
   ui: {
+    // 中文字体经 unicode-range 分包，交给 @nuxt/fonts 会让它在构建期把
+    // 全部分片下载进产物，既失去按需加载也丢掉跨项目共享的 CDN 缓存
+    fonts: false,
     theme: {
       colors: ['primary', 'secondary', 'info', 'success', 'warning', 'error', 'important']
     },
@@ -174,10 +185,6 @@ export default defineNuxtConfig({
       'nuxt/dist',
       'nuxt-og-image'
     ]
-  },
-
-  fonts: {
-    provider: 'local'
   },
 
   icon: {

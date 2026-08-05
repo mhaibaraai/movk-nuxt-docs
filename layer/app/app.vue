@@ -5,7 +5,7 @@ const site = useSiteConfig()
 const appConfig = useAppConfig()
 const route = useRoute()
 
-const { style, link, color } = useTheme()
+const { style, color } = useTheme()
 const { isEnabled: isAiChatEnabled } = useAIChat()
 const { locale, docsRoot, docsCollection } = useMovkI18n()
 const isDocsRoute = useDocsRoute()
@@ -39,7 +39,6 @@ useHead({
     { name: 'viewport', content: 'width=device-width, initial-scale=1' },
     { key: 'theme-color', name: 'theme-color', content: color }
   ],
-  link,
   style
 })
 
