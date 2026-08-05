@@ -295,16 +295,16 @@ watch(isOpen, (value) => {
               :streaming="isPartStreaming(part)"
               :icon="aiChat.icons?.reasoning ?? ''"
             >
-              <AiComark
-                :markdown="part.text"
+              <AiMarkdown
+                :value="part.text"
                 :streaming="isPartStreaming(part)"
               />
             </UChatReasoning>
 
             <template v-else-if="isTextUIPart(part) && part.text.length > 0">
-              <AiComark
+              <AiMarkdown
                 v-if="message.role === 'assistant'"
-                :markdown="part.text"
+                :value="part.text"
                 :streaming="isPartStreaming(part)"
               />
               <p v-else-if="message.role === 'user'" class="whitespace-pre-wrap text-sm/6">
