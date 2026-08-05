@@ -83,15 +83,20 @@ function slug(value: string): string {
       </template>
 
       <div class="lg:border-x border-default h-full flex items-center lg:bg-muted/20">
-        <UColorModeImage
-          :light="`/assets/templates/${slug(template.title)}-light.png`"
-          :dark="`/assets/templates/${slug(template.title)}-dark.png`"
-          class="w-full h-auto border lg:border-y lg:border-x-0 border-default rounded-sm lg:rounded-none"
-          :alt="`Template ${template.title} screenshot`"
-          width="654"
-          height="368"
-          loading="lazy"
-        />
+        <div class="w-full aspect-video overflow-hidden flex items-center justify-center border lg:border-y lg:border-x-0 border-default rounded-sm lg:rounded-none">
+          <UColorModeImage
+            :light="`/assets/templates/${slug(template.title)}-light.png`"
+            :dark="`/assets/templates/${slug(template.title)}-dark.png`"
+            class="w-full h-full object-contain p-6 sm:p-8"
+            :alt="`Template ${template.title} screenshot`"
+            width="1200"
+            height="675"
+            sizes="100vw lg:50vw"
+            fit="inside"
+            format="webp"
+            loading="lazy"
+          />
+        </div>
       </div>
     </UPageSection>
   </main>
