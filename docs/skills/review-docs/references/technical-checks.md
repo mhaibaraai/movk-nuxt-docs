@@ -235,8 +235,8 @@ import { ref } from 'vue'
 ````
 
 ````markdown
-```typescript [parse.ts]
-import { parse } from 'comark'
+```typescript [parseMarkdown.ts]
+import { parseMarkdown } from 'comark'
 ```
 ````
 

@@ -146,7 +146,7 @@ export default defineNuxtConfig({
           '@movk/nuxt-docs > @shikijs/core',
           '@movk/nuxt-docs > @shikijs/engine-javascript'
         )
-        // @comark/vue (+ highlight plugin) is imported by AiComark.client.ts;
+        // @comark/vue (+ highlight plugin) is imported by AiMarkdown.client.ts;
         // same bare-specifier resolution constraint as above.
         cfg.optimizeDeps.exclude.push(
           '@comark/vue',

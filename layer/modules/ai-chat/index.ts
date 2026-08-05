@@ -82,8 +82,8 @@ export default defineNuxtModule<AiChatModuleOptions>({
 
     if (hasApiKey) {
       addComponent({
-        name: 'AiComark',
-        filePath: resolve('./runtime/components/AiComark.client.ts')
+        name: 'AiMarkdown',
+        filePath: resolve('./runtime/components/AiMarkdown.client.ts')
       })
     }
 
