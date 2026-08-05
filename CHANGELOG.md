@@ -1,5 +1,38 @@
 # 📋 Changelog
 
+## [2.2.0](https://github.com/mhaibaraai/movk-nuxt-docs/compare/v2.1.0...v2.2.0) (2026-08-05)
+
+### ⚠ BREAKING CHANGES
+
+* **theme:** useTheme() 不再返回 link、font、fonts。
+* **ai-chat:** 全局组件 AiComark 重命名为 AiMarkdown，消费方需同步更新模板中的引用。
+
+### 🐛 Bug Fixes
+
+* **templates:** 更新案例预览截图为更紧凑的裁剪版本 ([6a9a38e](https://github.com/mhaibaraai/movk-nuxt-docs/commit/6a9a38ec00d1218815985427a55cc3277ca0f9ec))
+* **templates:** 案例页面预览图改为完整展示避免裁切失衡 ([ca0a21c](https://github.com/mhaibaraai/movk-nuxt-docs/commit/ca0a21c7cccc56290174b2e4e6072a8e8f8cf58e))
+
+### 📝 Documentation
+
+* **skills:** 更新 review-docs 中的 comark 示例 ([9a05328](https://github.com/mhaibaraai/movk-nuxt-docs/commit/9a0532815a3f5f41f835d3e421061be33fe53719))
+* 同步字体不再支持运行时切换 ([4b87330](https://github.com/mhaibaraai/movk-nuxt-docs/commit/4b873304b56d7966e028ce607a37e4d474898a61))
+* 清理字体运行时切换的残留描述 ([bee7e8c](https://github.com/mhaibaraai/movk-nuxt-docs/commit/bee7e8c0d4ae82680743f918d068d8a3f18e1e04))
+
+### ♻️ Code Refactoring
+
+* **ai-chat:** 迁移 Comark 0.6 API 并重命名 AiComark 为 AiMarkdown ([1360fc8](https://github.com/mhaibaraai/movk-nuxt-docs/commit/1360fc8856757c5b0c68f8527c35bfc5d5dda8c9))
+* **theme:** 删除 layer 自带的字体逻辑 ([bd68c99](https://github.com/mhaibaraai/movk-nuxt-docs/commit/bd68c9946d3c060f35521a96aa8ed142c970e6e4))
+
+### 📦 Build System
+
+* 升级 pnpm 到 11.20.0 ([83785be](https://github.com/mhaibaraai/movk-nuxt-docs/commit/83785beca0a024093a71ede731c31a8b67a09611))
+
+### 🔧 Chores
+
+* **deps:** lock file maintenance ([8c4ba42](https://github.com/mhaibaraai/movk-nuxt-docs/commit/8c4ba42b424d72cfe24670d281d3825def16197f))
+* **deps:** 升级依赖 ([c3756aa](https://github.com/mhaibaraai/movk-nuxt-docs/commit/c3756aa3d187f80421ef574bbca0ded10bfe5f4a))
+* **deps:** 清理 lockfile 中的重复条目 ([999be3a](https://github.com/mhaibaraai/movk-nuxt-docs/commit/999be3ab1babceac09a78db5ed25d563b0f3e83d))
+
 ## [2.1.0](https://github.com/mhaibaraai/movk-nuxt-docs/compare/v2.0.6...v2.1.0) (2026-08-03)
 
 ### ✨ Features
