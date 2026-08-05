@@ -98,7 +98,6 @@ export default defineAppConfig({
     radius: 0.25,            // Border radius (rem)
     blackAsPrimary: false,   // Use black as the primary color
     icons: 'lucide',         // Icon set (lucide)
-    font: 'Alibaba PuHuiTi', // Font
   },
   ui: {
     colors: {
