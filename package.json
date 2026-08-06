@@ -25,8 +25,8 @@
   },
   "devDependencies": {
     "@movk/core": "^1.4.1",
-    "@nuxt/eslint": "^1.16.0",
-    "@nuxt/eslint-config": "^1.16.0",
+    "@nuxt/eslint": "^1.17.0",
+    "@nuxt/eslint-config": "^1.17.0",
     "@release-it/bumper": "^8.0.0",
     "@release-it/conventional-changelog": "^12.0.0",
     "eslint": "^10.8.0",

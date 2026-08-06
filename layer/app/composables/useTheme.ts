@@ -112,10 +112,7 @@ export function useTheme() {
   })
 
   function exportCSS(): string {
-    const lines = [
-      '@import "tailwindcss";',
-      '@import "@nuxt/ui";'
-    ]
+    const lines: string[] = []
 
     const rootLines: string[] = []
     if (_radius.value !== 0.25) {
@@ -126,7 +123,7 @@ export function useTheme() {
     }
 
     if (rootLines.length) {
-      lines.push('', ':root {', ...rootLines, '}')
+      lines.push(':root {', ...rootLines, '}')
     }
 
     const darkLines: string[] = []

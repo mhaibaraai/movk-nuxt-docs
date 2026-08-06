@@ -1,5 +1,4 @@
-@import "tailwindcss" theme(static) source("../../../..");
-@import "@nuxt/ui";
+/* 由 layer/modules/css.ts 生成的 movk-nuxt-docs.css 统一导入，勿在此另建 Tailwind 编译根 */
 
 @theme static {
   --container-8xl: 90rem;
