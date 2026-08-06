@@ -1,5 +1,17 @@
 # 📋 Changelog
 
+## [2.2.1](https://github.com/mhaibaraai/movk-nuxt-docs/compare/v2.2.0...v2.2.1) (2026-08-06)
+
+### 🐛 Bug Fixes
+
+* **css:** 合并消费方样式到唯一 Tailwind 编译根 ([5e638bf](https://github.com/mhaibaraai/movk-nuxt-docs/commit/5e638bffaea9e9223d3b5efcf3f0c9cd67b96690))
+* **icon:** 扩大组件图标扫描的文件类型范围 ([8e6a7d9](https://github.com/mhaibaraai/movk-nuxt-docs/commit/8e6a7d915b6283ee175c053847e544dcd963ef0a))
+
+### 🔧 Chores
+
+* **deps:** update nuxt framework to ^4.5.2 ([e1894b6](https://github.com/mhaibaraai/movk-nuxt-docs/commit/e1894b6cf11eef2a272109053ea2fd52b38b5c58))
+* **deps:** 升级依赖版本 ([8eb2203](https://github.com/mhaibaraai/movk-nuxt-docs/commit/8eb2203be979311cef39d59230683c33d2a8fe0f))
+
 ## [2.2.0](https://github.com/mhaibaraai/movk-nuxt-docs/compare/v2.1.0...v2.2.0) (2026-08-05)
 
 ### ⚠ BREAKING CHANGES
