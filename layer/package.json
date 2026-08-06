@@ -66,7 +66,7 @@
     "@movk/core": "^1.4.1",
     "@nuxt/a11y": "^1.0.0-alpha.1",
     "@nuxt/image": "^2.1.0",
-    "@nuxt/kit": "^4.5.1",
+    "@nuxt/kit": "^4.5.2",
     "@nuxt/ui": "^4.10.0",
     "@nuxtjs/i18n": "^10.6.0",
     "@nuxtjs/mcp-toolkit": "^0.18.1",
