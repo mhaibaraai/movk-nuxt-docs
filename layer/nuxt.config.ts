@@ -195,7 +195,7 @@ export default defineNuxtConfig({
       }
     ],
     clientBundle: {
-      scan: true,
+      scan: { globInclude: ['**/*.{vue,jsx,tsx,md,mdc,mdx,yml,yaml,ts}'] },
       includeCustomCollections: true
     }
   },
