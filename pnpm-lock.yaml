@@ -91,25 +91,25 @@ importers:
         specifier: ^3.0.28
         version: 3.0.28(zod@4.4.3)
       '@ai-sdk/gateway':
-        specifier: ^4.0.52
+        specifier: ^4.0.54
         version: 4.0.54(zod@4.4.3)
       '@ai-sdk/openai':
-        specifier: ^4.0.42
+        specifier: ^4.0.43
         version: 4.0.43(zod@4.4.3)
       '@ai-sdk/vue':
-        specifier: ^4.0.66
+        specifier: ^4.0.68
         version: 4.0.68(vue@3.5.41(typescript@6.0.3))(zod@4.4.3)
       '@comark/vue':
         specifier: ^0.6.2
         version: 0.6.2(shiki@4.4.3)(vue@3.5.41(typescript@6.0.3))
       '@iconify-json/lucide':
-        specifier: ^1.2.123
+        specifier: ^1.2.124
         version: 1.2.124
       '@iconify-json/simple-icons':
         specifier: ^1.2.93
         version: 1.2.93
       '@iconify-json/vscode-icons':
-        specifier: ^1.2.73
+        specifier: ^1.2.74
         version: 1.2.74
       '@movk/core':
         specifier: ^1.4.1
@@ -139,7 +139,7 @@ importers:
         specifier: ^0.23.1
         version: 0.23.1(magic-string@1.2.0)(magicast@0.5.4)(oxc-parser@0.143.0)(rolldown@1.2.4)(supports-color@10.2.2)(unplugin@3.3.0(esbuild@0.28.2)(rolldown@1.2.4)(rollup@4.62.4)(vite@8.2.1(@types/node@26.2.0)(esbuild@0.28.2)(jiti@2.7.0)(terser@5.50.0)(yaml@2.9.0)))
       '@nuxtjs/robots':
-        specifier: ^6.1.4
+        specifier: ^6.1.5
         version: 6.1.5(6696059aae6ca5e7bff62f4c786f2ef7)
       '@octokit/rest':
         specifier: ^22.0.1
@@ -166,7 +166,7 @@ importers:
         specifier: ^14.4.0
         version: 14.4.0(9770a320821fd2e765686556417766df)
       ai:
-        specifier: ^7.0.66
+        specifier: ^7.0.68
         version: 7.0.68(zod@4.4.3)
       better-sqlite3:
         specifier: 12.x
