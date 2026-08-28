@@ -24,10 +24,10 @@ pnpm typecheck
 # 重新生成 Nuxt 类型（pnpm install 后自动执行）
 pnpm dev:prepare
 
-# 仅发布 layer 到 npm（前置 lint + typecheck）
+# 仅 bump layer 版本号（前置 lint + typecheck，发包由 CI 完成）
 pnpm release:layer
 
-# 同时发布 layer 到 npm 并创建 GitHub Release
+# 完整发布：bump 版本 + 生成 changelog + 打 tag 推送（tag 触发 CI 发包）+ 创建 GitHub Release
 pnpm release
 
 # 清理构建产物
@@ -156,7 +156,8 @@ i18n 基于 `@nuxtjs/i18n` v10，采用 **opt-in** 设计：layer 仅将其列�
 ## CI/CD
 
 - **`.github/workflows/ci.yml`** — push main / PR 时运行 `pnpm lint` + `pnpm typecheck`
-- **发布** — `pnpm release` 通过 release-it 前置运行 lint + typecheck，发布 npm 包 + GitHub Release
+- **`.github/workflows/release.yml`** — 监听 `v*` tag 推送，通过 npm Trusted Publishing（OIDC）发布 `@movk/nuxt-docs`。无需 `NPM_TOKEN`，自动附带 provenance；发布前校验 tag 与 `layer/package.json` 版本一致。重新发布可用 workflow_dispatch 手动传入 tag。
+- **发布** — 本地执行 `pnpm release`：release-it 前置运行 lint + typecheck，bump 版本、生成 changelog、打 tag 并推送，随后由 `release.yml` 完成 npm 发包
 
 ## 注意事项
 
