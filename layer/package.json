@@ -30,13 +30,17 @@
     "dompurify": "3.x",
     "mermaid": "11.x",
     "nuxt": "4.x",
-    "tailwindcss": "4.x"
+    "tailwindcss": "4.x",
+    "typescript": "*"
   },
   "peerDependenciesMeta": {
     "dompurify": {
       "optional": true
     },
     "mermaid": {
+      "optional": true
+    },
+    "typescript": {
       "optional": true
     }
   },
