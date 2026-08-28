@@ -6,6 +6,7 @@ import { defu } from 'defu'
 import { getGitBranch, getGitEnv, getLocalGitInfo } from '../utils/git'
 import { getPackageJsonMetadata, inferSiteURL } from '../utils/meta'
 import { createComponentMetaExcludeFilters } from '../utils/component-meta'
+import { applyEmitDocs } from '../utils/component-meta-emits'
 import { startCase, kebabCase } from '@movk/core'
 import { updateSiteConfig } from 'nuxt-site-config/kit'
 import type { SiteConfigInput } from 'nuxt-site-config/kit'
@@ -184,6 +185,9 @@ const movkNuxtDocsModule: NuxtModule<ModuleOptions> = defineNuxtModule<ModuleOpt
         ...createComponentMetaExcludeFilters(resolve, dir, layerPath, userInclude)
       ]
     })
+
+    // @ts-ignore - component-meta is not typed
+    nuxt.hook('component-meta:schema', (schema: any) => applyEmitDocs(schema))
   }
 })
 
