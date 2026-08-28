@@ -28,7 +28,7 @@ importers:
         specifier: ^12.0.0
         version: 12.0.0(conventional-commits-filter@6.0.1)(conventional-commits-parser@7.1.2)(release-it@21.0.2(@types/node@26.3.0)(magicast@0.5.4)(supports-color@10.2.2))
       eslint:
-        specifier: ^10.8.1
+        specifier: ^10.9.1
         version: 10.9.1(jiti@2.7.0)(supports-color@10.2.2)
       nuxt:
         specifier: ^4.5.2
@@ -40,7 +40,7 @@ importers:
         specifier: ^6.0.3
         version: 6.0.3
       vue-tsc:
-        specifier: ^3.3.10
+        specifier: ^3.3.11
         version: 3.3.11(typescript@6.0.3)
 
   docs:
@@ -52,8 +52,8 @@ importers:
         specifier: ^3.15.2
         version: 3.15.2(@oxc-project/types@0.147.0)(better-sqlite3@13.0.3)(esbuild@0.28.2)(magic-string@1.2.3)(magicast@0.5.4)(oxc-parser@0.141.0)(rolldown@1.2.6)(rollup@4.63.0)(supports-color@10.2.2)(vite@8.2.2(@types/node@26.3.0)(esbuild@0.28.2)(jiti@2.7.0)(terser@5.51.0)(yaml@2.9.0))
       '@nuxt/ui':
-        specifier: ^4.10.0
-        version: 4.11.0(94036cf5da10e8de0a5c37c09128ad7a)
+        specifier: ^4.11.0
+        version: 4.11.0(15c9a9903a2d6590737921986c2af138)
       '@nuxtjs/i18n':
         specifier: ^10.6.0
         version: 10.6.0(@vue/compiler-dom@3.5.41)(db0@0.3.4(better-sqlite3@13.0.3))(esbuild@0.28.2)(eslint@10.9.1(jiti@2.7.0)(supports-color@10.2.2))(ioredis@5.11.1(supports-color@10.2.2))(magicast@0.5.4)(rolldown@1.2.6)(rollup@4.63.0)(supports-color@10.2.2)(typescript@6.0.3)(vite@8.2.2(@types/node@26.3.0)(esbuild@0.28.2)(jiti@2.7.0)(terser@5.51.0)(yaml@2.9.0))(vue@3.5.41(typescript@6.0.3))
@@ -67,10 +67,10 @@ importers:
         specifier: ^13.0.3
         version: 13.0.3
       dompurify:
-        specifier: ^3.4.13
+        specifier: ^3.4.14
         version: 3.4.14
       mermaid:
-        specifier: ^11.16.1
+        specifier: ^11.17.2
         version: 11.17.2
       nuxt:
         specifier: ^4.5.2
@@ -82,34 +82,34 @@ importers:
   layer:
     dependencies:
       '@ai-sdk/alibaba':
-        specifier: ^2.0.32
-        version: 2.0.35(zod@4.4.3)
+        specifier: ^2.0.37
+        version: 2.0.37(zod@4.4.3)
       '@ai-sdk/anthropic':
-        specifier: ^4.0.39
-        version: 4.0.42(zod@4.4.3)
+        specifier: ^4.0.44
+        version: 4.0.44(zod@4.4.3)
       '@ai-sdk/deepseek':
-        specifier: ^3.0.28
-        version: 3.0.32(zod@4.4.3)
+        specifier: ^3.0.35
+        version: 3.0.35(zod@4.4.3)
       '@ai-sdk/gateway':
-        specifier: ^4.0.54
-        version: 4.0.64(zod@4.4.3)
+        specifier: ^4.0.67
+        version: 4.0.67(zod@4.4.3)
       '@ai-sdk/openai':
-        specifier: ^4.0.43
-        version: 4.0.47(zod@4.4.3)
+        specifier: ^4.0.50
+        version: 4.0.50(zod@4.4.3)
       '@ai-sdk/vue':
-        specifier: ^4.0.68
-        version: 4.0.79(vue@3.5.41(typescript@6.0.3))(zod@4.4.3)
+        specifier: ^4.0.83
+        version: 4.0.83(vue@3.5.41(typescript@6.0.3))(zod@4.4.3)
       '@comark/vue':
         specifier: ^0.6.2
         version: 0.6.2(shiki@4.4.3)(vue@3.5.41(typescript@6.0.3))
       '@iconify-json/lucide':
-        specifier: ^1.2.124
+        specifier: ^1.2.126
         version: 1.2.126
       '@iconify-json/simple-icons':
         specifier: ^1.2.93
         version: 1.2.93
       '@iconify-json/vscode-icons':
-        specifier: ^1.2.74
+        specifier: ^1.2.75
         version: 1.2.75
       '@movk/core':
         specifier: ^1.4.1
@@ -127,8 +127,8 @@ importers:
         specifier: ^4.5.2
         version: 4.5.2(magic-string@1.2.3)(magicast@0.5.4)(oxc-parser@0.143.0)(rolldown@1.2.6)(unplugin@3.3.0(esbuild@0.28.2)(rolldown@1.2.6)(rollup@4.63.0)(vite@8.2.2(@types/node@26.3.0)(esbuild@0.28.2)(jiti@2.7.0)(terser@5.51.0)(yaml@2.9.0)))
       '@nuxt/ui':
-        specifier: ^4.10.0
-        version: 4.11.0(a08d773ced135458dc6a855f7398df03)
+        specifier: ^4.11.0
+        version: 4.11.0(17ba5f29662749e63e0b714eba685b48)
       '@nuxtjs/i18n':
         specifier: ^10.6.0
         version: 10.6.0(@vue/compiler-dom@3.5.41)(db0@0.3.4(better-sqlite3@12.11.1))(esbuild@0.28.2)(eslint@10.9.1(jiti@2.7.0)(supports-color@10.2.2))(ioredis@5.11.1(supports-color@10.2.2))(magicast@0.5.4)(rolldown@1.2.6)(rollup@4.63.0)(supports-color@10.2.2)(typescript@6.0.3)(vite@8.2.2(@types/node@26.3.0)(esbuild@0.28.2)(jiti@2.7.0)(terser@5.51.0)(yaml@2.9.0))(vue@3.5.41(typescript@6.0.3))
@@ -139,7 +139,7 @@ importers:
         specifier: ^0.23.1
         version: 0.23.1(magic-string@1.2.3)(magicast@0.5.4)(oxc-parser@0.143.0)(rolldown@1.2.6)(supports-color@10.2.2)(unplugin@3.3.0(esbuild@0.28.2)(rolldown@1.2.6)(rollup@4.63.0)(vite@8.2.2(@types/node@26.3.0)(esbuild@0.28.2)(jiti@2.7.0)(terser@5.51.0)(yaml@2.9.0)))
       '@nuxtjs/robots':
-        specifier: ^6.1.5
+        specifier: ^6.2.0
         version: 6.2.0(1d86ba4f24c33005740dc0bbdeda5f25)
       '@octokit/rest':
         specifier: ^22.0.1
@@ -157,7 +157,7 @@ importers:
         specifier: ^4.4.3
         version: 4.4.3
       '@takumi-rs/core':
-        specifier: ^2.10.0
+        specifier: ^2.12.0
         version: 2.12.0(csstype@3.2.3)
       '@vueuse/core':
         specifier: ^14.4.0
@@ -166,8 +166,8 @@ importers:
         specifier: ^14.4.0
         version: 14.4.0(ae8288dfc7f6a91490eeeb386343a13c)
       ai:
-        specifier: ^7.0.68
-        version: 7.0.79(zod@4.4.3)
+        specifier: ^7.0.83
+        version: 7.0.83(zod@4.4.3)
       better-sqlite3:
         specifier: 12.x
         version: 12.11.1
@@ -202,7 +202,7 @@ importers:
         specifier: ^6.7.8
         version: 6.7.8(4f02eb35e1edcdf9b3beeb2d278c3b93)
       nuxt-schema-org:
-        specifier: ^6.2.9
+        specifier: ^6.3.1
         version: 6.3.1(512c8c6109d1e2658aeb2246fe6842d9)
       nuxt-site-config:
         specifier: ^4.2.3
@@ -235,7 +235,7 @@ importers:
         specifier: ^1.6.4
         version: 1.6.4
       vue-component-meta:
-        specifier: ^3.3.10
+        specifier: ^3.3.11
         version: 3.3.11(typescript@6.0.3)
       yaml:
         specifier: ^2.9.0
@@ -249,32 +249,32 @@ importers:
 
 packages:
 
-  '@ai-sdk/alibaba@2.0.35':
-    resolution: {integrity: sha512-zWD1jkTmZbvg6fN6Hi2zQoND2GogGmNdn75tEsmsm7sPt6rL2JuYH+6l9WnDGCCy2r+gvSFXm+j4j7jNBCwrOQ==}
+  '@ai-sdk/alibaba@2.0.37':
+    resolution: {integrity: sha512-WhZoJ8afPD83yxLYZlFMNykxgeYVH+A+cVccnbSPQFakxeZwRBUplEyOakQYembcipVXmmz12Riv7LgE1Wzrmg==}
     engines: {node: '>=22'}
     peerDependencies:
       zod: ^3.25.76 || ^4.1.8
 
-  '@ai-sdk/anthropic@4.0.42':
-    resolution: {integrity: sha512-U3RJDo2/rWdH6SjSbA2Owd30ZawKwt4zFTqteTTn6Po0vEW1ec1KXf6s1nwNE3mxCqKrQWEavU21C46AfGYaeg==}
+  '@ai-sdk/anthropic@4.0.44':
+    resolution: {integrity: sha512-PZT62FpNvilIeyyk09+BxYnWmmqRWFLe7ers25OPI8SnQxwDSeXtUTxiZNSbZt4ywj53op/INhLR1z5uyL6tHA==}
     engines: {node: '>=22'}
     peerDependencies:
       zod: ^3.25.76 || ^4.1.8
 
-  '@ai-sdk/deepseek@3.0.32':
-    resolution: {integrity: sha512-8Z/Pdxn1r6koUTu79ayzZ3JqmD/3wUIQ1DU6dLXiQ7/5xMZhO7q16MBE2kAmNXiWu4xaKcXToY8nzDF8BcVBog==}
+  '@ai-sdk/deepseek@3.0.35':
+    resolution: {integrity: sha512-j3OobU0uEK6/UN3TlP0w6N6n+mqmCkuNiHA105MiT2AFG4rWydKqZQPkI/t8B5QL6WP8oJ30RtX9sqEFFXDuMw==}
     engines: {node: '>=22'}
     peerDependencies:
       zod: ^3.25.76 || ^4.1.8
 
-  '@ai-sdk/gateway@4.0.64':
-    resolution: {integrity: sha512-iayK1z11I0b3sgbP3j6eKQypfpwO5Fbtaq1Mkwv7YxwGQG1YTNr5QAjyYsSfqyf/58WUOLWz2cTBpk+ExZVgpw==}
+  '@ai-sdk/gateway@4.0.67':
+    resolution: {integrity: sha512-LtyxLkg7dZ2iz8Ouh1806BJbA+q+FKc/mXUCl4v/wdNNIGtbfk80dNtlhqjhqOZa4dnfc3caVafRL7ocxzoegA==}
     engines: {node: '>=22'}
     peerDependencies:
       zod: ^3.25.76 || ^4.1.8
 
-  '@ai-sdk/openai@4.0.47':
-    resolution: {integrity: sha512-5/Lm29x7Z+GvUuzW3Hj6WXIgcdU7rBlpmnZPRVIUh7dhLus021upunjzpteYaH5v+JBQKC+Fg6BkRYrazysgTQ==}
+  '@ai-sdk/openai@4.0.50':
+    resolution: {integrity: sha512-e2Jepw5RbSwsCsPwyiNzdlmOHoCQefCziNp3k1UxfIv8QD0/p4SF6+cx7GuWX98jAVNiWLjRv1W3NVSmx3FuEQ==}
     engines: {node: '>=22'}
     peerDependencies:
       zod: ^3.25.76 || ^4.1.8
@@ -285,8 +285,8 @@ packages:
     peerDependencies:
       zod: ^3.25.76 || ^4.1.8
 
-  '@ai-sdk/provider-utils@5.0.30':
-    resolution: {integrity: sha512-9TyxUXolql77ntHIeygLqt7PO1O0HZPB73cJhLG2OsPecSBRIZhNXLxT1T7rlL6Zpm1eDoLMFrMV99kAJ28/Sg==}
+  '@ai-sdk/provider-utils@5.0.32':
+    resolution: {integrity: sha512-MZUhlINn6FzKIWuX3T36h+yM9d7bG+yatH+kC99ZCe0DHxXfP73KwaoLiLcZDPQDamFyO3umPPBLJieZJyG4DQ==}
     engines: {node: '>=22'}
     peerDependencies:
       zod: ^3.25.76 || ^4.1.8
@@ -299,8 +299,8 @@ packages:
     resolution: {integrity: sha512-aWO7iwhFUGf347tCwNGggggfmZigaSu7TF739IZSrWWABUp7zkb4Cr3fMqvBe5EIS7ABJJu3Cadn0g/zs1G0QQ==}
     engines: {node: '>=22'}
 
-  '@ai-sdk/vue@4.0.79':
-    resolution: {integrity: sha512-sJwJ75bJWufmtPLBH2dH6eKCRkOTsktntDdT0EKwXcpUdGoklRo20GFYprU1zsEVvKyle0WeJab9YVMIzoxCJQ==}
+  '@ai-sdk/vue@4.0.83':
+    resolution: {integrity: sha512-8w7Gblc9yHL4s/llfjQjEJ+EN+wirTWeROyKpka7h4iLbSYCfJQTtST5ETceF3OgadDEs63aybSHcTW2UaF8ZA==}
     engines: {node: '>=22'}
     peerDependencies:
       vue: ^3.3.4
@@ -3994,8 +3994,8 @@ packages:
     resolution: {integrity: sha512-TQf59BsZnytt8GdJKLPfUZ54g/iaUL2OWDSFCCvMOhsHduDQxO8xC4PNeyIkVcA5KwL2phPSv0douC0fgWzmnA==}
     engines: {node: '>= 20'}
 
-  ai@7.0.79:
-    resolution: {integrity: sha512-zZkSUq6MgmXjwIfML2wkPFeQ5Azk8kGEWkciAtE0NgnFy3slj4ljsw5LvigsCbYXxTSVr+6iCHBTPZafpx1P0w==}
+  ai@7.0.83:
+    resolution: {integrity: sha512-bg7+SopUwqA7DeQ2O8I9qELyQTHCeeI/0RuNUlT/gGz+LqWrIl5vbYRQv3eMBEnUsVFaM33n6SA8Vqe9gi8L1w==}
     engines: {node: '>=22'}
     peerDependencies:
       zod: ^3.25.76 || ^4.1.8
@@ -8720,43 +8720,43 @@ packages:
 
 snapshots:
 
-  '@ai-sdk/alibaba@2.0.35(zod@4.4.3)':
+  '@ai-sdk/alibaba@2.0.37(zod@4.4.3)':
     dependencies:
       '@ai-sdk/provider': 4.0.8
-      '@ai-sdk/provider-utils': 5.0.30(zod@4.4.3)
+      '@ai-sdk/provider-utils': 5.0.32(zod@4.4.3)
       zod: 4.4.3
 
-  '@ai-sdk/anthropic@4.0.42(zod@4.4.3)':
+  '@ai-sdk/anthropic@4.0.44(zod@4.4.3)':
     dependencies:
       '@ai-sdk/provider': 4.0.8
-      '@ai-sdk/provider-utils': 5.0.30(zod@4.4.3)
+      '@ai-sdk/provider-utils': 5.0.32(zod@4.4.3)
       zod: 4.4.3
 
-  '@ai-sdk/deepseek@3.0.32(zod@4.4.3)':
+  '@ai-sdk/deepseek@3.0.35(zod@4.4.3)':
     dependencies:
       '@ai-sdk/provider': 4.0.8
-      '@ai-sdk/provider-utils': 5.0.30(zod@4.4.3)
+      '@ai-sdk/provider-utils': 5.0.32(zod@4.4.3)
       zod: 4.4.3
 
-  '@ai-sdk/gateway@4.0.64(zod@3.25.76)':
+  '@ai-sdk/gateway@4.0.67(zod@3.25.76)':
     dependencies:
       '@ai-sdk/provider': 4.0.8
-      '@ai-sdk/provider-utils': 5.0.30(zod@3.25.76)
+      '@ai-sdk/provider-utils': 5.0.32(zod@3.25.76)
       '@vercel/oidc': 3.2.0
       zod: 3.25.76
     optional: true
 
-  '@ai-sdk/gateway@4.0.64(zod@4.4.3)':
+  '@ai-sdk/gateway@4.0.67(zod@4.4.3)':
     dependencies:
       '@ai-sdk/provider': 4.0.8
-      '@ai-sdk/provider-utils': 5.0.30(zod@4.4.3)
+      '@ai-sdk/provider-utils': 5.0.32(zod@4.4.3)
       '@vercel/oidc': 3.2.0
       zod: 4.4.3
 
-  '@ai-sdk/openai@4.0.47(zod@4.4.3)':
+  '@ai-sdk/openai@4.0.50(zod@4.4.3)':
     dependencies:
       '@ai-sdk/provider': 4.0.8
-      '@ai-sdk/provider-utils': 5.0.30(zod@4.4.3)
+      '@ai-sdk/provider-utils': 5.0.32(zod@4.4.3)
       zod: 4.4.3
 
   '@ai-sdk/provider-utils@4.0.48(zod@4.4.3)':
@@ -8767,7 +8767,7 @@ snapshots:
       undici: 6.28.0
       zod: 4.4.3
 
-  '@ai-sdk/provider-utils@5.0.30(zod@3.25.76)':
+  '@ai-sdk/provider-utils@5.0.32(zod@3.25.76)':
     dependencies:
       '@ai-sdk/provider': 4.0.8
       '@standard-schema/spec': 1.1.0
@@ -8777,7 +8777,7 @@ snapshots:
       zod: 3.25.76
     optional: true
 
-  '@ai-sdk/provider-utils@5.0.30(zod@4.4.3)':
+  '@ai-sdk/provider-utils@5.0.32(zod@4.4.3)':
     dependencies:
       '@ai-sdk/provider': 4.0.8
       '@standard-schema/spec': 1.1.0
@@ -8794,10 +8794,10 @@ snapshots:
     dependencies:
       json-schema: 0.4.0
 
-  '@ai-sdk/vue@4.0.79(vue@3.5.41(typescript@6.0.3))(zod@4.4.3)':
+  '@ai-sdk/vue@4.0.83(vue@3.5.41(typescript@6.0.3))(zod@4.4.3)':
     dependencies:
-      '@ai-sdk/provider-utils': 5.0.30(zod@4.4.3)
-      ai: 7.0.79(zod@4.4.3)
+      '@ai-sdk/provider-utils': 5.0.32(zod@4.4.3)
+      ai: 7.0.83(zod@4.4.3)
       swrv: 1.2.0(vue@3.5.41(typescript@6.0.3))
       vue: 3.5.41(typescript@6.0.3)
     transitivePeerDependencies:
@@ -11086,7 +11086,7 @@ snapshots:
       rc9: 3.0.1
       std-env: 4.2.0
 
-  '@nuxt/ui@4.11.0(94036cf5da10e8de0a5c37c09128ad7a)':
+  '@nuxt/ui@4.11.0(15c9a9903a2d6590737921986c2af138)':
     dependencies:
       '@floating-ui/dom': 1.8.0
       '@iconify/vue': 5.0.1(vue@3.5.41(typescript@6.0.3))
@@ -11156,7 +11156,7 @@ snapshots:
       '@internationalized/date': 3.12.3
       '@internationalized/number': 3.6.7
       '@nuxt/content': 3.15.2(@oxc-project/types@0.147.0)(better-sqlite3@13.0.3)(esbuild@0.28.2)(magic-string@1.2.3)(magicast@0.5.4)(oxc-parser@0.141.0)(rolldown@1.2.6)(rollup@4.63.0)(supports-color@10.2.2)(vite@8.2.2(@types/node@26.3.0)(esbuild@0.28.2)(jiti@2.7.0)(terser@5.51.0)(yaml@2.9.0))
-      ai: 7.0.79(zod@3.25.76)
+      ai: 7.0.83(zod@3.25.76)
       zod: 3.25.76
     transitivePeerDependencies:
       - '@azure/app-configuration'
@@ -11209,7 +11209,7 @@ snapshots:
       - vue
       - webpack
 
-  '@nuxt/ui@4.11.0(a08d773ced135458dc6a855f7398df03)':
+  '@nuxt/ui@4.11.0(17ba5f29662749e63e0b714eba685b48)':
     dependencies:
       '@floating-ui/dom': 1.8.0
       '@iconify/vue': 5.0.1(vue@3.5.41(typescript@6.0.3))
@@ -11279,7 +11279,7 @@ snapshots:
       '@internationalized/date': 3.12.3
       '@internationalized/number': 3.6.7
       '@nuxt/content': 3.15.2(@oxc-project/types@0.147.0)(better-sqlite3@12.11.1)(esbuild@0.28.2)(magic-string@1.2.3)(magicast@0.5.4)(oxc-parser@0.143.0)(rolldown@1.2.6)(rollup@4.63.0)(supports-color@10.2.2)(vite@8.2.2(@types/node@26.3.0)(esbuild@0.28.2)(jiti@2.7.0)(terser@5.51.0)(yaml@2.9.0))
-      ai: 7.0.79(zod@4.4.3)
+      ai: 7.0.83(zod@4.4.3)
       vue-router: 5.2.0(@vue/compiler-sfc@3.5.41)(esbuild@0.28.2)(rolldown@1.2.6)(rollup@4.63.0)(vite@8.2.2(@types/node@26.3.0)(esbuild@0.28.2)(jiti@2.7.0)(terser@5.51.0)(yaml@2.9.0))(vue@3.5.41(typescript@6.0.3))
       zod: 4.4.3
     transitivePeerDependencies:
@@ -13651,19 +13651,19 @@ snapshots:
 
   agent-base@9.0.0: {}
 
-  ai@7.0.79(zod@3.25.76):
+  ai@7.0.83(zod@3.25.76):
     dependencies:
-      '@ai-sdk/gateway': 4.0.64(zod@3.25.76)
+      '@ai-sdk/gateway': 4.0.67(zod@3.25.76)
       '@ai-sdk/provider': 4.0.8
-      '@ai-sdk/provider-utils': 5.0.30(zod@3.25.76)
+      '@ai-sdk/provider-utils': 5.0.32(zod@3.25.76)
       zod: 3.25.76
     optional: true
 
-  ai@7.0.79(zod@4.4.3):
+  ai@7.0.83(zod@4.4.3):
     dependencies:
-      '@ai-sdk/gateway': 4.0.64(zod@4.4.3)
+      '@ai-sdk/gateway': 4.0.67(zod@4.4.3)
       '@ai-sdk/provider': 4.0.8
-      '@ai-sdk/provider-utils': 5.0.30(zod@4.4.3)
+      '@ai-sdk/provider-utils': 5.0.32(zod@4.4.3)
       zod: 4.4.3
 
   ajv-formats@3.0.1(ajv@8.20.0):
