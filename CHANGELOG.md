@@ -1,5 +1,27 @@
 # 📋 Changelog
 
+## [2.2.2](https://github.com/mhaibaraai/movk-nuxt-docs/compare/v2.2.1...v2.2.2) (2026-08-28)
+
+### 🐛 Bug Fixes
+
+* **layer:** 修复 ComponentEmits 描述与标签不生效 ([1532446](https://github.com/mhaibaraai/movk-nuxt-docs/commit/153244612be6d0b97c69bc5acf4cdf62e27fde89))
+
+### 📝 Documentation
+
+* **agents:** 更新发布流程说明 ([fa73f91](https://github.com/mhaibaraai/movk-nuxt-docs/commit/fa73f91d71ccaaa321ea6d8c20123bccc29fb0bd))
+
+### 👷 CI
+
+* **release:** 通过 npm Trusted Publishing 迁移发包至 GitHub Actions ([bfc572c](https://github.com/mhaibaraai/movk-nuxt-docs/commit/bfc572c73933ccd4a92c5b75db03048047879656))
+
+### 🔧 Chores
+
+* **deps:** lock file maintenance ([11932ac](https://github.com/mhaibaraai/movk-nuxt-docs/commit/11932acf0e226d0071db87ef12cd4b75e1bda58c))
+* **deps:** lock file maintenance ([6d193d1](https://github.com/mhaibaraai/movk-nuxt-docs/commit/6d193d10c0643009bebbe92d2b109adecefc8130))
+* **deps:** update all non-major dependencies ([db4d59b](https://github.com/mhaibaraai/movk-nuxt-docs/commit/db4d59b63632b74ab4f034fe9869b8f427f1a9ea))
+* **deps:** update all non-major dependencies ([9dc0c0b](https://github.com/mhaibaraai/movk-nuxt-docs/commit/9dc0c0bad875b813a7e3f2b9d63ce864ba45e53a))
+* **deps:** update all non-major dependencies ([6dd56d4](https://github.com/mhaibaraai/movk-nuxt-docs/commit/6dd56d48038cf70d9f3dc15ab919ea05642d463c))
+
 ## [2.2.1](https://github.com/mhaibaraai/movk-nuxt-docs/compare/v2.2.0...v2.2.1) (2026-08-06)
 
 ### 🐛 Bug Fixes
