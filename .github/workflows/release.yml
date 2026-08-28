@@ -1,0 +1,51 @@
+name: Release
+
+on:
+  push:
+    tags:
+      - 'v*'
+  workflow_dispatch:
+    inputs:
+      tag:
+        description: '重新发布的 tag，如 v2.2.2'
+        required: true
+
+permissions:
+  contents: read
+  id-token: write
+
+jobs:
+  publish:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+
+    steps:
+      - uses: actions/checkout@v7
+        with:
+          ref: ${{ inputs.tag || github.ref_name }}
+
+      # 不设置 registry-url：它会写出引用 NODE_AUTH_TOKEN 的 .npmrc，
+      # 空值会让 npm 走旧 token 路径而非 OIDC
+      - uses: actions/setup-node@v7
+        with:
+          node-version: lts/*
+
+      # Trusted publishing 需要 npm >= 11.5.1；固定 11.x 以避开
+      # npm@12 对 Node 版本的 engine 限制（^22.22.2 || ^24.15.0 || >=26）
+      - name: Upgrade npm
+        run: npm install -g npm@11
+
+      - name: Verify tag matches layer version
+        env:
+          REF_NAME: ${{ inputs.tag || github.ref_name }}
+        run: |
+          TAG="${REF_NAME#v}"
+          PKG=$(node -p "require('./layer/package.json').version")
+          if [ "$TAG" != "$PKG" ]; then
+            echo "tag $TAG 与 layer/package.json 版本 $PKG 不一致"
+            exit 1
+          fi
+
+      - name: Publish
+        working-directory: layer
+        run: npm publish --provenance --access public
