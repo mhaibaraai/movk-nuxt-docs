@@ -1,6 +1,7 @@
 import type { DefinedCollection } from '@nuxt/content'
 import { defineCollection, defineContentConfig } from '@nuxt/content'
 import { useNuxt } from '@nuxt/kit'
+import { defineSitemapSchema } from '@nuxtjs/sitemap/content'
 import { joinURL } from 'ufo'
 import { z } from 'zod'
 import { collectionName, localeCode } from './utils/locale'
@@ -42,7 +43,12 @@ const PageHero = z.object({
   links: z.array(Button).optional()
 })
 
+// @nuxtjs/sitemap 只遍历 schema 声明了该字段的集合，并从中读取每页的
+// lastmod / changefreq / priority
+const sitemap = defineSitemapSchema({ z })
+
 const docsSchema = z.object({
+  sitemap,
   index: z.boolean().optional(),
   links: z.array(Button),
   category: z.string().optional(),
@@ -85,11 +91,13 @@ function defineLandingCollection(code: string | null): DefinedCollection {
     source: {
       cwd,
       include: code ? `${code}/index.md` : 'index.md'
-    }
+    },
+    schema: z.object({ sitemap })
   })
 }
 
 const releasesSchema = z.object({
+  sitemap,
   title: z.string(),
   description: z.string(),
   releases: z.string().optional(),
@@ -97,6 +105,7 @@ const releasesSchema = z.object({
 })
 
 const templatesSchema = z.object({
+  sitemap,
   title: z.string(),
   description: z.string(),
   hero: PageHero.optional(),

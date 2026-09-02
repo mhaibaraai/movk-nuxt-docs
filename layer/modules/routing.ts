@@ -12,42 +12,6 @@ export default defineNuxtModule({
     const hasReleasesFile = releasesFileExists(rootDir)
     const hasTemplatesFile = templatesFileExists(rootDir)
     const hasLandingPage = landingPageExists(rootDir)
-    const routeRules = nuxt.options.routeRules ||= {}
-
-    const varyHeaders = {
-      Vary: 'Accept, User-Agent'
-    }
-
-    const mergeRouteHeaders = (path: string, headers: Record<string, any>) => {
-      const routeRule = routeRules[path] || {}
-
-      routeRules[path] = {
-        ...routeRule,
-        headers: {
-          ...routeRule.headers,
-          ...headers
-        }
-      }
-    }
-
-    mergeRouteHeaders('/docs/**', varyHeaders)
-
-    // Agent discovery Link headers on the homepage (RFC 8288, RFC 9727)
-    mergeRouteHeaders('/', {
-      Link: [
-        '</sitemap.xml>; rel="sitemap"; type="application/xml"',
-        '</sitemap.md>; rel="sitemap"; type="text/markdown"',
-        '</.well-known/api-catalog>; rel="api-catalog"; type="application/linkset+json"',
-        '</.well-known/mcp/server-card.json>; rel="service-desc"; type="application/json"',
-        '</docs>; rel="service-doc"; type="text/html"',
-        '</llms.txt>; rel="describedby"; type="text/plain"',
-        '</llms-full.txt>; rel="describedby"; type="text/plain"',
-        '</>; rel="alternate"; type="text/markdown"'
-      ].join(', '),
-      ...varyHeaders
-    })
-
-    mergeRouteHeaders('/raw/**', varyHeaders)
 
     extendPages((pages) => {
       if (!hasLandingPage) {

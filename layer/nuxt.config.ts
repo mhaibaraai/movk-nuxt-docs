@@ -1,7 +1,9 @@
 import { defineNuxtConfig } from 'nuxt/config'
 import { createResolver, useNuxt } from '@nuxt/kit'
 import { join } from 'pathe'
+import { defu } from 'defu'
 import { hasAnyAiKey } from './modules/ai-chat/keys'
+import { docsFolderExists } from './utils/pages'
 
 const { resolve } = createResolver(import.meta.url)
 
@@ -20,7 +22,33 @@ export default defineNuxtConfig({
     '@nuxt/content',
     '@nuxt/image',
     '@nuxtjs/robots',
+    '@nuxtjs/sitemap',
     '@nuxtjs/mcp-toolkit',
+    // nuxt-agent-discovery 在 setup 里就读走了自己的选项，所以依赖 rootDir 的两项
+    // 必须在它之前写入：docs 前缀是运行期探测的（见 content.config.ts），
+    // MCP 端点则由 aiChat.mcpPath 决定。服务卡片的名称、版本、仓库等消费方元数据
+    // 留给 server/plugins/agent-discovery.ts 在请求期补全
+    () => {
+      const nuxt = useNuxt()
+      const options = nuxt.options as unknown as Record<string, any>
+      const docsPrefix = docsFolderExists(nuxt.options.rootDir) ? '/docs' : '/'
+
+      options.agentDiscovery = defu(options.agentDiscovery, {
+        discovery: {
+          mcpServerCard: {
+            endpoint: options.aiChat?.mcpPath || '/mcp',
+            name: '',
+            documentation: options.mcp?.browserRedirect || docsPrefix
+          },
+          links: [
+            { href: docsPrefix, rel: 'service-doc', type: 'text/html', title: 'Documentation', anchor: '/' },
+            // agent 从错误页恢复用的入口，不进 Link 头——Link 头只通告发现文档本身
+            { href: '/raw/index.md', rel: 'start', type: 'text/markdown', title: 'Homepage', header: false }
+          ]
+        }
+      })
+    },
+    'nuxt-agent-discovery',
     '@vueuse/nuxt',
     'nuxt-component-meta',
     'nuxt-llms',
@@ -164,6 +192,22 @@ export default defineNuxtConfig({
     }
   },
 
+  // siteUrl/siteName 留空：由消费方的 site.url / site.name 解析，layer 无从得知。
+  // routes 保持默认 ['/', '/**']——docs 前缀是运行期探测的（见 content.config.ts），
+  // i18n 前缀也一并被覆盖，无需按 locale 枚举。
+  // 依赖 rootDir 的 mcpServerCard 与 discovery.links 由 modules 数组里的内联模块补齐。
+  agentDiscovery: {
+    sitemap: {
+      markdown: {
+        expand: ['/docs'],
+        labels: { 'getting-started': 'Getting Started' }
+      }
+    },
+    skills: {
+      dir: 'skills'
+    }
+  },
+
   componentMeta: {
     metaFields: {
       type: false,
@@ -217,34 +261,17 @@ export default defineNuxtConfig({
   },
 
   robots: {
-    groups: [
-      {
-        contentSignal: 'search=yes, ai-train=yes, ai-input=yes'
-      },
-      {
-        userAgent: '*',
-        disallow: [
-          '/vercel/',
-          '/node_modules/',
-          '/docs/src/',
-          '/home/',
-          '/_nuxt/',
-          '/_plausible',
-          '/dev/',
-          '/api/'
-        ],
-        allow: '/'
-      },
-      { userAgent: 'GPTBot', allow: '/' },
-      { userAgent: 'ChatGPT-User', allow: '/' },
-      { userAgent: 'ClaudeBot', allow: '/' },
-      { userAgent: 'Claude-Web', allow: '/' },
-      { userAgent: 'CCBot', allow: '/' },
-      { userAgent: 'Google-Extended', allow: '/' },
-      { userAgent: 'PerplexityBot', allow: '/' },
-      { userAgent: 'Amazonbot', allow: '/' },
-      { userAgent: 'cohere-ai', allow: '/' }
-    ],
-    sitemap: '/sitemap.xml'
+    // agent 的 Allow 分组与 Content-Signal 由 nuxt-agent-discovery 通过 robots:config 注入，
+    // 与内容协商共用同一份 user-agent 列表
+    disallow: [
+      '/vercel/',
+      '/node_modules/',
+      '/docs/src/',
+      '/home/',
+      '/_nuxt/',
+      '/_plausible',
+      '/dev/',
+      '/api/'
+    ]
   }
 })

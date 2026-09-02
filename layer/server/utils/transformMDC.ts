@@ -1,4 +1,4 @@
-import { getRequestURL, type H3Event } from 'h3'
+import type { H3Event } from 'h3'
 import { camelCase, kebabCase, upperFirst } from 'scule'
 import { visit } from '@nuxt/content/runtime'
 import { queryCollection } from '@nuxt/content/server'
@@ -6,6 +6,7 @@ import { resolveCommitFilePath } from '../../shared/commit-path'
 import meta from '#nuxt-component-meta'
 // @ts-expect-error - no types available
 import { getComponentExample } from '#component-example/nitro'
+import { getAgentSiteUrl, rawUrl } from '#agent-discovery'
 
 type Document = {
   title: string
@@ -427,7 +428,8 @@ export async function transformMDC(event: H3Event, doc: Document): Promise<Docum
 
   if (changelogNodes.length) {
     const { github } = useAppConfig() as { github: Record<string, any> }
-    const origin = getRequestURL(event).origin
+    // 站点规范地址而非构建期请求源：文档会被预渲染，绝对链接就此烘进产物
+    const origin = getAgentSiteUrl(event)
 
     changelogNodes.forEach((node) => {
       const attrs = node[1] || {}
@@ -587,7 +589,6 @@ export async function transformMDC(event: H3Event, doc: Document): Promise<Docum
   for (const node of componentsListNodes) {
     const category = node[1]?.category
     if (!category) continue
-    const origin = getRequestURL(event).origin
 
     const components = await queryCollection(event, 'docs')
       .where('path', 'LIKE', '/docs/components/%')
@@ -598,7 +599,7 @@ export async function transformMDC(event: H3Event, doc: Document): Promise<Docum
       .all()
 
     const listItems = components.map((c: any) =>
-      ['li', {}, ['a', { href: `${origin}/raw${c.path}.md` }, c.title]]
+      ['li', {}, ['a', { href: rawUrl(event, c.path) }, c.title]]
     )
 
     node[0] = 'ul'
