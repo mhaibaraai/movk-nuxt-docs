@@ -1,38 +1,11 @@
-import type { LanguageModel } from 'ai'
-import { createGateway } from '@ai-sdk/gateway'
+import { createGateway } from 'ai'
 import { createOpenAI } from '@ai-sdk/openai'
-import { createAnthropic } from '@ai-sdk/anthropic'
-import { createDeepSeek } from '@ai-sdk/deepseek'
-import { createAlibaba } from '@ai-sdk/alibaba'
-import { createZhipu } from 'zhipu-ai-provider'
 import { modelProviderRegistry } from './modelProviders'
-import { AI_BUILTIN_PROVIDERS } from '../../../keys'
-
-// 前缀 → 各 SDK 的 create 函数（env 名称由 keys.ts 的 AI_BUILTIN_PROVIDERS 单一维护）
-const builtinFactories = {
-  openai: createOpenAI,
-  anthropic: createAnthropic,
-  deepseek: createDeepSeek,
-  alibaba: createAlibaba,
-  zai: createZhipu
-} as const
-
-type BuiltinPrefix = keyof typeof builtinFactories
-
-function resolveBuiltin(prefix: string, modelId: string): LanguageModel | undefined {
-  const meta = AI_BUILTIN_PROVIDERS.find(p => p.prefix === prefix)
-  const create = builtinFactories[prefix as BuiltinPrefix]
-  const apiKey = meta && process.env[meta.env]
-  if (!create || !apiKey) return undefined
-
-  // 约定 *_API_KEY → *_BASE_URL，缺省时各 SDK 用默认端点（如阿里云国际站）
-  const baseURL = process.env[meta.env.replace(/_API_KEY$/, '_BASE_URL')]
-  return create({ apiKey, baseURL })(modelId)
-}
+import { AI_API_KEY_ENV, AI_BASE_URL_ENV } from '../../../keys'
 
 /**
  * 获取 AI 模型实例
- * 优先级:用户注册的提供商 > 内置直连提供商 > AI Gateway 兜底
+ * 优先级:用户注册的提供商 > AI_BASE_URL OpenAI 兼容直连 > AI Gateway 兜底
  */
 export function getModel(modelId: string) {
   const config = useRuntimeConfig()
@@ -43,13 +16,17 @@ export function getModel(modelId: string) {
     if (factory) {
       return factory({ config, modelId: parsed.modelId })
     }
-
-    const model = resolveBuiltin(parsed.prefix, parsed.modelId)
-    if (model) return model
   }
 
-  const gateway = createGateway({
-    apiKey: process.env.AI_GATEWAY_API_KEY || undefined
-  })
-  return gateway(modelId)
+  const apiKey = process.env[AI_API_KEY_ENV] || undefined
+  const baseURL = process.env[AI_BASE_URL_ENV]
+
+  // 配了 baseURL 即视为 OpenAI 兼容直连:第三方端点只支持 chat completions，
+  // 且 provider 前缀仅用于前端图标，发请求时要剥掉只留裸模型 id
+  if (baseURL) {
+    return createOpenAI({ apiKey, baseURL }).chat(parsed?.modelId ?? modelId)
+  }
+
+  // 兜底走 AI Gateway，modelId 保持 provider/model 形式
+  return createGateway({ apiKey })(modelId)
 }
