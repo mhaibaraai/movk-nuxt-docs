@@ -313,6 +313,9 @@ Configure environment variables according to the features you enable:
 ```bash [.env]
 # Used to fetch docs content
 NUXT_GITHUB_TOKEN=
-# Used to access AI Gateway services
-AI_GATEWAY_API_KEY=
+# Enables AI Chat; works with AI Gateway or any OpenAI-compatible provider
+AI_API_KEY=
+# Optional: OpenAI-compatible endpoint. Leave empty to route through AI Gateway.
+# e.g. https://api.deepseek.com/v1
+AI_BASE_URL=
 ```
