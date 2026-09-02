@@ -56,8 +56,8 @@ export default defineNuxtConfig({
     model: 'alibaba/qwen3.7-plus',
     models: [
       'alibaba/qwen3.7-plus',
-      'alibaba/glm-5.1',
-      'alibaba/deepseek-v3.2'
+      'zai/glm-5.3',
+      'deepseek/deepseek-v4-pro'
     ]
   },
 

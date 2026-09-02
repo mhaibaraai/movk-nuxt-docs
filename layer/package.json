@@ -57,12 +57,8 @@
     "README.md"
   ],
   "dependencies": {
-    "@ai-sdk/alibaba": "^2.0.39",
-    "@ai-sdk/anthropic": "^4.0.46",
-    "@ai-sdk/deepseek": "^3.0.37",
-    "@ai-sdk/gateway": "^4.0.70",
-    "@ai-sdk/openai": "^4.0.53",
-    "@ai-sdk/vue": "^4.0.87",
+    "@ai-sdk/openai": "^4.0.56",
+    "@ai-sdk/vue": "^4.0.90",
     "@comark/vue": "^0.6.2",
     "@iconify-json/lucide": "^1.2.128",
     "@iconify-json/simple-icons": "^1.2.94",
@@ -81,10 +77,10 @@
     "@shikijs/engine-javascript": "^4.4.3",
     "@shikijs/langs": "^4.4.3",
     "@shikijs/themes": "^4.4.3",
-    "@takumi-rs/core": "^2.13.3",
+    "@takumi-rs/core": "^2.13.4",
     "@vueuse/core": "^14.4.0",
     "@vueuse/nuxt": "^14.4.0",
-    "ai": "^7.0.87",
+    "ai": "^7.0.90",
     "defu": "^6.1.7",
     "exsolve": "^1.1.1",
     "git-url-parse": "^16.1.0",
@@ -105,7 +101,6 @@
     "ufo": "^1.6.4",
     "vue-component-meta": "^3.3.11",
     "yaml": "^2.9.0",
-    "zhipu-ai-provider": "^0.4.0",
     "zod": "^4.5.4"
   }
 }
