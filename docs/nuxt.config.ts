@@ -52,13 +52,12 @@ export default defineNuxtConfig({
     }
   },
 
-  // 经百炼兼容模式一把 key 直连，前缀会被剥掉、仅用于渲染下拉框图标
   aiChat: {
     model: 'alibaba/qwen3.7-plus',
     models: [
       'alibaba/qwen3.7-plus',
-      'zai/glm-5.1',
-      'deepseek/deepseek-v3.2'
+      'zai/glm-5.3',
+      'deepseek/deepseek-v4-pro'
     ]
   },
 
