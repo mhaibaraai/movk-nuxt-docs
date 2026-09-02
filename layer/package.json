@@ -57,16 +57,16 @@
     "README.md"
   ],
   "dependencies": {
-    "@ai-sdk/alibaba": "^2.0.37",
-    "@ai-sdk/anthropic": "^4.0.44",
-    "@ai-sdk/deepseek": "^3.0.35",
-    "@ai-sdk/gateway": "^4.0.67",
-    "@ai-sdk/openai": "^4.0.50",
-    "@ai-sdk/vue": "^4.0.83",
+    "@ai-sdk/alibaba": "^2.0.39",
+    "@ai-sdk/anthropic": "^4.0.46",
+    "@ai-sdk/deepseek": "^3.0.37",
+    "@ai-sdk/gateway": "^4.0.70",
+    "@ai-sdk/openai": "^4.0.53",
+    "@ai-sdk/vue": "^4.0.87",
     "@comark/vue": "^0.6.2",
-    "@iconify-json/lucide": "^1.2.126",
-    "@iconify-json/simple-icons": "^1.2.93",
-    "@iconify-json/vscode-icons": "^1.2.75",
+    "@iconify-json/lucide": "^1.2.128",
+    "@iconify-json/simple-icons": "^1.2.94",
+    "@iconify-json/vscode-icons": "^1.2.76",
     "@movk/core": "^1.4.1",
     "@nuxt/a11y": "^1.0.0-alpha.1",
     "@nuxt/image": "^2.1.0",
@@ -81,10 +81,10 @@
     "@shikijs/engine-javascript": "^4.4.3",
     "@shikijs/langs": "^4.4.3",
     "@shikijs/themes": "^4.4.3",
-    "@takumi-rs/core": "^2.12.0",
+    "@takumi-rs/core": "^2.13.3",
     "@vueuse/core": "^14.4.0",
     "@vueuse/nuxt": "^14.4.0",
-    "ai": "^7.0.83",
+    "ai": "^7.0.87",
     "defu": "^6.1.7",
     "exsolve": "^1.1.1",
     "git-url-parse": "^16.1.0",
@@ -106,6 +106,6 @@
     "vue-component-meta": "^3.3.11",
     "yaml": "^2.9.0",
     "zhipu-ai-provider": "^0.4.0",
-    "zod": "^4.4.3"
+    "zod": "^4.5.4"
   }
 }
