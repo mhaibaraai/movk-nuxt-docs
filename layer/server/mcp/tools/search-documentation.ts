@@ -1,5 +1,5 @@
 import { z } from 'zod'
-import { queryCollection } from '@nuxt/content/server'
+import { listAgentPages } from '#agent-discovery'
 
 export default defineMcpTool({
   description: 'Search documentation pages by title, description, or section. With no params, lists all pages.',
@@ -10,7 +10,7 @@ export default defineMcpTool({
     openWorldHint: false
   },
   inputSchema: {
-    search: z.string().optional().describe('Search term to filter pages by title or description'),
+    search: z.string().optional().describe('Search terms to filter pages by title, path or description. Every term has to match.'),
     section: z.string().optional().describe('Filter by documentation section (e.g., "getting-started", "components", "composables")')
   },
   inputExamples: [
@@ -21,35 +21,24 @@ export default defineMcpTool({
   ],
   cache: '30m',
   async handler({ search, section }) {
-    const event = useEvent()
-
-    let query = queryCollection(event, 'docs')
-      .select('title', 'description', 'path')
-
-    if (section) {
-      query = query.where('path', 'LIKE', `/docs/${section}/%`)
-    }
-
-    const pages = await query.all()
-
-    let results = pages.map(page => ({
-      title: page.title,
-      description: page.description,
-      path: page.path,
-      url: `${getRequestURL(event).origin}${page.path}`
-    }))
-
-    if (search) {
-      const searchLower = search.toLowerCase()
-      results = results.filter(page =>
-        page.title?.toLowerCase().includes(searchLower)
-        || page.description?.toLowerCase().includes(searchLower)
-      )
-    }
+    // 两个 URL 都来自内容协商与 CDN 重写共用的那份路由配置，
+    // markdown_url 因此不会与页面的真实位置漂移，站点地址也不再写死在这里
+    const pages = await listAgentPages(useEvent(), {
+      search,
+      prefix: section ? `/docs/${section}/` : '/docs/'
+    })
 
     return {
-      pages: results.sort((a, b) => a.path.localeCompare(b.path)),
-      total: results.length
+      pages: pages
+        .map(page => ({
+          title: page.title,
+          description: page.description,
+          path: page.route,
+          url: page.url,
+          markdown_url: page.rawUrl
+        }))
+        .sort((a, b) => a.path.localeCompare(b.path)),
+      total: pages.length
     }
   }
 })

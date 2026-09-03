@@ -1,89 +1,65 @@
-import type { Collections, PageCollectionItemBase } from '@nuxt/content'
-import { queryCollection } from '@nuxt/content/server'
-import type { H3Event } from 'h3'
+import { getAgentDocument, getAgentSiteUrl, renderAgentResources } from '#agent-discovery'
 
-async function findIndexPage(event: H3Event) {
-  const landingCollection = 'landing' as keyof Collections
-  const pageCollections = getPageCollections()
-
-  if (pageCollections.includes(landingCollection)) {
-    const page = await queryCollection(event, landingCollection)
-      .path('/')
-      .first() as PageCollectionItemBase | null
-
-    if (page) return page
-  }
-
-  for (const collection of getPageCollections([landingCollection])) {
-    const page = await queryCollection(event, collection)
-      .path('/')
-      .first() as PageCollectionItemBase | null
-
-    if (page) return page
-  }
-
-  return null
+interface SeoConfig {
+  title?: string
+  description?: string
 }
 
+interface GithubConfig {
+  url?: string
+}
+
+/**
+ * 首页的 markdown 表示。
+ *
+ * nuxt-agent-discovery 默认把 `/` 当作普通文档，直接输出 landing 页的 MDC 树；
+ * 那是一堆组件标记，对 agent 的价值远低于一份导航性摘要。模块显式支持站点
+ * 自带 `/raw/index.md` 处理器来接管这份文档，发现清单仍由 renderAgentResources
+ * 从同一份注册表渲染。
+ */
 export default defineCachedEventHandler(async (event) => {
-  const page = await findIndexPage(event)
-  const metadata = getSiteMetadata(event, page)
-  const title = page?.title || metadata.siteName
-  const seoTitle = page?.seo?.title || ''
-  const description = page?.description || metadata.description
-  const seoDescription = page?.seo?.description || ''
-  const canonicalUrl = metadata.baseSiteUrl
+  const appConfig = useAppConfig()
+  const seo = (appConfig.seo || {}) as SeoConfig
+  const github = appConfig.github as GithubConfig | false | undefined
+  const siteUrl = getAgentSiteUrl(event)
+
+  // 标题与简介取自内容适配器，locale 集合与 landing 集合的探测都归它管
+  const landing = await getAgentDocument(event, '/')
+  const page = landing && !('redirect' in landing) ? landing : undefined
+  const title = page?.title || seo.title || 'Documentation'
+  const description = page?.description || seo.description || ''
 
   const links = [
-    `- Website: <${metadata.baseSiteUrl}>`,
-    metadata.repository ? `- GitHub: <${metadata.repository}>` : undefined
+    `- Website: <${siteUrl}>`,
+    github && github.url ? `- GitHub: <${github.url}>` : undefined
   ].filter(Boolean).join('\n')
 
-  const frontmatter = [
+  const body = [
     '---',
     `title: ${JSON.stringify(title)}`,
     `description: ${JSON.stringify(description)}`,
-    `seo_title: ${JSON.stringify(seoTitle)}`,
-    `seo_description: ${JSON.stringify(seoDescription)}`,
-    `canonical_url: ${JSON.stringify(canonicalUrl)}`,
+    `canonical_url: ${JSON.stringify(siteUrl)}`,
     '---',
-    '\n'
+    '',
+    `# ${title}`,
+    '',
+    ...(description ? [`> ${description}`, ''] : []),
+    ...(description ? ['## About', '', description, ''] : []),
+    renderAgentResources(event),
+    '## Links',
+    '',
+    links,
+    ''
   ].join('\n')
 
-  const body = `# ${title}
-
-${description}
-
-## About
-
-${description || `${title} documentation site.`}
-
-## Explore
-
-- Documentation: <${createSiteURL(event, '/docs')}>
-- Sitemap (XML): <${createSiteURL(event, '/sitemap.md')}>
-- Sitemap (Markdown): <${createSiteURL(event, '/sitemap.md')}>
-- LLMs index: <${createSiteURL(event, '/llms.txt')}>
-- Full LLMs documentation: <${createSiteURL(event, '/llms-full.txt')}>
-
-## Resources for Agents
-
-- MCP Server Card: <${createSiteURL(event, '/.well-known/mcp/server-card.json')}>
-- MCP endpoint: <${metadata.mcpUrl}>
-- API Catalog: <${createSiteURL(event, '/.well-known/api-catalog')}>
-- Skills index: <${createSiteURL(event, '/.well-known/skills/index.json')}>
-
-## Links
-
-${links}
-`
-
   setResponseHeader(event, 'Content-Type', 'text/markdown; charset=utf-8')
+  setResponseHeader(event, 'Vary', 'Accept, User-Agent')
   setResponseHeader(event, 'Link', [
-    `<${canonicalUrl}>; rel="canonical"`,
-    `<${canonicalUrl}>; rel="alternate"; type="text/html"`
+    `<${siteUrl}>; rel="canonical"`,
+    `<${siteUrl}>; rel="alternate"; type="text/html"`
   ].join(', '))
-  return frontmatter + body
+
+  return body
 }, {
   swr: true,
   maxAge: 60 * 60

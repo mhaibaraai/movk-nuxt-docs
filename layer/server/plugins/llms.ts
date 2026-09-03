@@ -1,23 +1,10 @@
-import type { H3Event } from 'h3'
-import type { PageCollectionItemBase } from '@nuxt/content'
 import type { LLMsSection } from 'nuxt-llms'
 
 export default defineNitroPlugin((nitroApp) => {
-  nitroApp.hooks.hook('content:llms:generate:document', async (event: H3Event, doc: PageCollectionItemBase) => {
-    await transformMDC(event, doc as any)
-  })
-
-  nitroApp.hooks.hook('llms:generate', (_, { sections, domain }) => {
-    sections.forEach((section: LLMsSection) => {
-      if (section.title !== 'Documentation Sets') {
-        section.links = section.links?.map(link => ({
-          ...link,
-          href: `${link.href.replace(new RegExp(`^${domain}`), `${domain}/raw`)}.md`
-        }))
-      }
-    })
-
-    const docSetIdx = sections.findIndex((s: any) => s.title === 'Documentation Sets')
+  // nuxt-llms 把「Documentation Sets」（指向 llms-full.txt 的单条链接）插在最前面，
+  // 文档本身更值得先出现。链接改写成 /raw/**.md 由 nuxt-agent-discovery 负责。
+  nitroApp.hooks.hook('llms:generate', (_, { sections }) => {
+    const docSetIdx = sections.findIndex((s: LLMsSection) => s.title === 'Documentation Sets')
     if (docSetIdx !== -1) {
       const [docSet] = sections.splice(docSetIdx, 1)
       if (docSet) {

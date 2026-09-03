@@ -1,5 +1,6 @@
 import { z } from 'zod'
 import { queryCollection } from '@nuxt/content/server'
+import { getAgentDocument, getAgentSiteUrl } from '#agent-discovery'
 
 const sectionEnum = z.enum(['usage', 'examples', 'api', 'theme', 'changelog'])
 
@@ -44,13 +45,10 @@ export default defineMcpTool({
 
     const normalizedName = normalizeComponentName(componentName, page.title)
 
-    const fullDocumentation = await $fetch<string>(`/raw${page.path}.md`)
-
-    let documentation = fullDocumentation
-
-    // If sections are specified, extract only those sections
-    if (sections && sections.length > 0) {
-      documentation = extractSections(fullDocumentation, sections)
+    // 与 /raw/**.md 同一个适配器，在进程内解析并按请求的 h2 章节裁剪
+    const document = await getAgentDocument(event, page.path, { sections })
+    if (!document || 'redirect' in document) {
+      throw createError({ statusCode: 404, message: `Component '${componentName}' has no documentation page` })
     }
 
     return {
@@ -58,8 +56,8 @@ export default defineMcpTool({
       title: page.title,
       description: page.description,
       category: page.category,
-      documentation,
-      documentation_url: `${getRequestURL(event).origin}${page.path}`,
+      documentation: document.markdown,
+      documentation_url: `${getAgentSiteUrl(event)}${page.path}`,
       sections_returned: sections || ['full']
     }
   }
