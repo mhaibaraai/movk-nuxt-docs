@@ -1,5 +1,41 @@
 # 📋 Changelog
 
+## [2.3.0](https://github.com/mhaibaraai/movk-nuxt-docs/compare/v2.2.2...v2.3.0) (2026-09-03)
+
+### ⚠ BREAKING CHANGES
+
+* **layer:** robots 分组改由模块注入，消费方若覆盖过 robots.groups
+  需改为 robots.disallow；自定义过 /raw 路由或依赖 useCanonical 导出的
+  消费方需同步调整。
+* **ai-chat:** 移除 AI_GATEWAY_API_KEY、OPENAI_API_KEY、ANTHROPIC_API_KEY、
+  DEEPSEEK_API_KEY、ALIBABA_API_KEY、ZHIPU_API_KEY 及 <PROVIDER>_BASE_URL，
+  统一改用 AI_API_KEY 与可选的 AI_BASE_URL。需要接入非 OpenAI 兼容协议的厂商时，
+  在消费方 server/plugins/ 中用 modelProviderRegistry.register() 注册。
+
+### ✨ Features
+
+* **ai-chat:** 统一为 OpenAI 兼容单提供商配置 ([e4eb9b7](https://github.com/mhaibaraai/movk-nuxt-docs/commit/e4eb9b731ae99900cc74db9103b2bf024b1b47b4))
+
+### 📝 Documentation
+
+* **agents:** 同步代理发现层实现说明 ([4b83dc3](https://github.com/mhaibaraai/movk-nuxt-docs/commit/4b83dc3b38e62eb23ed91f9225cb2ce9107a6dc7))
+* **ai-chat:** 同步单提供商配置说明 ([da45418](https://github.com/mhaibaraai/movk-nuxt-docs/commit/da45418baaf4f8dea69b8eb8fecfbd3f67618799))
+
+### ♻️ Code Refactoring
+
+* **layer:** 代理发现层迁移至 nuxt-agent-discovery ([6371efa](https://github.com/mhaibaraai/movk-nuxt-docs/commit/6371efaf8cebbcfc8b580724b4ae50fd630a1837))
+* **mcp:** MCP 文档工具改用 [#agent](https://github.com/mhaibaraai/movk-nuxt-docs/issues/agent)-discovery 管道 ([ffc40bc](https://github.com/mhaibaraai/movk-nuxt-docs/commit/ffc40bc288ebf31491fabcf12c52b6cf3b2d9c95)), references [#agent-discovery](https://github.com/mhaibaraai/movk-nuxt-docs/issues/agent-discovery)
+
+### 🔧 Chores
+
+* **deps:** lock file maintenance ([3308106](https://github.com/mhaibaraai/movk-nuxt-docs/commit/3308106a2e2839ccb4547a6107a2820da50baf8a))
+* **deps:** update all non-major dependencies ([104a7d5](https://github.com/mhaibaraai/movk-nuxt-docs/commit/104a7d5f97bc45a4ffe18550401d3504449f8859))
+* **deps:** 升级 AI SDK 依赖并同步文档站模型示例 ([ce06d41](https://github.com/mhaibaraai/movk-nuxt-docs/commit/ce06d4176125a6c4a34e7193db2e95a279140e9e))
+* **deps:** 引入 nuxt-agent-discovery 与 @nuxtjs/sitemap ([f87053c](https://github.com/mhaibaraai/movk-nuxt-docs/commit/f87053ca5a8685b3d07b9323d9020ae7268b9481))
+* **deps:** 更新依赖锁定文件 ([b41a661](https://github.com/mhaibaraai/movk-nuxt-docs/commit/b41a66189c75b7405bf6bee63e30a17fca6e105b))
+* **deps:** 移除多余的 AI SDK 提供商依赖 ([e48b95d](https://github.com/mhaibaraai/movk-nuxt-docs/commit/e48b95d55be429d7a6b4eb59e12832ebca3308eb))
+* **docs:** 文档站切换至百炼直连并统一模型示例 ([3fc5316](https://github.com/mhaibaraai/movk-nuxt-docs/commit/3fc53169e55fd5348eafb03189e1ced480a424e3))
+
 ## [2.2.2](https://github.com/mhaibaraai/movk-nuxt-docs/compare/v2.2.1...v2.2.2) (2026-08-28)
 
 ### 🐛 Bug Fixes
