@@ -9,12 +9,12 @@
   "dependencies": {
     "@movk/nuxt-docs": "workspace:*",
     "@nuxt/content": "^3.16.0",
-    "@nuxt/ui": "^4.11.0",
+    "@nuxt/ui": "^4.11.1",
     "@nuxtjs/i18n": "^10.6.0",
     "@vercel/analytics": "^2.0.1",
     "@vercel/speed-insights": "^2.0.0",
     "better-sqlite3": "^13.0.3",
-    "dompurify": "^3.4.14",
+    "dompurify": "^3.4.15",
     "mermaid": "^11.17.2",
     "nuxt": "^4.5.2",
     "tailwindcss": "^4.3.3"
