@@ -1,4 +1,5 @@
 import type { H3Event } from 'h3'
+import { kebabCase } from 'scule'
 
 const COOKIE_MAX_AGE = 60 * 60 * 24 * 365
 
@@ -14,7 +15,9 @@ const UUID_RE = /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/
  * throttling has to be enforced server-side on something the caller can't rotate.
  */
 export function getChatUser(event: H3Event, siteName: string): string {
-  const COOKIE_NAME = `${siteName}-chat-user`
+  // cookie 名只允许 ASCII token 字符，中文等站点名直接拼接会让 setCookie 抛错
+  const prefix = kebabCase(siteName).replace(/[^a-z0-9-]/g, '').replace(/^-+|-+$/g, '') || 'docs'
+  const COOKIE_NAME = `${prefix}-chat-user`
 
   const existing = getCookie(event, COOKIE_NAME)
   if (existing && UUID_RE.test(existing)) {

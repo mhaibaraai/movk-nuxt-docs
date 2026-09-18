@@ -9,10 +9,10 @@ import { getModel } from '../utils/getModel'
 import { hasAnyAiKey } from '../../../keys'
 import { getChatUser } from '../utils/chatUser'
 
-function getMainAgentSystemPrompt(siteName: string, currentPage?: string | null) {
+function getMainAgentSystemPrompt(siteName: string) {
   return `You are a helpful assistant for ${siteName}, the official documentation site. Treat the documentation and MCP tool results as the source of truth. Use your knowledge base tools to search for relevant information before answering documentation questions.
 
-${currentPage ? `The user is currently viewing the documentation page at \`${currentPage}\`. Use this context to provide more relevant answers. If the question seems related, read that page first, but do not limit yourself to it when the question is broader or unrelated.\n` : ''}Guidelines:
+Guidelines:
 - For documentation questions, ALWAYS use tools to search or read the relevant information before answering. Never rely on pre-trained knowledge for project-specific APIs, components, composables, configuration, behavior, or examples.
 - For questions about configuration, customization, page structure, content authoring, AI chat, MCP, skills, or examples, search the documentation like any other docs question.
 - If a question is unrelated to this documentation, answer briefly if you can, but do not waste tool calls searching docs for it.
@@ -99,6 +99,13 @@ export default defineEventHandler(async (event) => {
 
   const { messages, model: requestModel, currentPage } = await readBody(event)
 
+  if (!Array.isArray(messages)) {
+    throw createError({ statusCode: 400, message: 'Invalid or missing messages array.' })
+  }
+
+  // currentPage 只以标记形式追加到最后一条用户消息，不进入系统提示词：
+  // 既避免未校验的路径注入指令，也让提示词前缀在请求间保持稳定以命中缓存
+
   const safeCurrentPage = typeof currentPage === 'string'
     && currentPage.length <= 128
     && !/[\r\n]/.test(currentPage)
@@ -127,7 +134,7 @@ export default defineEventHandler(async (event) => {
 
   const agent = new ToolLoopAgent({
     model,
-    instructions: getMainAgentSystemPrompt(siteName, currentPage),
+    instructions: getMainAgentSystemPrompt(siteName),
     maxOutputTokens: 8000,
     stopWhen: isStepCount(6),
     tools,
