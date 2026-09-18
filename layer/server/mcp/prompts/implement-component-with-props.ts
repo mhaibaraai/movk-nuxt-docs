@@ -39,17 +39,6 @@ export default defineMcpPrompt({
     }
 
     const normalizedName = normalizeComponentName(componentName, page.title)
-    const metaCandidates = buildComponentNameCandidates(page.title).metaNames
-
-    let metadata = null
-    for (const metaName of metaCandidates) {
-      try {
-        metadata = await $fetch<any>(`/api/component-meta/${metaName}.json`)
-        break
-      } catch {
-        continue
-      }
-    }
 
     const component = {
       name: normalizedName,
@@ -57,15 +46,7 @@ export default defineMcpPrompt({
       description: page.description,
       category: page.category,
       documentation_url: `${getRequestURL(event).origin}${page.path}`,
-      metadata: metadata
-        ? {
-            pascalName: metadata.pascalName,
-            kebabName: metadata.kebabName,
-            props: metadata.meta.props,
-            slots: metadata.meta.slots,
-            emits: metadata.meta.emits
-          }
-        : null
+      metadata: await fetchComponentMetadata(page.title)
     }
 
     return {

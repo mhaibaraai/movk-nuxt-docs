@@ -52,6 +52,8 @@ const docsSchema = z.object({
   index: z.boolean().optional(),
   links: z.array(Button),
   category: z.string().optional(),
+  // 其他生态中的别名（如 dialog、combobox），供 MCP 按意图匹配组件
+  keywords: z.array(z.string()).optional(),
   navigation: z.object({
     title: z.string().optional(),
     badge: z.string().optional()
