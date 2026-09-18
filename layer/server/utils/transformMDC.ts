@@ -1,12 +1,15 @@
 import type { H3Event } from 'h3'
 import { camelCase, kebabCase, upperFirst } from 'scule'
 import { visit } from '@nuxt/content/runtime'
+import { textContent } from 'minimark'
 import { queryCollection } from '@nuxt/content/server'
 import { resolveCommitFilePath } from '../../shared/commit-path'
 import meta from '#nuxt-component-meta'
 // @ts-expect-error - no types available
 import { getComponentExample } from '#component-example/nitro'
 import { getAgentSiteUrl, rawUrl } from '#agent-discovery'
+import { compactProps } from './componentMeta'
+import { fencedBlock, pipeTable } from './markdown'
 
 type Document = {
   title: string
@@ -15,6 +18,37 @@ type Document = {
 }
 
 type MDCAttributes = Record<string, unknown>
+
+// useKbd 渲染为符号或按平台区分的按键，给出可读名称；字母、数字、`/` 等保持原样
+const KBD_LABELS: Record<string, string> = {
+  meta: 'Meta',
+  cmd: 'Cmd',
+  command: 'Cmd',
+  ctrl: 'Ctrl',
+  control: 'Ctrl',
+  alt: 'Alt',
+  option: 'Option',
+  win: 'Win',
+  shift: 'Shift',
+  enter: 'Enter',
+  escape: 'Esc',
+  backspace: 'Backspace',
+  delete: 'Delete',
+  tab: 'Tab',
+  space: 'Space',
+  capslock: 'CapsLock',
+  pageup: 'PageUp',
+  pagedown: 'PageDown',
+  home: 'Home',
+  end: 'End',
+  arrowup: '↑',
+  arrowdown: '↓',
+  arrowleft: '←',
+  arrowright: '→'
+}
+
+// 在 Markdown 中没有意义的行内组件
+const DROPPED_INLINE = new Set(['icon', 'u-icon', 'prose-icon', 'u-color-mode-select'])
 
 const parseBoolean = (value?: unknown): boolean => value === true || value === '' || value === 'true'
 
@@ -75,11 +109,8 @@ function generateTSInterface(
 function propItemHandler(propValue: any): string {
   if (!propValue?.name) return ''
   const propName = propValue.name
+  // 已由 compactProp 归一化，type 总是字符串
   const propType = propValue.type
-    ? Array.isArray(propValue.type)
-      ? propValue.type.map((t: any) => t.name || t).join(' | ')
-      : propValue.type.name || propValue.type
-    : 'any'
   const isRequired = propValue.required || false
   const hasDescription = propValue.description && propValue.description.trim().length > 0
   const hasDefault = propValue.default !== undefined
@@ -93,13 +124,8 @@ function propItemHandler(propValue: any): string {
       })
     }
     if (hasDefault) {
-      let defaultValue = propValue.default
-      if (typeof defaultValue === 'string') {
-        defaultValue = `"${defaultValue.replace(/"/g, '\\"')}"`
-      } else {
-        defaultValue = JSON.stringify(defaultValue)
-      }
-      result += `   * @default ${defaultValue}\n`
+      const defaultValue = propValue.default
+      result += `   * @default ${typeof defaultValue === 'string' ? defaultValue : JSON.stringify(defaultValue)}\n`
     }
     result += `   */\n`
   }
@@ -158,6 +184,68 @@ function replaceNodeWithPre(node: any[], language: string, code: string, filenam
   node[0] = 'pre'
   node[1] = { language, code }
   if (filename) node[1].filename = filename
+  // stringifier 只读取 code，原插槽内容对后续遍历只是负担
+  node.length = 2
+}
+
+// 把 JSON 值写成单引号的 JS 字面量，保证能放进双引号的 Vue 属性里
+function toJsLiteral(value: unknown): string {
+  return JSON.stringify(value)
+    .replace(/"((?:[^"\\]|\\.)*)"/g, (_, text: string) => `'${text.replace(/\\"/g, '"').replace(/'/g, '\\\'')}'`)
+    .replace(/'([A-Z_$][\w$]*)':/gi, '$1: ')
+}
+
+// 模板片段中的 Vue 属性：绑定属性以 `:key` 形式携带 JSON 字符串，还原为对象字面量
+function templateAttribute(key: string, value: unknown): string {
+  const quote = (text: string) => `"${text.replace(/"/g, '&quot;')}"`
+
+  if (key === 'className') {
+    return `class=${quote((Array.isArray(value) ? value : [value]).join(' '))}`
+  }
+  if (typeof value === 'string') {
+    if (key.startsWith(':')) {
+      try {
+        return `${key}=${quote(toJsLiteral(JSON.parse(value)))}`
+      } catch {
+        // 不是 JSON，而是绑定表达式，按原样输出
+      }
+    }
+    return `${key}=${quote(value)}`
+  }
+  if (typeof value === 'object') {
+    return `:${key}=${quote(toJsLiteral(value))}`
+  }
+  return `:${key}="${value}"`
+}
+
+// 承载现成 Markdown 的段落：stringifier 原样写出字符串子节点，
+// 没有 handler 的块级结构借此输出
+function replaceNodeWithMarkdown(node: any[], markdown: string) {
+  node[0] = 'p'
+  node[1] = {}
+  node[2] = markdown
+  node.length = 3
+}
+
+function containsNode(nodes: any[], tag: string): boolean {
+  return nodes.some(child => Array.isArray(child) && (child[0] === tag || containsNode(child.slice(2), tag)))
+}
+
+// 没有 `#code` 插槽的预览是用 MDC 写的组件演示，最接近源码的形式是把语法树还原为模板
+function templateSnippet(nodes: any[]): string {
+  return nodes.map((child) => {
+    if (typeof child === 'string') return child
+    if (!Array.isArray(child)) return ''
+
+    const [tag, attrs = {}, ...content] = child
+    const attributes = Object.entries(attrs)
+      .filter(([key, value]) => key !== 'style' && value !== '' && value !== undefined && value !== null)
+      .map(([key, value]) => templateAttribute(key, value))
+    const open = `<${tag}${attributes.length ? ` ${attributes.join(' ')}` : ''}`
+    const inner = templateSnippet(content).trim()
+
+    return inner ? `${open}>\n  ${inner.split('\n').join('\n  ')}\n</${tag}>` : `${open} />`
+  }).filter(Boolean).join('\n')
 }
 
 function parseAttrAsObject<T>(value: unknown, fallback: T): T {
@@ -315,9 +403,10 @@ function replaceWithChildren(node: any[], newChildren: any[]) {
   }
 }
 
-function flattenMarkers(node: any): void {
+// 普通节点 `[tag, attrs, ...children]` 从下标 2 开始，根 children 数组从 0 开始
+function flattenMarkers(node: any, start = 2): void {
   if (!Array.isArray(node)) return
-  let i = 2
+  let i = start
   while (i < node.length) {
     const child = node[i]
     if (Array.isArray(child) && (child[0] === '__flatten' || child[0] === 'div')) {
@@ -346,7 +435,7 @@ export async function transformMDC(event: H3Event, doc: Document): Promise<Docum
 
     const interfaceCode = generateTSInterface(
       interfaceName,
-      Object.values(componentMeta.props),
+      compactProps(Object.values(componentMeta.props)),
       propItemHandler,
       `Props for the ${isProse ? 'Prose' : ''}${pascalCaseName} component`
     )
@@ -546,7 +635,9 @@ export async function transformMDC(event: H3Event, doc: Document): Promise<Docum
 
     const allChildren: any[] = []
     if (title) {
-      allChildren.push(['p', {}, ['strong', {}, title]])
+      // strong 序列化后只剩文本，链接需要包在外层
+      const heading = ['strong', {}, title]
+      allChildren.push(['p', {}, attrs.to ? ['a', { href: attrs.to }, heading] : heading])
     }
     allChildren.push(...collectBlockChildren(content))
 
@@ -610,6 +701,30 @@ export async function transformMDC(event: H3Event, doc: Document): Promise<Docum
     }
   }
 
+  // code-preview 的 `#code` 插槽保存的就是源码，丢弃渲染预览；没有该插槽时预览本身即演示，
+  // 还原为模板。必须在解包 wrapper 之前执行，否则 `::tabs` 中的预览会被拆散
+  visitAndReplace(doc, 'code-preview', (node) => {
+    const children = node.slice(2)
+    const codeSlot = children.find(child => Array.isArray(child) && child[0] === 'template' && child[1]?.['v-slot:code'] !== undefined)
+
+    if (codeSlot) {
+      replaceWithChildren(node, codeSlot.slice(2))
+      return
+    }
+
+    const preview = children.filter(child => !(Array.isArray(child) && child[0] === 'template'))
+
+    // 预览的是代码块本身（如 code-tree、code-group），直接输出其中的代码块，
+    // 否则高亮后的 span 会被还原成冗长的模板
+    if (containsNode(preview, 'pre')) {
+      replaceWithChildren(node, preview)
+      return
+    }
+
+    const snippet = templateSnippet(preview)
+    replaceNodeWithPre(node, 'vue', `<template>\n  ${snippet.split('\n').join('\n  ')}\n</template>`)
+  })
+
   // Remove wrapper elements by extracting children content
   const wrapperTypes = ['card-group', 'accordion', 'steps', 'code-group', 'code-collapse', 'tabs', 'div']
   for (const wrapperType of wrapperTypes) {
@@ -665,44 +780,6 @@ export async function transformMDC(event: H3Event, doc: Document): Promise<Docum
     })
   }
 
-  // Transform code-preview to extract the Vue code as a code block
-  visitAndReplace(doc, 'code-preview', (node) => {
-    const children = node.slice(2)
-
-    const extractVueCode = (nodes: any[]): string => {
-      return nodes.map((child: any) => {
-        if (typeof child === 'string') return child
-        if (Array.isArray(child)) {
-          const tag = child[0]
-          const attrs = child[1] || {}
-          const content = child.slice(2)
-          // Build the opening tag
-          let tagStr = `<${tag}`
-          for (const [key, val] of Object.entries(attrs)) {
-            if (key.startsWith(':') || key.startsWith('v-')) {
-              tagStr += ` ${key}=${val}`
-            } else if (typeof val === 'string') {
-              tagStr += ` ${key}=${val}`
-            }
-          }
-          const innerContent = extractVueCode(content)
-          if (innerContent.trim()) {
-            tagStr += `>\n${innerContent}</${tag}>`
-          } else {
-            tagStr += ' />'
-          }
-          return tagStr
-        }
-        return ''
-      }).join('\n')
-    }
-
-    const vueCode = extractVueCode(children).trim()
-    node[0] = 'pre'
-    node[1] = { language: 'vue', code: `<template>\n  ${vueCode.split('\n').join('\n  ')}\n</template>` }
-    node.length = 2
-  })
-
   // Transform icons-theme and icons-theme-select to placeholder
   visitAndReplace(doc, 'icons-theme', (node) => {
     node[0] = 'p'
@@ -744,11 +821,51 @@ export async function transformMDC(event: H3Event, doc: Document): Promise<Docum
     }
   })
 
+  // 没有 Markdown 对应物的行内组件：kbd 转为带可读名称的行内代码（minimark 会把行内 HTML
+  // 写到单独的行上，不能用 `<kbd>`），span 解包为文本，装饰性图标与交互控件直接丢弃
+  visitAndReplace(doc, 'kbd', (node) => {
+    // `:kbd{value="K"}` 以属性携带按键，`<kbd>K</kbd>` 以文本携带
+    const value = String(node[1]?.value ?? textContent(node as any))
+    node[0] = 'code'
+    node[1] = {}
+    node[2] = KBD_LABELS[value.toLowerCase()] ?? value
+    node.length = 3
+  })
+
+  visitAndReplace(doc, 'span', (node) => {
+    node[0] = '__flatten'
+    node[1] = {}
+  })
+
+  visit(doc.body, (node) => {
+    if (Array.isArray(node) && DROPPED_INLINE.has(node[0])) {
+      node[0] = '__flatten'
+      node[1] = {}
+      node.length = 2
+    }
+    return true
+  }, node => node)
+
+  // minimark 没有管道表 handler，会把表格写成 HTML，这里逐格渲染为行内 Markdown。
+  // 放在所有行内处理之后，确保单元格中的 kbd、图标已被归一化
+  visitAndReplace(doc, 'table', (node) => {
+    replaceNodeWithMarkdown(node, pipeTable(node))
+  })
+
+  // minimark 总是用三个反引号开围栏，代码自身含围栏（如讲解代码块的排版页面）时会被提前闭合
+  visitAndReplace(doc, 'pre', (node) => {
+    const attrs = node[1] || {}
+    const code = String(attrs.code ?? '')
+    if (code.includes('```')) {
+      replaceNodeWithMarkdown(node, fencedBlock(code, attrs.language, attrs.filename, attrs.meta))
+    }
+  })
+
   // Flatten __flatten markers by splicing their children into parents
   if (Array.isArray(doc.body)) {
-    flattenMarkers(doc.body)
+    flattenMarkers(doc.body, 0)
   } else if (doc.body?.value && Array.isArray(doc.body.value)) {
-    flattenMarkers(doc.body.value)
+    flattenMarkers(doc.body.value, 0)
   }
 
   return doc

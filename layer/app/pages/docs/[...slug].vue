@@ -1,7 +1,6 @@
 <script setup lang="ts">
 import type { ContentNavigationItem } from '@nuxt/content'
 import { kebabCase } from 'scule'
-import { joinURL } from 'ufo'
 
 definePageMeta({
   layout: 'docs',
@@ -90,8 +89,6 @@ const communityLinks = computed(() => {
 const path = computed(() => route.path.replace(/\/$/, ''))
 
 if (import.meta.server) {
-  prerenderRoutes([joinURL('/raw', `${path.value}.md`)])
-
   defineOgImage('NuxtSeo.takumi', {
     title,
     description,
