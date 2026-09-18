@@ -1,5 +1,4 @@
 {
-  "eslint.useFlatConfig": true,
   "editor.quickSuggestions": {
     "strings": "on"
   },
@@ -11,26 +10,9 @@
     "*.css": "tailwindcss"
   },
   "prettier.enable": false,
-  "tailwindCSS.classAttributes": [
-    "class",
-    "ui"
-  ],
-  "tailwindCSS.classFunctions": [
-    "defineAppConfig"
-  ],
+  "tailwindCSS.classAttributes": ["class", "ui"],
+  "tailwindCSS.classFunctions": ["defineAppConfig"],
   "tailwindCSS.experimental.classRegex": [
-    [
-      "[:\\[,]\\s*['\"`]([^'\"`]*)['\"`]"
-    ]
-  ],
-  "mdc.enableComponentMetadataCompletions": true,
-  "[mdc]": {
-    "editor.tabSize": 2,
-    "editor.insertSpaces": true,
-    "editor.detectIndentation": false,
-    "editor.formatOnPaste": false
-  },
-  "tailwindCSS.experimental.configFile": {
-    "layer/app/assets/css/main.css": "layer/**"
-  }
+    ["export default[^{]*\\{([\\s\\S]*)\\}", "[:\\[,]\\s*['\"`]([^'\"`]*)['\"`]"]
+  ]
 }
