@@ -182,15 +182,12 @@ Default locale content stays at the `content/` root (no prefix); other locales l
 
 #### pnpm Monorepo
 
-1. Add the docs package to the workspace and configure `onlyBuiltDependencies` (required by better-sqlite3):
+1. Add the docs package to the workspace:
 
 ```yaml [pnpm-workspace.yaml]
 packages:
   - 'apps/*'
   - 'docs'
-
-onlyBuiltDependencies:
-  - better-sqlite3
 ```
 
 2. Add a development script to the root `package.json`:

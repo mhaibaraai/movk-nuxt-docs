@@ -104,7 +104,7 @@ Visit `http://localhost:3000` to view your documentation site.
 Use Movk Nuxt Docs as a layer in an existing Nuxt project:
 
 ```bash [Terminal]
-pnpm add @movk/nuxt-docs @nuxt/content better-sqlite3 tailwindcss
+pnpm add @movk/nuxt-docs @nuxt/content tailwindcss
 ```
 
 > `@nuxt/content` is a peerDependency and must be installed in your app's own dependencies, otherwise the content collection type augmentation cannot be resolved.

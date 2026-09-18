@@ -63,7 +63,8 @@ Layer 即 npm 包 `@movk/nuxt-docs`，是仓库的核心。关键入口：
 
 #### Layer 的 peer dependencies
 
-- 必需：`nuxt 4.x`、`tailwindcss 4.x`、`better-sqlite3 12.x`
+- 必需：`nuxt 4.x`、`tailwindcss 4.x`、`@nuxt/content`
+- 运行环境：Node.js ≥ 22.5（Nuxt Content 使用 `sqliteConnector: 'native'`，即内置 `node:sqlite`，无需 `better-sqlite3`）
 - 可选（按需启用 Mermaid）：`mermaid 11.x`、`dompurify 3.x`
 
 ### AI Chat 模块（`layer/modules/ai-chat/`）
