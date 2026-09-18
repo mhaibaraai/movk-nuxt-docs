@@ -81,7 +81,10 @@ const options = computed(() => {
       : (prop?.type === 'boolean' || prop?.type === 'boolean | undefined'
           ? [{ value: true, label: 'true' }, { value: false, label: 'false' }]
           : [])
-    return { name: key, label: key, type: prop?.type as string | undefined, items }
+    const type = prop?.type as string | undefined
+    // 按原始值判定，避免清空数字输入框后退化为文本框
+    const inputType = type?.includes('number') && typeof get(props.props, key) === 'number' ? 'number' : 'text'
+    return { name: key, label: key, inputType, items }
   })
 })
 
@@ -251,7 +254,7 @@ const { data: ast } = useAsyncData(codeKey.value, async () => {
           </USelectMenu>
           <UInput
             v-else
-            :type="option.type?.includes('number') && typeof getComponentProp(option.name) === 'number' ? 'number' : 'text'"
+            :type="option.inputType"
             :model-value="getComponentProp(option.name)"
             color="neutral"
             variant="soft"
