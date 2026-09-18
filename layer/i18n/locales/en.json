@@ -48,5 +48,10 @@
       "section": " ({value})",
       "search": ": {value}"
     }
+  },
+  "releases": {
+    "releasedOn": "Released on {date}",
+    "viewOnGitHub": "View on GitHub",
+    "unavailable": "Release notes are unavailable right now, please check them on GitHub."
   }
 }

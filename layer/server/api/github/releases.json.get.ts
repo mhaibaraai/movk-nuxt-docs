@@ -1,28 +1,11 @@
-import { Octokit } from '@octokit/rest'
+import type { ReleaseSummary } from '../../utils/releases'
 
-export default defineCachedEventHandler(async () => {
-  if (!process.env.NUXT_GITHUB_TOKEN) {
-    return []
-  }
-
-  const { github } = useAppConfig()
-
-  if (!github || typeof github === 'boolean') {
-    throw createError({
-      status: 500,
-      statusText: 'GitHub configuration is not available'
-    })
-  }
-
-  const octokit = new Octokit({ auth: process.env.NUXT_GITHUB_TOKEN })
-
-  const releases = await octokit.rest.repos.listReleases({
-    owner: github.owner!,
-    repo: github.name!
-  }).then(res => res.data).catch(() => [])
-
-  return releases
+/** 全部发布（不含说明正文），按发布时间倒序；正文由 releases/[tag] 按版本提供 */
+export default defineCachedEventHandler(async (): Promise<ReleaseSummary[]> => {
+  // 失败时直接抛出：返回空数组会被缓存 1 小时，调用方自行降级
+  const releases = await fetchReleases()
+  return releases.map(({ markdown: _markdown, ...release }) => release)
 }, {
   maxAge: 60 * 60,
-  getKey: () => 'releases'
+  getKey: () => 'releases-list'
 })

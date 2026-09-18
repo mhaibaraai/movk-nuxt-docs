@@ -48,5 +48,10 @@
       "section": "（{value}）",
       "search": "：{value}"
     }
+  },
+  "releases": {
+    "releasedOn": "发布于 {date}",
+    "viewOnGitHub": "在 GitHub 查看",
+    "unavailable": "暂时无法获取版本说明，请前往 GitHub 查看。"
   }
 }

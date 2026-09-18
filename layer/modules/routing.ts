@@ -13,6 +13,12 @@ export default defineNuxtModule({
     const hasTemplatesFile = templatesFileExists(rootDir)
     const hasLandingPage = landingPageExists(rootDir)
 
+    // 供 CommitChangelog 等组件判断能否链接到站内版本页
+    nuxt.options.runtimeConfig.public.movkDocs = {
+      ...nuxt.options.runtimeConfig.public.movkDocs,
+      releasesPage: hasReleasesFile
+    }
+
     extendPages((pages) => {
       if (!hasLandingPage) {
         pages.push({
@@ -25,7 +31,7 @@ export default defineNuxtModule({
       if (hasReleasesFile) {
         pages.push({
           name: 'releases',
-          path: '/releases',
+          path: '/releases/:tag?',
           file: resolve('../app/templates/releases.vue')
         })
       }

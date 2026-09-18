@@ -102,8 +102,10 @@ const releasesSchema = z.object({
   sitemap,
   title: z.string(),
   description: z.string(),
-  releases: z.string().optional(),
-  hero: PageHero.optional()
+  // 是否在版本导航中列出预发布版本
+  prerelease: z.boolean().optional(),
+  // 版本导航只列出 tag 匹配该正则的版本
+  include: z.string().optional()
 })
 
 const templatesSchema = z.object({

@@ -115,6 +115,16 @@ export default defineNuxtConfig({
     }
   },
 
+  // 由 modules/i18n.ts 与 modules/routing.ts 在构建期写入，这里声明默认值以生成完整类型
+  runtimeConfig: {
+    public: {
+      movkDocs: {
+        filteredLocales: [] as { code: string, name: string }[],
+        releasesPage: false
+      }
+    }
+  },
+
   experimental: {
     asyncContext: true,
     defaults: {

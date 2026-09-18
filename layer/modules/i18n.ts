@@ -62,7 +62,7 @@ export default defineNuxtModule({
     }
 
     nuxt.options.runtimeConfig.public.movkDocs = {
-      ...(nuxt.options.runtimeConfig.public.movkDocs as Record<string, unknown> | undefined),
+      ...nuxt.options.runtimeConfig.public.movkDocs,
       filteredLocales: filteredLocales.map(locale => ({
         code: localeCode(locale),
         name: localeName(locale)
