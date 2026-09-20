@@ -1,5 +1,40 @@
 # 📋 Changelog
 
+## [2.4.0](https://github.com/mhaibaraai/movk-nuxt-docs/compare/v2.3.0...v2.4.0) (2026-09-20)
+
+### ⚠ BREAKING CHANGES
+
+* **releases:** releases 内容文件移除 releases（API 地址）与 hero 字段，新增 prerelease、include；不再支持在 releases.md 中手写版本说明；/api/github/releases.json 返回结构改为 { tag, title, date, url, prerelease }
+* **deps:** 运行环境要求 Node.js 22.5 及以上
+
+### ✨ Features
+
+* **mcp:** 精简组件元数据并支持 X-MCP-Tools 与 keywords ([175796c](https://github.com/mhaibaraai/movk-nuxt-docs/commit/175796c323adf97ed48821a88f98d40c297f2249))
+* **releases:** 重做版本发布页为按版本分页的文档式页面 ([54f5889](https://github.com/mhaibaraai/movk-nuxt-docs/commit/54f58898a140cb37aa0ab93ab2109b5910d1cb03))
+
+### 🐛 Bug Fixes
+
+* **ai-chat:** 页面上下文不再拼入系统提示词并规范 cookie 名 ([5647b5e](https://github.com/mhaibaraai/movk-nuxt-docs/commit/5647b5e05e86b2361687fd2505b577fd9109195d))
+* **layer:** 同步 nuxt/ui 文档组件修复 ([7d077dc](https://github.com/mhaibaraai/movk-nuxt-docs/commit/7d077dcbdb4ee2fe28da2ec1fa89918ea8afcb60))
+* **mcp:** 修复提供给 AI 代理的原始 Markdown 输出 ([c36600d](https://github.com/mhaibaraai/movk-nuxt-docs/commit/c36600dc12e0b943e5259ce9cf4236118a43eb59)), references [#code](https://github.com/mhaibaraai/movk-nuxt-docs/issues/code)
+* **PageHeaderLinks:** 移除无效的 text-neutral 类名 ([c2a53bf](https://github.com/mhaibaraai/movk-nuxt-docs/commit/c2a53bfec6e74cdcceffcd575f9cdec9d794f883))
+
+### 📝 Documentation
+
+* **mcp:** 同步工具命名与 X-MCP-Tools、keywords 说明 ([fb893d8](https://github.com/mhaibaraai/movk-nuxt-docs/commit/fb893d8597acc1ce348c70424ef8a83bd25c84fa))
+* **releases:** 同步按版本分页的版本发布页说明 ([aab07fe](https://github.com/mhaibaraai/movk-nuxt-docs/commit/aab07fe8d7084c41523ee63abbf50b318bacfd48))
+
+### 🔧 Chores
+
+* **deps:** update all non-major dependencies ([07d08cb](https://github.com/mhaibaraai/movk-nuxt-docs/commit/07d08cbaeaae78c0df3f709758c37527729292c7))
+* **deps:** update dependency mermaid to v12 ([e2bbefc](https://github.com/mhaibaraai/movk-nuxt-docs/commit/e2bbefc9f502cdd7fa52cd37aa6357d1007ba5de))
+* **deps:** update pnpm to v12 ([fe9b8d5](https://github.com/mhaibaraai/movk-nuxt-docs/commit/fe9b8d51b5ded6fe9e589e0db45364215f939178))
+* **deps:** 升级 layer 与根目录依赖 ([9221232](https://github.com/mhaibaraai/movk-nuxt-docs/commit/92212327d5e56071db87d7123cdb0246ac22db10))
+* **deps:** 更新锁文件 ([3066fc7](https://github.com/mhaibaraai/movk-nuxt-docs/commit/3066fc73d86b4d49f08a337248e8ec10c519311a))
+* **deps:** 移除 better-sqlite3 依赖 ([cc4105f](https://github.com/mhaibaraai/movk-nuxt-docs/commit/cc4105f72058ad4231730d90aaca44cacc8f3b52))
+* **docs:** 更新 AI Chat 可选模型列表 ([83a8eb1](https://github.com/mhaibaraai/movk-nuxt-docs/commit/83a8eb1c60130c802d75f06f87c739616ef44468))
+* **lint:** 引入 eslint-plugin-better-tailwindcss 校验类名 ([43f72db](https://github.com/mhaibaraai/movk-nuxt-docs/commit/43f72db4c1adf6f64491ff259a01eec6a9f068bb))
+
 ## [2.3.0](https://github.com/mhaibaraai/movk-nuxt-docs/compare/v2.2.2...v2.3.0) (2026-09-03)
 
 ### ⚠ BREAKING CHANGES
