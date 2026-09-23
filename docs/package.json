@@ -8,8 +8,8 @@
   },
   "dependencies": {
     "@movk/nuxt-docs": "workspace:*",
-    "@nuxt/content": "^3.16.0",
-    "@nuxt/ui": "^4.11.1",
+    "@nuxt/content": "^3.16.1",
+    "@nuxt/ui": "^4.11.2",
     "@nuxtjs/i18n": "^10.6.0",
     "@vercel/analytics": "^2.0.1",
     "@vercel/speed-insights": "^2.0.0",
