@@ -1,5 +1,18 @@
 # 📋 Changelog
 
+## [2.4.1](https://github.com/mhaibaraai/movk-nuxt-docs/compare/v2.4.0...v2.4.1) (2026-09-24)
+
+### 🐛 Bug Fixes
+
+* **changelog:** 转义提交信息中的 MDC 行内组件语法 ([b9eba3d](https://github.com/mhaibaraai/movk-nuxt-docs/commit/b9eba3db43dc8660ba7a269420a56fccca9d6d93))
+* **templates:** 迁移构建审批配置到 allowBuilds ([45d8d46](https://github.com/mhaibaraai/movk-nuxt-docs/commit/45d8d46c4a080b24d3f9a0baaebb156bcd9ade61))
+
+### 🔧 Chores
+
+* **deps:** update all non-major dependencies ([341ce59](https://github.com/mhaibaraai/movk-nuxt-docs/commit/341ce59a31d3fecd24b81f3e4545ed0c7db2f5c3))
+* **deps:** 更新锁文件 ([0fb9bbc](https://github.com/mhaibaraai/movk-nuxt-docs/commit/0fb9bbcfae8cf01bb2edfd6615a7d6ec657436ee))
+* **templates:** 精简模板 VSCode 配置 ([be609fb](https://github.com/mhaibaraai/movk-nuxt-docs/commit/be609fb1cb9291826b0e87ac3f31d66f07b102cb))
+
 ## [2.4.0](https://github.com/mhaibaraai/movk-nuxt-docs/compare/v2.3.0...v2.4.0) (2026-09-20)
 
 ### ⚠ BREAKING CHANGES
