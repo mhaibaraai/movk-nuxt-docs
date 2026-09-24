@@ -175,6 +175,8 @@ function isExternal(url?: string) {
 function normalizeCommitMessage(commit: Commit) {
   const prefix = `[\`${commit.sha.slice(0, SHA_SHORT_LENGTH)}\`](${githubUrl.value}/commit/${commit.sha})`
   const content = commit.message
+    // 转义 MDC 行内组件语法，避免提交信息中的 :key 等被解析为组件
+    .replace(/(^|[\s[*_(]):(?=[a-z])/gi, '$1\\:')
     .replace(/#(\d+)/g, `<a href='${githubUrl.value}/issues/$1'>#$1</a>`)
     .replace(/`(.*?)`/g, '<code class="text-xs">$1</code>')
 
