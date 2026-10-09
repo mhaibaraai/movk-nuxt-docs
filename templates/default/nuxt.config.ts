@@ -14,7 +14,7 @@ export default defineNuxtConfig({
     model: 'zai/glm-4.7',
     models: [
       'zai/glm-4.7',
-      'anthropic/claude-sonnet-4.6',
+      'anthropic/claude-sonnet-5.5',
       'google/gemini-3-flash'
     ]
   },

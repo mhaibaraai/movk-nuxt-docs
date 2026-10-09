@@ -65,7 +65,7 @@ ui:
         extends: ['@movk/nuxt-docs'],
         aiChat: {
           model: 'zai/glm-4.7',
-          models: ['zai/glm-4.7', 'anthropic/claude-sonnet-4.6']
+          models: ['zai/glm-4.7', 'anthropic/claude-sonnet-5.5']
         },
         mcp: {
           name: 'My Docs'
@@ -79,7 +79,7 @@ ui:
       extends: ['@movk/nuxt-docs'],
       aiChat: {
         model: 'zai/glm-4.7',
-        models: ['zai/glm-4.7', 'anthropic/claude-sonnet-4.6']
+        models: ['zai/glm-4.7', 'anthropic/claude-sonnet-5.5']
       },
       mcp: {
         name: 'My Docs'
