@@ -23,8 +23,8 @@
   --ui-container: var(--container-8xl);
 }
 
-/* Comark Shiki dark mode styles */
-html.dark .shiki span {
+/* Shiki 暗色模式样式；颜色色块保留转换器写入的背景与对比前景色 */
+html.dark .shiki span:not([style*="background-color"], .shiki-color-highlight) {
   color: var(--shiki-dark) !important;
   background-color: var(--shiki-dark-bg) !important;
   font-style: var(--shiki-dark-font-style) !important;
