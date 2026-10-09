@@ -4,7 +4,8 @@ import { visit } from '@nuxt/content/runtime'
 import { textContent } from 'minimark'
 import { queryCollection } from '@nuxt/content/server'
 import { resolveCommitFilePath } from '../../shared/commit-path'
-import meta from '#nuxt-component-meta'
+// @ts-expect-error - no types available
+import meta from '#nuxt-component-meta/nitro'
 // @ts-expect-error - no types available
 import { getComponentExample } from '#component-example/nitro'
 import { getAgentSiteUrl, rawUrl } from '#agent-discovery'
