@@ -183,3 +183,4 @@ i18n 基于 `@nuxtjs/i18n` v10，采用 **opt-in** 设计：layer 仅将其列�
 - **代理发现层配置顺序** — `agentDiscovery` 中依赖 `rootDir` 的项必须由 `modules` 数组里位于 `nuxt-agent-discovery` 之前的内联模块写入，否则模块已在 `setup` 阶段读走选项。
 - **Component Meta 排除清单** — `layer/nuxt.config.ts` 的 `componentMeta.exclude` 已排除 Nuxt 官方包，避免无关组件污染元数据。新增第三方 UI 库时按需追加。
 - **无测试套件** — 项目当前不包含单元、集成或 E2E 测试；改动核心逻辑时优先靠 `pnpm typecheck` + `pnpm dev` 手测。
+- **上游同步** — Layer 源自 nuxt/ui 的 `docs/` 站点，同步时以最近一次 `同步 nuxt/ui` 提交为起点，对比上游 `docs/` 此后的提交，只移植 layer 有对应实现的改动；会改变消费方行为的项（如 `compatibilityVersion: 5`、`nuxt/server` 迁移、`icon.serverBundle.externalizeIconsJson`）不同步。
