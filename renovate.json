@@ -8,6 +8,11 @@
     {
       "matchDepTypes": ["peerDependencies", "resolutions"],
       "enabled": false
+    },
+    {
+      "matchPackageNames": ["h3"],
+      "matchUpdateTypes": ["major"],
+      "enabled": false
     }
   ]
 }
