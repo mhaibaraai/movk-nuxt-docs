@@ -9,9 +9,8 @@ import { splitByCase, upperFirst } from 'scule'
 import { useMemoize } from '@vueuse/core'
 import type { DocsChatMessage } from '../server/api/ai-chat'
 
-const { isOpen, messages } = useAIChat()
+const { isOpen, messages, currentPage } = useAIChat()
 const toast = useToast()
-const route = useRoute()
 const config = useRuntimeConfig()
 const { aiChat } = useAppConfig()
 const { model } = useModels()
@@ -35,7 +34,7 @@ const { messages: chatMessages, status, error, sendMessage, regenerate, stop } =
   messages: messages.value,
   transport: new DefaultChatTransport<DocsChatMessage>({
     api: (config.app?.baseURL.replace(/\/$/, '') || '') + config.public.aiChat.apiPath,
-    body: () => ({ model: model.value, currentPage: route.path.startsWith('/docs/') ? route.path : null })
+    body: () => ({ model: model.value })
   }),
   onError: (error: Error) => {
     let message = error.message
@@ -159,7 +158,7 @@ function onSubmit() {
     return
   }
 
-  sendMessage({ text: input.value })
+  sendMessage({ text: input.value, metadata: { currentPage: currentPage.value } })
 
   input.value = ''
 }

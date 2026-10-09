@@ -5,6 +5,7 @@ import { kebabCase } from '@movk/core'
 export const useAIChat = createSharedComposable(() => {
   const config = useRuntimeConfig()
   const site = useSiteConfig()
+  const route = useRoute()
   const name = kebabCase(site.name)
 
   const isEnabled = computed(() => config.public.aiChat?.enabled ?? false)
@@ -13,6 +14,7 @@ export const useAIChat = createSharedComposable(() => {
   const messages = useLocalStorage<DocsChatMessage[]>(`${name}-ai-chat-messages`, [])
 
   const isOpen = ref(false)
+  const currentPage = computed(() => route.path)
 
   onNuxtReady(() => {
     nextTick(() => {
@@ -32,7 +34,8 @@ export const useAIChat = createSharedComposable(() => {
     messages.value = [...messages.value, {
       id: String(Date.now()),
       role: 'user',
-      parts: [{ type: 'text', text: text }]
+      parts: [{ type: 'text', text: text }],
+      metadata: { currentPage: currentPage.value }
     }]
     isOpen.value = true
   }
@@ -41,6 +44,7 @@ export const useAIChat = createSharedComposable(() => {
     isEnabled,
     isOpen,
     messages,
+    currentPage,
     toggleChat,
     open
   }

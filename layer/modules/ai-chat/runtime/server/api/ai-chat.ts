@@ -15,7 +15,7 @@ function getMainAgentSystemPrompt(siteName: string) {
 Guidelines:
 - For documentation questions, ALWAYS use tools to search or read the relevant information before answering. Never rely on pre-trained knowledge for project-specific APIs, components, composables, configuration, behavior, or examples.
 - For questions about configuration, customization, page structure, content authoring, AI chat, MCP, skills, or examples, search the documentation like any other docs question.
-- If a question is unrelated to this documentation, answer briefly if you can, but do not waste tool calls searching docs for it.
+- If a question is unrelated to this documentation, answer it briefly without searching the docs.
 - If no relevant information is found after searching, respond with "Sorry, I couldn't find information about that in the documentation."
 - Be concise, direct, and practical.
 
@@ -33,7 +33,6 @@ Guidelines:
 - Reference specific page paths, component names, props, composables, config keys, or APIs when applicable.
 - If a question is ambiguous, ask for clarification rather than guessing.
 - When multiple relevant items are found, list them clearly using bullet points.
-- You have up to 5 tool calls to find the answer, so be strategic: start broad, then get specific if needed.
 - Format responses in a conversational way, not as documentation sections.`
 }
 
@@ -88,7 +87,16 @@ const tools = {
 }
 
 export type DocsChatTools = InferUITools<typeof tools>
-export type DocsChatMessage = UIMessage<unknown, never, DocsChatTools>
+export type DocsChatMessage = UIMessage<{ currentPage?: string }, never, DocsChatTools>
+
+function safePagePath(path: unknown) {
+  return typeof path === 'string'
+    && path.length <= 128
+    && !/[\r\n]/.test(path)
+    && /^\/[\w/-]*$/.test(path)
+    ? path
+    : null
+}
 
 export default defineEventHandler(async (event) => {
   if (!hasAnyAiKey()) {
@@ -97,30 +105,23 @@ export default defineEventHandler(async (event) => {
 
   const config = useRuntimeConfig()
 
-  const { messages, model: requestModel, currentPage } = await readBody(event)
+  const { messages, model: requestModel } = await readBody(event)
 
   if (!Array.isArray(messages)) {
     throw createError({ statusCode: 400, message: 'Invalid or missing messages array.' })
   }
 
-  // currentPage 只以标记形式追加到最后一条用户消息，不进入系统提示词：
-  // 既避免未校验的路径注入指令，也让提示词前缀在请求间保持稳定以命中缓存
-
-  const safeCurrentPage = typeof currentPage === 'string'
-    && currentPage.length <= 128
-    && !/[\r\n]/.test(currentPage)
-    && /^\/docs\/[\w/-]*$/.test(currentPage)
-    ? currentPage
-    : null
-
-  const uiMessages = messages.map((message: UIMessage, index: number) => {
-    if (!safeCurrentPage || index !== messages.length - 1 || message.role !== 'user') {
+  // 页面路径随每条用户消息存在 metadata 中，每次请求都为所有用户消息补上标记，不进入系统提示词：
+  // 既避免未校验的路径注入指令，也让历史消息在请求间逐字节一致以命中提示词缓存
+  const uiMessages = messages.map((message: DocsChatMessage) => {
+    const currentPage = message.role === 'user' ? safePagePath(message.metadata?.currentPage) : null
+    if (!currentPage) {
       return message
     }
 
     return {
       ...message,
-      parts: [...(message.parts || []), { type: 'text' as const, text: `[Context: the user is currently viewing ${safeCurrentPage}]` }]
+      parts: [...(message.parts || []), { type: 'text' as const, text: `[Context: the user is currently viewing ${currentPage}]` }]
     }
   })
 
