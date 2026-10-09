@@ -314,7 +314,8 @@ export default defineNuxtSchema({
           title: '文件命名格式',
           description: '文件命名格式：auto（自动）、kebab（短横线）、camel（驼峰）、pascal（帕斯卡）',
           icon: 'i-lucide-case-sensitive',
-          default: 'auto'
+          default: 'auto',
+          tsType: '\'auto\' | \'kebab\' | \'camel\' | \'pascal\''
         }),
 
         dateFormat: group({
