@@ -1,7 +1,7 @@
 import { z } from 'zod'
 
 export default defineMcpTool({
-  description: 'Retrieves specific example implementation code and details',
+  description: 'Retrieves the source code of an example. Returns the code as a string only, without metadata. Use `list-examples` to find the exact example name.',
   annotations: {
     readOnlyHint: true,
     destructiveHint: false,

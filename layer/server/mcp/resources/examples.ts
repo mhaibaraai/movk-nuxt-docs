@@ -3,7 +3,7 @@ import { listComponentExamples } from '#component-example/nitro'
 
 export default defineMcpResource({
   uri: 'resource://docs/examples',
-  description: 'Complete list of available example code and demonstrations',
+  description: 'List of the available example names. Names only, not code.',
   cache: '1h',
   handler(uri: URL) {
     return {
