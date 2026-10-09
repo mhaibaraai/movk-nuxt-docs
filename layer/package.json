@@ -84,7 +84,7 @@
     "defu": "^6.1.7",
     "exsolve": "^1.1.1",
     "git-url-parse": "^16.1.0",
-    "minimark": "^0.2.0",
+    "minimark": "^1.0.0",
     "motion-v": "^2.4.4",
     "nuxt-agent-discovery": "^0.7.0",
     "nuxt-component-meta": "^0.18.0",
