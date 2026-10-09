@@ -2,7 +2,7 @@ import { z } from 'zod'
 import { queryCollection } from '@nuxt/content/server'
 
 export default defineMcpTool({
-  description: 'Retrieves metadata for a component including props, slots, and events. Props are compact by default, pass `full: true` to get the raw recursive prop schemas (very large)',
+  description: 'Retrieves metadata for a component including props, slots, and events. Props are compact by default, pass `full: true` to get the raw recursive prop schemas (very large). Use this over `get-component` when you need structured props, slots and events rather than prose documentation.',
   annotations: {
     readOnlyHint: true,
     destructiveHint: false,
@@ -10,7 +10,7 @@ export default defineMcpTool({
     openWorldHint: false
   },
   inputSchema: {
-    componentName: z.string().describe('The name of the component (PascalCase)'),
+    componentName: z.string().describe('Component name. Accepts `Button` or `button`.'),
     full: z.boolean().optional().describe('Return raw metadata with recursive prop schemas (very large). Defaults to false (compact props)')
   },
   inputExamples: [
