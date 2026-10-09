@@ -1,5 +1,37 @@
 # 📋 Changelog
 
+## [2.4.2](https://github.com/mhaibaraai/movk-nuxt-docs/compare/v2.4.1...v2.4.2) (2026-10-09)
+
+### 🐛 Bug Fixes
+
+* **ai-chat:** 页面上下文随每条用户消息保留以命中提示词缓存 ([de950bb](https://github.com/mhaibaraai/movk-nuxt-docs/commit/de950bb799fa4f391902a602165e2ddc134dbfd9))
+* **component-example:** 按 Vite environment 区分客户端构建 ([faac0a5](https://github.com/mhaibaraai/movk-nuxt-docs/commit/faac0a5432a45443685d8b8c98d07a363d88f8d0))
+* **mcp:** 明确工具与资源描述 ([2794452](https://github.com/mhaibaraai/movk-nuxt-docs/commit/279445236fb7365e428b0e8ec71bc59a1f01bc0d))
+* **prose:** 暗色模式下保留代码块颜色色块 ([680dda8](https://github.com/mhaibaraai/movk-nuxt-docs/commit/680dda8d126330f9d8bf77284418e849c2bf3797))
+* **schema:** 为 github.casing 声明字面量联合类型 ([af0bc90](https://github.com/mhaibaraai/movk-nuxt-docs/commit/af0bc90cb83c19d28fb4894fca35e09f6e297cda))
+
+### ⚡ Performance Improvements
+
+* **mcp:** 服务端改用 nitro 专用的组件元数据入口 ([ea7e287](https://github.com/mhaibaraai/movk-nuxt-docs/commit/ea7e287aa6ccbee4d5c196263fb380624b1e1a36))
+
+### 📝 Documentation
+
+* **agents:** 补充上游同步约定 ([651e4a0](https://github.com/mhaibaraai/movk-nuxt-docs/commit/651e4a06420adaa718b9c8c5c250032d00aa431b))
+* **mcp:** 同步示例工具说明 ([d486c29](https://github.com/mhaibaraai/movk-nuxt-docs/commit/d486c293d24c3174a4edc138d2c2975cc42a4c8e))
+* 示例模型更新为 Claude Sonnet 5.5 ([33f5aca](https://github.com/mhaibaraai/movk-nuxt-docs/commit/33f5aca99a9e071ee91bb8279b37d6ba8dce5adb))
+
+### 📦 Build System
+
+* **docs:** 构建前先生成 layer 类型配置 ([efce3d6](https://github.com/mhaibaraai/movk-nuxt-docs/commit/efce3d69862cb7bdd4149ad71aca0dd0fb41c69d))
+
+### 🔧 Chores
+
+* **deps:** lock file maintenance ([aa5ee48](https://github.com/mhaibaraai/movk-nuxt-docs/commit/aa5ee48de57e566e24f0ba7d2c44dc72ada0f631))
+* **deps:** update all non-major dependencies ([2729e73](https://github.com/mhaibaraai/movk-nuxt-docs/commit/2729e732e9b4d07deb00a8822471fca2557d3310))
+* **deps:** update dependency minimark to v1 ([b9b3205](https://github.com/mhaibaraai/movk-nuxt-docs/commit/b9b320550c8c17b084337e26b0ee97e856481fba))
+* **deps:** update nuxt framework to ^4.6.0 ([5f9da66](https://github.com/mhaibaraai/movk-nuxt-docs/commit/5f9da663ac52bf30fd6e9f996040f43519e554c2))
+* **renovate:** 禁用 h3 主版本升级 ([a80db10](https://github.com/mhaibaraai/movk-nuxt-docs/commit/a80db104a17d0d8f36b7212d921a80ae416f6552))
+
 ## [2.4.1](https://github.com/mhaibaraai/movk-nuxt-docs/compare/v2.4.0...v2.4.1) (2026-09-24)
 
 ### 🐛 Bug Fixes
