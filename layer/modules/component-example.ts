@@ -95,7 +95,9 @@ export default defineNuxtModule({
         name: 'component-example',
         enforce: 'post',
         async buildStart() {
-          if (_configResolved?.build.ssr) {
+          // 启用 Vite Environment API 后客户端与服务端共用同一份配置，build.ssr 两端都为真，只能靠 environment 区分
+          const environment = (this as any).environment?.name as string | undefined
+          if (environment ? environment !== 'client' : _configResolved?.build.ssr) {
             return
           }
           await fetchComponents()
