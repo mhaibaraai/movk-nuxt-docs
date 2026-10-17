@@ -1,6 +1,6 @@
 {
   "name": "movk-nuxt-docs-template",
-  "packageManager": "pnpm@12.10.1",
+  "packageManager": "pnpm@12.14.0",
   "scripts": {
     "build": "nuxt build",
     "dev": "nuxt dev",
@@ -11,14 +11,14 @@
   },
   "dependencies": {
     "@movk/nuxt-docs": "latest",
-    "@nuxt/content": "^3.16.1",
+    "@nuxt/content": "^3.16.2",
     "nuxt": "^4.6.0",
     "tailwindcss": "^4.3.3"
   },
   "devDependencies": {
     "@nuxt/eslint": "^1.17.0",
-    "eslint": "^10.12.0",
+    "eslint": "^10.13.0",
     "typescript": "^6.0.3",
-    "vue-tsc": "^3.3.12"
+    "vue-tsc": "^3.3.13"
   }
 }
