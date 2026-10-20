@@ -27,7 +27,7 @@
   "peerDependencies": {
     "@nuxt/content": "^3.15.0",
     "dompurify": "3.x",
-    "mermaid": "11.x",
+    "mermaid": "11.x || 12.x",
     "nuxt": "4.x",
     "tailwindcss": "4.x",
     "typescript": "*"
