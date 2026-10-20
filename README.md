@@ -234,7 +234,7 @@ D --> E
 - **甘特图**（`gantt`）：用于展示项目时间线
 - **饼图**（`pie`）：用于展示数据占比
 - **Git 图**（`gitGraph`）：用于展示分支历史
-- 以及更多 [Mermaid 支持的图表类型](https://mermaid.js.org/intro())
+- 以及更多 [Mermaid 支持的图表类型](https://mermaid.js.org/intro/)
 
 ### 无障碍支持（A11y）
 
@@ -274,7 +274,7 @@ export default defineNuxtConfig({
 })
 ```
 
-默认语言内容保持在 `content/` 根目录（无前缀，如 `/docs`），其余语言放入 `content/{locale}/`（带前缀，如 `/en/docs`）。开箱即用可使用官方 i18n 模板：`npx nuxi init -t gh:mhaibaraai/movk-nuxt-docs/templates/i18n my-docs`。详见 [国际化文档](https://docs.mhaibaraai.cn/docs/i18n)。
+默认语言内容保持在 `content/` 根目录（无前缀，如 `/docs`），其余语言放入 `content/{locale}/`（带前缀，如 `/en/docs`）。开箱即用可使用官方 i18n 模板：`npx nuxi init -t gh:mhaibaraai/movk-nuxt-docs/templates/i18n my-docs`。详见 [国际化文档](https://docs.mhaibaraai.cn/docs/getting-started/i18n)。
 
 ## 🛠️ 开发
 

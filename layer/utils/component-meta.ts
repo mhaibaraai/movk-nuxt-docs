@@ -58,9 +58,7 @@ export function createComponentMetaExcludeFilters(
 
   const userComponentPaths = [
     join(dir, 'app/components'),
-    join(dir, 'components'),
-    join(dir, 'docs/app/components'),
-    join(dir, 'templates/*/app/components')
+    join(dir, 'components')
   ]
 
   return [

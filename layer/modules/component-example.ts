@@ -159,7 +159,7 @@ export async function listComponentExamples() {
     addServerHandler({
       method: 'get',
       route: '/api/component-example/:component?',
-      handler: resolver.resolve('../server/api/component-example.get')
+      handler: resolver.resolve('./runtime/server/component-example.get')
     })
   }
 })

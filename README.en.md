@@ -280,7 +280,7 @@ export default defineNuxtConfig({
 })
 ```
 
-Default-language content stays in the `content/` root (no prefix, e.g. `/docs`); other languages go into `content/{locale}/` (with prefix, e.g. `/zh-CN/docs`). You can also use the official i18n template to get started immediately: `npx nuxi init -t gh:mhaibaraai/movk-nuxt-docs/templates/i18n my-docs`. See the [Internationalization documentation](https://docs.mhaibaraai.cn/docs/i18n) for details.
+Default-language content stays in the `content/` root (no prefix, e.g. `/docs`); other languages go into `content/{locale}/` (with prefix, e.g. `/zh-CN/docs`). You can also use the official i18n template to get started immediately: `npx nuxi init -t gh:mhaibaraai/movk-nuxt-docs/templates/i18n my-docs`. See the [Internationalization documentation](https://docs.mhaibaraai.cn/en/docs/getting-started/i18n) for details.
 
 ## 🛠️ Development
 
