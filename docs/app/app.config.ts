@@ -7,7 +7,7 @@ export default defineAppConfig({
   github: {
     rootDir: 'docs',
     commitPath: 'layer/app/components/content',
-    since: '2025-06-31T04:00:00Z'
+    since: '2025-07-01T04:00:00Z'
   },
   toc: {
     bottom: {
