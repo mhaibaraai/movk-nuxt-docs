@@ -5,9 +5,6 @@ export function useHeader() {
     label: '文档',
     to: '/docs/getting-started',
     active: route.path.startsWith('/docs/')
-  }, {
-    label: '版本发布',
-    to: '/releases'
   }])
 
   const mobileLinks = computed(() => [{
@@ -15,10 +12,6 @@ export function useHeader() {
     icon: 'i-lucide-square-play',
     to: '/docs/getting-started',
     active: route.path.startsWith('/docs/getting-started')
-  }, {
-    label: '发布版本',
-    icon: 'i-lucide-newspaper',
-    to: '/releases'
   }])
 
   return {
