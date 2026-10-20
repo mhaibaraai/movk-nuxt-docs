@@ -98,11 +98,13 @@ provide('navigation', rootNavigation)
           </template>
         </div>
 
-        <template v-if="!route.path.startsWith('/examples') && isAiChatEnabled">
+        <template v-if="!route.path.startsWith('/examples')">
           <ClientOnly>
-            <AiChatPanel />
+            <template v-if="isAiChatEnabled">
+              <AiChatPanel />
 
-            <AiChatFloatingInput />
+              <AiChatFloatingInput />
+            </template>
 
             <UContentSearch
               :files="files"
