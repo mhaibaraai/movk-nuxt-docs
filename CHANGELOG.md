@@ -1,5 +1,20 @@
 # 📋 Changelog
 
+## [2.4.3](https://github.com/mhaibaraai/movk-nuxt-docs/compare/v2.4.2...v2.4.3) (2026-10-20)
+
+### 🐛 Bug Fixes
+
+* **component-example:** 移除被自动扫描导致的重复路由注册 ([8d1aeb3](https://github.com/mhaibaraai/movk-nuxt-docs/commit/8d1aeb3581ad919ec4f047d3bb4fb6fe48aa6e6a))
+* **component-meta:** 移除无效的 monorepo 组件路径 ([5ebb00a](https://github.com/mhaibaraai/movk-nuxt-docs/commit/5ebb00a3c3493de42ab9ffa17035be0c2ede016a))
+* **deps:** mermaid peer 依赖兼容 12.x ([e1a4dc6](https://github.com/mhaibaraai/movk-nuxt-docs/commit/e1a4dc66012a7200b1ca71dcd0b7e0ccd77cd41f))
+* **docs:** 修正 github.since 非法日期 2025-06-31 ([d5d0627](https://github.com/mhaibaraai/movk-nuxt-docs/commit/d5d0627bad6915a5a3742fb34f800ad70dc99f74))
+* **search:** 未启用 AI Chat 时全站搜索无法打开 ([a983bb4](https://github.com/mhaibaraai/movk-nuxt-docs/commit/a983bb460bbe3789712d2d66341dadc058a44a6d))
+* **templates:** 修复 default 模板 /releases 404 与 i18n 模板失效链接 ([155e6f0](https://github.com/mhaibaraai/movk-nuxt-docs/commit/155e6f0f81748fd8b984b7bea1dcebb8ba4ac546))
+
+### 📝 Documentation
+
+* 修正部署环境变量名并修复失效链接 ([170ffd7](https://github.com/mhaibaraai/movk-nuxt-docs/commit/170ffd706667ef3185028ddfc6252a136ffbab53))
+
 ## [2.4.2](https://github.com/mhaibaraai/movk-nuxt-docs/compare/v2.4.1...v2.4.2) (2026-10-09)
 
 ### 🐛 Bug Fixes
