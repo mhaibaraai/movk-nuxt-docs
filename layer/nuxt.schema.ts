@@ -118,9 +118,38 @@ export default defineNuxtSchema({
         links: field({
           type: 'array',
           title: 'Header 链接',
-          description: 'Header 中显示的导航链接按钮',
+          description: 'Header 右侧的图标按钮',
           icon: 'i-lucide-link',
           default: []
+        }),
+        nav: field({
+          type: 'array',
+          title: '桌面端导航',
+          description: '顶部导航链接，label 支持按语言区分的对象，站内链接自动加语言前缀',
+          icon: 'i-lucide-navigation',
+          default: []
+        }),
+        mobileNav: field({
+          type: 'array',
+          title: '移动端导航',
+          description: '移动端菜单中的导航链接，留空则沿用桌面端导航',
+          icon: 'i-lucide-smartphone',
+          default: []
+        })
+      }
+    }),
+
+    docs: group({
+      title: '文档',
+      description: '文档侧边栏配置',
+      icon: 'i-lucide-book-open',
+      fields: {
+        categories: field({
+          type: 'object',
+          title: '分类',
+          description: '按顶层目录对侧边栏导航分组，键为目录 slug，值为分类列表',
+          icon: 'i-lucide-folders',
+          default: {}
         })
       }
     }),
