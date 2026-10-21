@@ -99,7 +99,7 @@ transition: { duration: 0.6, delay: 0.1 }
   ---
   color: neutral
   size: lg
-  to: /docs/components
+  to: https://docs.mhaibaraai.cn/docs/components/component-props
   trailingIcon: i-lucide-arrow-right
   variant: subtle
   ---
@@ -183,7 +183,7 @@ AI 增强体验
   ---
   color: neutral
   size: lg
-  to: /docs/getting-started/ai-chat
+  to: https://docs.mhaibaraai.cn/docs/getting-started/ai-chat
   trailingIcon: i-lucide-arrow-right
   variant: subtle
   ---
