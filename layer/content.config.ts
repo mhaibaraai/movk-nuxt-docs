@@ -5,7 +5,7 @@ import { defineSitemapSchema } from '@nuxtjs/sitemap/content'
 import { joinURL } from 'ufo'
 import { z } from 'zod'
 import { collectionName, localeCode } from './utils/locale'
-import { docsFolderExists, landingPageExists } from './utils/pages'
+import { landingPageExists } from './utils/pages'
 
 const { options } = useNuxt()
 const cwd = joinURL(options.rootDir, 'content')
@@ -15,7 +15,6 @@ const locales = i18n?.locales
 const defaultLocale = i18n?.defaultLocale
 
 const hasLandingPage = landingPageExists(options.rootDir)
-const hasDocsFolder = docsFolderExists(options.rootDir)
 
 const Avatar = z.object({
   src: z.string(),
@@ -66,22 +65,19 @@ function defineDocsCollection(code: string | null): DefinedCollection {
       type: 'page',
       source: {
         cwd,
-        include: hasDocsFolder ? 'docs/**' : '**',
-        prefix: hasDocsFolder ? '/docs' : '/',
-        exclude: ['index.md']
+        include: 'docs/**',
+        prefix: '/docs'
       },
       schema: docsSchema
     })
   }
 
-  const hasLocaleDocs = docsFolderExists(options.rootDir, code)
   return defineCollection({
     type: 'page',
     source: {
       cwd,
-      include: hasLocaleDocs ? `${code}/docs/**` : `${code}/**/*`,
-      prefix: hasLocaleDocs ? `/${code}/docs` : `/${code}`,
-      exclude: [`${code}/index.md`]
+      include: `${code}/docs/**`,
+      prefix: `/${code}/docs`
     },
     schema: docsSchema
   })

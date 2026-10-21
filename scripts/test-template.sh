@@ -13,7 +13,12 @@ fi
 [[ -d "$src" ]] || { echo "模板不存在：$template" >&2; exit 1; }
 
 work="$(mktemp -d)"
-trap 'rm -rf "$work"' EXIT
+# KEEP_WORK=1 时保留构建目录便于排查
+if [[ "${KEEP_WORK:-}" == "1" ]]; then
+  echo "构建目录：$work"
+else
+  trap 'rm -rf "$work"' EXIT
+fi
 
 pnpm --dir "$root/layer" pack --pack-destination "$work" >/dev/null
 tarball="$(ls "$work"/*.tgz)"

@@ -191,7 +191,7 @@ i18n 基于 `@nuxtjs/i18n` v10，采用 **opt-in** 设计：layer 仅将其列�
 
 ## 注意事项
 
-- **内容路径自动检测** — `content.config.ts` 通过 `docsFolderExists()` / `landingPageExists()`（在 `layer/utils/pages.ts`）决定路由前缀，新增模板时不要破坏这套约定。
+- **内容路径约定** — 文档固定位于 `content/docs`（其余语言为 `content/{locale}/docs`），路由前缀固定为 `/docs`；`landingPageExists()` 等（`layer/utils/pages.ts`）只决定是否注入首页、releases、templates 页面。
 - **功能开关** — `movkNuxtDocs.componentDocs / mcp / ogImage / mermaid / a11y` 与 `aiChat.enabled` 统一由 `layer/utils/features.ts` 解析，模块与 `nuxt.config.ts` 的内联模块共用。默认开启的功能（MCP、OG 图片）依赖放在 `dependencies`，默认关闭的功能（AI Chat、组件文档、Mermaid、a11y、i18n）依赖为 optional peer，启用但未安装时由 `utils/feature-dependencies.ts` 在构建期报错并给出安装命令。
 - **关闭功能的类型与运行时** — 关闭的功能目录通过 `utils/feature-types.ts` 移出生成的 tsconfig；服务端虚拟模块（`#nuxt-component-meta/nitro`、`#component-example/nitro`）与 `defineOgImage`、`useAIChat` 指向空实现，调用方无需判断开关。新增可选功能时沿用同一模式，并在 `test/fixtures/features-off` 覆盖关闭状态。
 - **optimizeDeps 前缀** — 修改 `vite:extendConfig` 钩子时需注意：所有非 `@movk/nuxt-docs > ` 前缀的嵌套依赖会被自动加上前缀（兼容 `@nuxt/a11y > axe-core` 等在 pnpm 下的解析）。
