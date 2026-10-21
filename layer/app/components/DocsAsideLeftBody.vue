@@ -1,13 +1,12 @@
 <script lang="ts" setup>
-import type { ContentNavigationItem } from '@nuxt/content'
 import { useFilter } from '@nuxt/ui/composables'
 
 const route = useRoute()
-const navigation = inject<Ref<ContentNavigationItem[]>>('navigation')
+const navigation = useDocsNavigation()
 const searchTerm = inject<Ref<string>>('docsFilterSearch') ?? ref('')
 
 const { scoreItem } = useFilter()
-const { navigationByCategory } = useNavigation(navigation!)
+const { navigationByCategory } = useNavigation(navigation)
 
 const filteredNavigation = computed(() =>
   filterNavigation(navigationByCategory.value, searchTerm.value, scoreItem)

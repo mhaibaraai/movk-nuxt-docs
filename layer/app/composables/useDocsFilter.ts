@@ -28,8 +28,8 @@ export function useDocsFilterConfig(): DocsFilterConfig {
 }
 
 export function useDocsFilterVisible(): ComputedRef<boolean> {
-  const navigation = inject<Ref<ContentNavigationItem[]>>('navigation')
-  const { navigationByCategory } = useNavigation(navigation!)
+  const navigation = useDocsNavigation()
+  const { navigationByCategory } = useNavigation(navigation)
   const { enabled, threshold } = useDocsFilterConfig()
 
   return computed(() => {

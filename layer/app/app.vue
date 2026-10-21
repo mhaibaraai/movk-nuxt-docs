@@ -1,46 +1,13 @@
 <script setup lang="ts">
-import * as nuxtUiLocales from '@nuxt/ui/locale'
-
 const site = useSiteConfig()
 const appConfig = useAppConfig()
 const route = useRoute()
 
-const { style, color } = useTheme()
 const { isEnabled: isAiChatEnabled } = useAIChat()
-const { locale, docsRoot, docsCollection } = useMovkI18n()
 const isDocsRoute = useDocsRoute()
-
-const nuxtUiLocale = computed(() =>
-  nuxtUiLocales[locale.value.replace('-', '_').toLowerCase() as keyof typeof nuxtUiLocales] || nuxtUiLocales.en
-)
+const { nuxtUiLocale, rootNavigation, files } = await useDocsShell()
 
 useLocaleSeo()
-
-const { data: navigation } = await useAsyncData(
-  () => `docs-navigation-${locale.value}`,
-  () => queryCollectionNavigation(docsCollection.value as 'docs', ['category', 'description']),
-  {
-    transform: data => transformNavigation(data, docsRoot.value)
-  }
-)
-
-const { data: files } = useLazyAsyncData(
-  () => `docs-search-${locale.value}`,
-  () => queryCollectionSearchSections(docsCollection.value as 'docs', { ignoredTags: ['style'] }),
-  { server: false }
-)
-
-useHead({
-  htmlAttrs: {
-    lang: computed(() => nuxtUiLocale.value.code),
-    dir: computed(() => nuxtUiLocale.value.dir)
-  },
-  meta: [
-    { name: 'viewport', content: 'width=device-width, initial-scale=1' },
-    { key: 'theme-color', name: 'theme-color', content: color }
-  ],
-  style
-})
 
 if (import.meta.server) {
   useSeoMeta({
@@ -61,10 +28,6 @@ if (import.meta.server) {
 const fuse = {
   resultLimit: 500
 }
-
-const { rootNavigation } = useNavigation(navigation)
-
-provide('navigation', rootNavigation)
 </script>
 
 <template>

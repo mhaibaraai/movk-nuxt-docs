@@ -1,5 +1,4 @@
 <script setup lang="ts">
-import type { ContentNavigationItem } from '@nuxt/content'
 import { kebabCase } from 'scule'
 
 definePageMeta({
@@ -21,7 +20,7 @@ if (!page.value) {
   throw createError({ status: 404, statusText: 'Page not found', fatal: true })
 }
 
-const navigation = inject<Ref<ContentNavigationItem[]>>('navigation')
+const navigation = useDocsNavigation()
 
 const { data: surround } = await useAsyncData(`surround-${(kebabCase(route.path))}`, () => {
   return queryCollectionItemSurroundings(collection, route.path, {
@@ -29,7 +28,7 @@ const { data: surround } = await useAsyncData(`surround-${(kebabCase(route.path)
   })
 })
 
-const { findBreadcrumb } = useNavigation(navigation!)
+const { findBreadcrumb } = useNavigation(navigation)
 
 const breadcrumb = computed(() => findBreadcrumb(page.value?.path as string))
 
