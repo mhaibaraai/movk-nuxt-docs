@@ -65,7 +65,9 @@ export default defineNuxtModule<AiChatModuleOptions>({
     addImports([
       {
         name: 'useAIChat',
-        from: resolve('./runtime/composables/useAIChat')
+        from: hasApiKey
+          ? resolve('./runtime/composables/useAIChat')
+          : resolve('./runtime/composables/useAIChatDisabled')
       }
     ])
 

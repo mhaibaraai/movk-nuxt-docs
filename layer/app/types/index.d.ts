@@ -1,25 +1,8 @@
 import type { ButtonProps } from '@nuxt/ui'
-import type { Options } from 'prettier'
-import type { FaqQuestions, LocalizedFaqQuestions } from '../../modules/ai-chat/runtime/types'
+import type { FaqQuestions, LocalizedFaqQuestions } from '../../shared/faq'
 
 export interface ExtendedButtonProps extends ButtonProps {
   label?: string
-}
-
-export interface SimplePrettier {
-  format: (source: string, options?: Options) => Promise<string>
-}
-
-declare module '#app' {
-  interface NuxtApp {
-    $prettier: SimplePrettier
-  }
-}
-
-declare module 'vue' {
-  interface ComponentCustomProperties {
-    $prettier: SimplePrettier
-  }
 }
 
 declare module 'nuxt/schema' {
