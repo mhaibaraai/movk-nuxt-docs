@@ -171,6 +171,19 @@ export default defineNuxtConfig({
       // Exclude it from pre-bundling so it resolves on demand instead of warning.
       cfg.optimizeDeps.exclude.push('shiki-transformer-color-highlight')
 
+      // @nuxtjs/i18n 在 package.json 声明了 imports 字段，依赖扫描器会把其运行时文件里的
+      // #components 当作包内 subpath import 解析并报错，导致整轮预构建被跳过。
+      // 扫描阶段将 Nuxt 虚拟模块标记为外部即可，正常编译仍由 Nuxt 的插件解析
+      const scanOptions = cfg.optimizeDeps as { rolldownOptions?: { plugins?: unknown[] } }
+      scanOptions.rolldownOptions ||= {}
+      scanOptions.rolldownOptions.plugins = [
+        ...(scanOptions.rolldownOptions.plugins || []),
+        {
+          name: 'movk:scan-nuxt-virtual',
+          resolveId: (id: string) => id === '#components' ? { id, external: true } : null
+        }
+      ]
+
       // 其余模块追加的嵌套依赖（如 @nuxt/a11y > axe-core、@nuxtjs/mdc > remark-gfm）
       // 在 pnpm 下无法从消费方根目录解析，统一改为经由 @movk/nuxt-docs 解析
       cfg.optimizeDeps.include = cfg.optimizeDeps.include
