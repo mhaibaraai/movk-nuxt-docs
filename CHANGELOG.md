@@ -1,5 +1,15 @@
 # 📋 Changelog
 
+## [2.4.4](https://github.com/mhaibaraai/movk-nuxt-docs/compare/v2.4.3...v2.4.4) (2026-10-21)
+
+### 🐛 Bug Fixes
+
+* **templates:** 修复 i18n 模板构建失败与 module 模板无法安装 ([42bfec3](https://github.com/mhaibaraai/movk-nuxt-docs/commit/42bfec34ea90f6038dc4c48368f2190a492a917c))
+
+### 📝 Documentation
+
+* **i18n:** 移除 locales 示例中会导致构建失败的 file 字段 ([cd18be1](https://github.com/mhaibaraai/movk-nuxt-docs/commit/cd18be1476318097738a01dfb77e6201fb38d6b7))
+
 ## [2.4.3](https://github.com/mhaibaraai/movk-nuxt-docs/compare/v2.4.2...v2.4.3) (2026-10-20)
 
 ### 🐛 Bug Fixes
