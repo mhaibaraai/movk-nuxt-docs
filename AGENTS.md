@@ -178,7 +178,7 @@ i18n 基于 `@nuxtjs/i18n` v10，采用 **opt-in** 设计：layer 仅将其列�
 | `AI_API_KEY` | 否 | AI Chat 总开关，AI Gateway 与 OpenAI 兼容端点共用同一个 key |
 | `AI_BASE_URL` | 否 | OpenAI 兼容端点，如 `https://api.deepseek.com/v1`；留空则走 AI Gateway |
 
-> `AI_API_KEY` 存在即启用 AI Chat；缺失时 AI 相关依赖不会被打包，所有 AiChat 组件降级为禁用态。一组 `AI_API_KEY` + `AI_BASE_URL` 只对应一个上游，需要同时接入多家厂商时在消费方 `server/plugins/` 中用 `modelProviderRegistry.register()` 注册。
+> `aiChat.enabled` 未设置时，构建期存在 `AI_API_KEY` 即启用 AI Chat；关闭时 AiChat 组件与 `useAIChat` 均替换为禁用态实现，AI 依赖不参与打包与类型检查。一组 `AI_API_KEY` + `AI_BASE_URL` 只对应一个上游，需要同时接入多家厂商时在消费方 `server/plugins/` 中用 `modelProviderRegistry.register()` 注册。
 
 ## CI/CD
 
@@ -192,10 +192,11 @@ i18n 基于 `@nuxtjs/i18n` v10，采用 **opt-in** 设计：layer 仅将其列�
 ## 注意事项
 
 - **内容路径自动检测** — `content.config.ts` 通过 `docsFolderExists()` / `landingPageExists()`（在 `layer/utils/pages.ts`）决定路由前缀，新增模板时不要破坏这套约定。
-- **AI Chat 条件编译** — 修改 `vite:extendConfig` 钩子时需注意：所有非 `@movk/nuxt-docs > ` 前缀的依赖会被自动加上前缀（兼容 `@nuxt/a11y > axe-core` 等嵌套依赖解析）。
-- **Mermaid 可选依赖** — 启用图表时消费方需手动安装 `mermaid` + `dompurify`，layer 不会自动拉取。
+- **功能开关** — `movkNuxtDocs.componentDocs / mcp / ogImage / mermaid / a11y` 与 `aiChat.enabled` 统一由 `layer/utils/features.ts` 解析，模块与 `nuxt.config.ts` 的内联模块共用。默认开启的功能（MCP、OG 图片）依赖放在 `dependencies`，默认关闭的功能（AI Chat、组件文档、Mermaid、a11y、i18n）依赖为 optional peer，启用但未安装时由 `utils/feature-dependencies.ts` 在构建期报错并给出安装命令。
+- **关闭功能的类型与运行时** — 关闭的功能目录通过 `utils/feature-types.ts` 移出生成的 tsconfig；服务端虚拟模块（`#nuxt-component-meta/nitro`、`#component-example/nitro`）与 `defineOgImage`、`useAIChat` 指向空实现，调用方无需判断开关。新增可选功能时沿用同一模式，并在 `test/fixtures/features-off` 覆盖关闭状态。
+- **optimizeDeps 前缀** — 修改 `vite:extendConfig` 钩子时需注意：所有非 `@movk/nuxt-docs > ` 前缀的嵌套依赖会被自动加上前缀（兼容 `@nuxt/a11y > axe-core` 等在 pnpm 下的解析）。
 - **代理发现层配置顺序** — `agentDiscovery` 中依赖 `rootDir` 的项必须由 `modules` 数组里位于 `nuxt-agent-discovery` 之前的内联模块写入，否则模块已在 `setup` 阶段读走选项。
-- **Component Meta 排除清单** — `layer/nuxt.config.ts` 的 `componentMeta.exclude` 已排除 Nuxt 官方包，避免无关组件污染元数据。新增第三方 UI 库时按需追加。
+- **Component Meta 排除清单** — `layer/modules/component-docs/index.ts` 的 `COMPONENT_META_DEFAULTS.exclude` 排除 Nuxt 官方包与以包名注册组件的模块（component-meta 按需安装后会扫描到它们，并因无法从根目录解析而报错）。新增此类模块时按需追加。
 - **测试分层** — 纯函数放 `layer/utils`、`layer/shared`、`layer/app/utils` 并在 `test/unit` 覆盖；依赖 Nitro 运行时的逻辑（如 `transformMDC`）通过 `test/e2e/raw-markdown.spec.ts` 的 raw markdown 快照做特征测试，重构这类代码时快照必须保持不变。
 - **预渲染死链** — layer 开启 `nitro.prerender.failOnError: false`，死链只会输出 `[request error]` 日志；CI 会对文档站与模板显式拦截该日志。
 - **i18n locales 不要声明 `file`** — 内置翻译由 layer 通过 `i18n:registerModule` 注册，消费方在 `locales` 中声明 `file` 会让 `@nuxtjs/i18n` 去站点自身的 `i18n/locales/` 查找并构建失败。
