@@ -18,8 +18,19 @@ pnpm build
 pnpm lint
 pnpm lint:fix
 
-# TypeScript 类型检查（仅针对 layer，避免重复检查消费方）
+# TypeScript 类型检查（layer + docs 站点）
 pnpm typecheck
+
+# 单元测试（vitest，test/unit）
+pnpm test
+pnpm test:coverage
+
+# E2E 冒烟与 raw markdown 快照（Playwright，需先 pnpm build）
+pnpm test:e2e
+pnpm test:e2e --update-snapshots   # 有意改变 transformMDC 输出后更新快照
+
+# 用本地 layer 打包产物构建模板（default | i18n | module）
+pnpm test:template default
 
 # 重新生成 Nuxt 类型（pnpm install 后自动执行）
 pnpm dev:prepare
@@ -171,7 +182,10 @@ i18n 基于 `@nuxtjs/i18n` v10，采用 **opt-in** 设计：layer 仅将其列�
 
 ## CI/CD
 
-- **`.github/workflows/ci.yml`** — push main / PR 时运行 `pnpm lint` + `pnpm typecheck`
+- **`.github/workflows/ci.yml`** — push main / PR 时并行运行三个 job：
+  - `check`：lint、typecheck、单元测试，并通过 pkg-pr-new 发布预览包
+  - `docs`：不注入 `AI_API_KEY` 构建文档站，拦截预渲染失败路由，运行 Playwright E2E
+  - `templates`：以本地 layer 打包产物分别构建三套模板，预渲染出现失败路由即失败
 - **`.github/workflows/release.yml`** — 监听 `v*` tag 推送，通过 npm Trusted Publishing（OIDC）发布 `@movk/nuxt-docs`。无需 `NPM_TOKEN`，自动附带 provenance；发布前校验 tag 与 `layer/package.json` 版本一致。重新发布可用 workflow_dispatch 手动传入 tag。
 - **发布** — 本地执行 `pnpm release`：release-it 前置运行 lint + typecheck，bump 版本、生成 changelog、打 tag 并推送，随后由 `release.yml` 完成 npm 发包
 
@@ -182,5 +196,7 @@ i18n 基于 `@nuxtjs/i18n` v10，采用 **opt-in** 设计：layer 仅将其列�
 - **Mermaid 可选依赖** — 启用图表时消费方需手动安装 `mermaid` + `dompurify`，layer 不会自动拉取。
 - **代理发现层配置顺序** — `agentDiscovery` 中依赖 `rootDir` 的项必须由 `modules` 数组里位于 `nuxt-agent-discovery` 之前的内联模块写入，否则模块已在 `setup` 阶段读走选项。
 - **Component Meta 排除清单** — `layer/nuxt.config.ts` 的 `componentMeta.exclude` 已排除 Nuxt 官方包，避免无关组件污染元数据。新增第三方 UI 库时按需追加。
-- **无测试套件** — 项目当前不包含单元、集成或 E2E 测试；改动核心逻辑时优先靠 `pnpm typecheck` + `pnpm dev` 手测。
+- **测试分层** — 纯函数放 `layer/utils`、`layer/shared`、`layer/app/utils` 并在 `test/unit` 覆盖；依赖 Nitro 运行时的逻辑（如 `transformMDC`）通过 `test/e2e/raw-markdown.spec.ts` 的 raw markdown 快照做特征测试，重构这类代码时快照必须保持不变。
+- **预渲染死链** — layer 开启 `nitro.prerender.failOnError: false`，死链只会输出 `[request error]` 日志；CI 会对文档站与模板显式拦截该日志。
+- **i18n locales 不要声明 `file`** — 内置翻译由 layer 通过 `i18n:registerModule` 注册，消费方在 `locales` 中声明 `file` 会让 `@nuxtjs/i18n` 去站点自身的 `i18n/locales/` 查找并构建失败。
 - **上游同步** — Layer 源自 nuxt/ui 的 `docs/` 站点，同步时以最近一次 `同步 nuxt/ui` 提交为起点，对比上游 `docs/` 此后的提交，只移植 layer 有对应实现的改动；会改变消费方行为的项（如 `compatibilityVersion: 5`、`nuxt/server` 迁移、`icon.serverBundle.externalizeIconsJson`）不同步。
