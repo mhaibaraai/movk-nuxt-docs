@@ -3,17 +3,38 @@ import { omit, kebabCase } from '@movk/core'
 import { useLocalStorage } from '@vueuse/core'
 import colors from 'tailwindcss/colors'
 
+export interface ThemeDefaults {
+  primary: string
+  neutral: string
+  radius: number
+  icons: string
+  blackAsPrimary: boolean
+}
+
+/** 站点在 app.config 中配置的主题，访客偏好覆盖前的基准值 */
+export function useThemeDefaults() {
+  const appConfig = useAppConfig()
+  return useState<ThemeDefaults>('movk-theme-defaults', () => ({
+    primary: appConfig.ui.colors.primary,
+    neutral: appConfig.ui.colors.neutral,
+    radius: appConfig.theme?.radius ?? 0.25,
+    icons: appConfig.theme?.icons ?? 'lucide',
+    blackAsPrimary: appConfig.theme?.blackAsPrimary ?? false
+  }))
+}
+
 export function useTheme() {
   const appConfig = useAppConfig()
   const colorMode = useColorMode()
   const site = useSiteConfig()
   const name = kebabCase(site.name)
+  const defaults = useThemeDefaults()
 
   const color = computed(() => colorMode.value === 'dark' ? (colors as any)[appConfig.ui.colors.neutral][900] : 'white')
 
-  const _radius = useLocalStorage(`${name}-ui-radius`, 0.25)
-  const _iconSet = useLocalStorage(`${name}-ui-icons`, 'lucide')
-  const _blackAsPrimary = useLocalStorage(`${name}-ui-black-as-primary`, false)
+  const _radius = useLocalStorage(`${name}-ui-radius`, defaults.value.radius)
+  const _iconSet = useLocalStorage(`${name}-ui-icons`, defaults.value.icons)
+  const _blackAsPrimary = useLocalStorage(`${name}-ui-black-as-primary`, defaults.value.blackAsPrimary)
 
   const neutralColors = ['slate', 'gray', 'zinc', 'neutral', 'stone', 'taupe', 'mauve', 'mist', 'olive']
   const neutral = computed({
@@ -101,21 +122,21 @@ export function useTheme() {
   ]
 
   const hasCSSChanges = computed(() => {
-    return _radius.value !== 0.25
-      || _blackAsPrimary.value
+    return _radius.value !== defaults.value.radius
+      || _blackAsPrimary.value !== defaults.value.blackAsPrimary
   })
 
   const hasConfigChanges = computed(() => {
-    return appConfig.ui.colors.primary !== 'green'
-      || appConfig.ui.colors.neutral !== 'slate'
-      || _iconSet.value !== 'lucide'
+    return appConfig.ui.colors.primary !== defaults.value.primary
+      || appConfig.ui.colors.neutral !== defaults.value.neutral
+      || _iconSet.value !== defaults.value.icons
   })
 
   function exportCSS(): string {
     const lines: string[] = []
 
     const rootLines: string[] = []
-    if (_radius.value !== 0.25) {
+    if (_radius.value !== defaults.value.radius) {
       rootLines.push(`  --ui-radius: ${_radius.value}rem;`)
     }
     if (_blackAsPrimary.value) {
@@ -140,13 +161,13 @@ export function useTheme() {
   function exportConfig(): string {
     const config: Record<string, any> = {}
 
-    const defaultColors: Record<string, string> = { primary: 'green', neutral: 'slate', secondary: 'blue', success: 'green', info: 'blue', warning: 'yellow', error: 'red' }
+    const defaultColors: Record<string, string> = { secondary: 'blue', success: 'green', info: 'blue', warning: 'yellow', error: 'red', primary: defaults.value.primary, neutral: defaults.value.neutral }
     const colorEntries = Object.entries(defaultColors).filter(([key, def]) => (appConfig.ui.colors as any)[key] !== def)
     if (colorEntries.length) {
       config.ui = { colors: Object.fromEntries(colorEntries.map(([key]) => [key, (appConfig.ui.colors as any)[key]])) }
     }
 
-    if (_iconSet.value !== 'lucide') {
+    if (_iconSet.value !== defaults.value.icons) {
       const iconMapping = themeIcons[_iconSet.value as keyof typeof themeIcons]
       config.ui = config.ui || {}
       config.ui.icons = iconMapping
@@ -160,16 +181,16 @@ export function useTheme() {
   }
 
   function resetTheme() {
-    appConfig.ui.colors.primary = 'green'
+    appConfig.ui.colors.primary = defaults.value.primary
     window.localStorage.removeItem(`${name}-ui-primary`)
 
-    appConfig.ui.colors.neutral = 'slate'
+    appConfig.ui.colors.neutral = defaults.value.neutral
     window.localStorage.removeItem(`${name}-ui-neutral`)
 
-    _radius.value = 0.25
-    _iconSet.value = 'lucide'
-    appConfig.ui.icons = resolveThemeIcons('lucide', appConfig.ui.icons) as any
-    _blackAsPrimary.value = false
+    _radius.value = defaults.value.radius
+    _iconSet.value = defaults.value.icons
+    appConfig.ui.icons = resolveThemeIcons(defaults.value.icons, appConfig.ui.icons) as any
+    _blackAsPrimary.value = defaults.value.blackAsPrimary
   }
 
   return {

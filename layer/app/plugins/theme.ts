@@ -8,6 +8,14 @@ export default defineNuxtPlugin({
     const site = useSiteConfig()
     const name = kebabCase(site.name)
 
+    // 在应用访客偏好前记录站点配置的主题，作为重置与差异比较的基准；
+    // 客户端沿用服务端写入 payload 的值，避免读到已被 localStorage 覆盖的配置
+    const defaults = useThemeDefaults()
+
+    if (defaults.value.icons !== 'lucide') {
+      appConfig.ui.icons = resolveThemeIcons(defaults.value.icons, appConfig.ui.icons) as any
+    }
+
     if (import.meta.client) {
       const primary = localStorage.getItem(`${name}-ui-primary`)
       if (primary) appConfig.ui.colors.primary = primary

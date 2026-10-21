@@ -40,3 +40,21 @@ test('组件示例接口', async ({ request }) => {
   expect(response.status()).toBe(200)
   expect(await response.json()).toHaveProperty('code')
 })
+
+test('访客主题偏好生效且无水合错误', async ({ page }) => {
+  const errors: string[] = []
+  page.on('pageerror', error => errors.push(error.message))
+  // 外部资源加载失败与本测试无关，只关注运行时异常与水合不匹配
+  page.on('console', (message) => {
+    if (/hydration/i.test(message.text())) errors.push(message.text())
+  })
+
+  await page.goto('/docs/getting-started')
+  await page.evaluate(() => localStorage.setItem('movk-nuxt-docs-ui-radius', '0.5'))
+  await page.reload()
+  await page.waitForLoadState('networkidle')
+
+  const radius = await page.evaluate(() => getComputedStyle(document.documentElement).getPropertyValue('--ui-radius').trim())
+  expect(radius).toBe('0.5rem')
+  expect(errors).toEqual([])
+})
