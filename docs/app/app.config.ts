@@ -1,6 +1,28 @@
 export default defineAppConfig({
   header: {
-    avatar: 'https://docs.mhaibaraai.cn/avatar.png'
+    avatar: 'https://docs.mhaibaraai.cn/avatar.png',
+    nav: [
+      { label: { 'zh-CN': '文档', 'en': 'Docs' }, to: '/docs/getting-started', activeMatch: '/docs' },
+      { label: { 'zh-CN': '案例', 'en': 'Examples' }, to: '/templates' },
+      { label: { 'zh-CN': '版本发布', 'en': 'Releases' }, to: '/releases' }
+    ],
+    mobileNav: [
+      { label: { 'zh-CN': '快速开始', 'en': 'Getting Started' }, icon: 'i-lucide-square-play', to: '/docs/getting-started' },
+      { label: { 'zh-CN': '排版', 'en': 'Typography' }, icon: 'i-lucide-square-pilcrow', to: '/docs/typography' },
+      { label: { 'zh-CN': '组件', 'en': 'Components' }, icon: 'i-lucide-component', to: '/docs/components' },
+      { label: { 'zh-CN': '组合式函数', 'en': 'Composables' }, icon: 'i-lucide-square-function', to: '/docs/composables' },
+      { label: { 'zh-CN': '案例', 'en': 'Examples' }, icon: 'i-lucide-layout-template', to: '/templates' },
+      { label: { 'zh-CN': '版本发布', 'en': 'Releases' }, icon: 'i-lucide-newspaper', to: '/releases' },
+      { label: 'GitHub', icon: 'i-simple-icons-github', to: 'https://github.com/mhaibaraai/movk-nuxt-docs' }
+    ]
+  },
+  docs: {
+    categories: {
+      'getting-started': [
+        { id: 'core-concepts', title: { 'zh-CN': '核心概念', 'en': 'Core Concepts' }, icon: 'i-lucide-settings' },
+        { id: 'ai', title: { 'zh-CN': 'AI 集成', 'en': 'AI Integration' }, icon: 'i-lucide-bot' }
+      ]
+    }
   },
   aside: {
     filter: {
