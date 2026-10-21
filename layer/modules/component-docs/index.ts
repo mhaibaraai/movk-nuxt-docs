@@ -3,6 +3,7 @@ import { join } from 'pathe'
 import { addComponent, addComponentsDir, addImportsDir, addPlugin, addTypeTemplate, createResolver, defineNuxtModule } from '@nuxt/kit'
 import type { ModuleDependencies } from 'nuxt/schema'
 import { getFeatures } from '../../utils/features'
+import { assertFeatureDependencies } from '../../utils/feature-dependencies'
 import { createComponentMetaExcludeFilters } from '../../utils/component-meta'
 import { applyEmitDocs } from '../../utils/component-meta-emits'
 import { setupCodeRegistry } from './code-registry'
@@ -46,6 +47,7 @@ export default defineNuxtModule({
     name: 'movk-component-docs'
   },
   moduleDependencies(nuxt): ModuleDependencies {
+    assertFeatureDependencies(nuxt)
     return getFeatures(nuxt).componentDocs
       ? { 'nuxt-component-meta': { defaults: COMPONENT_META_DEFAULTS } }
       : {}

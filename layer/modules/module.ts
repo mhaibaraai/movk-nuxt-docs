@@ -4,6 +4,8 @@ import { defu } from 'defu'
 import { getGitBranch, getGitEnv, getLocalGitInfo } from '../utils/git'
 import { getPackageJsonMetadata, inferSiteURL } from '../utils/meta'
 import { getFeatures, type FeatureOptions } from '../utils/features'
+import { assertFeatureDependencies } from '../utils/feature-dependencies'
+import { excludeFeatureTypes } from '../utils/feature-types'
 import { startCase, kebabCase } from '@movk/core'
 import { updateSiteConfig } from 'nuxt-site-config/kit'
 import type { SiteConfigInput } from 'nuxt-site-config/kit'
@@ -20,6 +22,7 @@ const movkNuxtDocsModule: NuxtModule<ModuleOptions> = defineNuxtModule<ModuleOpt
   },
   // 默认值见 utils/features.ts，模块与 nuxt.config 中的内联模块共用同一份解析逻辑
   moduleDependencies(nuxt): ModuleDependencies {
+    assertFeatureDependencies(nuxt)
     const features = getFeatures(nuxt)
 
     return {
@@ -50,6 +53,11 @@ const movkNuxtDocsModule: NuxtModule<ModuleOptions> = defineNuxtModule<ModuleOpt
       }
     }
 
+    excludeFeatureTypes(nuxt, [
+      ...features.aiChat ? [] : [resolve('./ai-chat/runtime')],
+      ...features.componentDocs ? [] : [resolve('./component-docs/runtime')]
+    ])
+
     // 关闭 OG 图片时保留 defineOgImage 调用点，替换为空实现
     if (!features.ogImage) {
       addImports({ name: 'defineOgImage', from: resolve('./runtime/og-image-stub') })
@@ -63,54 +71,44 @@ const movkNuxtDocsModule: NuxtModule<ModuleOptions> = defineNuxtModule<ModuleOpt
     }
 
     if (features.mermaid) {
-      let mermaidAvailable = true
-      try {
-        import.meta.resolve('mermaid')
-      } catch {
-        log.warn('mermaid package not found. install it with: pnpm add mermaid dompurify')
-        mermaidAvailable = false
-      }
+      addComponentsDir({
+        path: resolve('./components/prose'),
+        pathPrefix: false,
+        prefix: 'Prose',
+        global: true
+      })
 
-      if (mermaidAvailable) {
-        addComponentsDir({
-          path: resolve('./components/prose'),
-          pathPrefix: false,
-          prefix: 'Prose',
-          global: true
-        })
-
-        const contentOptions = nuxt.options.content as Record<string, any> | false
-        if (contentOptions) {
-          const build = contentOptions.build ??= {}
-          const markdown = build.markdown ??= {}
-          const highlight = markdown.highlight ??= {}
-          const langs = highlight.langs ??= [] as string[]
-          if (!langs.includes('mermaid')) {
-            langs.push('mermaid')
-          }
+      const contentOptions = nuxt.options.content as Record<string, any> | false
+      if (contentOptions) {
+        const build = contentOptions.build ??= {}
+        const markdown = build.markdown ??= {}
+        const highlight = markdown.highlight ??= {}
+        const langs = highlight.langs ??= [] as string[]
+        if (!langs.includes('mermaid')) {
+          langs.push('mermaid')
         }
-
-        nuxt.hooks.hook('vite:extendConfig', (config) => {
-          const cfg = config as { optimizeDeps?: { include?: string[] } }
-          cfg.optimizeDeps ??= {}
-          cfg.optimizeDeps.include ??= []
-          cfg.optimizeDeps.include.push(
-            '@movk/nuxt-docs > mermaid',
-            '@movk/nuxt-docs > mermaid > dayjs',
-            '@movk/nuxt-docs > mermaid > @braintree/sanitize-url',
-            '@movk/nuxt-docs > mermaid > d3',
-            '@movk/nuxt-docs > mermaid > dompurify'
-          )
-        })
-
-        const appConfig = nuxt.options.appConfig as Record<string, any>
-        appConfig.ui ??= {}
-        appConfig.ui.prose ??= {}
-        appConfig.ui.prose.codeIcon ??= {}
-        appConfig.ui.prose.codeIcon.mmd ??= 'i-vscode-icons-file-type-mermaid'
-
-        log.info('mermaid diagram support enabled')
       }
+
+      nuxt.hooks.hook('vite:extendConfig', (config) => {
+        const cfg = config as { optimizeDeps?: { include?: string[] } }
+        cfg.optimizeDeps ??= {}
+        cfg.optimizeDeps.include ??= []
+        cfg.optimizeDeps.include.push(
+          '@movk/nuxt-docs > mermaid',
+          '@movk/nuxt-docs > mermaid > dayjs',
+          '@movk/nuxt-docs > mermaid > @braintree/sanitize-url',
+          '@movk/nuxt-docs > mermaid > d3',
+          '@movk/nuxt-docs > mermaid > dompurify'
+        )
+      })
+
+      const appConfig = nuxt.options.appConfig as Record<string, any>
+      appConfig.ui ??= {}
+      appConfig.ui.prose ??= {}
+      appConfig.ui.prose.codeIcon ??= {}
+      appConfig.ui.prose.codeIcon.mmd ??= 'i-vscode-icons-file-type-mermaid'
+
+      log.info('mermaid diagram support enabled')
     }
 
     const dir = nuxt.options.rootDir
