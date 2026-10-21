@@ -61,14 +61,6 @@ export default defineNuxtConfig({
     rootAttrs: {
       'data-vaul-drawer-wrapper': '',
       'class': 'bg-default'
-    },
-    head: {
-      // 字体在构建期静态声明，随 SSR 直出。crossorigin 不可省：
-      // woff2 经 CSS 加载是 anonymous CORS 请求，属性不匹配的预热连接不会被复用
-      link: [
-        { rel: 'preconnect', href: 'https://cdn.mhaibaraai.cn', crossorigin: '' },
-        { rel: 'stylesheet', href: 'https://cdn.mhaibaraai.cn/fonts/alibaba-puhuiti.css' }
-      ]
     }
   },
 
@@ -275,15 +267,6 @@ export default defineNuxtConfig({
   robots: {
     // agent 的 Allow 分组与 Content-Signal 由 nuxt-agent-discovery 通过 robots:config 注入，
     // 与内容协商共用同一份 user-agent 列表
-    disallow: [
-      '/vercel/',
-      '/node_modules/',
-      '/docs/src/',
-      '/home/',
-      '/_nuxt/',
-      '/_plausible',
-      '/dev/',
-      '/api/'
-    ]
+    disallow: ['/_nuxt/', '/api/']
   }
 })

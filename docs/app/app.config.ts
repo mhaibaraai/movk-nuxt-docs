@@ -1,4 +1,7 @@
 export default defineAppConfig({
+  header: {
+    avatar: 'https://docs.mhaibaraai.cn/avatar.png'
+  },
   aside: {
     filter: {
       enabled: true
@@ -7,7 +10,17 @@ export default defineAppConfig({
   github: {
     rootDir: 'docs',
     commitPath: 'layer/app/components/content',
-    since: '2025-07-01T04:00:00Z'
+    since: '2025-07-01T04:00:00Z',
+    dateFormat: {
+      options: {
+        year: 'numeric',
+        month: 'numeric',
+        day: 'numeric',
+        hour: '2-digit',
+        minute: '2-digit',
+        timeZone: 'Asia/Shanghai'
+      }
+    }
   },
   toc: {
     bottom: {

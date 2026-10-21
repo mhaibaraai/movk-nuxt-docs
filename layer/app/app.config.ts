@@ -22,7 +22,6 @@ export default defineAppConfig({
     }
   },
   header: {
-    avatar: 'https://docs.mhaibaraai.cn/avatar.png',
     to: '/',
     search: true,
     colorMode: true,
@@ -53,8 +52,7 @@ export default defineAppConfig({
         month: 'numeric',
         day: 'numeric',
         hour: '2-digit',
-        minute: '2-digit',
-        timeZone: 'Asia/Shanghai'
+        minute: '2-digit'
       }
     }
   },
