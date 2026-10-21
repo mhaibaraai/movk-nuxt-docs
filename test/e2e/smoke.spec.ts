@@ -58,3 +58,15 @@ test('访客主题偏好生效且无水合错误', async ({ page }) => {
   expect(radius).toBe('0.5rem')
   expect(errors).toEqual([])
 })
+
+test('页头导航来自 app.config 并按语言本地化', async ({ page }) => {
+  await page.goto('/docs/getting-started')
+  const zhNav = page.getByRole('navigation', { name: '主导航' })
+  await expect(zhNav.getByRole('link', { name: '文档' })).toHaveAttribute('aria-current', 'page')
+  await expect(zhNav.getByRole('link', { name: '案例' })).toHaveAttribute('href', '/templates')
+
+  await page.goto('/en/docs/getting-started')
+  const enNav = page.getByRole('navigation', { name: 'Main Navigation' })
+  await expect(enNav.getByRole('link', { name: 'Docs' })).toHaveAttribute('href', '/en/docs/getting-started')
+  await expect(enNav.getByRole('link', { name: 'Examples' })).toHaveAttribute('href', '/en/templates')
+})
