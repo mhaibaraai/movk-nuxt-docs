@@ -110,7 +110,7 @@ async function copyPage() {
         :icon="ui.icons.chevronDown"
         color="neutral"
         variant="outline"
-        aria-label="Toggle Dropdown"
+        :aria-label="t('header.toggleMenu')"
       />
     </UDropdownMenu>
   </UFieldGroup>

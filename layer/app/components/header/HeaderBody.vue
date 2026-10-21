@@ -1,10 +1,9 @@
 <script setup lang="ts">
-import type { ContentNavigationItem } from '@nuxt/content'
-
-const navigation = inject<Ref<ContentNavigationItem[]>>('navigation')
+const navigation = useDocsNavigation()
 
 const { mobileLinks } = useHeader()
-const { navigationByCategory } = useNavigation(navigation!)
+const { t } = useMovkI18n()
+const { navigationByCategory } = useNavigation(navigation)
 const isDocsRoute = useDocsRoute()
 </script>
 
@@ -13,7 +12,7 @@ const isDocsRoute = useDocsRoute()
     orientation="vertical"
     :items="mobileLinks"
     class="-mx-2.5"
-    aria-label="Mobile Navigation"
+    :aria-label="t('header.mobileNavigation')"
   />
 
   <template v-if="isDocsRoute">
@@ -23,7 +22,7 @@ const isDocsRoute = useDocsRoute()
       :navigation="navigationByCategory"
       highlight
       :ui="{ linkTrailingBadge: 'font-semibold uppercase' }"
-      aria-label="Documentation Navigation"
+      :aria-label="t('header.docsNavigation')"
     />
   </template>
 </template>

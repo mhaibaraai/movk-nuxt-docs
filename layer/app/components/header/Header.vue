@@ -2,8 +2,8 @@
 import type { ButtonProps } from '@nuxt/ui'
 
 const { header, github } = useAppConfig()
-const { isEnabled, locales } = useMovkI18n()
 const isDocsRoute = useDocsRoute()
+const { t, isEnabled, locales } = useMovkI18n()
 
 const links = computed<ButtonProps[]>(() => (github && github.url
   ? [
@@ -19,7 +19,7 @@ const links = computed<ButtonProps[]>(() => (github && github.url
 </script>
 
 <template>
-  <UHeader :ui="{ left: 'min-w-0', right: 'gap-0.5' }" class="flex flex-col" aria-label="Site Header">
+  <UHeader :ui="{ left: 'min-w-0', right: 'gap-0.5' }" :aria-label="t('header.site')" class="flex flex-col">
     <template #left>
       <HeaderLogo />
     </template>
@@ -31,12 +31,12 @@ const links = computed<ButtonProps[]>(() => (github && github.url
 
       <ThemePicker />
 
-      <UTooltip text="Search" :kbds="['meta', 'K']">
+      <UTooltip :text="t('header.search')" :kbds="['meta', 'K']">
         <UContentSearchButton v-if="header?.search" />
       </UTooltip>
 
-      <UTooltip text="Color Mode">
-        <UColorModeButton v-if="header?.colorMode" aria-label="Color Mode" />
+      <UTooltip :text="t('header.colorMode')">
+        <UColorModeButton v-if="header?.colorMode" :aria-label="t('header.colorMode')" />
       </UTooltip>
 
       <template v-if="isEnabled && locales.length > 1">
