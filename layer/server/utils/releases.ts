@@ -1,5 +1,3 @@
-import { Octokit } from '@octokit/rest'
-
 export interface Release {
   tag: string
   /** 发布名称，未命名时为 tag */
@@ -20,11 +18,11 @@ export type ReleaseSummary = Omit<Release, 'markdown'>
  */
 export const fetchReleases = defineCachedFunction(async (): Promise<Release[]> => {
   const repo = getGitHubRepo()
-  if (!repo) {
+  const octokit = useOctokit()
+  if (!repo || !octokit) {
     return []
   }
 
-  const octokit = new Octokit({ auth: process.env.NUXT_GITHUB_TOKEN || undefined })
   const releases = await octokit.paginate(octokit.rest.repos.listReleases, { ...repo, per_page: 100 })
 
   return releases
@@ -48,9 +46,6 @@ export const fetchReleases = defineCachedFunction(async (): Promise<Release[]> =
 })
 
 function getGitHubRepo(): { owner: string, repo: string } | null {
-  const { github } = useAppConfig()
-  if (!github || typeof github === 'boolean' || !github.owner || !github.name) {
-    return null
-  }
-  return { owner: github.owner, repo: github.name }
+  const github = useGitHubConfig()
+  return github ? { owner: github.owner, repo: github.name } : null
 }

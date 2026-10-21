@@ -117,6 +117,8 @@ export default defineNuxtConfig({
 
   // 由 modules/i18n.ts 与 modules/routing.ts 在构建期写入，这里声明默认值以生成完整类型
   runtimeConfig: {
+    // GitHub API 令牌，对应环境变量 NUXT_GITHUB_TOKEN
+    githubToken: '',
     public: {
       movkDocs: {
         filteredLocales: [] as { code: string, name: string }[],

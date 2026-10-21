@@ -161,17 +161,16 @@ const movkNuxtDocsModule: NuxtModule<ModuleOptions> = defineNuxtModule<ModuleOpt
       description: meta.description || ''
     })
 
-    nuxt.options.appConfig.github = defu(nuxt.options.appConfig.github as Record<string, any>, {
-      owner: gitInfo?.owner,
-      name: gitInfo?.name,
-      url: gitInfo?.url,
-      commitPath: 'src',
-      suffix: 'vue',
-      since: '2025-01-31T04:00:00Z',
-      branch: getGitBranch(),
-      per_page: 100,
-      until: new Date().toISOString()
-    })
+    // 仅补充从 git 推断的仓库信息，其余默认值以 nuxt.schema.ts 为准
+    // github: false 表示关闭集成，不能交给 defu（会被默认值整体替换）
+    if ((nuxt.options.appConfig.github as unknown) !== false) {
+      nuxt.options.appConfig.github = defu(nuxt.options.appConfig.github as Record<string, any>, {
+        owner: gitInfo?.owner,
+        name: gitInfo?.name,
+        url: gitInfo?.url,
+        branch: getGitBranch()
+      })
+    }
 
     const layerPath = resolve('..')
     // @ts-ignore - component-meta is not typed

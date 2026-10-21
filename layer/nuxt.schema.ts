@@ -269,38 +269,38 @@ export default defineNuxtSchema({
         }),
         commitPath: field({
           type: 'string',
-          title: 'Commit 路径',
-          description: 'GitHub commit 页面路径模板',
+          title: '源码目录',
+          description: 'CommitChangelog 推导组件 / composable 源文件路径时使用的仓库内目录',
           icon: 'i-lucide-git-commit',
-          default: '/commit'
+          default: 'src'
+        }),
+        suffix: field({
+          type: 'string',
+          title: '源文件扩展名',
+          description: 'CommitChangelog 推导源文件路径时使用的扩展名，不含点',
+          icon: 'i-lucide-file',
+          default: 'vue'
         }),
         since: field({
           type: 'string',
           title: '开始日期',
-          description: '获取提交记录的开始日期',
+          description: '只获取该 ISO 日期之后的提交，留空不限制',
           icon: 'i-lucide-calendar',
           default: ''
-        }),
-        suffix: field({
-          type: 'string',
-          title: '文件后缀',
-          description: '文档文件的后缀',
-          icon: 'i-lucide-file',
-          default: '.md'
-        }),
-        per_page: field({
-          type: 'number',
-          title: '每页数量',
-          description: '每页显示的 commit 数量',
-          icon: 'i-lucide-hash',
-          default: 30
         }),
         until: field({
           type: 'string',
           title: '结束日期',
-          description: '获取提交记录的结束日期',
+          description: '只获取该 ISO 日期之前的提交，留空不限制',
           icon: 'i-lucide-calendar',
           default: ''
+        }),
+        perPage: field({
+          type: 'number',
+          title: '每页数量',
+          description: '单个文件获取的提交数量上限',
+          icon: 'i-lucide-hash',
+          default: 100
         }),
         author: field({
           type: 'string',

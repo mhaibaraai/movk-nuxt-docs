@@ -1,7 +1,7 @@
-import { Octokit } from '@octokit/rest'
-
 export default defineCachedEventHandler(async (event) => {
-  if (!process.env.NUXT_GITHUB_TOKEN) {
+  const octokit = useOctokit(event, { requireToken: true })
+  const github = useGitHubConfig()
+  if (!octokit || !github) {
     return null
   }
 
@@ -13,25 +13,11 @@ export default defineCachedEventHandler(async (event) => {
     })
   }
 
-  const { github } = useAppConfig()
-
-  if (!github || typeof github === 'boolean') {
-    throw createError({
-      status: 500,
-      statusText: 'GitHub configuration is not available'
-    })
-  }
-
-  const octokit = new Octokit({
-    auth: process.env.NUXT_GITHUB_TOKEN,
-    request: { timeout: 10_000 }
-  })
-
   try {
     const commits = await octokit.rest.repos.listCommits({
-      sha: github.branch!,
-      owner: github.owner!,
-      repo: github.name!,
+      sha: github.branch,
+      owner: github.owner,
+      repo: github.name,
       path,
       per_page: 1
     }).then(res => res.data).catch(() => [])
@@ -58,8 +44,8 @@ export default defineCachedEventHandler(async (event) => {
         const prMatch = commit.commit.message.match(/#(\d+)/)
         if (prMatch?.[1]) {
           const prData = await octokit.rest.pulls.get({
-            owner: github.owner!,
-            repo: github.name!,
+            owner: github.owner,
+            repo: github.name,
             pull_number: Number.parseInt(prMatch[1])
           }).then(res => res.data).catch(() => null)
 
@@ -82,8 +68,7 @@ export default defineCachedEventHandler(async (event) => {
       month: 'numeric',
       day: 'numeric',
       hour: '2-digit',
-      minute: '2-digit',
-      timeZone: 'Asia/Shanghai'
+      minute: '2-digit'
     }
     const dateFormatted = date
       ? new Date(date).toLocaleDateString(locale, formatOptions)

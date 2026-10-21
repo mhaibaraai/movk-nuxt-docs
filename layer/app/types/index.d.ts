@@ -64,7 +64,7 @@ declare module 'nuxt/schema' {
       commitPath: string
       since: string
       suffix: string
-      per_page: number
+      perPage: number
       until: string
       author: string
       /**
