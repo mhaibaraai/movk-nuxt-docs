@@ -1,4 +1,3 @@
-import type { Resolver } from '@nuxt/kit'
 import { join } from 'pathe'
 
 /**
@@ -40,22 +39,11 @@ export function isUserComponent(filePath: string, userComponentPaths: string[]):
  * 创建 component-meta exclude 过滤器
  */
 export function createComponentMetaExcludeFilters(
-  resolve: Resolver['resolve'],
+  allowedComponents: string[],
   dir: string,
   layerPath: string,
   userInclude: Array<string | RegExp | ((component: { filePath: string, pascalName: string }) => boolean)>
 ) {
-  const allowedComponents = [
-    resolve('../app/components/content/CommitChangelog.vue'),
-    resolve('../app/components/content/ComponentEmits.vue'),
-    resolve('../app/components/content/ComponentCode.vue'),
-    resolve('../app/components/content/ComponentExample.vue'),
-    resolve('../app/components/content/ComponentProps.vue'),
-    resolve('../app/components/content/ComponentSlots.vue'),
-    resolve('../app/components/content/PageLastCommit.vue'),
-    resolve('./components/prose/Mermaid.vue')
-  ]
-
   const userComponentPaths = [
     join(dir, 'app/components'),
     join(dir, 'components')

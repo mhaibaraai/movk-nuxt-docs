@@ -112,6 +112,7 @@ export default defineNuxtConfig({
   },
 
   movkNuxtDocs: {
+    componentDocs: true,
     a11y: true,
     mermaid: true
   }

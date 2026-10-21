@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import { useFetchComponentMeta } from '../composables/fetchComponentMeta'
 import { camelCase, kebabCase } from 'scule'
 
 const props = defineProps<{

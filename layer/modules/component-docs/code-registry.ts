@@ -1,4 +1,4 @@
-import { addTemplate, addTypeTemplate, updateTemplates } from '@nuxt/kit'
+import { addTemplate, updateTemplates } from '@nuxt/kit'
 import type { Nuxt } from '@nuxt/schema'
 import { join } from 'pathe'
 
@@ -40,15 +40,6 @@ export function setupCodeRegistry(nuxt: Nuxt): void {
 
   nuxt.options.alias ||= {}
   nuxt.options.alias['#component-code/registry'] = join(nuxt.options.buildDir, VIRTUAL_FILENAME)
-
-  addTypeTemplate({
-    filename: 'types/component-code-registry.d.ts',
-    getContents: () => `declare module '#component-code/registry' {
-import type { Component } from 'vue'
-export const registry: Record<string, Component>
-}
-`
-  })
 
   nuxt.hook('builder:watch', async (event, path) => {
     if (!path.endsWith('.vue')) return

@@ -1,6 +1,5 @@
 import { defineEventHandler, createError, appendHeader } from 'h3'
 import { pascalCase } from 'scule'
-// @ts-expect-error - no types available
 import { getComponentExample } from '#component-example/nitro'
 
 export default defineEventHandler(async (event) => {

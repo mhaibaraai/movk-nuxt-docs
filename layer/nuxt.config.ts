@@ -2,8 +2,8 @@ import { defineNuxtConfig } from 'nuxt/config'
 import { createResolver, useNuxt } from '@nuxt/kit'
 import { join } from 'pathe'
 import { defu } from 'defu'
-import { hasAnyAiKey } from './modules/ai-chat/keys'
 import { docsFolderExists } from './utils/pages'
+import { getFeatures } from './utils/features'
 
 const { resolve } = createResolver(import.meta.url)
 
@@ -23,7 +23,6 @@ export default defineNuxtConfig({
     '@nuxt/image',
     '@nuxtjs/robots',
     '@nuxtjs/sitemap',
-    '@nuxtjs/mcp-toolkit',
     // nuxt-agent-discovery 在 setup 里就读走了自己的选项，所以依赖 rootDir 的两项
     // 必须在它之前写入：docs 前缀是运行期探测的（见 content.config.ts），
     // MCP 端点则由 aiChat.mcpPath 决定。服务卡片的名称、版本、仓库等消费方元数据
@@ -35,11 +34,13 @@ export default defineNuxtConfig({
 
       options.agentDiscovery = defu(options.agentDiscovery, {
         discovery: {
-          mcpServerCard: {
-            endpoint: options.aiChat?.mcpPath || '/mcp',
-            name: '',
-            documentation: options.mcp?.browserRedirect || docsPrefix
-          },
+          mcpServerCard: getFeatures(nuxt).mcp
+            ? {
+                endpoint: options.aiChat?.mcpPath || '/mcp',
+                name: '',
+                documentation: options.mcp?.browserRedirect || docsPrefix
+              }
+            : false,
           links: [
             { href: docsPrefix, rel: 'service-doc', type: 'text/html', title: 'Documentation', anchor: '/' },
             // agent 从错误页恢复用的入口，不进 Link 头——Link 头只通告发现文档本身
@@ -50,9 +51,7 @@ export default defineNuxtConfig({
     },
     'nuxt-agent-discovery',
     '@vueuse/nuxt',
-    'nuxt-component-meta',
     'nuxt-llms',
-    'nuxt-og-image',
     'nuxt-schema-org',
     'motion-v/nuxt'
   ],
@@ -114,7 +113,13 @@ export default defineNuxtConfig({
     public: {
       movkDocs: {
         filteredLocales: [] as { code: string, name: string }[],
-        releasesPage: false
+        releasesPage: false,
+        features: {
+          mcp: true,
+          aiChat: false,
+          componentDocs: false,
+          ogImage: true
+        }
       }
     }
   },
@@ -158,10 +163,7 @@ export default defineNuxtConfig({
       cfg.optimizeDeps.exclude ||= []
 
       // tailwindcss/colors is a peer dep resolved in the consumer project directly.
-      cfg.optimizeDeps.include.push(
-        'tailwindcss/colors',
-        '@movk/nuxt-docs > prettier'
-      )
+      cfg.optimizeDeps.include.push('tailwindcss/colors')
 
       // shiki-transformer-color-highlight is inlined into the mdc highlighter
       // bundle via app/mdc.config.ts; its bare specifier is discovered from a
@@ -169,25 +171,8 @@ export default defineNuxtConfig({
       // Exclude it from pre-bundling so it resolves on demand instead of warning.
       cfg.optimizeDeps.exclude.push('shiki-transformer-color-highlight')
 
-      // AI Chat static deps — only pre-bundle when the feature is actually enabled.
-      // @shikijs/langs/* and @shikijs/themes/* are dynamically imported in useHighlighter.ts
-      if (hasAnyAiKey()) {
-        cfg.optimizeDeps.include.push(
-          '@movk/nuxt-docs > @ai-sdk/vue',
-          '@movk/nuxt-docs > ai',
-          '@movk/nuxt-docs > @shikijs/core',
-          '@movk/nuxt-docs > @shikijs/engine-javascript'
-        )
-        // @comark/vue (+ highlight plugin) is imported by AiMarkdown.client.ts;
-        // same bare-specifier resolution constraint as above.
-        cfg.optimizeDeps.exclude.push(
-          '@comark/vue',
-          '@comark/vue/plugins/highlight'
-        )
-      }
-
-      // Transform all remaining 'pkg > dep' entries added by Nuxt modules
-      // (e.g. @nuxt/a11y > axe-core, @nuxtjs/mdc > remark-gfm) to use the
+      // 其余模块追加的嵌套依赖（如 @nuxt/a11y > axe-core、@nuxtjs/mdc > remark-gfm）
+      // 在 pnpm 下无法从消费方根目录解析，统一改为经由 @movk/nuxt-docs 解析
       cfg.optimizeDeps.include = cfg.optimizeDeps.include
         .map(id => (id.startsWith('@movk/nuxt-docs > ') || !id.includes(' > '))
           ? id
@@ -210,29 +195,6 @@ export default defineNuxtConfig({
     skills: {
       dir: 'skills'
     }
-  },
-
-  componentMeta: {
-    metaFields: {
-      type: false,
-      props: true,
-      slots: 'no-schema',
-      events: 'no-schema',
-      exposed: false
-    },
-    exclude: [
-      '@nuxt/ui',
-      '@nuxt/content',
-      '@nuxt/icon',
-      '@nuxt/image',
-      '@nuxtjs/color-mode',
-      '@nuxtjs/mcp-toolkit',
-      '@nuxtjs/mdc',
-      '@nuxtjs/plausible',
-      '@comark/vue',
-      'nuxt/dist',
-      'nuxt-og-image'
-    ]
   },
 
   icon: {

@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import { useFetchComponentExample } from '../composables/fetchComponentExample'
 import type { ChipProps } from '@nuxt/ui'
 import { camelCase, upperFirst } from 'scule'
 import { hash } from 'ohash'

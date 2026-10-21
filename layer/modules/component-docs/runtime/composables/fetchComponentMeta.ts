@@ -1,4 +1,9 @@
 import type { ComponentMeta } from 'vue-component-meta'
+import { useAsyncData, useRequestEvent } from '#imports'
+
+export interface ComponentMetaData {
+  meta: ComponentMeta
+}
 
 export function useFetchComponentMeta(name: string) {
   if (import.meta.server) {
@@ -9,7 +14,7 @@ export function useFetchComponentMeta(name: string) {
     )
   }
 
-  return useAsyncData<{ meta: ComponentMeta }>(`component-meta-${name}`, () => $fetch(`/api/component-meta/${name}.json`).catch(() => ({}) as any), {
+  return useAsyncData<Partial<ComponentMetaData>>(`component-meta-${name}`, () => $fetch<ComponentMetaData>(`/api/component-meta/${name}.json`).catch(() => ({})), {
     lazy: import.meta.client,
     dedupe: 'defer',
     getCachedData: (key, nuxtApp) => nuxtApp.payload.data[key]

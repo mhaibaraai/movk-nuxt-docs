@@ -1,30 +1,14 @@
-import { existsSync } from 'node:fs'
-import { join } from 'pathe'
-import { addComponent, addComponentsDir, createResolver, defineNuxtModule, logger } from '@nuxt/kit'
+import { addComponentsDir, addImports, createResolver, defineNuxtModule, logger } from '@nuxt/kit'
 import type { ModuleDependencies, NuxtModule } from 'nuxt/schema'
 import { defu } from 'defu'
 import { getGitBranch, getGitEnv, getLocalGitInfo } from '../utils/git'
 import { getPackageJsonMetadata, inferSiteURL } from '../utils/meta'
-import { createComponentMetaExcludeFilters } from '../utils/component-meta'
-import { applyEmitDocs } from '../utils/component-meta-emits'
+import { getFeatures, type FeatureOptions } from '../utils/features'
 import { startCase, kebabCase } from '@movk/core'
 import { updateSiteConfig } from 'nuxt-site-config/kit'
 import type { SiteConfigInput } from 'nuxt-site-config/kit'
 
-export interface ModuleOptions {
-  /**
-   * 是否启用 @nuxt/a11y 无障碍支持
-   * @defaultValue true
-   * @see https://a11y.nuxtjs.org/
-   */
-  a11y?: boolean
-  /**
-   * 是否启用 Mermaid 图表支持
-   * - 启用前需安装依赖: `pnpm add mermaid dompurify`
-   * @defaultValue false
-   */
-  mermaid?: boolean
-}
+export type ModuleOptions = FeatureOptions
 
 const log = logger.withTag('@movk/nuxt-docs')
 
@@ -34,17 +18,15 @@ const movkNuxtDocsModule: NuxtModule<ModuleOptions> = defineNuxtModule<ModuleOpt
     configKey: 'movkNuxtDocs',
     docs: 'https://docs.mhaibaraai.cn/'
   },
-  defaults: {
-    a11y: true,
-    mermaid: false
-  },
+  // 默认值见 utils/features.ts，模块与 nuxt.config 中的内联模块共用同一份解析逻辑
   moduleDependencies(nuxt): ModuleDependencies {
-    const userOptions = nuxt.options.movkNuxtDocs || {}
+    const features = getFeatures(nuxt)
 
     return {
-      ...userOptions.a11y !== false && {
+      ...features.mcp && { '@nuxtjs/mcp-toolkit': {} },
+      ...features.ogImage && { 'nuxt-og-image': {} },
+      ...features.a11y && {
         '@nuxt/a11y': {
-          version: '^1.0.0-alpha.1',
           defaults: {
             logIssues: false
           }
@@ -52,30 +34,35 @@ const movkNuxtDocsModule: NuxtModule<ModuleOptions> = defineNuxtModule<ModuleOpt
       }
     }
   },
-  async setup(options, nuxt) {
+  async setup(_options, nuxt) {
     const { resolve } = createResolver(import.meta.url)
+    const features = getFeatures(nuxt)
 
     nuxt.options.alias['#ai-chat'] = resolve('./ai-chat/runtime')
 
-    const consumerExtrasCandidates = [
-      join(nuxt.options.srcDir, 'components/content/ComponentExampleExtras.vue'),
-      join(nuxt.options.rootDir, 'app/components/content/ComponentExampleExtras.vue')
-    ]
-    const consumerExtrasPath = consumerExtrasCandidates.find(existsSync)
+    nuxt.options.runtimeConfig.public.movkDocs = {
+      ...nuxt.options.runtimeConfig.public.movkDocs,
+      features: {
+        mcp: features.mcp,
+        aiChat: features.aiChat,
+        componentDocs: features.componentDocs,
+        ogImage: features.ogImage
+      }
+    }
 
-    addComponent({
-      name: 'ComponentExampleExtras',
-      filePath: consumerExtrasPath ?? resolve('./components/content/ComponentExampleExtras.vue')
-    })
+    // 关闭 OG 图片时保留 defineOgImage 调用点，替换为空实现
+    if (!features.ogImage) {
+      addImports({ name: 'defineOgImage', from: resolve('./runtime/og-image-stub') })
+    }
 
-    if (options.a11y !== false) {
+    if (features.a11y) {
       const a11yOptions = (nuxt.options as Record<string, any>).a11y ??= {}
       a11yOptions.axe = defu(a11yOptions.axe, {
         runOptions: { preload: false }
       })
     }
 
-    if (options.mermaid) {
+    if (features.mermaid) {
       let mermaidAvailable = true
       try {
         import.meta.resolve('mermaid')
@@ -171,22 +158,6 @@ const movkNuxtDocsModule: NuxtModule<ModuleOptions> = defineNuxtModule<ModuleOpt
         branch: getGitBranch()
       })
     }
-
-    const layerPath = resolve('..')
-    // @ts-ignore - component-meta is not typed
-    nuxt.hook('component-meta:extend', (options: any) => {
-      const userInclude = (nuxt.options.componentMeta && typeof nuxt.options.componentMeta === 'object')
-        ? nuxt.options.componentMeta.include || []
-        : []
-
-      options.exclude = [
-        ...(options.exclude || []),
-        ...createComponentMetaExcludeFilters(resolve, dir, layerPath, userInclude)
-      ]
-    })
-
-    // @ts-ignore - component-meta is not typed
-    nuxt.hook('component-meta:schema', (schema: any) => applyEmitDocs(schema))
   }
 })
 

@@ -1,3 +1,6 @@
+import type { ComponentExampleData } from '../example'
+import { useAsyncData, useRequestEvent } from '#imports'
+
 export function useFetchComponentExample(name: string) {
   if (import.meta.server) {
     const event = useRequestEvent()
@@ -7,7 +10,7 @@ export function useFetchComponentExample(name: string) {
     )
   }
 
-  return useAsyncData(`component-example-${name}`, () => $fetch(`/api/component-example/${name}.json`).catch(() => ({})), {
+  return useAsyncData<Partial<ComponentExampleData>>(`component-example-${name}`, () => $fetch<ComponentExampleData>(`/api/component-example/${name}.json`).catch(() => ({})), {
     lazy: import.meta.client,
     dedupe: 'defer',
     getCachedData: (key, nuxtApp) => nuxtApp.payload.data[key]

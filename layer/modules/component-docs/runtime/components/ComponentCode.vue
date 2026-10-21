@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import { useFetchComponentMeta } from '../composables/fetchComponentMeta'
 import type { ChipProps } from '@nuxt/ui'
 import { camelCase, kebabCase, upperFirst } from 'scule'
 import { hash } from 'ohash'
