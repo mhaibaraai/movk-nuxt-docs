@@ -16,3 +16,32 @@ export const normalizeLocaleId = (code: string): string => code.replaceAll('-', 
  */
 export const collectionName = (base: string, code: string, defaultLocale: string | undefined): string =>
   code === defaultLocale ? base : `${base}_${normalizeLocaleId(code)}`
+
+export type LocaleRequirement = 'translation' | 'content'
+
+export interface LocaleFilterOptions {
+  defaultLocale: string
+  hasTranslation: (code: string) => boolean
+  /** 默认语言内容位于 content/ 根目录，不做检查 */
+  hasContent: (code: string) => boolean
+}
+
+/**
+ * 有效 locale 需同时具备内置翻译文件与内容目录，返回有效列表与被跳过的原因
+ */
+export function filterValidLocales(locales: I18nLocale[], { defaultLocale, hasTranslation, hasContent }: LocaleFilterOptions) {
+  const valid: I18nLocale[] = []
+  const skipped: Array<{ code: string, missing: LocaleRequirement[] }> = []
+
+  for (const locale of locales) {
+    const code = localeCode(locale)
+    const missing: LocaleRequirement[] = []
+    if (!hasTranslation(code)) missing.push('translation')
+    if (code !== defaultLocale && !hasContent(code)) missing.push('content')
+
+    if (missing.length) skipped.push({ code, missing })
+    else valid.push(locale)
+  }
+
+  return { valid, skipped }
+}

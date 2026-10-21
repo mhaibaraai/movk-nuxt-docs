@@ -1,7 +1,7 @@
 import { createResolver, defineNuxtModule, logger } from '@nuxt/kit'
 import { existsSync } from 'node:fs'
 import { join } from 'pathe'
-import { localeCode, localeName, type I18nLocale } from '../utils/locale'
+import { filterValidLocales, localeCode, localeName, type I18nLocale } from '../utils/locale'
 
 const log = logger.withTag('movk-docs')
 
@@ -39,17 +39,16 @@ export default defineNuxtModule({
     const defaultLocale = i18n.defaultLocale || localeCode(i18n.locales[0]!)
     const rootDir = nuxt.options.rootDir
 
-    // 有效 locale 需同时具备翻译文件与内容目录（默认语言内容位于 content/ 根）
-    const filteredLocales = i18n.locales.filter((locale) => {
-      const code = localeCode(locale)
-      const hasFile = existsSync(join(langDir, `${code}.json`))
-      const hasContent = code === defaultLocale || existsSync(join(rootDir, 'content', code))
-
-      if (!hasFile) log.warn(`缺少翻译文件 ${code}.json，已跳过 locale "${code}"`)
-      if (!hasContent) log.warn(`缺少内容目录 content/${code}/，已跳过 locale "${code}"`)
-
-      return hasFile && hasContent
+    const { valid: filteredLocales, skipped } = filterValidLocales(i18n.locales, {
+      defaultLocale,
+      hasTranslation: code => existsSync(join(langDir, `${code}.json`)),
+      hasContent: code => existsSync(join(rootDir, 'content', code))
     })
+
+    for (const { code, missing } of skipped) {
+      if (missing.includes('translation')) log.warn(`缺少翻译文件 ${code}.json，已跳过 locale "${code}"`)
+      if (missing.includes('content')) log.warn(`缺少内容目录 content/${code}/，已跳过 locale "${code}"`)
+    }
 
     if (!filteredLocales.length) return
 
