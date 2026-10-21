@@ -1,0 +1,20 @@
+{
+  "name": "movk-nuxt-docs-fixture-features-off",
+  "private": true,
+  "type": "module",
+  "packageManager": "pnpm@12.10.1",
+  "scripts": {
+    "build": "nuxt build",
+    "typecheck": "nuxt typecheck"
+  },
+  "dependencies": {
+    "@movk/nuxt-docs": "latest",
+    "@nuxt/content": "^3.16.1",
+    "nuxt": "^4.6.0",
+    "tailwindcss": "^4.3.3"
+  },
+  "devDependencies": {
+    "typescript": "^6.0.3",
+    "vue-tsc": "^3.3.12"
+  }
+}

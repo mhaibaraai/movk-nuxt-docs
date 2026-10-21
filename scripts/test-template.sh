@@ -1,11 +1,15 @@
 #!/usr/bin/env bash
 # 用本地 layer 打包产物安装并构建指定模板，验证模板在发布前可用
-# 用法：scripts/test-template.sh <default|i18n|module>
+# 用法：scripts/test-template.sh <default|i18n|module|目录路径>
 set -euo pipefail
 
 template="${1:?请指定模板名：default | i18n | module}"
 root="$(cd "$(dirname "$0")/.." && pwd)"
-src="$root/templates/$template"
+if [[ -d "$template" ]]; then
+  src="$(cd "$template" && pwd)"
+else
+  src="$root/templates/$template"
+fi
 [[ -d "$src" ]] || { echo "模板不存在：$template" >&2; exit 1; }
 
 work="$(mktemp -d)"

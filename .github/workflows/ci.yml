@@ -78,7 +78,7 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        template: [default, i18n, module]
+        template: [default, i18n, module, test/fixtures/features-off]
 
     steps:
       - uses: actions/checkout@v7
