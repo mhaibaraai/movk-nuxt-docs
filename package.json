@@ -20,20 +20,27 @@
     "release:layer": "release-it --config .release-it.layer.json",
     "lint": "eslint .",
     "lint:fix": "eslint . --fix",
-    "typecheck": "nuxt typecheck layer",
-    "clean": "movk-clean"
+    "typecheck": "nuxt typecheck layer && nuxt typecheck docs --extends ../layer",
+    "clean": "movk-clean",
+    "test": "vitest run",
+    "test:coverage": "vitest run --coverage",
+    "test:e2e": "playwright test",
+    "test:template": "bash scripts/test-template.sh"
   },
   "devDependencies": {
     "@movk/core": "^1.5.0",
     "@nuxt/eslint": "^1.17.0",
     "@nuxt/eslint-config": "^1.17.0",
+    "@playwright/test": "^1.64.1",
     "@release-it/bumper": "^8.0.1",
     "@release-it/conventional-changelog": "^12.0.2",
+    "@vitest/coverage-v8": "^5.0.5",
     "eslint": "^10.12.0",
     "eslint-plugin-better-tailwindcss": "^4.9.0",
     "nuxt": "^4.6.0",
     "release-it": "^21.1.1",
     "typescript": "^6.0.3",
+    "vitest": "^5.0.5",
     "vue-tsc": "^3.3.12"
   }
 }

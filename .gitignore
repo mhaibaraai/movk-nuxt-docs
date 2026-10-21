@@ -61,3 +61,8 @@ Temporary Items
 
 # VSC
 .history
+
+# Tests
+coverage
+test-results
+playwright-report
