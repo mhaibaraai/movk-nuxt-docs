@@ -1,7 +1,8 @@
 <script setup lang="ts">
 import { useFetchComponentMeta } from '../composables/fetchComponentMeta'
+import { generateComponentCode } from '../../../../shared/component-code'
 import type { ChipProps } from '@nuxt/ui'
-import { camelCase, kebabCase, upperFirst } from 'scule'
+import { camelCase, upperFirst } from 'scule'
 import { hash } from 'ohash'
 import { registry as componentRegistry } from '#component-code/registry'
 import { get, set } from '#ui/utils'
@@ -109,83 +110,27 @@ function buildCollapseAttrs(): string {
     .join(' ')
 }
 
+function getPropDefault(key: string) {
+  const prop = (meta.value as any)?.meta?.props?.find((p: any) => p.name === key)
+  return prop && (prop.default ?? prop.tags?.find((tag: any) => tag.name === 'defaultValue')?.text)
+}
+
 function buildCode(): string {
-  let code = ''
+  const highlights = props.highlights?.length ? ` {${props.highlights.join('-')}}` : ''
+  const fence = `\`\`\`vue${highlights}\n${generateComponentCode({
+    name: pascalName.value,
+    props: componentProps,
+    external: props.external,
+    hide: props.hide,
+    model: props.model,
+    slots: props.slots,
+    getDefault: getPropDefault
+  })}\n\`\`\``
 
-  if (props.collapse) {
-    const collapseAttrs = buildCollapseAttrs()
-    code += `::code-collapse${collapseAttrs ? `{${collapseAttrs}}` : ''}\n`
-  }
+  if (!props.collapse) return fence
 
-  code += `\`\`\`vue${props.highlights?.length ? ` {${props.highlights.join('-')}}` : ''}\n`
-
-  const externals = (props.external || []).filter(key => key in componentProps)
-  if (externals.length) {
-    code += `<script setup lang="ts">\n`
-    for (const key of externals) {
-      const varName = key === 'modelValue' ? 'value' : key
-      const value = componentProps[key]
-      code += `const ${varName} = ref(${JSON.stringify(value)})\n`
-    }
-    code += `</` + `script>\n\n`
-  }
-
-  code += `<template>\n  <${pascalName.value}`
-
-  for (const [key, value] of Object.entries(componentProps)) {
-    if (key === 'modelValue') {
-      code += ` v-model="value"`
-      continue
-    }
-    if (props.model?.includes(key)) {
-      code += ` v-model:${kebabCase(key)}="${key}"`
-      continue
-    }
-    if (value === undefined || value === null || value === '' || props.hide?.includes(key)) continue
-
-    const prop = (meta.value as any)?.meta?.props?.find((p: any) => p.name === key)
-    const propDefault = prop && (prop.default ?? prop.tags?.find((tag: any) => tag.name === 'defaultValue')?.text)
-    const attr = kebabCase(key)
-
-    if (typeof value === 'boolean') {
-      if (value && (propDefault === 'true' || propDefault === '`true`' || propDefault === true)) continue
-      if (!value && (!propDefault || propDefault === 'false' || propDefault === '`false`' || propDefault === false)) continue
-      code += value ? ` ${attr}` : ` :${attr}="false"`
-    } else if (typeof value === 'object') {
-      if (props.external?.includes(key)) {
-        code += ` :${attr}="${key}"`
-      } else {
-        code += ` :${attr}='${JSON.stringify(value)}'`
-      }
-    } else if (typeof value === 'number') {
-      code += ` :${attr}="${value}"`
-    } else {
-      if (propDefault === value) continue
-      code += ` ${attr}="${value}"`
-    }
-  }
-
-  if (props.slots && Object.keys(props.slots).length) {
-    code += `>`
-    if (props.slots.default !== undefined) {
-      code += `${props.slots.default}`
-    }
-    for (const [key, value] of Object.entries(props.slots)) {
-      if (key === 'default') continue
-      code += `\n    <template #${key}>\n      ${value}\n    </template>`
-    }
-    code += `${Object.keys(props.slots).length > 1 ? '\n  ' : ''}</${pascalName.value}>`
-  } else {
-    code += ` />`
-  }
-
-  code += `\n</template>\n\`\`\``
-
-  if (props.collapse) {
-    code += `\n::`
-  }
-
-  return code
+  const collapseAttrs = buildCollapseAttrs()
+  return `::code-collapse${collapseAttrs ? `{${collapseAttrs}}` : ''}\n${fence}\n::`
 }
 
 const code = computed(() => buildCode())

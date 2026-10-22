@@ -1,7 +1,8 @@
-import { camelCase, kebabCase, upperFirst } from 'scule'
+import { camelCase, upperFirst } from 'scule'
 import meta from '#nuxt-component-meta/nitro'
 import { getComponentExample } from '#component-example/nitro'
 import { compactProps } from '../utils/componentMeta'
+import { generateComponentCode } from '../../shared/component-code'
 import type { Document, MDCAttributes } from './nodes'
 import { getBooleanAttribute, parseAttrAsObject, readMdcAttr, replaceNodeWithPre, visitAndReplace } from './nodes'
 
@@ -129,105 +130,6 @@ function emitItemHandler(event: any): string {
   return result
 }
 
-type ComponentCodeConfig = {
-  props: Record<string, any>
-  external: string[]
-  hide: string[]
-  componentName: string
-  slots?: Record<string, string>
-  model?: string[]
-}
-
-function generateComponentCode({
-  props,
-  external,
-  hide,
-  componentName,
-  slots,
-  model
-}: ComponentCodeConfig): string {
-  const pascalName = upperFirst(componentName)
-  const externalSet = new Set(external)
-  const modelSet = new Set(model || [])
-
-  const propAttributes: string[] = []
-  for (const [key, value] of Object.entries(props)) {
-    if (hide.includes(key)) continue
-    if (value === undefined || value === null || value === '') continue
-
-    if (key === 'modelValue') {
-      propAttributes.push(`v-model="value"`)
-      continue
-    }
-    if (modelSet.has(key)) {
-      propAttributes.push(`v-model:${kebabCase(key)}="${key}"`)
-      continue
-    }
-
-    const attr = kebabCase(key)
-
-    if (typeof value === 'boolean') {
-      propAttributes.push(value ? attr : `:${attr}="false"`)
-      continue
-    }
-    if (typeof value === 'object') {
-      if (externalSet.has(key)) {
-        propAttributes.push(`:${attr}="${key}"`)
-      } else {
-        propAttributes.push(`:${attr}='${JSON.stringify(value)}'`)
-      }
-      continue
-    }
-    if (typeof value === 'number') {
-      propAttributes.push(`:${attr}="${value}"`)
-      continue
-    }
-    propAttributes.push(`${attr}="${value}"`)
-  }
-
-  const refDeclarations: string[] = []
-  for (const key of external) {
-    if (!(key in props)) continue
-    const varName = key === 'modelValue' ? 'value' : key
-    refDeclarations.push(`const ${varName} = ref(${JSON.stringify(props[key])})`)
-  }
-
-  let scriptSetup = ''
-  if (refDeclarations.length) {
-    scriptSetup = `<script setup lang="ts">\n${refDeclarations.join('\n')}\n</script>\n\n`
-  }
-
-  let defaultSlotContent = ''
-  let namedSlotsContent = ''
-  if (slots && Object.keys(slots).length) {
-    const defaultSlot = slots.default?.trim()
-    if (defaultSlot) {
-      const indented = defaultSlot
-        .split('\n')
-        .map(line => line.trim() ? `    ${line}` : line)
-        .join('\n')
-      defaultSlotContent = `\n${indented}\n  `
-    }
-    for (const [slotName, content] of Object.entries(slots)) {
-      if (slotName === 'default' || !content?.trim?.()) continue
-      const indented = content.trim()
-        .split('\n')
-        .map((line: string) => line.trim() ? `      ${line}` : line)
-        .join('\n')
-      namedSlotsContent += `\n    <template #${slotName}>\n${indented}\n    </template>`
-    }
-  }
-
-  const formattedProps = propAttributes.length ? ` ${propAttributes.join(' ')}` : ''
-  const componentTemplate = (defaultSlotContent || namedSlotsContent)
-    ? `<${pascalName}${formattedProps}>${defaultSlotContent}${namedSlotsContent}</${pascalName}>`
-    : `<${pascalName}${formattedProps} />`
-
-  return `${scriptSetup}<template>
-  ${componentTemplate}
-</template>`
-}
-
 /** 组件文档类 MDC 组件转为纯 Markdown：Props / Slots / Emits 接口、组件代码与示例源码 */
 export async function transformComponentDocs(doc: Document, componentName: string): Promise<void> {
   visitAndReplace(doc, 'component-props', (node) => {
@@ -295,7 +197,7 @@ export async function transformComponentDocs(doc: Document, componentName: strin
       props: parseAttrAsObject<Record<string, any>>(readMdcAttr(attrs, 'props'), {}),
       external: parseAttrAsObject<string[]>(readMdcAttr(attrs, 'external'), []),
       hide: parseAttrAsObject<string[]>(readMdcAttr(attrs, 'hide'), []),
-      componentName: targetName,
+      name: upperFirst(targetName),
       slots: parseAttrAsObject<Record<string, string>>(readMdcAttr(attrs, 'slots'), {}),
       model: parseAttrAsObject<string[]>(readMdcAttr(attrs, 'model'), [])
     })
