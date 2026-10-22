@@ -1,5 +1,3 @@
-import { existsSync } from 'node:fs'
-import { join } from 'pathe'
 import { addComponent, addComponentsDir, addImportsDir, addPlugin, addTypeTemplate, createResolver, defineNuxtModule } from '@nuxt/kit'
 import type { ModuleDependencies } from 'nuxt/schema'
 import { getFeatures } from '../../utils/features'
@@ -94,14 +92,11 @@ declare module '#nuxt-component-meta/nitro' {
       ignore: ['ComponentExampleExtras.vue']
     })
 
-    const consumerExtras = [
-      join(nuxt.options.srcDir, 'components/content/ComponentExampleExtras.vue'),
-      join(nuxt.options.rootDir, 'app/components/content/ComponentExampleExtras.vue')
-    ].find(existsSync)
-
+    // 最低优先级兜底：消费方组件目录中任意同名组件都会覆盖它
     addComponent({
       name: 'ComponentExampleExtras',
-      filePath: consumerExtras ?? resolve('./runtime/components/ComponentExampleExtras.vue')
+      filePath: resolve('./runtime/components/ComponentExampleExtras.vue'),
+      priority: -1
     })
 
     addImportsDir(resolve('./runtime/composables'))
