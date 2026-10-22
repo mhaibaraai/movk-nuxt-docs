@@ -10,19 +10,22 @@ export default defineMcpTool({
     openWorldHint: false
   },
   inputSchema: {
-    search: z.string().optional().describe('Single keyword, matched as a substring of the name, title or description')
+    search: z.string().optional().describe('Single keyword, matched as a substring of the name, title or description'),
+    locale: docsLocaleInput
   },
   inputExamples: [
     {},
     { search: 'toast' },
-    { search: 'overlay' }
+    { search: 'overlay' },
+    { locale: 'en' }
   ],
   cache: '1h',
-  async handler({ search }) {
+  async handler({ search, locale }) {
     const event = useEvent()
 
-    const composables = await queryCollection(event, 'docs')
-      .where('path', 'LIKE', '/docs/composables/%')
+    const { collection, docsRoot } = useDocsLocale(event, locale)
+    const composables = await queryCollection(event, collection as 'docs')
+      .where('path', 'LIKE', `${docsRoot}/composables/%`)
       .where('extension', '=', 'md')
       .select('path', 'title', 'description')
       .all()

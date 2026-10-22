@@ -17,6 +17,33 @@ export const normalizeLocaleId = (code: string): string => code.replaceAll('-', 
 export const collectionName = (base: string, code: string, defaultLocale: string | undefined): string =>
   code === defaultLocale ? base : `${base}_${normalizeLocaleId(code)}`
 
+export interface DocsLocaleTarget {
+  locale: string
+  collection: string
+  docsRoot: string
+}
+
+/**
+ * 解析请求语言对应的文档集合与路由前缀：未启用 i18n 时忽略请求语言，
+ * 缺省为默认语言，未注册的 locale 返回 null
+ */
+export function resolveDocsLocale(
+  requested: string | undefined,
+  { defaultLocale, locales }: { defaultLocale?: string, locales: string[] }
+): DocsLocaleTarget | null {
+  const fallback = defaultLocale ?? ''
+  if (!locales.length) return { locale: fallback, collection: 'docs', docsRoot: '/docs' }
+
+  const code = requested || fallback
+  if (!locales.includes(code)) return null
+
+  return {
+    locale: code,
+    collection: collectionName('docs', code, defaultLocale),
+    docsRoot: code === defaultLocale ? '/docs' : `/${code}/docs`
+  }
+}
+
 export type LocaleRequirement = 'translation' | 'content'
 
 export interface LocaleFilterOptions {

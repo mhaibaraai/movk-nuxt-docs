@@ -4,12 +4,14 @@ import { queryCollection } from '@nuxt/content/server'
 export default defineMcpPrompt({
   description: 'Find the best component for a specific use case',
   inputSchema: {
-    usecase: z.string().describe('Describe what you want to build (e.g., "user login form", "data table", "navigation menu")')
+    usecase: z.string().describe('Describe what you want to build (e.g., "user login form", "data table", "navigation menu")'),
+    locale: docsLocaleInput
   },
-  async handler({ usecase }) {
+  async handler({ usecase, locale }) {
     const event = useEvent()
 
-    const components = await queryCollection(event, 'docs')
+    const { collection } = useDocsLocale(event, locale)
+    const components = await queryCollection(event, collection as 'docs')
       .where('path', 'LIKE', '%/components/%')
       .where('extension', '=', 'md')
       .select('path', 'title', 'description', 'category', 'keywords')
