@@ -15,7 +15,7 @@ watch(() => route.path, () => {
     <UContainer>
       <UPage>
         <template #left>
-          <UPageAside>
+          <UPageAside class="[view-transition-name:docs-aside]">
             <template v-if="showFilter" #top>
               <DocsAsideLeftTop />
             </template>

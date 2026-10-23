@@ -125,6 +125,8 @@ export default defineNuxtConfig({
 
   experimental: {
     asyncContext: true,
+    // 页面切换时标题形变、页头与侧栏保持静止；Nuxt 在 prefers-reduced-motion 下自动跳过
+    viewTransition: true,
     defaults: {
       nuxtLink: {
         externalRelAttribute: 'noopener'

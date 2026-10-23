@@ -85,7 +85,7 @@ export default defineAppConfig({
       slots: {
         root: 'pt-10 pb-8',
         headline: 'mb-5',
-        title: 'font-display text-4xl sm:text-5xl font-bold tracking-tight leading-[1.08] text-balance',
+        title: '[view-transition-name:page-title] font-display text-4xl sm:text-5xl font-bold tracking-tight leading-[1.08] text-balance',
         description: 'text-lg/relaxed sm:text-xl/relaxed text-toned max-w-3xl'
       }
     },

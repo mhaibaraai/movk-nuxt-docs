@@ -21,7 +21,7 @@ const links = computed<ButtonProps[]>(() => (github && github.url
 <template>
   <UHeader
     :ui="{
-      root: 'bg-default backdrop-blur-none border-inverted',
+      root: 'bg-default backdrop-blur-none border-inverted [view-transition-name:site-header]',
       left: 'min-w-0',
       center: 'lg:ms-10 lg:me-auto',
       right: 'gap-0.5 lg:flex-none'
