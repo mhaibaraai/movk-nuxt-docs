@@ -74,5 +74,8 @@
     "export": "Export",
     "reset": "Reset theme",
     "black": "Black"
+  },
+  "search": {
+    "recent": "Recently viewed"
   }
 }

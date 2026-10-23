@@ -74,5 +74,8 @@
     "export": "导出",
     "reset": "重置主题",
     "black": "黑色"
+  },
+  "search": {
+    "recent": "最近访问"
   }
 }

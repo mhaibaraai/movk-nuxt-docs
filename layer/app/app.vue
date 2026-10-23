@@ -28,6 +28,19 @@ if (import.meta.server) {
 const fuse = {
   resultLimit: 500
 }
+
+const { t } = useMovkI18n()
+const { pages: recentPages } = useRecentPages()
+const searchTerm = ref('')
+
+// 搜索词为空时只展示最近访问，输入后恢复完整的分类导航
+const recentItems = computed(() => recentPages.value
+  .filter(page => page.path !== route.path)
+  .map(page => ({ label: page.title, to: page.path, icon: 'i-lucide-history' })))
+
+const recentGroups = computed(() => !searchTerm.value && recentItems.value.length
+  ? [{ id: 'recent', label: t('search.recent'), items: recentItems.value }]
+  : [])
 </script>
 
 <template>
@@ -70,8 +83,10 @@ const fuse = {
             </template>
 
             <UContentSearch
+              v-model:search-term="searchTerm"
               :files="files"
-              :navigation="rootNavigation"
+              :navigation="recentGroups.length ? undefined : rootNavigation"
+              :groups="recentGroups"
               :fuse="fuse"
               :unmount-on-hide="false"
             />

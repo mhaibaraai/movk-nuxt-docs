@@ -36,6 +36,12 @@ const prefix = page.value?.path.includes('components/') || page.value?.path.incl
 const suffix = page.value?.path.includes('components/') ? 'Component ' : page.value?.path.includes('composables/') ? 'Composable ' : ''
 const description = page.value?.seo?.description || page.value?.description
 
+const { record: recordRecentPage } = useRecentPages()
+
+onMounted(() => {
+  if (page.value) recordRecentPage({ path: page.value.path, title: page.value.title })
+})
+
 const filterValidLinks = (links: Array<any>) => links.filter(Boolean)
 
 function buildFileLink(type: 'edit' | 'blob') {

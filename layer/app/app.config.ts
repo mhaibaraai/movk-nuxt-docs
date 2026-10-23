@@ -41,6 +41,20 @@ export default defineAppConfig({
         }
       }
     },
+    // ⌘K：高亮项与侧栏当前项一致，墨色文字 + 左侧朱红短条
+    commandPalette: {
+      slots: {
+        label: 'text-xs font-medium text-muted',
+        item: 'before:rounded-none data-highlighted:after:absolute data-highlighted:after:start-0 data-highlighted:after:inset-y-1.5 data-highlighted:after:w-0.5 data-highlighted:after:bg-primary'
+      },
+      variants: {
+        active: {
+          false: {
+            item: 'data-highlighted:not-data-disabled:before:bg-muted'
+          }
+        }
+      }
+    },
     contentToc: {
       slots: {
         root: 'bg-default lg:bg-transparent backdrop-blur-none',
