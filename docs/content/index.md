@@ -1,6 +1,6 @@
 ---
 title: 现代化 Nuxt 文档主题
-description: 基于 Nuxt 4 的现代文档主题，集成组件自动化文档、AI 聊天助手、MCP Server 和完整的开发者体验优化。
+description: 一个可以直接 extends 的 Nuxt Layer：用 Markdown 写文档，编辑式排版、全文搜索、SEO、MCP Server 与 llms.txt 开箱即用，AI 助手与组件文档按需开启。
 seo:
   title: Modern Nuxt Documentation Theme
   description: Build modern Nuxt 4 documentation sites with automated component docs, AI Chat, MCP Server support, SEO, and a polished developer experience.
@@ -71,7 +71,7 @@ seo:
   ---
   color: neutral
   variant: outline
-  to: /docs/components
+  to: /docs/components/component-props
   trailing-icon: i-lucide-arrow-right
   ---
   查看组件文档
@@ -83,7 +83,7 @@ seo:
   组件元数据自动提取
 
   #description
-  基于 `nuxt-component-meta` 读取 Vue 组件定义，无需手动维护 API 表格。
+  开启 `componentDocs` 后基于 `nuxt-component-meta` 读取 Vue 组件定义，无需手动维护 API 表格。
   :::
 
   :::landing-feature
@@ -146,7 +146,7 @@ seo:
   :::
 
 #aside
-  :landing-figure{src="/ai/AiChat.png" alt="Movk Nuxt Docs 内置 AI 聊天助手" label="图 1" caption="内置 AI 助手在文档旁实时作答。"}
+  :landing-figure{src="/screenshots/ai-chat-light.png" alt="Movk Nuxt Docs 内置 AI 聊天助手" label="图 1" caption="内置 AI 助手在文档旁实时作答。"}
 
 #default
   :::landing-feature

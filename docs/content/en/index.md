@@ -1,6 +1,6 @@
 ---
 title: Modern Nuxt Documentation Theme
-description: A modern Nuxt 4 documentation theme with automated component docs, an AI chat assistant, MCP Server, and a complete developer experience optimization.
+description: A Nuxt Layer you can extend to write docs in Markdown, with editorial typography, full-text search, SEO, an MCP Server and llms.txt built in, plus opt-in AI chat and component docs.
 seo:
   title: Modern Nuxt Documentation Theme
   description: Build modern Nuxt 4 documentation sites with automated component docs, AI Chat, MCP Server support, SEO, and a polished developer experience.
@@ -71,7 +71,7 @@ Props, Slots and Emits are extracted from source; examples, commit history and t
   ---
   color: neutral
   variant: outline
-  to: /en/docs/components
+  to: /en/docs/components/component-props
   trailing-icon: i-lucide-arrow-right
   ---
   Explore component docs
@@ -83,7 +83,7 @@ Props, Slots and Emits are extracted from source; examples, commit history and t
   Component metadata extraction
 
   #description
-  Reads Vue component definitions with `nuxt-component-meta`, so API tables never drift.
+  With `componentDocs` on, Vue component definitions are read with `nuxt-component-meta`, so API tables never drift.
   :::
 
   :::landing-feature
@@ -146,7 +146,7 @@ Readers can ask the docs directly, while AI editors read the same content throug
   :::
 
 #aside
-  :landing-figure{src="/ai/AiChat.png" alt="The built-in Movk Nuxt Docs AI chat assistant" label="Fig. 1" caption="The built-in assistant answers right beside the docs."}
+  :landing-figure{src="/screenshots/ai-chat-light.png" alt="The built-in Movk Nuxt Docs AI chat assistant" label="Fig. 1" caption="The built-in assistant answers right beside the docs."}
 
 #default
   :::landing-feature
