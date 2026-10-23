@@ -1,18 +1,53 @@
 ---
 title: "ComponentSlots"
-description: "ComponentSlots 通过 nuxt-component-meta 自动为 Vue 组件生成完整的 Slot 插槽文档，在 Markdown 中一行代码即可展示所有插槽的名称、作用域变量类型和功能说明，大幅简化手写 API 文档的工作量。"
+description: "用一行 `:component-slots` 列出 Vue 组件的全部插槽，插槽名、作用域参数类型与 JSDoc 说明来自 `defineSlots` 的类型定义，无需手写插槽文档。"
 canonical_url: "https://docs.mhaibaraai.cn/docs/components/component-slots"
 ---
 # ComponentSlots
 
-> ComponentSlots 通过 nuxt-component-meta 自动为 Vue 组件生成完整的 Slot 插槽文档，在 Markdown 中一行代码即可展示所有插槽的名称、作用域变量类型和功能说明，大幅简化手写 API 文档的工作量。
+> 用一行 `:component-slots` 列出 Vue 组件的全部插槽，插槽名、作用域参数类型与 JSDoc 说明来自 `defineSlots` 的类型定义，无需手写插槽文档。
+
+`ComponentSlots` 读取组件的 `defineSlots` 类型，渲染插槽名、作用域参数类型与说明。
+
+> [!NOTE]
+> See: /docs/components/component-props
+> 
+> 需要开启 
+> 
+> movkNuxtDocs.componentDocs
+> 
+> ，前置条件与 
+> 
+> ComponentProps
+> 
+>  相同。
 
 ## 用法
 
-在您的 Markdown 文档中使用 `:component-slots` 语法：
-
 ```mdc
 :component-slots{slug="TestApi"}
+```
+
+省略 `slug` 时按当前路由的最后一段查找组件。
+
+## 编写插槽说明
+
+在 `defineSlots` 中为每个插槽写 JSDoc，作用域参数的类型会显示在类型列：
+
+```vue [components/TestApi.vue]
+<script setup lang="ts">
+defineSlots<{
+  /**
+   * 默认内容插槽
+   */
+  default(props?: {}): any
+  /**
+   * 头像插槽，作用域暴露头像地址
+   * @see https://ui.nuxt.com/components/avatar
+   */
+  avatar(props: { src: string }): any
+}>()
+</script>
 ```
 
 ## API
@@ -34,11 +69,11 @@ interface ComponentSlotsProps {
 
 ## Changelog
 
-See commit history for [layer/app/components/content/ComponentSlots.vue](https://github.com/mhaibaraai/movk-nuxt-docs/commits/v3/layer/app/components/content/ComponentSlots.vue).
+See commit history for [layer/modules/component-docs/runtime/components/ComponentSlots.vue](https://github.com/mhaibaraai/movk-nuxt-docs/commits/v3/layer/modules/component-docs/runtime/components/ComponentSlots.vue).
 
 ---
 
-- [GitHub](https://github.com/mhaibaraai/movk-nuxt-docs/blob/main/layer/app/components/content/ComponentSlots.vue)
+- [GitHub](https://github.com/mhaibaraai/movk-nuxt-docs/blob/main/layer/modules/component-docs/runtime/components/ComponentSlots.vue)
 
 
 ## Sitemap

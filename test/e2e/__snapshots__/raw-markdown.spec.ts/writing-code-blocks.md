@@ -1,280 +1,217 @@
 ---
 title: "代码块"
-description: "掌握 Movk Nuxt Docs 代码块的全部功能：语法高亮、文件名标注、::code-group 分组展示、::code-tree 目录树视图、::code-collapse 可折叠代码块，以及 ::code-preview 并排预览，高效、直观地呈现技术内容。"
+description: "代码块默认使用 github-light / github-dark 高亮，支持文件名、行高亮、复制按钮与颜色、图标预览；用 code-group、code-tree 等组件组织多文件与长代码示例。"
 canonical_url: "https://docs.mhaibaraai.cn/docs/writing/code-blocks"
 ---
 # 代码块
 
-> 掌握 Movk Nuxt Docs 代码块的全部功能：语法高亮、文件名标注、::code-group 分组展示、::code-tree 目录树视图、::code-collapse 可折叠代码块，以及 ::code-preview 并排预览，高效、直观地呈现技术内容。
+> 代码块默认使用 github-light / github-dark 高亮，支持文件名、行高亮、复制按钮与颜色、图标预览；用 code-group、code-tree 等组件组织多文件与长代码示例。
 
 ## 基础用法
 
-### 内联代码
+### 行内代码
 
-使用反引号包裹内联代码，适合在句子中引用代码元素。
+用反引号包裹行内代码。需要 TypeScript 高亮时加上 `{lang="ts-type"}`：
 
 ```mdc
-`内联代码`
+`useMovkI18n()` 返回 `Ref<string>`{lang="ts-type"}
 ```
 
 ### 代码块
 
-使用三个反引号展示带语法高亮的多行代码。
+三个反引号后写语言标识。亮色模式使用 `github-light`，暗色模式使用 `github-dark`，随站点主题自动切换：
 
 ````mdc
 ```ts
 export default defineNuxtConfig({
-  modules: ['@nuxt/ui']
+  extends: ['@movk/nuxt-docs']
 })
 ```
 ````
 
-在编写代码块时，您可以指定一个文件名显示在代码块的顶部。图标会根据文件扩展名或名称自动匹配。这有助于用户理解代码在项目中的位置和用途。
+layer 预置了 `bash`、`shell`、`diff`、`json`、`js`、`ts`、`html`、`css`、`vue`、`mdc`、`md`、`yaml` 的语法，开启 Mermaid 时追加 `mermaid`。其他语言需加入 `content.build.markdown.highlight.langs`。
+
+### 文件名
+
+在语言标识后用方括号写文件名，代码块顶部显示文件名与按扩展名匹配的图标：
 
 ````mdc
 ```ts [nuxt.config.ts]
 export default defineNuxtConfig({
-  modules: ['@nuxt/ui']
+  extends: ['@movk/nuxt-docs']
 })
 ```
 ````
 
-每个代码块都内置了一个复制按钮，方便用户将代码复制到剪贴板。
+### 行高亮
+
+在文件名后用花括号标出需要高亮的行，支持单行与范围：
+
+````mdc
+```ts [nuxt.config.ts] {3-5}
+export default defineNuxtConfig({
+  extends: ['@movk/nuxt-docs'],
+  movkNuxtDocs: {
+    mermaid: true
+  }
+})
+```
+````
+
+### 复制按钮
+
+每个代码块右上角都有复制按钮，点击后文字由「复制」变为「已复制」，约 2 秒后复原。文案跟随当前语言。
+
+### 颜色与图标预览
+
+代码中的字面颜色值（如 `#d64b34`、`rgb(214 75 52)`）旁显示色块，`i-lucide-*` 这类图标名旁显示对应图标。Tailwind 调色板名（如 `primary: 'vermilion'`）不显示色块：
+
+```ts [app/app.config.ts]
+export default defineAppConfig({
+  ui: {
+    colors: {
+      primary: 'vermilion'
+    }
+  },
+  toc: {
+    bottom: {
+      links: [{ icon: 'i-lucide-message-circle-code', label: 'llms.txt', to: '/llms.txt' }]
+    }
+  }
+})
+```
+
+```css [app/assets/css/main.css]
+@theme static {
+  --color-brand-500: #d64b34;
+}
+```
 
 > [!TIP]
 > See: https://ui.nuxt.com/getting-started/icons/nuxt#theme
 > 
-> 图标已默认定义，但您可以在 `app/app.config.ts` 中进行自定义：
+> 代码块图标可在 `app/app.config.ts` 中自定义：
 > 
 > ```ts [app/app.config.ts]
 > export default defineAppConfig({
 >   ui: {
 >     prose: {
 >       codeIcon: {
->         terminal: 'i-ph-terminal-window-duotone'
+>         terminal: 'i-lucide-square-terminal'
 >       }
 >     }
 >   }
 > })
 > ```
 
-## 高级用法
+## 组合多个代码块
 
-### 代码组
+### `CodeGroup`
 
-使用 `code-group` 组件在选项卡中对多个代码块进行分组，非常适合用于展示多种语言或包管理器的代码示例。
+`code-group` 把多个代码块合成选项卡，用于不同包管理器或不同写法：
 
 ````mdc
-:::code-group
+::code-group
 
 ```bash [pnpm]
-pnpm add @nuxt/ui
-```
-
-```bash [yarn]
-yarn add @nuxt/ui
+pnpm add @movk/nuxt-docs
 ```
 
 ```bash [npm]
-npm install @nuxt/ui
+npm install @movk/nuxt-docs
+```
+
+```bash [yarn]
+yarn add @movk/nuxt-docs
 ```
 
 ```bash [bun]
-bun add @nuxt/ui
+bun add @movk/nuxt-docs
 ```
 
 ::
 ````
 
-### 代码树
+### `CodeTree`
 
-使用 `code-tree` 在文件树视图中显示代码块。`code-tree` 非常适合展示项目结构和文件关系。
+`code-tree` 以文件树展示一组相关文件，`default-value` 指定默认打开的文件：
 
 ```ts [nuxt.config.ts]
 export default defineNuxtConfig({
-  modules: ['@nuxt/ui'],
-
-  css: ['~/assets/css/main.css']
+  extends: ['@movk/nuxt-docs']
 })
-```
-
-```css [app/assets/css/main.css]
-@import "tailwindcss";
-@import "@nuxt/ui";
 ```
 
 ```ts [app/app.config.ts]
 export default defineAppConfig({
-  ui: {
-    colors: {
-      primary: 'sky',
-      colors: 'slate'
-    }
+  header: {
+    title: 'My Docs'
   }
 })
 ```
 
-```vue [app/app.vue]
-<template>
-  <UApp>
-    <NuxtPage />
-  </UApp>
-</template>
+```md [content/index.md]
+---
+title: My Docs
+---
+
+# My Docs
+```
+
+```md [content/docs/1.getting-started/1.index.md]
+---
+title: 简介
+description: 一句话介绍这个项目。
+---
+
+## 快速开始
 ```
 
 ```json [package.json]
 {
-  "name": "nuxt-app",
+  "name": "my-docs",
   "private": true,
   "type": "module",
   "scripts": {
-    "build": "nuxt build",
     "dev": "nuxt dev",
-    "generate": "nuxt generate",
-    "preview": "nuxt preview",
-    "lint": "eslint .",
-    "lint:fix": "eslint --fix ."
+    "build": "nuxt build",
+    "generate": "nuxt generate"
   },
   "dependencies": {
-    "@iconify-json/lucide": "^1.2.18",
-    "@nuxt/ui": "^4.0.0",
-    "nuxt": "^4.3.0",
-  },
-  "devDependencies": {
-    "eslint": "^9.34.0",
-    "typescript": "^5.9.3",
-    "vue-tsc": "^3.0.6"
+    "@movk/nuxt-docs": "^3.0.0",
+    "nuxt": "^4.0.0",
+    "tailwindcss": "^4.0.0"
   }
 }
 ```
 
-```json [tsconfig.json]
-{
-  "extends": "./.nuxt/tsconfig.json"
-}
-```
-
-````md [md] [README.md]
-# Nuxt 4 Minimal Starter
-
-Look at the [Nuxt 4 documentation](https://nuxt.com/docs/getting-started/introduction) to learn more.
-
-## Setup
-
-Make sure to install the dependencies:
-
-```bash
-# npm
-npm install
-
-# pnpm
-pnpm install
-
-# yarn
-yarn install
-
-# bun
-bun install
-```
-
-## Development Server
-
-Start the development server on `http://localhost:3000`:
-
-```bash
-# npm
-npm run dev
-
-# pnpm
-pnpm run dev
-
-# yarn
-yarn dev
-
-# bun
-bun run dev
-```
-
-## Production
-
-Build the application for production:
-
-```bash
-# npm
-npm run build
-
-# pnpm
-pnpm run build
-
-# yarn
-yarn build
-
-# bun
-bun run build
-```
-
-Locally preview production build:
-
-```bash
-# npm
-npm run preview
-
-# pnpm
-pnpm run preview
-
-# yarn
-yarn preview
-
-# bun
-bun run preview
-```
-
-Check out the [deployment documentation](https://nuxt.com/docs/getting-started/deployment) for more information.
-````
-
 ### `CodePreview`
 
-使用 `code-preview` 显示代码输出与代码并排。`code-preview` 非常适合交互式示例和演示代码结果。
-在 `default` 插槽中编写要预览的代码，在 `code` 插槽中编写实际代码。
+`code-preview` 把渲染结果与源码上下排列：默认插槽写要渲染的内容，`#code` 插槽写展示的代码。本页的示例都使用了它：
 
 ````mdc
 ::code-preview
-`内联代码`
+`行内代码`
 
 #code
 ```mdc
-`内联代码`
+`行内代码`
 ```
 ::
 ````
 
 ### `CodeCollapse`
 
-使用 `code-collapse` 对于长代码块以保持页面整洁。`code-collapse` 允许用户仅在需要时展开代码块，提高可读性。
+`code-collapse` 折叠较长的代码，读者需要时再展开：
 
 ````mdc
 ::code-collapse
 
-```css [main.css]
-@import "tailwindcss";
-@import "@nuxt/ui";
-
-@theme {
---font-sans: 'Alibaba PuHuiTi', sans-serif;
-
---breakpoint-3xl: 1920px;
-
---color-green-50: #EFFDF5;
---color-green-100: #D9FBE8;
---color-green-200: #B3F5D1;
---color-green-300: #75EDAE;
---color-green-400: #00DC82;
---color-green-500: #00C16A;
---color-green-600: #00A155;
---color-green-700: #007F45;
---color-green-800: #016538;
---color-green-900: #0A5331;
---color-green-950: #052E16;
+```css [app/assets/css/colors.css]
+@theme static {
+--color-vermilion-50: #fdf3f1;
+/* ... */
+--color-vermilion-950: #3c110a;
 }
 ```
 

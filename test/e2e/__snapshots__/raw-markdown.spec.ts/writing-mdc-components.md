@@ -1,62 +1,82 @@
 ---
-title: "Markdown 组件"
-description: "使用 MDC 语法在文档中嵌入 Nuxt UI Prose 组件，包括 Accordion 折叠面板、Badge 徽标、Callout 提示框、Card 卡片、Field 字段文档等，显著提升文档的表现力和交互性，无需编写 Vue 组件代码。"
+title: "MDC 组件"
+description: "在 Markdown 中用 MDC 语法嵌入 Nuxt UI 的 Prose 组件：提示块、徽标、卡片、折叠面板、选项卡、步骤、字段说明、图标与按键，无需编写 Vue 代码即可组织更有层次的文档内容。"
 canonical_url: "https://docs.mhaibaraai.cn/docs/writing/mdc-components"
 ---
-# Markdown 组件
+# MDC 组件
 
-> 使用 MDC 语法在文档中嵌入 Nuxt UI Prose 组件，包括 Accordion 折叠面板、Badge 徽标、Callout 提示框、Card 卡片、Field 字段文档等，显著提升文档的表现力和交互性，无需编写 Vue 组件代码。
+> 在 Markdown 中用 MDC 语法嵌入 Nuxt UI 的 Prose 组件：提示块、徽标、卡片、折叠面板、选项卡、步骤、字段说明、图标与按键，无需编写 Vue 代码即可组织更有层次的文档内容。
 
-Prose 组件是标准 HTML 排版标签的替代品，在 Markdown 中提供自定义 UI。
+[MDC 语法](https://content.nuxt.com/docs/files/markdown#mdc-syntax) 允许在 Markdown 中使用 Vue 组件：块级组件写作 `::name`，行内组件写作 `:name`，属性放在 `{}` 或 YAML 块中，嵌套时每层多加一个冒号。
 
-**Movk Nuxt Docs** 和 **Nuxt UI** 提供设计精美的 Prose 组件，支持 [MDC 语法](https://content.nuxt.com/docs/files/markdown#mdc-syntax)。
-
-::prose-note{to="https://ui.nuxt.com/getting-started"}
-本页仅列举适合文档的 Prose 组件。所有 Nuxt UI 组件均可在 Markdown 中使用。完整组件列表请查看 [Nuxt UI 文档](https://ui.nuxt.com/getting-started)。
+::prose-note{to="https://ui.nuxt.com/docs/typography"}
+本页只列出文档中最常用的 Prose 组件。任何全局注册的 Vue 组件都能以同样的方式在 Markdown 中使用，完整列表见 [Nuxt UI 文档](https://ui.nuxt.com/docs/typography)。
 ::
 
-### `Accordion`
+## `Callout`
 
-使用 `accordion` 和 `accordion-item` 组件在您的内容中嵌入一个 [Accordion](https://ui.nuxt.com/components/accordion)。
+提示块用于强调与正文并列的补充信息。`note`、`tip`、`warning`、`caution` 是预设了图标与颜色的快捷写法：
 
-**Q: 什么是 Movk Nuxt Docs，它的主要特性是什么？**
+> [!NOTE]
+> 
+> 页面标题来自 frontmatter 的 
+> 
+> title
+> 
+> ，正文从二级标题开始。
 
-Movk Nuxt Docs 是一个使用 Nuxt UI 构建的完全集成的文档解决方案。它是一个基于 UI 文档模板的主题，提供开箱即用的视觉效果。用户可以专注于使用 Markdown 和 MDC 语法编写内容。
+> [!TIP]
+> 
+> 在 
+> 
+> app.config.ts
+> 
+>  中修改的配置无需重启开发服务器。
 
-**Q: 如何开始使用 Movk Nuxt Docs？**
+> [!WARNING]
+> 
+> 启用 AI Chat 时不能关闭 MCP Server。
 
-要开始一个 Movk Nuxt Docs 项目，您只需要一个 
-
-content/
-
- 文件夹。您可以查看入门模板以快速开始。
-
-**Q: 什么是 Nuxt UI？**
-
-Nuxt UI
-
- 是一个包含高质量 Vue 组件、可组合项和工具的集合。
+> [!CAUTION]
+> 
+> 不要把 
+> 
+> NUXT_GITHUB_TOKEN
+> 
+>  提交到公开仓库。
 
 ```mdc
-::accordion
+::note
+  页面标题来自 frontmatter 的 `title`，正文从二级标题开始。
+  ::
 
-  :::accordion-item{label="什么是 Movk Nuxt Docs，它的主要特性是什么？" icon="i-lucide-circle-help"}
-  Movk Nuxt Docs 是一个使用 Nuxt UI 构建的完全集成的文档解决方案。它是一个基于 UI 文档模板的主题，提供开箱即用的视觉效果。用户可以专注于使用 Markdown 和 MDC 语法编写内容。
-  :::
+  ::tip
+  在 `app.config.ts` 中修改的配置无需重启开发服务器。
+  ::
 
-  :::accordion-item{label="如何开始使用 Movk Nuxt Docs？" icon="i-lucide-circle-help"}
-  要开始一个 Movk Nuxt Docs 项目，您只需要一个 `content/` 文件夹。您可以查看入门模板以快速开始。
-  :::
+  ::warning
+  启用 AI Chat 时不能关闭 MCP Server。
+  ::
 
-  :::accordion-item{label="什么是 Nuxt UI？" icon="i-lucide-circle-help"}
-  [Nuxt UI](https://ui.nuxt.com/) 是一个包含高质量 Vue 组件、可组合项和工具的集合。
-  :::
+  ::caution
+  不要把 `NUXT_GITHUB_TOKEN` 提交到公开仓库。
+  ::
+```
+
+:::
+::
+
+通用的 `callout` 通过 `icon` 与 `color` 自定义外观。所有提示块都接受 [`NuxtLink`](https://nuxt.com/docs/api/components/nuxt-link) 的属性，设置 `to` 后整个提示块可点击：
+
+```mdc
+::callout{icon="i-lucide-square-play" color="neutral" to="/docs/getting-started/installation"}
+第一次使用？从安装开始。
 ::
 ```
 
-### `Badge`
+## `Badge`
 
-在 `badge` 组件的默认插槽中使用 Markdown，在您的内容中显示一个 [Badge](https://ui.nuxt.com/components/badge)。
+`badge` 的默认插槽支持 Markdown，适合标注版本或状态：
 
 ```mdc
 ::badge
@@ -64,269 +84,231 @@ Nuxt UI
 ::
 ```
 
-### `Callout`
+## `Card` 与 `CardGroup`
 
-在 `callout` 组件的默认插槽中使用 Markdown，为您的内容添加引人注目的上下文信息。
-
-使用 `icon` 和 `color` 属性来自定义其外观。您还可以传递 [`<NuxtLink>`](https://nuxt.com/docs/api/components/nuxt-link) 组件的任何属性。
-
-此外，您可以使用具有预定义图标和颜色的 `note`、`tip`、`warning` 和 `caution` 快捷方式。
-
-> [!NOTE]
-> 
-> 这是一些额外的信息。
-
-> [!TIP]
-> 
-> 这是一个有帮助的建议。
-
-> [!WARNING]
-> 
-> 请小心此操作，因为它可能产生意外结果。
-
-> [!CAUTION]
-> 
-> 此操作无法撤销。
+`card` 用于突出一段内容或一个入口，支持 `title`、`icon`、`color` 与 `NuxtLink` 属性。用 `card-group` 包裹多个卡片得到网格布局：
 
 ```mdc
-::note
-这是一些额外信息。
-::
+::card-group
+:::card
+---
+icon: i-lucide-compass
+title: 指南
+to: /docs/guide/configuration
+---
+配置、主题、导航与部署。
+:::
 
-::tip
-这是一个有帮助的建议。
-::
-
-::warning
-请小心此操作，因为它可能产生意外结果。
-::
-
-::caution
-此操作无法撤销。
+:::card
+---
+icon: i-lucide-sparkles
+title: AI
+to: /docs/ai/ai-chat
+---
+AI Chat、MCP Server 与 llms.txt。
+:::
 ::
 ```
 
-### `Card` 和 `CardGroup`
+## `Accordion`
 
-在 `card` 组件的默认插槽中使用 Markdown 来突出显示您的内容。
+`accordion` 与 `accordion-item` 把多个问答收进折叠面板，适合 FAQ：
 
-使用 `title`、`icon` 和 `color` 属性来自定义它。您还可以传递 [`<NuxtLink>`](https://nuxt.com/docs/api/components/nuxt-link) 中的任何属性。
+**Q: 文档必须放在哪个目录？**
 
-使用 `card-group` 组件包装您的 `card` 组件，将它们分组在一起以获得网格布局。
+默认语言的文档放在 
 
-[**Dashboard**](https://github.com/nuxt-ui-templates/dashboard)
+content/docs/
 
-一个多列布局的仪表板。
+，其他语言放在 
 
-[**SaaS**](https://github.com/nuxt-ui-templates/saas)
+content/{locale}/docs/
 
-具有登陆页面、定价、文档和博客的模板。
+，路由前缀固定为 
 
-[**Docs**](https://github.com/nuxt-ui-templates/docs)
+/docs
 
-一个带有 
+。
 
-@nuxt/content
+**Q: 修改 app.config.ts 需要重启吗？**
 
- 的文档。
+不需要。
 
-[**Landing**](https://github.com/nuxt-ui-templates/landing)
+app.config.ts
 
-一个可用作起点的登陆页面。
+ 在运行时读取，开发服务器会热更新。
+
+**Q: 如何关闭 GitHub 集成？**
+
+在 
+
+app/app.config.ts
+
+ 中设置 
+
+github: false
+
+。
 
 ```mdc
-:::card-group
+::accordion
+    :::accordion-item{icon="i-lucide-circle-help" label="文档必须放在哪个目录？"}
+    默认语言的文档放在 `content/docs/`，其他语言放在 `content/{locale}/docs/`，路由前缀固定为 `/docs`。
+    :::
 
-  ::card
-  ---
-  title: Dashboard
-  icon: i-simple-icons-github
-  to: https://github.com/nuxt-ui-templates/dashboard
-  target: _blank
-  ---
-  一个多列布局的仪表板。
-  ::
+    :::accordion-item{icon="i-lucide-circle-help" label="修改 app.config.ts 需要重启吗？"}
+    不需要。`app.config.ts` 在运行时读取，开发服务器会热更新。
+    :::
 
-  ::card
-  ---
-  title: SaaS
-  icon: i-simple-icons-github
-  to: https://github.com/nuxt-ui-templates/saas
-  target: _blank
-  ---
-  包含落地页、定价、文档和博客的完整模板。
+    :::accordion-item{icon="i-lucide-circle-help" label="如何关闭 GitHub 集成？"}
+    在 `app/app.config.ts` 中设置 `github: false`。
+    :::
   ::
-
-  ::card
-  ---
-  title: Docs
-  icon: i-simple-icons-github
-  to: https://github.com/nuxt-ui-templates/docs
-  target: _blank
-  ---
-  基于 `@nuxt/content` 的文档站点。
-  ::
-
-  ::card
-  ---
-  title: Landing
-  icon: i-simple-icons-github
-  to: https://github.com/nuxt-ui-templates/landing
-  target: _blank
-  ---
-  一个可用作起点的登陆页面。
-  ::
+```
 
 :::
-```
+::
 
-### `Collapsible`
+## `Collapsible`
 
-使用 `collapsible` 组件包装您的内容以在内容中显示 [Collapsible](https://ui.nuxt.com/components/collapsible)。
-
-| Prop | Default | Type |
-| --- | --- | --- |
-| `name` |  | `string` |
-| `size` | `md` | `string` |
-| `color` | `neutral` | `string` |
+`collapsible` 默认收起内容，适合放置次要的长表格：
 
 ```mdc
 ::collapsible
-
-| Prop    | Default   | Type                     |
-|---------|-----------|--------------------------|
-| `name`  |           | `string`{lang="ts-type"} |
-| `size`  | `md`      | `string`{lang="ts-type"} |
-| `color` | `neutral` | `string`{lang="ts-type"} |
-
+| 字段 | 默认值 | 说明 |
+| --- | --- | --- |
+| `theme.radius` | `0.25` | 全局圆角，单位 rem |
+| `theme.font` | `editorial` | 标题字体风格 |
+| `theme.grain` | `false` | 背景纸张颗粒 |
 ::
 ```
 
-### `Field` 和 `FieldGroup`
+## `Tabs`
 
-`field` 是一个在内容中显示的属性或参数。您可以通过 `field-group` 将它们分组在列表中。
-
-Default to 
-
-false
-
- - Enables analytics for your project (coming soon).
-
-Default to 
-
-false
-
- - Enables blob storage to store static assets, such as images, videos and more.
-
-Default to 
-
-false
-
- - Enables cache storage to cache your server route responses or functions using Nitro's 
-
-cachedEventHandler
-
- and 
-
-cachedFunction
-
-Default to 
-
-false
-
- - Enables SQL database to store your application's data.
-
-```mdc
-::field-group
-  ::field{name="analytics" type="boolean"}
-    Default to `false` - Enables analytics for your project (coming soon).
-  ::
-
-  ::field{name="blob" type="boolean"}
-    Default to `false` - Enables blob storage to store static assets, such as images, videos and more.
-  ::
-
-  ::field{name="cache" type="boolean"}
-    Default to `false` - Enables cache storage to cache your server route responses or functions using Nitro's `cachedEventHandler` and `cachedFunction`
-  ::
-
-  ::field{name="database" type="boolean"}
-    Default to `false` - Enables SQL database to store your application's data.
-  ::
-::
-```
-
-### `Icon`
-
-使用 `icon` 组件在内容中显示 [Icon](https://ui.nuxt.com/components/icon)。
-
-```mdc
-:icon{name="i-simple-icons-nuxtdotjs"}
-```
-
-### `Kbd`
-
-使用 `kbd` 组件在内容中显示 [Kbd](https://ui.nuxt.com/components/kbd)。
-
-```mdc
-:kbd{value="meta"} :kbd{value="K"}
-```
-
-### `Tabs`
-
-使用 `tabs` 和 `tabs-item` 组件在内容中显示 [Tabs](https://ui.nuxt.com/components/tabs)。
+`tabs` 与 `tabs-item` 用于并列展示可互换的内容，例如同一配置的两种写法：
 
 ````mdc
-::tabs{.w-full}
-  :::tabs-item{icon="i-lucide-code" label="Code"}
-    ```mdc
-    ::::callout
-    Lorem velit voluptate ex reprehenderit ullamco et culpa.
-    ::::
-    ```
-  ::::
+::tabs
+:::tabs-item{icon="i-lucide-file-cog" label="app.config.ts"}
+```ts [app/app.config.ts]
+export default defineAppConfig({
+header: { title: 'My Docs' }
+})
+```
+  :::
 
-  :::tabs-item{icon="i-lucide-eye" label="Preview"}
-    :::::callout
-    Lorem velit voluptate ex reprehenderit ullamco et culpa.
-    :::::
+  :::tabs-item{icon="i-lucide-settings" label="nuxt.config.ts"}
+  ```ts [nuxt.config.ts]
+  export default defineNuxtConfig({
+    extends: ['@movk/nuxt-docs']
+  })
+  ```
   :::
 ::
 ````
 
-### `Steps`
+## `Steps`
 
-用 Steps 组件包装您的标题以显示步骤列表。
+`steps` 把指定级别的标题渲染为编号步骤，`level` 决定使用哪一级标题：
 
-使用 `level` 属性来定义哪个标题将用于步骤。
+#### 创建项目
 
-#### Start a fresh new project
+`````bash [Terminal]
+npx nuxi init -t gh:mhaibaraai/movk-nuxt-docs/templates/default my-docs
+    ```
+
+    #### 启动开发服务器
+
+    ```bash [Terminal]
+    cd my-docs && pnpm dev
+    ```
+    ::::
+  :::
+
+  :::tabs-item{icon="i-lucide-code" label="代码"}
+  ````mdc
+  ::steps{level="4"}
+  #### 创建项目
+
+  ```bash [Terminal]
+  npx nuxi init -t gh:mhaibaraai/movk-nuxt-docs/templates/default my-docs
+`````
+
+#### 启动开发服务器
 
 ```bash [Terminal]
-npx nuxi init -t gh:mhaibaraai/movk-nuxt-docs/template
+cd my-docs && pnpm dev
 ```
 
-#### Run your dev server
-
-```bash [Terminal]
-pnpm run dev
-```
-
-````mdc
-::steps{level="4"}
-  #### 启动一个全新项目
-  
-  ```bash [Terminal]
-  npx nuxi init -t gh:mhaibaraai/movk-nuxt-docs/template
-  ```
-  
-  #### 启动您的开发服务器
-  
-  ```bash [Terminal]
-  pnpm run dev
-  ```
 ::
+
+````text
+:::
+::
+
+::tip
+`steps` 中的标题不会出现在右侧目录里，也不参与二级标题编号，建议使用 `level="4"`。
+::
+
+## `Field` 与 `FieldGroup`
+
+`field` 描述一个参数或属性，`name` 与 `type` 显示在标题行，`required` 标记必填。用 `field-group` 组合成列表：
+
+::code-preview
+:::field-group{.my-0}
+  ::::field{name="componentDocs" type="boolean"}
+  组件文档：ComponentProps、ComponentExample 等，默认 `false`。
+  ::::
+
+  ::::field{name="mcp" type="boolean"}
+  内置 MCP Server，AI Chat 依赖此项，默认 `true`。
+  ::::
+
+  ::::field{name="ogImage" type="boolean"}
+  构建期生成 OG 图片，默认 `true`。
+  ::::
+
+  ::::field{name="mermaid" type="boolean"}
+  Mermaid 图表，需安装 `mermaid` 与 `dompurify`，默认 `false`。
+  ::::
+:::
+
+#code
+```mdc
+::field-group
+:::field{name="componentDocs" type="boolean"}
+组件文档：ComponentProps、ComponentExample 等，默认 `false`。
+:::
+
+:::field{name="mcp" type="boolean"}
+内置 MCP Server，AI Chat 依赖此项，默认 `true`。
+:::
 ````
+
+````text
+::
+
+## `Icon`
+
+`icon` 渲染任意 [Iconify](https://icones.js.org/) 图标，名称格式为 `i-{集合}-{图标}`：
+
+::code-preview
+:icon{name="i-simple-icons-nuxtdotjs" class="size-6"} :icon{name="i-lucide-book-open" class="size-6"}
+
+#code
+```mdc
+:icon{name="i-simple-icons-nuxtdotjs" class="size-6"} :icon{name="i-lucide-book-open" class="size-6"}
+````
+
+::
+
+## `Kbd`
+
+`kbd` 显示键盘按键，`meta` 在 macOS 上显示为 `⌘`，在其他系统上显示为 `Ctrl`：
+
+```mdc
+按 :kbd{value="meta"} :kbd{value="K"} 打开搜索。
+```
 
 
 ## Sitemap
