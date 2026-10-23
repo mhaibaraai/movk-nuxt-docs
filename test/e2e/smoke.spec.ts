@@ -70,3 +70,11 @@ test('页头导航来自 app.config 并按语言本地化', async ({ page }) => 
   await expect(enNav.getByRole('link', { name: 'Docs' })).toHaveAttribute('href', '/en/docs/getting-started')
   await expect(enNav.getByRole('link', { name: 'Showcase' })).toHaveAttribute('href', '/en/templates')
 })
+
+test('A–Z 索引列出全部文档页且链接可达', async ({ page }) => {
+  await page.goto('/docs/reference/a-z')
+  const index = page.locator('#index-M')
+  await expect(index.getByRole('link', { name: /Migrating from v2/ })).toHaveAttribute('href', '/docs/getting-started/migration')
+  await page.goto('/en/docs/reference/a-z')
+  await expect(page.locator('#index-A').getByRole('link', { name: /AI Chat/ })).toHaveAttribute('href', '/en/docs/ai/ai-chat')
+})
