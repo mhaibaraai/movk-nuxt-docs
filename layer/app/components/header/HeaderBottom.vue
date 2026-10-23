@@ -13,6 +13,8 @@ const items = computed(() => (navigation.value ?? []).map((item, index) => ({
 </script>
 
 <template>
+  <div class="reading-progress absolute inset-x-0 -bottom-px z-10 h-0.5 bg-primary" aria-hidden="true" />
+
   <nav class="hidden lg:block h-12 border-t border-default" :aria-label="t('header.categoryNavigation')">
     <UContainer class="flex items-stretch gap-9 h-full">
       <NuxtLink
