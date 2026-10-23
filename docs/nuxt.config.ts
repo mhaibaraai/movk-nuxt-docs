@@ -76,6 +76,10 @@ export default defineNuxtConfig({
     }
   },
 
+  site: {
+    name: 'Movk Nuxt Docs'
+  },
+
   runtimeConfig: {
     public: {
       version: pkg.version

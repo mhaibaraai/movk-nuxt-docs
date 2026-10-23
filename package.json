@@ -26,7 +26,8 @@
     "test:coverage": "vitest run --coverage",
     "test:e2e": "playwright test",
     "test:template": "bash scripts/test-template.sh",
-    "docs:reference": "node scripts/config-reference/generate.ts"
+    "docs:reference": "node scripts/config-reference/generate.ts",
+    "docs:screenshots": "node scripts/screenshots/index.ts"
   },
   "devDependencies": {
     "@movk/core": "^1.5.0",

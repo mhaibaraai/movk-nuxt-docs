@@ -24,7 +24,7 @@
 ### 🤖 AI 增强体验
 
 <div style="padding: 40px 0; display: flex; justify-content: center;">
-<img src="https://docs.mhaibaraai.cn/ai/AiChat.png" alt="AiChat" width="400">
+<img src="https://docs.mhaibaraai.cn/screenshots/ai-chat-light.png" alt="AiChat" width="400">
 </div>
 
 - **AI 聊天助手** - 内置智能文档助手，基于 Vercel AI SDK 支持多种 LLM 模型
