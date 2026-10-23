@@ -110,6 +110,7 @@ export default defineAppConfig({
         slots: {
           header: 'border-muted bg-muted border-b border-dashed px-4 py-2',
           filename: 'font-mono text-xs text-muted',
+          copy: 'inline-flex items-center gap-1.5 top-2 end-2 px-2 py-1 bg-muted font-mono text-[11px] uppercase tracking-[0.12em] transition-[color,opacity]',
           base: 'bg-muted'
         }
       },

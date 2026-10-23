@@ -16,7 +16,9 @@
     "addMcpCursor": "添加 MCP Server 到 Cursor",
     "copied": "已复制到剪贴板",
     "pageNotFound": "页面未找到",
-    "pageNotFoundDescription": "很抱歉，您访问的页面未找到。"
+    "pageNotFoundDescription": "很抱歉，您访问的页面未找到。",
+    "copyCode": "复制",
+    "codeCopied": "已复制"
   },
   "assistant": {
     "title": "AI 助手",

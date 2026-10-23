@@ -16,7 +16,9 @@
     "addMcpCursor": "Add MCP Server to Cursor",
     "copied": "Copied to clipboard",
     "pageNotFound": "Page not found",
-    "pageNotFoundDescription": "We are sorry but this page could not be found."
+    "pageNotFoundDescription": "We are sorry but this page could not be found.",
+    "copyCode": "Copy",
+    "codeCopied": "Copied"
   },
   "assistant": {
     "title": "AI Assistant",
