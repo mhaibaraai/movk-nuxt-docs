@@ -22,7 +22,7 @@ export default defineAppConfig({
       primary: 'vermilion',
       neutral: 'paper'
     },
-    // 去掉树形竖线与选中底色：当前项墨色 + 左侧朱红短条
+    // 去掉树形竖线与选中底色：当前项墨色，左侧朱红指示条由 DocsAsideLeftBody 统一绘制并滑动
     contentNavigation: {
       slots: {
         list: 'mx-0 mt-0',
@@ -33,7 +33,7 @@ export default defineAppConfig({
       variants: {
         active: {
           true: {
-            link: 'text-highlighted font-medium after:absolute after:start-0 after:inset-y-2 after:w-0.5 after:bg-primary'
+            link: 'text-highlighted font-medium'
           },
           false: {
             link: 'text-muted hover:text-highlighted'
