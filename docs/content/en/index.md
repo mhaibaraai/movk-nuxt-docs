@@ -146,7 +146,7 @@ Readers can ask the docs directly, while AI editors read the same content throug
   :::
 
 #aside
-  :landing-figure{src="/screenshots/ai-chat-light.png" alt="The built-in Movk Nuxt Docs AI chat assistant" label="Fig. 1" caption="The built-in assistant answers right beside the docs."}
+  :landing-figure{src="/screenshots/ai-chat-light.png" dark="/screenshots/ai-chat-dark.png" alt="The built-in Movk Nuxt Docs AI chat assistant" label="Fig. 1" caption="The built-in assistant answers right beside the docs."}
 
 #default
   :::landing-feature

@@ -146,7 +146,7 @@ seo:
   :::
 
 #aside
-  :landing-figure{src="/screenshots/ai-chat-light.png" alt="Movk Nuxt Docs 内置 AI 聊天助手" label="图 1" caption="内置 AI 助手在文档旁实时作答。"}
+  :landing-figure{src="/screenshots/ai-chat-light.png" dark="/screenshots/ai-chat-dark.png" alt="Movk Nuxt Docs 内置 AI 聊天助手" label="图 1" caption="内置 AI 助手在文档旁实时作答。"}
 
 #default
   :::landing-feature
