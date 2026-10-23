@@ -12,7 +12,7 @@ export default defineAppConfig({
       { label: 'AI', icon: 'i-lucide-sparkles', to: '/docs/ai/ai-chat' },
       { label: { 'zh-CN': '写作', 'en': 'Writing' }, icon: 'i-lucide-square-pilcrow', to: '/docs/writing/markdown-syntax' },
       { label: { 'zh-CN': '组件', 'en': 'Components' }, icon: 'i-lucide-component', to: '/docs/components/component-props' },
-      { label: { 'zh-CN': '参考', 'en': 'Reference' }, icon: 'i-lucide-book-marked', to: '/docs/reference/composables/use-header' },
+      { label: { 'zh-CN': '参考', 'en': 'Reference' }, icon: 'i-lucide-book-marked', to: '/docs/reference/app-config' },
       { label: { 'zh-CN': '案例', 'en': 'Showcase' }, icon: 'i-lucide-layout-template', to: '/templates' },
       { label: { 'zh-CN': '版本发布', 'en': 'Releases' }, icon: 'i-lucide-newspaper', to: '/releases' },
       { label: 'GitHub', icon: 'i-simple-icons-github', to: 'https://github.com/mhaibaraai/movk-nuxt-docs' }

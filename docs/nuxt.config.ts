@@ -10,7 +10,7 @@ const sectionRedirects: Record<string, string> = {
   '/docs/ai': '/docs/ai/ai-chat',
   '/docs/writing': '/docs/writing/markdown-syntax',
   '/docs/components': '/docs/components/component-props',
-  '/docs/reference': '/docs/reference/composables/use-header',
+  '/docs/reference': '/docs/reference/app-config',
   '/docs/reference/composables': '/docs/reference/composables/use-header'
 }
 
