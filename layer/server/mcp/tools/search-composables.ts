@@ -25,7 +25,7 @@ export default defineMcpTool({
 
     const { collection, docsRoot } = useDocsLocale(event, locale)
     const composables = await queryCollection(event, collection as 'docs')
-      .where('path', 'LIKE', `${docsRoot}/composables/%`)
+      .where('path', 'LIKE', `${docsRoot}/%composables/%`)
       .where('extension', '=', 'md')
       .select('path', 'title', 'description')
       .all()
