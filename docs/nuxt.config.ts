@@ -11,7 +11,7 @@ const sectionRedirects: Record<string, string> = {
   '/docs/writing': '/docs/writing/markdown-syntax',
   '/docs/components': '/docs/components/component-props',
   '/docs/reference': '/docs/reference/app-config',
-  '/docs/reference/composables': '/docs/reference/composables/use-header'
+  '/docs/reference/composables': '/docs/reference/composables/use-movk-i18n'
 }
 
 // v2 旧路径永久跳到 v3 新位置
