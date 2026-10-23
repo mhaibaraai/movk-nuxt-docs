@@ -1,7 +1,7 @@
 ---
 name: create-docs
 description: |
-  Create a complete documentation site for any project.
+  Create a complete documentation site for any project with Movk Nuxt Docs v3.
   Use when asked to:
   "create docs", "add documentation", "set up a docs site", "generate documentation",
   "document this project", "write docs", "initialize docs",
@@ -10,533 +10,288 @@ description: |
   "创建文档", "添加文档", "建立文档网站", "生成文档",
   "文档化项目", "编写文档", "初始化文档",
   "添加文档文件夹", "创建文档网站"。
-  Generates a Movk Nuxt Docs based site with search, dark mode, MCP server, and llms.txt integration.
+  Generates a Movk Nuxt Docs site with search, dark mode, MCP server, llms.txt and agent discovery built in.
 ---
 
 # Create Docs
 
-Generate a complete, production-ready documentation site for any project.
+Generate a production-ready documentation site based on the `@movk/nuxt-docs` Nuxt layer (v3).
 
 ## Workflow
 
-1. **Analyze** — Detect package manager, monorepo layout, and read project context.
-2. **Initialize** — Scaffold the docs directory with the right settings.
-3. **Generate** — Author documentation pages from templates.
-4. **Configure** — Set up AI integration (MCP, llms.txt).
-5. **Finalize** — Provide next steps and the correct commands.
+1. **Analyze** — Detect the package manager, monorepo layout, languages, and what the project exposes.
+2. **Scaffold** — Pick a template (`default`, `i18n`, `module`) or extend the layer in an existing Nuxt app.
+3. **Generate** — Write pages under `content/docs/` from the skeletons in [references/templates.md](./references/templates.md).
+4. **Configure** — Declare navigation in `app.config.ts`, enable only the features the project needs.
+5. **Finalize** — Verify the build and hand over the commands.
 
----
-
-## Package Manager Reference
-
-Detect from the lock file. Default to npm if no lock file is found:
-
-| Lock file | PM | Install | Run | Add |
-|-----------|------|---------|-----|-----|
-| `pnpm-lock.yaml` | pnpm | `pnpm install` | `pnpm run` | `pnpm add` |
-| `package-lock.json` | npm | `npm install` | `npm run` | `npm install` |
-| `yarn.lock` | yarn | `yarn install` | `yarn` | `yarn add` |
-| `bun.lockb` | bun | `bun install` | `bun run` | `bun add` |
-
-Use `[pm]` as the placeholder in the commands below.
+Requirements: Node.js >= 22.5 (Nuxt Content uses the built-in `node:sqlite`), Nuxt 4, Tailwind CSS 4, `@nuxt/content` 3.
 
 ---
 
 ## Step 1: Analyze the Project
 
-### Detect Project Structure
+### Package manager
 
-```
-Check:
-├── pnpm-workspace.yaml   → pnpm monorepo
-├── turbo.json            → Turborepo monorepo
-├── lerna.json            → Lerna monorepo
-├── nx.json               → Nx monorepo
-├── apps/                 → apps directory (monorepo)
-├── packages/             → packages directory (monorepo)
-├── docs/                 → existing documentation (avoid overwriting)
-├── README.md             → primary documentation source
-└── src/ or lib/          → source code location
-```
+Detect from the lock file; default to npm. Use `[pm]` below as the placeholder.
 
-### Determine the Docs Location
+| Lock file | PM | Install | Run | Add |
+|-----------|----|---------|-----|-----|
+| `pnpm-lock.yaml` | pnpm | `pnpm install` | `pnpm run` | `pnpm add` |
+| `package-lock.json` | npm | `npm install` | `npm run` | `npm install` |
+| `yarn.lock` | yarn | `yarn install` | `yarn` | `yarn add` |
+| `bun.lock` / `bun.lockb` | bun | `bun install` | `bun run` | `bun add` |
 
-| Project type | Target directory | Workspace entry |
-|--------------|------------------|-----------------|
-| Standard project | `./docs` | N/A |
-| Monorepo with `apps/` | `./apps/docs` | `apps/docs` |
-| Monorepo with `packages/` | `./docs` | `docs` |
-| Existing `docs/` folder | Ask the user, or use `./documentation` | — |
+### Project layout
 
-### Read Context Files
+| Signal | Meaning |
+|--------|---------|
+| `pnpm-workspace.yaml`, `turbo.json`, `nx.json`, `lerna.json`, `workspaces` in `package.json` | Monorepo |
+| `apps/` | Put the docs in `apps/docs` |
+| `packages/` only | Put the docs in `docs` |
+| Existing `docs/` that is not a Nuxt app | Ask before overwriting; otherwise use `documentation/` |
+| `nuxt.config.ts` already present and the user wants docs inside it | Extend the layer instead of scaffolding |
 
-| File | Extract |
-|------|---------|
-| `README.md` | Project name, description, features, usage examples |
-| `package.json` | Name, description, dependencies, repository URL |
-| `src/` or `lib/` | Exported functions and composables for API docs |
+### Context to read
+
+| Source | Extract |
+|--------|---------|
+| `README.md` | Name, pitch, features, usage examples |
+| `package.json` | Name, description, repository URL, `exports`, peer dependencies |
+| `src/` / `lib/` / `runtime/` | Public functions, composables, components, module options |
+| `CHANGELOG.md` or GitHub releases | Whether a releases page is worth enabling |
+| Existing translations | Whether the docs need more than one language |
+
+Document what the code actually exposes. Never invent options or return values.
 
 ---
 
-## Step 2: Initialize the Docs
+## Step 2: Scaffold
 
-### Create the Directory Structure
+### Choose a template
+
+| Template | Use for | Includes |
+|----------|---------|----------|
+| `default` | Most projects | ESLint, typecheck scripts, `.editorconfig`, `.vscode/` |
+| `i18n` | Docs in two or more languages | `@nuxtjs/i18n`, `zh-CN` + `en` content trees |
+| `module` | Small library / Nuxt module docs | Minimal setup plus `content/releases.yml` |
 
 ```bash
-# Full template
 npx nuxi init -t gh:mhaibaraai/movk-nuxt-docs/templates/default my-docs
-
-# Module documentation template
-npx nuxi init -t gh:mhaibaraai/movk-nuxt-docs/templates/module my-module-docs
-
-# Multilingual template (zh-CN + en, preconfigured @nuxtjs/i18n)
 npx nuxi init -t gh:mhaibaraai/movk-nuxt-docs/templates/i18n my-docs
+npx nuxi init -t gh:mhaibaraai/movk-nuxt-docs/templates/module my-docs
 ```
 
-**Full template**
+Template layout (`default`):
 
-```
+```text
 [docs-location]/
 ├── app/
-│   └── composables/
-│       ├── useCategory.ts       # Navigation category definitions
-│       └── useHeader.ts         # Header navigation links
+│   └── app.config.ts            # header.nav, header.mobileNav, docs.categories
 ├── content/
-│   ├── index.md                 # Landing page
-│   └── docs/
+│   ├── index.md                 # Landing page (optional, see below)
+│   └── docs/                    # Required: every docs page lives here → /docs/**
 │       └── 1.getting-started/
 │           ├── .navigation.yml
 │           ├── 1.index.md
 │           └── 2.installation.md
 ├── public/
-│   ├── favicon.ico
-│   └── icon.svg
-├── .editorconfig
-├── .env.example
-├── .gitignore
-├── .vscode/
-│   └── settings.json
-├── eslint.config.mjs
-├── nuxt.config.ts
-├── package.json
-├── pnpm-workspace.yaml
-└── tsconfig.json
+├── nuxt.config.ts               # extends: ['@movk/nuxt-docs']
+└── package.json
 ```
 
-**Module template**
+The `i18n` template adds `content/en/index.md` and `content/en/docs/**`. The default locale stays at the `content/` root without a URL prefix; every other locale lives in `content/{locale}/` and is served under `/{locale}/docs/**`.
 
-```
-[docs-location]/
-├── app/
-│   └── composables/
-│       ├── useCategory.ts
-│       └── useHeader.ts
-├── content/
-│   ├── index.md
-│   ├── releases.yml
-│   └── docs/
-│       └── 1.getting-started/
-│           ├── .navigation.yml
-│           ├── 1.index.md
-│           └── 2.installation.md
-├── public/
-│   ├── favicon.ico
-│   └── icon.svg
-├── .env.example
-├── nuxt.config.ts
-├── package.json
-└── tsconfig.json
+### Extend an existing Nuxt app
+
+```bash
+[pm] add @movk/nuxt-docs @nuxt/content tailwindcss
 ```
 
-**Multilingual (i18n) template**
-
-Default locale content stays at the `content/` root (no prefix); other locales live under `content/{locale}/` (prefixed). `@nuxtjs/i18n` is preconfigured with `zh-CN` (default) and `en`.
-
-```
-[docs-location]/
-├── app/
-│   └── composables/
-│       ├── useCategory.ts
-│       └── useHeader.ts         # Uses localePath() for locale-aware links
-├── content/
-│   ├── index.md                 # Default locale (zh-CN) home → /
-│   ├── docs/                    # Default locale docs → /docs/*
-│   │   └── 1.getting-started/
-│   │       ├── .navigation.yml
-│   │       ├── 1.index.md
-│   │       └── 2.installation.md
-│   └── en/                      # English content
-│       ├── index.md             # English home → /en
-│       └── docs/                # English docs → /en/docs/*
-│           └── 1.getting-started/
-│               ├── .navigation.yml
-│               ├── 1.index.md
-│               └── 2.installation.md
-├── public/
-├── nuxt.config.ts               # modules: ['@nuxtjs/i18n'] + i18n.locales
-├── package.json                 # includes @nuxtjs/i18n
-└── tsconfig.json
+```ts [nuxt.config.ts]
+export default defineNuxtConfig({
+  extends: ['@movk/nuxt-docs']
+})
 ```
 
-### Update Monorepo Configuration (if applicable)
+Then create `content/docs/` and an `app/app.config.ts` as described in Step 4.
 
-#### pnpm Monorepo
-
-1. Add the docs package to the workspace:
+### Monorepo wiring
 
 ```yaml [pnpm-workspace.yaml]
 packages:
-  - 'apps/*'
-  - 'docs'
+  - packages/*
+  - docs
 ```
-
-2. Add a development script to the root `package.json`:
 
 ```json [package.json]
 {
   "scripts": {
-    "docs:dev": "pnpm run --filter [docs-package-name] dev"
+    "docs:dev": "pnpm --filter ./docs dev",
+    "docs:build": "pnpm --filter ./docs build"
   }
 }
 ```
 
-Or use a directory path:
+For npm / yarn / bun add the docs directory to `workspaces` and use `[pm] run dev --workspace=docs`.
 
-```json [package.json]
-{
-  "scripts": {
-    "docs:dev": "cd docs && pnpm dev"
+---
+
+## Step 3: Generate Content
+
+### Content rules (v3)
+
+- Docs pages must live in `content/docs/` (other locales: `content/{locale}/docs/`). Routes always start with `/docs`.
+- Numeric prefixes (`1.getting-started/`, `2.installation.md`) order pages and are stripped from URLs.
+- Every section directory gets a `.navigation.yml` with `title` and `icon`.
+- The sidebar shows the current top-level section. Pages without `category` appear under an "Overview" group; subdirectories become their own groups; pages with `category` are grouped by `docs.categories` in `app.config.ts`.
+- `content/index.md` is the landing page, written with Nuxt UI page components. To build the home page in Vue instead, create `app/pages/index.vue`; the landing collection is then skipped.
+- `content/releases.yml` (or `.md`) enables `/releases`; `content/templates.yml` (or `.md`) enables `/templates`.
+- Add a `routeRules` redirect for every section root, e.g. `'/docs': { redirect: '/docs/getting-started', prerender: false }`.
+
+### Recommended structure
+
+```text
+content/docs/
+├── 1.getting-started/   # Introduction, installation, project structure
+├── 2.guide/             # Task-oriented guides, one feature per page
+├── 3.api/               # Functions, composables, components, options (if any)
+└── 4.examples/          # Recipes (optional)
+```
+
+Generate, in order:
+
+1. **Introduction** — what it is, who it is for, key features, link to installation.
+2. **Installation** — prerequisites, install commands in a `::code-group`, minimal setup, verification.
+3. **Guides** — one page per feature with action-oriented H2 headings.
+4. **API reference** — one page per public function / component when the surface is large; a single table page when it is small.
+5. **Landing page** — hero, install command, feature grid. Do not add an "AI integration" section; MCP and llms.txt work without configuration.
+
+### MDC rules
+
+- Nuxt UI components need the `u-` prefix in MDC: `::u-page-hero`, `:::u-button`, `:u-color-mode-image`.
+- Prose components do not: `::note`, `::tip`, `::warning`, `::caution`, `::callout`, `::code-group`, `::code-preview`, `::steps`, `::tabs`, `::accordion`, `::card`, `::card-group`, `::field`, `:badge`.
+- Nesting increases the colon count: `::` → `:::` → `::::`.
+
+See [references/mdc-components.md](./references/mdc-components.md) and [references/writing-guide.md](./references/writing-guide.md).
+
+---
+
+## Step 4: Configure
+
+Keep configuration minimal and only enable what the project uses. Full details: [references/configuration.md](./references/configuration.md).
+
+### Navigation in `app.config.ts`
+
+```ts [app/app.config.ts]
+export default defineAppConfig({
+  header: {
+    title: 'My Project',
+    nav: [
+      { label: 'Docs', to: '/docs/getting-started', activeMatch: '/docs' },
+      { label: 'Releases', to: '/releases' }
+    ],
+    mobileNav: [
+      { label: 'Getting Started', icon: 'i-lucide-square-play', to: '/docs/getting-started' }
+    ]
+  },
+  docs: {
+    categories: {
+      guide: [
+        { id: 'basics', title: 'Basics', icon: 'i-lucide-settings' },
+        { id: 'advanced', title: 'Advanced', icon: 'i-lucide-rocket' }
+      ]
+    }
+  },
+  github: {
+    owner: 'my-org',
+    name: 'my-project',
+    url: 'https://github.com/my-org/my-project',
+    rootDir: 'docs'
   }
-}
+})
 ```
 
-#### npm/yarn Monorepo
+- `label` / `title` accept a per-locale object (`{ 'zh-CN': '文档', 'en': 'Docs' }`) when i18n is enabled.
+- Internal links get the locale prefix automatically; do not hard-code `/en/...` in `nav`.
+- Keys of `docs.categories` are top-level directory slugs without the numeric prefix; pages opt in with `category: <id>` in frontmatter.
+- Do not override `useHeader` / `useCategory` for navigation; `app.config` is the v3 way.
 
-```json [package.json]
-{
-  "workspaces": ["apps/*", "docs"],
-  "scripts": {
-    "docs:dev": "npm run dev --workspace=docs"
-  }
-}
+### Feature flags in `nuxt.config.ts`
+
+| Flag | Default | Extra packages when enabled |
+|------|---------|-----------------------------|
+| `movkNuxtDocs.mcp` | `true` | none |
+| `movkNuxtDocs.ogImage` | `true` | none |
+| `movkNuxtDocs.componentDocs` | `false` | `nuxt-component-meta vue-component-meta prettier` |
+| `movkNuxtDocs.mermaid` | `false` | `mermaid dompurify` |
+| `movkNuxtDocs.a11y` | `false` | `@nuxt/a11y` |
+| `aiChat.enabled` | `true` when `AI_API_KEY` is set at build time | `ai @ai-sdk/openai @ai-sdk/vue @comark/vue @shikijs/engine-javascript @shikijs/langs @shikijs/themes` |
+
+A missing package fails the build with the exact install command. AI Chat requires MCP; do not set `mcp: false` while AI Chat is enabled.
+
+Enable `componentDocs` only when the project ships Vue components to document, and `mermaid` only when pages contain `mermaid` code blocks.
+
+### Internationalization
+
+Only when the project needs several languages: install `@nuxtjs/i18n`, add it to `modules`, and list `i18n.locales` with `code` and `name`. Never declare `file` on a locale; the layer registers its own translations (`zh-CN`, `en`). A locale without a matching translation and `content/{locale}/` directory is dropped at build time with a warning. Single-language sites set the UI language with `app.config` `i18n.locale` (default `zh-CN`; use `en` for English sites).
+
+### Theme
+
+The default look is editorial: vermilion primary, warm `paper` neutral, serif headings. Change it only on request:
+
+```ts [app/app.config.ts]
+export default defineAppConfig({
+  ui: { colors: { primary: 'blue', neutral: 'zinc' } },
+  theme: { font: 'sans', grain: false, radius: 0.5 }
+})
 ```
+
+### AI features
+
+Enabled by default, nothing to configure:
+
+- MCP server at `/mcp`
+- `/llms.txt` and `/llms-full.txt`
+- Markdown for agents: `/raw/<path>.md`, `Accept: text/markdown` negotiation, `/sitemap.md`
+- `/.well-known/api-catalog`, `/.well-known/mcp/server-card.json`, `/.well-known/skills/index.json`
+
+Set `mcp.name` and the `llms` title / description in `nuxt.config.ts` so agents see the project name. To publish Agent Skills, add `skills/<name>/SKILL.md` at the docs root (directory name equals `name`, kebab-case, max 64 characters).
+
+### Environment variables
+
+| Variable | When |
+|----------|------|
+| `NUXT_GITHUB_TOKEN` | Production builds that show releases or commit history |
+| `AI_API_KEY` | Enables AI Chat |
+| `AI_BASE_URL` | OpenAI-compatible endpoint; omit to route through Vercel AI Gateway |
 
 ---
 
-## Step 3: Generate Documentation
+## Step 5: Finalize
 
-Use the templates in [references/templates.md](./references/templates.md).
+1. Run `[pm] install` and `[pm] run build`. Treat `[request error]` lines in the prerender log as dead links and fix them.
+2. Hand over:
 
-**Critical: MDC component naming**
-
-Every Nuxt UI component used inside MDC must keep the `u-` prefix:
-
-| Correct | Incorrect |
-|---------|-----------|
-| `::u-page-hero` | `::page-hero` |
-| `::u-page-section` | `::page-section` |
-| `:::u-page-feature` | `:::page-feature` |
-| `:::u-button` | `:::button` |
-| `::::u-page-card` | `::::page-card` |
-
-Without the `u-` prefix, Vue cannot resolve these components.
-
-### Documentation Layout
-
-```
-content/
-├── index.md                        # Landing page
-├── 1.getting-started/
-│   ├── .navigation.yml
-│   ├── 1.introduction.md
-│   └── 2.installation.md
-├── 2.guide/
-│   ├── .navigation.yml
-│   ├── 1.configuration.md
-│   ├── 2.authentication.md
-│   └── 3.deployment.md
-└── 3.api/                          # If applicable
-    ├── .navigation.yml
-    └── 1.reference.md
-```
-
-### Page Generation
-
-1. **Landing page** (`index.md`) — Hero + feature grid.
-2. **Introduction** — What and why, plus use cases.
-3. **Installation** — Prerequisites and install commands.
-4. **Guide pages** — Feature documentation with action-oriented H2 headings.
-
-For writing style, see [references/writing-guide.md](./references/writing-guide.md).
-For MDC components, see [references/mdc-components.md](./references/mdc-components.md).
-
----
-
-## Step 4: Configure AI Integration
-
-Movk Nuxt Docs ships with the MCP server (`/mcp`) and llms.txt generation enabled by default. No configuration is required.
-
-**Do not add an "AI Integration" section to the landing page.** These features work automatically.
-
-Optionally mention them on the introduction page:
-
-```markdown
-::note
-This documentation includes AI integration through an MCP server and automatic `llms.txt` generation.
-::
-```
-
-Load [references/configuration.md](./references/configuration.md) for detailed configuration options.
-
----
-
-## Step 5: Author Agent Skills (Advanced)
-
-When the project has specific workflows (code review, release process, content style checks, etc.), author Agent Skills for the docs site so AI agents can understand and execute those workflows directly. Skills are auto-published to the `/.well-known/skills/` endpoint, and tools such as Claude Code and Cursor can discover and load them automatically.
-
-### Directory Structure
-
-Create a `skills/` folder under the docs directory:
-
-```
-[docs-location]/
-└── skills/
-    └── my-skill/
-        ├── SKILL.md          # Required: frontmatter + workflow description
-        ├── references/       # Optional: detailed reference docs
-        │   └── checklist.md
-        └── assets/           # Optional: templates and example assets
-            └── template.md
-```
-
-### SKILL.md Template
-
-```markdown
----
-name: my-skill
-description: |
-  One-sentence description of what this skill does.
-  Use when asked to:
-  "trigger phrase 1", "trigger phrase 2", "trigger phrase 3".
----
-
-# My Skill
-
-A brief statement of the skill's goal and where it applies.
-
-## Workflow
-
-1. **Step One** — What to do.
-2. **Step Two** — What to do.
-3. **Step Three** — What to do.
-
----
-
-## Step One
-
-Detailed instructions...
-```
-
-### Frontmatter Fields
-
-| Field | Required | Description |
-|------|------|------|
-| `name` | Yes | kebab-case, must match the directory name exactly, ≤64 characters |
-| `description` | Yes | Functional description plus trigger phrases. The AI uses these phrases to decide when to invoke the skill. |
-
-**Trigger-phrase style:**
-
-```yaml
-description: |
-  Review Vue component code for performance, accessibility, and best practices.
-  Use when asked to:
-  "review component", "check the code", "code review",
-  "audit Vue", "analyze component quality".
-```
-
-### Reference File Organization
-
-Keep the main `SKILL.md` lean (≤500 lines). Put detailed rules, checklists, and templates under `references/`, then link to them from the main file:
-
-```markdown
-See [references/checklist.md](./references/checklist.md) for details.
-```
-
-### Naming Validation
-
-- [x] Directory name matches the `name` field exactly.
-- [x] Lowercase letters, digits, and hyphens only.
-- [x] Does not start or end with a hyphen.
-- [x] No consecutive hyphens (`--`).
-- [x] Length ≤64 characters.
-
-### Full Example: `release-check`
-
-```markdown
----
-name: release-check
-description: |
-  Verify the project meets release criteria before publishing.
-  Use when asked to:
-  "check release readiness", "prepare a release", "release check",
-  "validate release", "pre-release check".
----
-
-# Release Check
-
-Ensure the project meets every quality requirement before release.
-
-## Workflow
-
-1. **Code quality** — Run lint and type checks.
-2. **Version number** — Verify the version field is updated.
-3. **Changelog** — Confirm CHANGELOG entries exist.
-4. **Build verification** — Run the production build and verify the output.
-
----
-
-## Step 1: Code Quality
-
-Run the following commands and confirm they all pass:
-
-\`\`\`bash
-pnpm lint
-pnpm typecheck
-\`\`\`
-
-## Step 2: Version Number
-
-Check that the `version` field in `package.json` matches the release version.
-
-## Step 3: Changelog
-
-Confirm `CHANGELOG.md` has an entry at the top for the current version with all major changes.
-
-## Step 4: Build Verification
-
-\`\`\`bash
-pnpm build
-\`\`\`
-
-After a successful build, confirm the `.output/` directory is not empty.
-```
-
----
-
-## Step 6: Finalize
-
-Provide instructions using the detected package manager.
-
-### Standard Project
-
-```
+```text
 Documentation created at [docs-location]
-
-To start:
 
   cd [docs-location]
   [pm] install
-  [pm] run dev
-
-Available at http://localhost:3000
+  [pm] run dev        # http://localhost:3000
 ```
 
-### Monorepo
+For monorepos also mention `[pm] run docs:dev` from the root.
 
-```
-Documentation created at [docs-location]
+3. Offer follow-ups: brand colors, richer landing page, component docs, i18n, deployment.
 
-From the repo root:
+### Deployment
 
-  [pm] install
-  [pm] run docs:dev
+| Platform | Build | Notes |
+|----------|-------|-------|
+| Vercel | `[pm] run build` | Auto-detected, set env vars in the dashboard |
+| Netlify | `[pm] run build` | Auto-detected preset |
+| Cloudflare | `[pm] run build` | Select the Cloudflare Nitro preset for the target (Pages or Workers) |
+| Static hosting | `[pm] run generate` | Output in `.output/public`; AI Chat and MCP need a server and are unavailable |
 
-Or from the docs directory:
-
-  cd [docs-location]
-  [pm] run dev
-
-Available at http://localhost:3000
-```
-
-### Included Features
-
-- Full-text search
-- Dark mode
-- MCP server for AI tools (`/mcp`)
-- LLM integration (`/llms.txt`)
-- SEO optimization
-- GitHub integration
-- Automatic component documentation
-
-### Next Steps
-
-1. Review the generated content.
-2. Verify frontmatter completeness.
-3. Check MDC syntax correctness.
-4. Evaluate content clarity and SEO.
-5. Validate structure and navigation.
-6. Deploy to Vercel / Netlify / Cloudflare.
-
-### Suggested Follow-ups
-
-After the docs are created, suggest enhancements:
-
-```
-Your documentation is ready!
-
-Would you like me to:
-- **Customize the UI** — match your brand colors and style
-- **Enhance the landing page** — add feature cards, code previews, visual polish
-- **Set up deployment** — deploy to Vercel, Netlify, or Cloudflare
-
-Let me know what you'd like to improve!
-```
-
----
-
-## Deployment
-
-| Platform | Command | Output |
-|----------|---------|--------|
-| Vercel | `npx vercel --prod` | Auto-detected |
-| Netlify | `[pm] run generate` | `.output/public` |
-| Cloudflare Pages | `[pm] run generate` | `.output/public` |
-| GitHub Pages | `[pm] run generate` | `.output/public` |
-
----
-
-## Example: auth-utils
-
-**Detected:** pnpm monorepo, packages live under `packages/`.
-
-**Generated structure:**
-```
-docs/
-├── content/
-│   ├── index.md
-│   ├── 1.getting-started/
-│   │   ├── .navigation.yml
-│   │   ├── 1.introduction.md
-│   │   └── 2.installation.md
-│   ├── 2.guide/
-│   │   ├── .navigation.yml
-│   │   ├── 1.authentication.md
-│   │   ├── 2.oauth-providers.md
-│   │   └── 3.sessions.md
-│   └── 3.api/
-│       ├── .navigation.yml
-│       └── 1.composables.md
-├── public/
-│   └── favicon.ico
-├── package.json
-└── .gitignore
-```
-
-**In `authentication.md`** (action-oriented H2 headings):
-```markdown
-## Add basic authentication
-## Protect your routes
-## Handle login redirects
-## Customize sessions
-```
+Docs: https://docs.mhaibaraai.cn/docs/getting-started/installation, https://docs.mhaibaraai.cn/docs/guide/deployment

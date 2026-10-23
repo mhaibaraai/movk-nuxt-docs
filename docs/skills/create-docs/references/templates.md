@@ -1,31 +1,62 @@
-# Documentation Templates
+# Page Templates
 
-Ready-to-use templates for generating documentation pages.
+Skeletons for the pages a Movk Nuxt Docs site needs. Replace every `[placeholder]`. All docs pages live in `content/docs/` and are served under `/docs`; with i18n, other locales mirror the tree in `content/{locale}/docs/`.
 
-**Critical: every Nuxt UI component must use the `u-` prefix in MDC syntax.**
-- `::u-page-hero` not `::page-hero`
-- `:::u-button` not `:::button`
-- `::::u-page-card` not `::::page-card`
+## Frontmatter
 
-## Table of Contents
+Every docs page uses the same fields:
 
-- [Landing page](#landing-page)
-- [Introduction page](#introduction-page)
-- [Installation page](#installation-page)
-- [Guide page](#guide-page)
-- [Navigation YAML](#navigation-yaml)
-
+```yaml
 ---
+title: [Page title]                 # Sidebar and H1, short
+description: [What the page covers and what the reader can do after reading it]
+seo:
+  title: [Search-result title, 50-60 characters]
+  description: [Search-result description, 120-160 characters]
+navigation:
+  icon: i-lucide-[icon]             # Optional sidebar icon
+  title: [Shorter sidebar label]    # Optional
+  badge: New                        # Optional
+category: [category id]             # Optional, groups the page via app.config docs.categories
+links:                              # Optional buttons under the page header
+  - label: Source
+    icon: i-simple-icons-github
+    to: [https://github.com/...]
+    target: _blank
+---
+```
 
-## Landing Page
+- The page body starts with an H2; the title is rendered from `title`.
+- `navigation: false` keeps a route out of the sidebar.
+- On a Chinese site, keep `title` / `description` in Chinese and write `seo.*` in the language you want search engines to show.
 
-### Basic Landing Page
+## Section navigation
+
+```yaml [content/docs/1.getting-started/.navigation.yml]
+title: Getting Started
+icon: i-lucide-square-play
+```
+
+| Section | Icon |
+|---------|------|
+| Getting started | `i-lucide-square-play` |
+| Guide | `i-lucide-compass` |
+| API / Reference | `i-lucide-book-marked` |
+| Components | `i-lucide-component` |
+| Composables | `i-lucide-square-function` |
+| Examples | `i-lucide-lightbulb` |
+
+Add a redirect for each section root in `nuxt.config.ts` `routeRules`, e.g. `'/docs/guide': { redirect: '/docs/guide/configuration', prerender: false }`.
+
+## Landing page
+
+`content/index.md`. Keep it short: hero, install command, features.
 
 ```markdown
 ---
 seo:
-  title: [Project Name] Documentation
-  description: [Project description]
+  title: [Project Name]
+  description: [One-sentence pitch, 120-160 characters]
 ---
 
 ::u-page-hero
@@ -33,330 +64,278 @@ seo:
 [Project Name]
 
 #description
-[Short description — what problem does it solve?]
+[What problem it solves, for whom, in one or two sentences.]
 
 #links
-  :::u-button
-  ---
-  color: neutral
-  size: xl
-  to: /getting-started/introduction
-  trailing-icon: i-lucide-arrow-right
-  ---
+  :::u-button{to="/docs/getting-started" size="xl" trailing-icon="i-lucide-arrow-right"}
   Get started
   :::
 
-  :::u-button
-  ---
-  color: neutral
-  icon: i-simple-icons-github
-  size: xl
-  to: [GitHub URL]
-  target: _blank
-  variant: outline
-  ---
-  View on GitHub
+  :::u-button{to="[GitHub URL]" target="_blank" size="xl" color="neutral" variant="outline" icon="i-simple-icons-github"}
+  GitHub
   :::
 ::
 
 ::u-page-section
 #title
-What you can do
+Features
 
 #features
-  :::u-page-feature
-  ---
-  icon: [icon]
-  to: /guide/[topic]
-  ---
+  :::u-page-feature{icon="i-lucide-[icon]" to="/docs/guide/[topic]"}
   #title
-  [Action verb] [thing]
+  [Feature name]
 
   #description
-  [One-sentence description of the feature]
+  [One sentence about what it does for the user.]
+  :::
+
+  :::u-page-feature{icon="i-lucide-[icon]" to="/docs/guide/[topic]"}
+  #title
+  [Feature name]
+
+  #description
+  [One sentence.]
   :::
 ::
 ```
 
-### Advanced Landing Page with Grid Cards
-
-Use `u-page-grid` + `u-page-card` for richer feature showcases:
+For screenshots use light and dark variants:
 
 ```markdown
-::u-page-hero
-#title
-[Project Name]
-
-#description
-[Description]
-
-#headline
-  :::u-button
-  ---
-  size: sm
-  to: [changelog-url]
-  variant: outline
-  ---
-  v1.0.0 released →
-  :::
-
-#links
-  :::u-button
-  ---
-  color: neutral
-  size: xl
-  to: /getting-started
-  trailing-icon: i-lucide-arrow-right
-  ---
-  Get started
-  :::
-::
-
-::u-page-section
-  :::u-page-grid
-    ::::u-page-card
-    ---
-    spotlight: true
-    class: col-span-2 lg:col-span-1
-    to: /guide/feature-1
-    ---
-    #title
-    Feature one
-
-    #description
-    Description of this feature and what it's for.
-    ::::
-
-    ::::u-page-card
-    ---
-    spotlight: true
-    class: col-span-2
-    ---
-      :::::u-color-mode-image
-      ---
-      alt: Feature screenshot
-      class: w-full rounded-lg
-      dark: /images/feature-dark.png
-      light: /images/feature-light.png
-      ---
-      :::::
-
-    #title
-    Feature with image
-
-    #description
-    Showcase a feature with light/dark mode images.
-    ::::
-  :::
-::
+:u-color-mode-image{light="/screenshots/[name]-light.png" dark="/screenshots/[name]-dark.png" alt="[What the image shows]" class="rounded-md" width="1280" height="800"}
 ```
 
-### Card with Code Preview
+## Introduction
 
-```markdown
-::::u-page-card
----
-spotlight: true
-class: col-span-2 md:col-span-1
----
-  :::::div{.bg-elevated.rounded-lg.p-3.overflow-x-auto}
-  ```ts [config.ts]
-  export default {
-    option: 'value'
-  }
-  ```
-  :::::
-
-#title
-Simple configuration
-
-#description
-Configure with straightforward options.
-::::
-```
-
-### Card with a Custom Component
-
-Create custom components under `app/components/content/` for interactive demos:
-
-```markdown
-::::u-page-card
----
-spotlight: true
-class: col-span-2
----
-:my-custom-demo
-
-#title
-Interactive demo
-
-#description
-A custom Vue component embedded in a card.
-::::
-```
-
-### Grid Layout Classes
-
-| Class | Usage |
-|-------|-------|
-| `col-span-2` | Full width (2 columns) |
-| `col-span-2 lg:col-span-1` | Full width on mobile, half width on desktop |
-| `col-span-2 md:col-span-1` | Full width on mobile, half width on tablet and up |
-| `min-h-[450px]` | Minimum height for tall cards |
-
-### Optional Enhancement Patterns
-
-Choose based on the project's needs:
-
-| Pattern | When to use |
-|---------|-------------|
-| Code preview in cards | Libraries, APIs, CLIs |
-| Feature grid with icons | Projects with multiple features |
-| CTA section | Drive user action |
-| Code comparison | Projects that solve a pain point |
-
-See [mdc-components.md](mdc-components.md) for component syntax.
-See https://ui.nuxt.com/llms.txt for the full component reference.
-
----
-
-## Introduction Page
+`content/docs/1.getting-started/1.index.md` → `/docs/getting-started`
 
 ```markdown
 ---
 title: Introduction
-description: Learn what [Project Name] is and when to use it
+description: [Project] is [category] that [main benefit]. Learn what it does, when to use it and where to start.
+seo:
+  title: Introduction to [Project]
+  description: [120-160 characters]
 navigation:
   icon: i-lucide-house
 ---
 
-[Project Name] helps you [main value proposition].
+## What is [Project]?
 
-## What is [Project Name]?
+[Two or three sentences: what it is and the problem it solves.]
 
-[2–3 sentences explaining the project]
+## Features
 
-## What you can do
+- **[Feature]** — [one line]
+- **[Feature]** — [one line]
+- **[Feature]** — [one line]
 
-- **[Action 1]** — [Short description]
-- **[Action 2]** — [Short description]
-- **[Action 3]** — [Short description]
+## When to use it
 
-## When to use [Project Name]
+[Who benefits, and when another tool is a better fit.]
 
-Use [Project Name] when you need to:
+## Next steps
 
-- [Use case 1]
-- [Use case 2]
-- [Use case 3]
+::card-group
+  :::card{title="Installation" icon="i-lucide-download" to="/docs/getting-started/installation"}
+  Install [Project] and run it for the first time.
+  :::
+
+  :::card{title="Guide" icon="i-lucide-compass" to="/docs/guide/[first-topic]"}
+  Learn the core workflows.
+  :::
+::
 ```
 
----
+## Installation
 
-## Installation Page
+`content/docs/1.getting-started/2.installation.md`
 
-Use the detected package manager and show every option:
-
-```markdown
+````markdown
 ---
 title: Installation
-description: How to install [Project Name]
+description: Install [Project], add the minimal configuration and verify that it works.
+seo:
+  title: Install [Project]
+  description: [120-160 characters]
 navigation:
   icon: i-lucide-download
 ---
 
 ## Prerequisites
 
-[List any prerequisites]
+- Node.js [version] or later
+- [Other requirement]
 
-## How to install
+## Install the package
 
 ::code-group
 ```bash [pnpm]
-pnpm add [package-name]
+pnpm add [package]
 ```
 
 ```bash [npm]
-npm install [package-name]
+npm install [package]
 ```
 
 ```bash [yarn]
-yarn add [package-name]
+yarn add [package]
 ```
 
 ```bash [bun]
-bun add [package-name]
+bun add [package]
 ```
 ::
 
-## How to verify the installation
+## Configure
 
-[Verification steps]
+```ts [[config file]]
+[minimal configuration]
 ```
 
----
+## Verify the installation
 
-## Guide Page
+[Command or code that proves it works, and the expected output.]
+````
 
-Use action verbs in H2/H3 headings:
+## Guide page
 
-```markdown
+`content/docs/2.guide/[n].[topic].md`. One feature per page, headings start with a verb.
+
+````markdown
 ---
 title: [Topic]
-description: [Action verb] [thing] in your [Project Name] app
+description: [What the reader will be able to do with this feature.]
+seo:
+  title: [Topic] - [Project]
+  description: [120-160 characters]
 navigation:
-  icon: [icon]
+  icon: i-lucide-[icon]
+category: [category id]
 ---
 
-[One-sentence overview]
+## Enable [feature]
 
-## Add basic [feature]
+[Short explanation.]
 
-[Explanation]
-
-```[language] [[file-path]]
+```ts [[file]]
 [code]
 ```
 
 ## Configure [feature]
 
-[Explanation]
-
-```[language] [[file-path]]
-[code]
-```
+::field-group
+  :::field{name="[option]" type="string"}
+  [What it does.] Defaults to `[value]`.
+  :::
+::
 
 ## Handle [edge case]
 
-[Explanation]
+::warning
+[Gotcha and how to avoid it.]
+::
 
 ## Next steps
 
-- [Link to related guide]
-- [Link to advanced topic]
-```
+- [Related guide](/docs/guide/[topic])
+````
 
-**Action verbs for H2 headings:** add, configure, create, set up, enable, connect, handle, customize, deploy, use.
+## API reference page
 
+`content/docs/3.api/[n].[name].md`. One page per public function, composable or module option group.
+
+````markdown
+---
+title: [functionName]
+description: [One sentence about what it returns or does.]
+seo:
+  title: [functionName] - [Project] API
+  description: [120-160 characters]
+navigation:
+  icon: i-lucide-square-function
 ---
 
-## Navigation YAML
+## Usage
 
-Each section folder needs a `.navigation.yml`:
-
-```yaml
-title: [Section title]
-icon: [icon-name]
+```ts
+const result = [functionName]([args])
 ```
 
-### Recommended Icons by Section
+## Parameters
 
-| Section | Icon |
-|---------|------|
-| Getting started | `i-lucide-rocket` |
-| Guide | `i-lucide-book-open` |
-| Recipes | `i-lucide-chef-hat` |
-| API | `i-lucide-code` |
-| Examples | `i-lucide-lightbulb` |
-| Configuration | `i-lucide-settings` |
-| Advanced | `i-lucide-sparkles` |
+| Name | Type | Default | Description |
+|------|------|---------|-------------|
+| `[param]` | `[type]` | `[default]` | [description] |
+
+## Returns
+
+| Name | Type | Description |
+|------|------|-------------|
+| `[field]` | `[type]` | [description] |
+
+## Example
+
+```ts [[file]]
+[complete example]
+```
+````
+
+Signatures, defaults and return shapes must be copied from the source, not paraphrased.
+
+## Component page
+
+Requires `movkNuxtDocs.componentDocs: true`, the packages `nuxt-component-meta vue-component-meta prettier`, and the component listed in `componentMeta.include`. The slug defaults to the last path segment, so name the file after the component (`3.my-button.md` → `MyButton`).
+
+````markdown
+---
+title: MyButton
+description: [What the component is for.]
+seo:
+  title: MyButton component - [Project]
+  description: [120-160 characters]
+navigation:
+  icon: i-lucide-mouse-pointer-click
+links:
+  - label: Source
+    icon: i-simple-icons-github
+    to: [https://github.com/.../MyButton.vue]
+    target: _blank
+---
+
+## Usage
+
+::component-code
+---
+name: MyButton
+props:
+  color: primary
+items:
+  color: [primary, neutral]
+---
+::
+
+## Examples
+
+:component-example{name="MyButtonLoadingExample"}
+
+## API
+
+### Props
+
+:component-props
+
+### Slots
+
+:component-slots
+
+### Emits
+
+:component-emits
+
+## Changelog
+
+:commit-changelog
+````
+
+Examples live in `app/components/content/examples/` (`MyButtonLoadingExample.vue`).

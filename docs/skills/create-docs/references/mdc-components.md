@@ -1,24 +1,26 @@
 # MDC Component Reference
 
-Movk Nuxt Docs uses Nuxt UI components with MDC syntax.
+Movk Nuxt Docs renders Markdown with Nuxt Content (MDC) and Nuxt UI. Three families of components are available.
 
-**Critical: always use the `u-` prefix for Nuxt UI components in MDC:**
+| Family | MDC name | Prefix |
+|--------|----------|--------|
+| Nuxt UI components | `u-page-hero`, `u-button`, `u-color-mode-image` | `u-` required |
+| Nuxt UI prose components | `note`, `tip`, `code-group`, `card`, `field`, `badge` | no prefix |
+| Layer content components | `motion`, `stars-bg`, `commit-changelog`, `page-last-commit`, `component-*` | no prefix |
 
 ```markdown
-::u-page-hero      ✅ Correct (resolves to UPageHero)
-::page-hero        ❌ Incorrect (does not resolve)
+::u-page-hero      Correct: resolves to UPageHero
+::page-hero        Wrong: unknown component, renders nothing
+::note             Correct: prose component, no prefix
 ```
 
----
+Nesting adds one colon per level: `::` → `:::` → `::::`. Props use `{key="value"}` inline or a YAML block between `---` lines; slots use `#slot-name`.
 
-## Documentation Sources
+## Documentation sources
 
-**Components:**
 - Component list: https://ui.nuxt.com/llms.txt
-- Raw docs: `https://ui.nuxt.com/raw/docs/components/[component].md`
-
-**Typography / Prose:**
-- Introduction: https://ui.nuxt.com/raw/docs/typography.md
+- Raw component docs: `https://ui.nuxt.com/raw/docs/components/[component].md`
+- Prose overview: https://ui.nuxt.com/raw/docs/typography.md
 - Headings and text: https://ui.nuxt.com/raw/docs/typography/headers-and-text.md
 - Lists and tables: https://ui.nuxt.com/raw/docs/typography/lists-and-tables.md
 - Code blocks: https://ui.nuxt.com/raw/docs/typography/code-blocks.md
@@ -26,246 +28,185 @@ Movk Nuxt Docs uses Nuxt UI components with MDC syntax.
 - Accordion: https://ui.nuxt.com/raw/docs/typography/accordion.md
 - Tabs: https://ui.nuxt.com/raw/docs/typography/tabs.md
 
----
+## Page layout (Nuxt UI, `u-` prefix)
 
-## Page Layout Components
-
-The most-used components for documentation sites:
+Mostly for the landing page.
 
 | Component | Raw docs | Usage |
-|-----------|----------|---------|
-| `u-page-hero` | [page-hero.md](https://ui.nuxt.com/raw/docs/components/page-hero.md) | Landing page hero |
-| `u-page-section` | [page-section.md](https://ui.nuxt.com/raw/docs/components/page-section.md) | Content section |
-| `u-page-grid` | [page-grid.md](https://ui.nuxt.com/raw/docs/components/page-grid.md) | Responsive grid layout |
-| `u-page-card` | [page-card.md](https://ui.nuxt.com/raw/docs/components/page-card.md) | Rich content card |
-| `u-page-feature` | [page-feature.md](https://ui.nuxt.com/raw/docs/components/page-feature.md) | Feature showcase |
+|-----------|----------|-------|
+| `u-page-hero` | [page-hero.md](https://ui.nuxt.com/raw/docs/components/page-hero.md) | Hero with title, description, links |
+| `u-page-section` | [page-section.md](https://ui.nuxt.com/raw/docs/components/page-section.md) | Titled section, `#features` slot |
+| `u-page-feature` | [page-feature.md](https://ui.nuxt.com/raw/docs/components/page-feature.md) | Feature item |
+| `u-page-grid` | [page-grid.md](https://ui.nuxt.com/raw/docs/components/page-grid.md) | Responsive grid |
+| `u-page-card` | [page-card.md](https://ui.nuxt.com/raw/docs/components/page-card.md) | Card with title, description, media |
 | `u-page-cta` | [page-cta.md](https://ui.nuxt.com/raw/docs/components/page-cta.md) | Call to action |
-| `u-page-header` | [page-header.md](https://ui.nuxt.com/raw/docs/components/page-header.md) | Page header |
-
----
-
-## Quick Syntax Examples
-
-### Landing Hero with Buttons
-
-```markdown
-::u-page-hero
-#title
-Project Name
-
-#description
-Short description
-
-#headline
-  :::u-button{size="sm" to="/changelog" variant="outline"}
-  v1.0.0 →
-  :::
-
-#links
-  :::u-button{color="neutral" size="xl" to="/getting-started" trailing-icon="i-lucide-arrow-right"}
-  Get started
-  :::
-
-  :::u-button{color="neutral" size="xl" to="https://github.com/..." target="_blank" variant="outline" icon="i-simple-icons-github"}
-  GitHub
-  :::
-::
-```
-
-### Grid with Cards
+| `u-button` | [button.md](https://ui.nuxt.com/raw/docs/components/button.md) | Link button |
+| `u-color-mode-image` | [color-mode-image.md](https://ui.nuxt.com/raw/docs/components/color-mode-image.md) | Light / dark image pair |
 
 ```markdown
 ::u-page-section
   :::u-page-grid
-    ::::u-page-card{spotlight class="col-span-2 lg:col-span-1" to="/feature"}
+    ::::u-page-card{to="/docs/guide/configuration" class="col-span-2 lg:col-span-1"}
     #title
-    Feature title
+    Configure
 
     #description
-    Feature description
-    ::::
-
-    ::::u-page-card{spotlight class="col-span-2"}
-      :::::u-color-mode-image{alt="Screenshot" class="w-full rounded-lg" dark="/images/dark.png" light="/images/light.png"}
-      :::::
-
-    #title
-    Visual feature
-
-    #description
-    With light/dark mode images
+    One file for navigation, theme and integrations.
     ::::
   :::
 ::
 ```
 
-### Card with a Code Block
+## Prose components (no prefix)
+
+### Callouts
 
 ```markdown
-::::u-page-card{spotlight class="col-span-2 md:col-span-1"}
-  :::::div{.bg-elevated.rounded-lg.p-3}
-  ```ts [config.ts]
-  export default {
-    option: 'value'
-  }
-  ```
-  :::::
+::note
+Extra context.
+::
 
-#title
-Configuration
+::tip{title="Faster"}
+A helpful suggestion.
+::
 
-#description
-Easy to configure
-::::
+::warning
+Something that can break.
+::
+
+::caution
+Something destructive or irreversible.
+::
+
+::callout{icon="i-lucide-info" color="neutral" to="/docs/guide/features"}
+Generic callout with a link.
+::
 ```
 
----
+### Code
 
-## Content Components
-
-| Component | Raw docs | Usage |
-|-----------|----------|---------|
-| `code-group` | N/A (Nuxt Content) | Multi-tab code block |
-| `steps` | N/A (Nuxt Content) | Step-by-step guide |
-| `tabs` | [tabs.md](https://ui.nuxt.com/raw/docs/components/tabs.md) | Tabbed content |
-| `accordion` | [accordion.md](https://ui.nuxt.com/raw/docs/components/accordion.md) | Collapsible sections |
-
-### Code Group (Nuxt Content)
-
-```markdown
+````markdown
 ::code-group
+```bash [pnpm]
+pnpm add my-package
+```
+
+```bash [npm]
+npm install my-package
+```
+::
+
+::code-preview
+**Rendered output**
+
+#code
+```md
+**Rendered output**
+```
+::
+
+::code-collapse
+```ts [long-file.ts]
+// long code
+```
+::
+
+::code-tree{default-value="nuxt.config.ts"}
 ```ts [nuxt.config.ts]
 export default defineNuxtConfig({})
 ```
 
-```ts [app.config.ts]
+```ts [app/app.config.ts]
 export default defineAppConfig({})
 ```
 ::
-```
+````
 
-### Steps (Nuxt Content)
+Code block options: a filename label ` ```ts [nuxt.config.ts] `, line highlights ` ```ts {2-3} `, and `mermaid` blocks when `movkNuxtDocs.mermaid` is enabled. The layer replaces Nuxt UI `ProsePre` to add a text copy button; the syntax is unchanged.
+
+### Structure
 
 ```markdown
-::steps
+::steps{level="3"}
 ### Install
 
 Run the install command.
 
 ### Configure
 
-Add your configuration.
+Add the configuration.
+::
 
-### Use
+::tabs
+  :::tabs-item{label="Vue" icon="i-logos-vue"}
+  Vue content
+  :::
 
-Start using the feature.
+  :::tabs-item{label="Nuxt" icon="i-logos-nuxt-icon"}
+  Nuxt content
+  :::
+::
+
+::accordion
+  :::accordion-item{label="Question?" icon="i-lucide-circle-help"}
+  Answer.
+  :::
+::
+
+::card-group
+  :::card{title="Guide" icon="i-lucide-compass" to="/docs/guide/configuration"}
+  Card body.
+  :::
+::
+
+::field-group
+  :::field{name="mode" type="'light' | 'dark'" required}
+  Field description.
+  :::
 ::
 ```
 
----
+Inline: `:badge{label="v3"}`, `:kbd{value="meta"}`, `:icon{name="i-lucide-star"}`, `` `code`{lang="ts"} ``.
 
-## Callout Components
+## Layer content components
 
-| Component | Usage |
-|-----------|---------|
-| `::note` | Additional information |
-| `::tip` | Helpful suggestion |
-| `::warning` | Important warning |
-| `::caution` | Critical warning |
+| Component | Needs | Usage |
+|-----------|-------|-------|
+| `motion` | — | Fade/blur-in wrapper (motion-v); props `initial`, `animate`, `transition` |
+| `stars-bg` | — | Decorative star field; props `star-count`, `color`, `size` |
+| `page-last-commit` | GitHub config | Last commit for the current page, rendered automatically by the docs page |
+| `commit-changelog` | GitHub config, `NUXT_GITHUB_TOKEN` in production | Commit history of a source file; props `name`, `commit-path`, `prefix`, `suffix`, `author`, `casing` |
+| `component-props` | `componentDocs` | Props table; `slug` defaults to the last URL segment, `prose` for Prose components, `ignore` |
+| `component-slots` | `componentDocs` | Slots table; `slug` |
+| `component-emits` | `componentDocs` | Emits table; `slug` |
+| `component-example` | `componentDocs` | Renders `app/components/content/examples/[Name].vue` with its source; props `name`, `client-only` |
+| `component-code` | `componentDocs` | Interactive playground with generated code; props `name`, `props`, `items`, `slots`, `hide`, `ignore` |
 
 ```markdown
-::note{title="Custom title"}
-Provide context here.
+::motion{:transition='{"duration":0.6,"delay":0.3}'}
+Animated text
 ::
 
-::tip
-Pro-tip content.
-::
+:commit-changelog{name="useHeader" prefix="composables" suffix="ts"}
 
-::warning
-Be careful with this feature.
-::
-
-::caution
-This action cannot be undone.
-::
+:component-props{slug="MyButton"}
 ```
 
----
+`componentDocs` means `movkNuxtDocs.componentDocs: true` plus the packages `nuxt-component-meta vue-component-meta prettier`. With it disabled these components render nothing.
 
 ## Images
 
-### Color Mode Image
-
 ```markdown
-:u-color-mode-image{alt="Feature" dark="/images/dark.png" light="/images/light.png" class="rounded-lg" width="859" height="400"}
+![Alt text](/images/diagram.png)
+
+:u-color-mode-image{light="/screenshots/panel-light.png" dark="/screenshots/panel-dark.png" alt="Panel" class="rounded-md" width="1280" height="800"}
 ```
 
----
+Always set `alt`. Provide light and dark variants for UI screenshots.
 
-## Grid Class Reference
+## Full references
 
-| Class | Usage |
-|-------|-------|
-| `col-span-2` | Full width |
-| `col-span-2 lg:col-span-1` | Full width on mobile, half width on desktop |
-| `col-span-2 md:col-span-1` | Full width on mobile, half width on tablet and up |
-
----
-
-## Mermaid Diagrams
-
-````mdc
-```mermaid
-graph TD
-    A[Start] --> B{Condition}
-    B -->|Yes| C[Run action]
-    B -->|No| D[End]
-```
-````
-
----
-
-## Content Display Components
-
-### ComponentExample
-
-Create example components under `app/components/content/examples/`, then reference them in Markdown:
-
-```mdc
-:component-example{name="MyComponent"}
-```
-
-### ComponentProps / ComponentSlots / ComponentEmits
-
-Auto-generate component API documentation:
-
-```mdc
-:component-props{name="Button"}
-:component-slots{name="Button"}
-:component-emits{name="Button"}
-```
-
-The components to document must be configured under `componentMeta.include` in `nuxt.config.ts`.
-
-### CommitChangelog
-
-```mdc
-:commit-changelog{name="Button"}
-```
-
-### PageLastCommit
-
-```mdc
-:page-last-commit
-```
-
----
-
-## Complete Documentation Reference
-
-- **All components**: https://ui.nuxt.com/llms.txt
-- **Full docs (for LLMs)**: https://ui.nuxt.com/llms-full.txt
-- **Typography introduction**: https://ui.nuxt.com/raw/docs/typography.md
-- **Content integration**: https://ui.nuxt.com/raw/docs/getting-started/integrations/content.md
-- **Theme customization**: https://ui.nuxt.com/raw/docs/getting-started/theme/components.md
+- All components: https://ui.nuxt.com/llms.txt
+- Full docs for LLMs: https://ui.nuxt.com/llms-full.txt
+- Content integration: https://ui.nuxt.com/raw/docs/getting-started/integrations/content.md
+- Theme customization: https://ui.nuxt.com/raw/docs/getting-started/theme/components.md

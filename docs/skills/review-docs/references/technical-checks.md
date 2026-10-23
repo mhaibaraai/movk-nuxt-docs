@@ -1,341 +1,134 @@
 # Technical Validation Guide
 
-Technical specification checks for Movk Nuxt Docs documentation, covering frontmatter, MDC components, code blocks, and file naming.
+Checks for Movk Nuxt Docs v3 / Nuxt Content projects: content location, frontmatter, MDC components, feature-dependent components, images, code blocks, i18n parity and file naming. Each check lists its default priority.
 
-## Frontmatter Validation
+## Content Location and Links
 
-### Required Fields
+| Check | Priority |
+|-------|----------|
+| Docs pages are under `content/docs/`; other locales under `content/{locale}/docs/` | Critical |
+| Internal links use absolute paths starting with `/docs/` (other locales `/{locale}/docs/`) | Important |
+| Internal links point to existing pages (compare with the file tree, numeric prefixes stripped) | Critical |
+| No relative `.md` links (`../guide/x.md`) and no hard-coded deployed domain for internal pages | Important |
+| A page in a non-default locale links to the same locale (`/en/docs/...`), not the default locale | Important |
+| Each section root URL has a page or a `routeRules` redirect in `nuxt.config.ts` | Important |
 
-Every documentation page must include:
+Route mapping: `content/docs/2.guide/3.navigation.md` → `/docs/guide/navigation`; `content/docs/1.getting-started/1.index.md` → `/docs/getting-started`.
+
+Broken links do not fail a Movk build (`nitro.prerender.failOnError` is `false`); they only print `[request error]` lines during prerender. When a build log is available, treat each such line as Critical.
+
+## Frontmatter
+
+### Fields
 
 ```yaml
 ---
-title: Page title
-description: Page description used for SEO and search results.
----
-```
-
-### Optional Fields
-
-```yaml
----
-title: Page title
-description: Page description
-navigation:
-  title: Short navigation title (1–3 words)
-  icon: i-lucide-book
-category: core-concepts
+title: Navigation              # Required
+description: Declare header links and sidebar groups in app.config.ts.   # Required
 seo:
-  title: SEO-optimized title (50–60 characters)
-  description: SEO description (120–160 characters)
-links:
-  - label: Related link
-    icon: i-lucide-arrow-right
-    to: /docs/guide
-    target: _blank  # Required for external links
+  title: Configure navigation in Movk Nuxt Docs        # Recommended
+  description: Declare desktop and mobile header links ...   # Recommended
+navigation:                    # Optional
+  icon: i-lucide-panel-left
+  title: Nav
+  badge: New
+category: basics               # Optional, must exist in app.config docs.categories
+links:                         # Optional header buttons
+  - label: Source
+    icon: i-simple-icons-github
+    to: https://github.com/org/repo/blob/main/src/x.ts
+    target: _blank
+keywords: [sidebar, menu]      # Optional, used by MCP search
 ---
 ```
 
-### Field Validation Rules
-
-**title:**
-- Type: string
-- Required: yes
-- Recommended length: under 60 characters (page title and SEO use)
-- Must be unique across pages
-
-**description:**
-- Type: string
-- Required: yes
-- Recommended length: 120–160 characters (optimal SEO range)
-- Should be concise and descriptive
-
-**navigation.icon:**
-- Format: `i-{collection}-{icon-name}` (e.g. `i-lucide-house`, `i-simple-icons-github`)
-- Must start with `i-`
-- Prefer the Lucide icon set (`i-lucide-*`) for consistency
-
-**navigation.title:**
-- Type: string
-- Optional: overrides the default sidebar title
-- Keep it short (1–3 words)
-
-**seo.title:**
-- Type: string
-- Optimal: 50–60 characters
-- May differ from the page title for SEO optimization
-
-**seo.description:**
-- Type: string
-- Optimal: 120–160 characters
-- More detailed than the main description if needed
-
-**links:**
-- Type: array of objects
-- Each object must include: `label`, `to`
-- Optional: `icon`, `target` (for external links)
-
-### Common Frontmatter Errors
-
-❌ **Missing required fields:**
-```yaml
----
-title: My page
-# Wrong: description is missing
----
-```
-
-❌ **Wrong icon format:**
-```yaml
----
-navigation:
-  icon: lucide-house  # Wrong: missing the i- prefix
----
-```
-
-❌ **Wrong links structure:**
-```yaml
----
-links:
-  - "https://example.com"  # Wrong: must be an object
----
-```
-
-✅ **Correct example:**
-```yaml
----
-title: AI Chat
-description: Add a built-in AI chat assistant to your docs site, with multi-model switching and a customizable UI.
-navigation:
-  icon: i-lucide-bot
-seo:
-  title: AI Chat — Movk Nuxt Docs
-  description: Learn how to integrate the AI chat feature in Movk Nuxt Docs to provide intelligent Q&A and an interactive experience.
-links:
-  - label: Configuration reference
-    icon: i-lucide-settings
-    to: /docs/configuration
----
-```
-
----
-
-## MDC Component Validation
-
-### Strict Rule: the `u-` Prefix
-
-**Every Nuxt UI component used in MDC must use the `u-` prefix.**
-
-This is the most common error and causes build failures.
-
-### Common Components Requiring the `u-` Prefix
-
-| Component | Wrong | Correct |
-|-----------|-------|---------|
-| Page hero | `::page-hero` | `::u-page-hero` |
-| Page section | `::page-section` | `::u-page-section` |
-| Page grid | `::page-grid` | `::u-page-grid` |
-| Page card | `::page-card` | `::u-page-card` |
-| Page feature | `::page-feature` | `::u-page-feature` |
-| Button | `::button` or `:::button` | `:::u-button` |
-| Badge | `::badge` | `::u-badge` |
-| Color mode image | `:color-mode-image` | `:u-color-mode-image` |
+| Check | Priority |
+|-------|----------|
+| `title` and `description` present and non-empty | Critical |
+| Valid YAML (quotes around values containing `:` or starting with `@`, `*`, `[`) | Critical |
+| `seo.title` and `seo.description` present | Important |
+| `description` unique across pages | Important |
+| `links` is an array of objects with `label` and `to`; external links have `target: _blank` | Important |
+| `category` declared in `docs.categories` for the page's top-level section; an undeclared id hides the page from the sidebar | Important |
+| Icons use the `i-{collection}-{name}` format (`i-lucide-house`) | Important |
+| `navigation: false` only on pages that must stay out of the sidebar | Suggested |
+| Stale badges such as `navigation.badge: V2` on pages that are no longer new | Suggested |
+| `links` pointing to source files that still exist at that path | Suggested |
+
+## MDC Components
+
+### Naming
+
+| Family | Example | Prefix |
+|--------|---------|--------|
+| Nuxt UI components | `::u-page-hero`, `:::u-button`, `:u-color-mode-image` | `u-` required |
+| Nuxt UI prose components | `::note`, `::tip`, `::warning`, `::caution`, `::callout`, `::code-group`, `::code-preview`, `::code-collapse`, `::code-tree`, `::steps`, `::tabs`, `::accordion`, `::card`, `::card-group`, `::field`, `::field-group`, `:badge`, `:kbd`, `:icon` | none |
+| Layer content components | `::motion`, `:stars-bg`, `:commit-changelog`, `:page-last-commit` | none |
+| Component docs (needs `componentDocs`) | `:component-props`, `:component-slots`, `:component-emits`, `:component-example`, `:component-code` | none |
+| Project components | anything in `app/components/content/` | none |
+
+| Check | Priority |
+|-------|----------|
+| Nuxt UI component without `u-` (`::page-hero`) | Critical |
+| Prose component with `u-` (`::u-note`) | Critical |
+| Component name that exists nowhere (Nuxt UI, layer, project) | Critical |
+| Unclosed block or mismatched colon count | Critical |
+| Slot name not supported by the component (`#title`, `#description`, `#links`, `#code`) | Important |
+| Props passed with invalid syntax (`{key=value}` without quotes for strings containing spaces) | Important |
+
+Nesting: `::` → `:::` → `::::`, one extra colon per level; inner blocks are indented by two spaces for readability.
+
+To confirm a name, check `https://ui.nuxt.com/llms.txt`, `layer/app/components/content/`, `layer/modules/component-docs/runtime/components/` (in `node_modules/@movk/nuxt-docs/`), and the project's `app/components/content/`.
+
+### Feature-dependent components
+
+Read `nuxt.config.ts` before validating:
+
+| Usage | Requires | Priority if missing |
+|-------|----------|---------------------|
+| `component-props` / `slots` / `emits` / `example` / `code` | `movkNuxtDocs.componentDocs: true`, packages `nuxt-component-meta vue-component-meta prettier`, target in `componentMeta.include` | Critical (renders empty or fails the build) |
+| ` ```mermaid ` blocks | `movkNuxtDocs.mermaid: true`, packages `mermaid dompurify` | Important (shown as plain code) |
+| `:commit-changelog`, edit links, releases | `app.config` `github` not `false`, owner / name set, `NUXT_GITHUB_TOKEN` in production | Important |
+| Docs describing AI Chat as available | `aiChat.enabled` or `AI_API_KEY`, AI packages installed, MCP not disabled | Important |
+
+`component-props` / `slots` / `emits` resolve the component from `slug`, defaulting to the last URL segment in camel/Pascal case. A page named `3.button.md` documents `Button`. Flag pages whose file name does not match the component and no `slug` is given. `component-example` uses `name`, matching a file in `app/components/content/examples/`.
+
+### Component overrides described in docs
+
+When docs tell users to override a layer component, the name must be in the v3 override contract: `Header`, `HeaderLogo`, `HeaderCenter`, `HeaderCTA`, `HeaderBody`, `HeaderBottom`, `LanguageSwitcher`, `ThemePicker`, `PageHeaderLinks`, `DocsAsideLeftTop`, `DocsAsideLeftBody`, `DocsAsideRightBottom`, `Footer`, `FooterLeft`, `FooterRight`, `ComponentExampleExtras`. The source of truth is the table in the layer's customization guide (`docs/content/docs/2.guide/5.customization.md` in the movk-nuxt-docs repository). Recommending an unlisted component (e.g. `ThemePickerButton`) is Important. Recommending `useHeader` / `useCategory` overrides for plain navigation changes is Suggested: v3 uses `app.config` `header.nav`, `header.mobileNav`, `docs.categories`.
+
+## Images
+
+| Check | Priority |
+|-------|----------|
+| Image file exists in `public/` at the referenced path | Critical |
+| Every image has meaningful `alt` text | Important |
+| UI screenshots use `:u-color-mode-image{light="..." dark="..."}` with both files present | Important |
+| `width` / `height` set on large images to avoid layout shift | Suggested |
+| Screenshots show the current UI (not an older theme or removed component) | Suggested |
+
+## Code Blocks
+
+| Check | Priority |
+|-------|----------|
+| Every fence has a language (`ts`, `vue`, `bash`, `json`, `yaml`, `md`, `mdc`, `text`) | Important |
+| Blocks representing a file have a label: ` ```ts [nuxt.config.ts] ` | Important |
+| Code matches the project stack (`<script setup lang="ts">` in TypeScript projects) | Important |
+| Install commands in `::code-group` cover the package managers the project supports (usually pnpm, npm, yarn, bun) | Important |
+| `::code-group` only groups equivalent variants, never install + config | Important |
+| Options, defaults and signatures in examples match the source code | Critical |
+| `::code-preview` used for rendered Markdown / MDC examples | Suggested |
+
+Label conventions: `[nuxt.config.ts]`, `[app/app.config.ts]`, `[components/Alert.vue]`, `[Terminal]`. No label needed for type-only snippets, MDC syntax examples and inline fragments.
+
+Good:
 
-### Component Nesting Levels
-
-MDC uses colons to indicate nesting depth:
-
-```markdown
-::u-page-hero           # Level 1: 2 colons
-  :::u-button           # Level 2: 3 colons
-    ::::div             # Level 3: 4 colons (HTML element)
-      :::::span         # Level 4: 5 colons
-```
-
-**Validate:** ensure nesting levels are consistent and logical.
-
-### Component Properties
-
-**Inline properties** (using braces):
-
-```markdown
-:::u-button{color="neutral" size="xl" to="/path" trailing-icon="i-lucide-arrow-right"}
-Button text
-:::
-```
-
-**Block properties** (using `---` delimiters):
-
-```markdown
-:::u-button
----
-color: neutral
-size: xl
-to: /path
-trailing-icon: i-lucide-arrow-right
----
-Button text
-:::
-```
-
-**Common property errors:**
-
-❌ Wrong: `:::u-button(color="neutral")`
-✅ Correct: `:::u-button{color="neutral"}`
-
-❌ Wrong: `:::u-button[size=xl]`
-✅ Correct: `:::u-button{size="xl"}`
-
-### Slot Syntax
-
-Components with named slots use `#slot-name`:
-
-```markdown
-::u-page-hero
-#title
-Your title here
-
-#description
-Your description text
-
-#links
-  :::u-button{to="/start"}
-  Get started
-  :::
-::
-```
-
-**Validate:** ensure slot names match the component documentation.
-
-### Content vs. Nuxt Content Components
-
-**Nuxt Content components** (no `u-` prefix):
-- `::code-group` — multi-tab code block
-- `::steps` — step-by-step instructions
-- `::note`, `::tip`, `::warning`, `::caution` — callouts
-
-**Nuxt UI components** (require the `u-` prefix):
-- `::u-page-*` — page layout components
-- `::u-button`, `::u-badge` — interactive elements
-- `:u-color-mode-image` — image with theme variants
-
-### Code Block Validation
-
-#### File Path Labels
-
-**Every code block that represents a file should include a filename label**, not just config files. This applies to every code sample that represents a file:
-
-✅ Good:
-````markdown
-```vue [App.vue]
-<script setup lang="ts">
-import { ref } from 'vue'
-</script>
-```
-````
-
-````markdown
-```typescript [parseMarkdown.ts]
-import { parseMarkdown } from 'comark'
-```
-````
-
-````markdown
-```tsx [App.tsx]
-export default function App() {}
-```
-````
-
-❌ Missing label:
-````markdown
-```vue
-<script setup lang="ts">
-import { ref } from 'vue'
-</script>
-```
-````
-
-**Label naming conventions:**
-- Vue components: `[App.vue]`, `[components/Alert.vue]`, `[pages/index.vue]`
-- TypeScript files: `[parse.ts]`, `[config.ts]`, `[server.ts]`
-- React components: `[App.tsx]`, `[components/Card.tsx]`
-- Configuration files: `[nuxt.config.ts]`, `[app.config.ts]`
-- CSS files: `[styles.css]`, `[app/assets/css/main.css]`
-- Terminal commands: `[Terminal]`
-
-**Exceptions** (no label needed):
-- Type definitions / interfaces
-- MDC syntax examples (` ```mdc `)
-- Inline snippets that don't represent a file
-
-#### Code Language Consistency
-
-Code samples should match the project's language stack. Check the project's `tsconfig.json`, `package.json`, or existing code to determine the default language.
-
-**For TypeScript projects**, every code sample should use TypeScript. Common mismatches to flag:
-- Vue `<script setup>` missing `lang="ts"` → should be `<script setup lang="ts">`.
-- `.js` extensions in samples when the project uses `.ts`.
-- Missing type annotations on function signatures when the project uses strict TypeScript.
-
-#### Language Tags
-
-Always specify a language for syntax highlighting:
-
-✅ Good: ` ```ts `, ` ```bash `, ` ```vue `
-❌ Avoid: ` ``` ` (no language)
-
-#### Code Group
-
-Use `::code-group` for multi-variant examples (package managers, frameworks, etc.):
-
-````markdown
-::code-group
-```bash [pnpm]
-pnpm add @movk/nuxt-docs
-```
-
-```bash [npm]
-npm install @movk/nuxt-docs
-```
-
-```bash [yarn]
-yarn add @movk/nuxt-docs
-```
-
-```bash [bun]
-bun add @movk/nuxt-docs
-```
-::
-````
-
-**Make sure every package manager the project / ecosystem supports is represented.** Check the project's README, `package.json` scripts, or lock files to decide which to include. Common omissions: forgetting newer package managers (such as bun) or accidentally dropping one.
-
-#### Code Group: What Not to Group
-
-**Don't mix terminal commands and config files in one group** — these are separate steps:
-
-❌ Bad (mixing install + config in one group):
-````markdown
-::code-group
-```bash [Terminal]
-npm install my-package
-```
-
-```ts [nuxt.config.ts]
-export default defineNuxtConfig({
-  modules: ['my-package']
-})
-```
-::
-````
-
-✅ Good (separate blocks with transition text):
 ````markdown
 ```bash [Terminal]
-npm install my-package
+pnpm add my-package
 ```
 
-Add the module to your `nuxt.config.ts`:
+Add the module to `nuxt.config.ts`:
 
 ```ts [nuxt.config.ts]
 export default defineNuxtConfig({
@@ -344,229 +137,57 @@ export default defineNuxtConfig({
 ```
 ````
 
-**When to use `::code-group`:**
-- Package manager variants (pnpm/npm/yarn/bun).
-- Framework variants (Vue/React).
-- Code + output pairs (`[Code]` / `[Output]`).
-- Syntax + AST pairs (`[Syntax]` / `[AST]`).
+Avoid: putting both blocks above into one `::code-group`.
 
-#### Code Preview
+## Internationalization Parity
 
-Use `::code-preview` to display rendered output beside the source code. This is ideal for documenting visual features (Markdown syntax, code-block metadata, component rendering):
+Only when `@nuxtjs/i18n` is in `modules`:
 
-````markdown
-::code-preview
-| Header 1 | Header 2 |
-| -------- | -------- |
-| Cell 1   | Cell 2   |
-
-#code
-```mdc
-| Header 1 | Header 2 |
-| -------- | -------- |
-| Cell 1   | Cell 2   |
-```
-::
-````
-
-**When to use `::code-preview`:**
-- Markdown syntax examples (headings, lists, tables, blockquotes, task lists, emojis).
-- Code-block features (filename labels, line highlighting).
-- Any feature where rendering adds clarity.
-
-**When not to use `::code-preview`:**
-- API/TypeScript code samples (no visual preview).
-- Component samples that use unregistered custom components.
-
----
+| Check | Priority |
+|-------|----------|
+| `i18n.locales` entries do not declare `file` (the layer registers its own translations) | Critical |
+| Each locale in `i18n.locales` has a `content/{code}/` directory (default locale uses the `content/` root); missing ones are dropped at build time | Critical |
+| Every default-locale page has a counterpart at the same relative path in each locale | Important |
+| Counterparts have the same H2 / H3 structure, code blocks and component usage | Important |
+| `.navigation.yml` titles are translated per locale | Suggested |
+| `app.config` labels used on multilingual sites are per-locale objects (`{ 'zh-CN': '文档', 'en': 'Docs' }`) | Suggested |
 
 ## File and Directory Naming
 
-### Directory Structure
+| Check | Priority |
+|-------|----------|
+| Kebab-case file and directory names | Important |
+| Numeric prefixes for ordering (`1.getting-started/`, `2.installation.md`), no duplicates in one directory | Important |
+| `.navigation.yml` with `title` and `icon` in every section directory | Important |
+| Gaps in numbering | Suggested |
 
-Documentation sections should follow a numbered pattern:
-
+```yaml [content/docs/1.getting-started/.navigation.yml]
+title: Getting Started
+icon: i-lucide-square-play
 ```
-content/
-├── en/
-│   ├── index.md
-│   ├── 1.getting-started/
-│   ├── 2.guide/
-│   ├── 3.api/
-│   └── 4.advanced/
-```
-
-**Rules:**
-- Directories start with a number for ordering: `1.`, `2.`, `3.`.
-- Directory names use kebab-case.
-- Names reflect the section content.
-
-### File Naming
-
-**Pattern:** `{number}.{name}.md`
-
-Examples:
-- `1.introduction.md`
-- `2.installation.md`
-- `3.configuration.md`
-
-**Rules:**
-- Start with a number for ordering.
-- Use kebab-case (lowercase with hyphens).
-- Use descriptive names (not `page-1.md` or `doc.md`).
-
-### Navigation Files
-
-**Every section directory must have a `.navigation.yml`:**
-
-```yaml
-# 1.getting-started/.navigation.yml
-title: Getting started
-icon: i-lucide-rocket
-```
-
-**Purpose:** controls sidebar display and section metadata.
-
----
-
-## Common Technical Errors
-
-### 1. Missing `u-` Prefix (most common)
-
-**Error pattern:**
-```markdown
-::page-hero
-#title
-Welcome
-::
-```
-
-**Fix:**
-```markdown
-::u-page-hero
-#title
-Welcome
-::
-```
-
-### 2. Inconsistent Nesting
-
-**Error pattern:**
-```markdown
-::u-page-section
-::::u-button  # Wrong: skipped a nesting level
-Close
-::::
-::
-```
-
-**Fix:**
-```markdown
-::u-page-section
-  :::u-button
-  Close
-  :::
-::
-```
-
-### 3. Invalid Component Name
-
-**Error pattern:**
-```markdown
-::u-hero  # Component does not exist
-```
-
-**Fix:**
-```markdown
-::u-page-hero  # Use the correct component name
-```
-
-### 4. Missing File Label on a Code Block
-
-**Error pattern:**
-````markdown
-```typescript
-export default defineNuxtConfig({})
-```
-````
-
-**Fix:**
-````markdown
-```ts [nuxt.config.ts]
-export default defineNuxtConfig({})
-```
-````
-
-### 5. Broken Component Attributes
-
-**Error pattern:**
-```markdown
-:::u-button color=neutral size=xl
-```
-
-**Fix:**
-```markdown
-:::u-button{color="neutral" size="xl"}
-```
-
----
-
-## Component Documentation Components
-
-When the docs site documents Vue components, the following components are available:
-
-```markdown
-<!-- Render a component example (requires an example file under app/components/content/examples/) -->
-:component-example{name="MyButton"}
-
-<!-- Auto-generate the props table -->
-:component-props{name="MyButton"}
-
-<!-- Auto-generate the slots table -->
-:component-slots{name="MyButton"}
-
-<!-- Auto-generate the emits table -->
-:component-emits{name="MyButton"}
-
-<!-- Show commit history -->
-:commit-changelog{name="MyButton"}
-
-<!-- Show the page's last update time -->
-:page-last-commit
-```
-
----
 
 ## Validation Checklist
 
-Validate every page against the following:
+### Location and links
+- [ ] Pages under `content/docs/` (and `content/{locale}/docs/`).
+- [ ] Internal links absolute, `/docs/`-prefixed, locale-correct, and resolving.
+- [ ] Section roots have a page or redirect.
 
 ### Frontmatter
-- [ ] `title` and `description` fields are present.
-- [ ] `navigation.icon`, when present, starts with `i-`.
-- [ ] The `links` array has the correct object structure.
-- [ ] No invalid YAML syntax.
-- [ ] Use `navigation: false` for pages that should exist as routes but be excluded from the sidebar.
+- [ ] `title`, `description` present; `seo.*` present.
+- [ ] `category` ids declared in `docs.categories`.
+- [ ] `links` objects well-formed; icons `i-*`.
 
-### MDC Components
-- [ ] Every Nuxt UI component uses the `u-` prefix.
-- [ ] Nesting levels are consistent (`::`, `:::`, `::::`).
-- [ ] Component names are valid.
-- [ ] Properties use the correct syntax `{key="value"}`.
-- [ ] Slot names match the component documentation.
-- [ ] `::code-preview` is used for visually renderable examples (Markdown syntax, tables, lists, etc.).
+### MDC
+- [ ] `u-` prefix only on Nuxt UI components.
+- [ ] Every component name resolves.
+- [ ] Feature-dependent components have their feature flag and packages.
+- [ ] Override advice limited to the v3 contract.
 
-### Code Blocks
-- [ ] Language tags are specified (ts, js, vue, bash, etc.).
-- [ ] Filename labels exist on every code block that represents a file (not just config files).
-- [ ] Code language matches the project's stack (for example, `lang="ts"` on Vue `<script setup>` in TypeScript projects).
-- [ ] `::code-group` is used for multi-variant examples (package managers, frameworks, etc.).
-- [ ] Package manager `::code-group` blocks cover every supported package manager (check by project / ecosystem).
-- [ ] Only equivalent alternatives are grouped — don't mix unrelated steps in `::code-group` (for example install + config).
-- [ ] `::code-preview` is used wherever a rendered preview adds clarity.
+### Images and code
+- [ ] Images exist, have `alt`, screenshots have light and dark variants.
+- [ ] Fences have languages and file labels; examples match the source.
 
-### File Structure
-- [ ] Directories follow the numbered pattern (`1.section/`).
-- [ ] Files follow the numbered pattern (`1.page.md`).
-- [ ] `.navigation.yml` exists in every section.
-- [ ] File and directory names are kebab-case.
+### i18n (if enabled)
+- [ ] No `file` on locales; every locale has content.
+- [ ] Pages and headings mirrored across locales.

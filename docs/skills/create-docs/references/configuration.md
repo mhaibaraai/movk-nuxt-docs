@@ -1,321 +1,252 @@
 # Configuration Reference
 
-Movk Nuxt Docs is configured through two files: `nuxt.config.ts` and `app/app.config.ts`.
+Only the options a generated docs site usually needs. Full, always up-to-date tables:
+
+- `app.config.ts`: https://docs.mhaibaraai.cn/docs/reference/app-config
+- `nuxt.config.ts`: https://docs.mhaibaraai.cn/docs/reference/nuxt-config
+
+`nuxt.config.ts` holds build-time module options (feature flags, AI models, i18n). `app/app.config.ts` holds runtime UI settings (header, navigation, footer, GitHub, theme).
 
 ## nuxt.config.ts
 
-### Minimal Configuration
+### Minimal
 
 ```ts [nuxt.config.ts]
 export default defineNuxtConfig({
   extends: ['@movk/nuxt-docs'],
+
+  routeRules: {
+    '/docs': { redirect: '/docs/getting-started', prerender: false }
+  },
+
+  compatibilityDate: 'latest'
 })
 ```
 
-### Full Configuration
+### Site identity
 
 ```ts [nuxt.config.ts]
 export default defineNuxtConfig({
-  extends: ['@movk/nuxt-docs'],
-
-  // Custom CSS
-  css: ['~/assets/css/main.css'],
-
-  // Site information (used for SEO)
   site: {
-    name: 'My Docs',
+    url: 'https://docs.example.com',
+    name: 'My Project'
   },
-
-  // AI Chat configuration
-  aiChat: {
-    model: 'openai/gpt-5-nano',
-    models: [
-      'openai/gpt-5-nano',
-      'deepseek/deepseek-v3.2',
-    ],
-  },
-
-  // MCP Server configuration
   mcp: {
-    name: 'My Docs',
+    name: 'My Project'
   },
-
-  // Layer feature flags
-  movkNuxtDocs: {
-    a11y: true,
-    mermaid: false
-  },
-
-  // Component metadata (for auto-generated component docs)
-  componentMeta: {
-    include: [
-      'Button',
-      'Card*',
-    ],
+  llms: {
+    domain: 'https://docs.example.com',
+    title: 'My Project',
+    description: 'One-sentence description of the project for AI tools.'
   }
 })
 ```
 
-### Layer Feature Flags
+`site.url` drives canonical URLs, the sitemap, OG images and agent discovery documents.
 
-| Option | Type | Default | Description |
-|------|------|--------|------|
-| `movkNuxtDocs.a11y` | `boolean` | `true` | Enable the `@nuxt/a11y` accessibility module |
-| `movkNuxtDocs.mermaid` | `boolean` | `false` | Enable Mermaid diagram rendering (requires `mermaid` and `dompurify`) |
-
-### AI Chat
-
-| Option | Type | Description |
-|------|------|------|
-| `aiChat.model` | `string` | Default model |
-| `aiChat.models` | `string[]` | List of selectable models |
-
-The model format is `provider/model-name`, for example `openai/gpt-5-nano` or `deepseek/deepseek-v3.2`.
-
-### Component Metadata
+### Feature flags
 
 ```ts [nuxt.config.ts]
 export default defineNuxtConfig({
-  componentMeta: {
-    // Supports string globs, regular expressions, and functions
-    include: [
-      'Button',                // Exact match
-      'Card*',                 // Wildcard
-      /^Modal/,                // Regular expression
-    ],
-    exclude: ['Internal*'],
-  },
+  movkNuxtDocs: {
+    componentDocs: false, // ComponentProps / Slots / Emits / Example / Code
+    mcp: true,            // MCP server at /mcp
+    ogImage: true,        // Build-time OG images
+    mermaid: false,       // ```mermaid code blocks
+    a11y: false           // @nuxt/a11y during development
+  }
 })
 ```
 
+| Flag | Default | Install when enabled |
+|------|---------|----------------------|
+| `componentDocs` | `false` | `nuxt-component-meta vue-component-meta prettier` |
+| `mcp` | `true` | — |
+| `ogImage` | `true` | — |
+| `mermaid` | `false` | `mermaid dompurify` |
+| `a11y` | `false` | `@nuxt/a11y` |
+
+### Component docs
+
+```ts [nuxt.config.ts]
+export default defineNuxtConfig({
+  movkNuxtDocs: { componentDocs: true },
+  componentMeta: {
+    include: ['app/components/MyButton.vue', /Card/]
+  }
+})
+```
+
+Put live examples in `app/components/content/examples/` and reference them with `:component-example{name="MyButtonExample"}`.
+
+### AI Chat
+
+```ts [nuxt.config.ts]
+export default defineNuxtConfig({
+  aiChat: {
+    // enabled: true,          // defaults to whether AI_API_KEY exists at build time
+    model: 'openai/gpt-5-mini',
+    models: ['openai/gpt-5-mini', 'anthropic/claude-sonnet-5.5']
+  }
+})
+```
+
+| Option | Default | Description |
+|--------|---------|-------------|
+| `enabled` | `true` if `AI_API_KEY` is set | Turn AI Chat on or off |
+| `model` | `''` | Default model id, `provider/model` |
+| `models` | `[]` | Models offered in the selector |
+| `apiPath` | `'/api/ai-chat'` | Chat endpoint |
+| `mcpPath` | `'/mcp'` | MCP endpoint used for tools |
+
+Model routing: a provider registered with `modelProviderRegistry` wins; otherwise `AI_BASE_URL` sends every model to that OpenAI-compatible endpoint (the `provider/` prefix is stripped and only used for the icon); otherwise Vercel AI Gateway is used. Install the AI packages listed in the feature table of `SKILL.md`.
+
+### Internationalization
+
+```ts [nuxt.config.ts]
+export default defineNuxtConfig({
+  modules: ['@nuxtjs/i18n'],
+  routeRules: {
+    '/docs': { redirect: '/docs/getting-started', prerender: false },
+    '/en/docs': { redirect: '/en/docs/getting-started', prerender: false }
+  },
+  i18n: {
+    defaultLocale: 'zh-CN',
+    locales: [
+      { code: 'zh-CN', name: '简体中文' },
+      { code: 'en', name: 'English' }
+    ]
+  }
+})
+```
+
+- Do not set `file` on locales.
+- The layer forces `strategy: 'prefix_except_default'`.
+- Built-in UI translations: `zh-CN`, `en`. Other locales need a translation file and are otherwise filtered out with a warning.
+- Content collections: default locale `docs`, `landing`, `releases`, `templates`; others `docs_{code}` etc. (`-` becomes `_`).
+
 ## app/app.config.ts
+
+### Header and navigation
+
+```ts [app/app.config.ts]
+export default defineAppConfig({
+  header: {
+    title: 'My Project',
+    avatar: '/logo.svg',
+    nav: [
+      { label: { 'zh-CN': '文档', 'en': 'Docs' }, to: '/docs/getting-started', activeMatch: '/docs' }
+    ],
+    mobileNav: [
+      { label: { 'zh-CN': '快速开始', 'en': 'Getting Started' }, icon: 'i-lucide-square-play', to: '/docs/getting-started' }
+    ],
+    links: [
+      { 'icon': 'i-simple-icons-github', 'to': 'https://github.com/my-org/my-project', 'target': '_blank', 'aria-label': 'GitHub' }
+    ]
+  }
+})
+```
+
+`mobileNav` falls back to `nav` when empty. Plain string labels are fine for single-language sites.
+
+### Sidebar categories
+
+```ts [app/app.config.ts]
+export default defineAppConfig({
+  docs: {
+    categories: {
+      'guide': [
+        { id: 'basics', title: 'Basics', icon: 'i-lucide-settings' }
+      ]
+    }
+  }
+})
+```
+
+```yaml [content/docs/2.guide/1.configuration.md]
+---
+title: Configuration
+category: basics
+---
+```
+
+### GitHub
+
+```ts [app/app.config.ts]
+export default defineAppConfig({
+  github: {
+    owner: 'my-org',
+    name: 'my-project',
+    url: 'https://github.com/my-org/my-project',
+    branch: 'main',
+    rootDir: 'docs',      // docs directory inside the repo (monorepos)
+    commitPath: 'src',    // where CommitChangelog looks for source files
+    suffix: 'vue'
+  }
+})
+```
+
+Set `github: false` to disable edit links, commit history and releases fetching. Production builds that use them need `NUXT_GITHUB_TOKEN`.
+
+### Footer, TOC, SEO
+
+```ts [app/app.config.ts]
+export default defineAppConfig({
+  seo: { titleTemplate: '%s - My Project' },
+  footer: {
+    credits: `Copyright © ${new Date().getFullYear()} My Org`,
+    socials: [{ 'icon': 'i-simple-icons-github', 'to': 'https://github.com/my-org', 'target': '_blank', 'aria-label': 'GitHub' }]
+  },
+  toc: {
+    bottom: {
+      links: [{ icon: 'i-lucide-message-circle-code', label: 'llms.txt', to: '/llms.txt', target: '_blank' }]
+    }
+  }
+})
+```
 
 ### Theme
 
 ```ts [app/app.config.ts]
 export default defineAppConfig({
-  theme: {
-    radius: 0.25,            // Border radius (rem)
-    blackAsPrimary: false,   // Use black as the primary color
-    icons: 'lucide',         // Icon set (lucide)
-  },
   ui: {
-    colors: {
-      primary: 'green',      // Primary color
-      neutral: 'slate',      // Neutral color
-    },
+    colors: { primary: 'vermilion', neutral: 'paper' } // layer defaults
   },
+  theme: {
+    font: 'editorial', // 'editorial' serif headings | 'sans'
+    grain: false,      // paper grain texture
+    radius: 0.25,
+    icons: 'lucide'
+  }
 })
 ```
 
-### Header
-
-```ts [app/app.config.ts]
-export default defineAppConfig({
-  header: {
-    title: 'My Docs',           // Title
-    avatar: '/avatar.png',      // Avatar
-    to: '/',                    // Title link
-    search: true,               // Search bar
-    colorMode: true,            // Color mode toggle
-    links: [                    // Header links
-      {
-        icon: 'i-simple-icons-github',
-        to: 'https://github.com/my/repo',
-        target: '_blank',
-        label: 'GitHub',
-      },
-    ],
-  },
-})
-```
-
-### Footer
-
-```ts [app/app.config.ts]
-export default defineAppConfig({
-  footer: {
-    credits: `Copyright © 2024 - ${new Date().getFullYear()}`,
-    socials: [
-      {
-        icon: 'i-simple-icons-github',
-        to: 'https://github.com/my/repo',
-        target: '_blank',
-        label: 'GitHub',
-      },
-    ],
-  },
-})
-```
-
-### TOC
-
-```ts [app/app.config.ts]
-export default defineAppConfig({
-  toc: {
-    title: 'On this page',
-    bottom: {
-      title: 'Community',
-      links: [
-        {
-          icon: 'i-lucide-book-open',
-          label: 'Nuxt UI Docs',
-          to: 'https://ui.nuxt.com',
-          target: '_blank',
-        },
-      ],
-    },
-  },
-})
-```
-
-### SEO
-
-```ts [app/app.config.ts]
-export default defineAppConfig({
-  seo: {
-    titleTemplate: '',      // Title template, defaults to '%s - ${site.name}'
-    title: '',              // Default title
-    description: '',        // Default description
-  },
-})
-```
-
-### GitHub Integration
-
-```ts [app/app.config.ts]
-export default defineAppConfig({
-  github: {
-    branch: 'main',
-    rootDir: 'docs',         // Docs root directory (for monorepos)
-    dateFormat: {
-      locale: 'en-US',
-      options: {
-        year: 'numeric',
-        month: 'numeric',
-        day: 'numeric',
-      },
-    },
-  },
-})
-```
-
-Disable the GitHub integration: `github: false`.
+Single-language UI language: `i18n: { locale: 'en' }` (default `zh-CN`).
 
 ### AI Chat UI
 
 ```ts [app/app.config.ts]
 export default defineAppConfig({
   aiChat: {
-    floatingInput: true,       // Floating input
-    explainWithAi: true,       // "Explain with AI" button
-    shortcuts: {
-      focusInput: 'meta_i',    // Keyboard shortcut
-    },
-    // FAQ questions (categorized, simple, or per-locale object)
+    floatingInput: true,
+    explainWithAi: true,
     faqQuestions: [
-      {
-        category: 'Quick start',
-        items: ['How do I install?', 'How do I configure it?'],
-      },
-    ],
-    // Localized form when i18n is enabled:
-    // faqQuestions: { 'zh-CN': [...], 'en': [...] },
-    // Customize UI text
-    texts: {
-      title: 'AI Assistant',
-      placeholder: 'Type your question...',
-      trigger: 'Chat with AI',
-    },
-    // Customize icons
-    icons: {
-      trigger: 'i-custom-ai',
-    },
-  },
+      { category: 'Getting started', items: ['How do I install it?', 'How do I configure it?'] }
+    ]
+  }
 })
 ```
 
-## Route Rules
+`faqQuestions` also accepts a string array or an object keyed by locale.
 
-Configure redirects and prerender rules in `nuxt.config.ts`:
+## Component overrides
 
-```ts [nuxt.config.ts]
-export default defineNuxtConfig({
-  routeRules: {
-    '/docs': { redirect: '/docs/getting-started', prerender: false },
-  },
-})
-```
+Create a component with the same name in `app/components/` to override the layer. Stable override points in v3: `Header`, `HeaderLogo`, `HeaderCenter`, `HeaderCTA`, `HeaderBody`, `HeaderBottom`, `LanguageSwitcher`, `ThemePicker`, `PageHeaderLinks`, `DocsAsideLeftTop`, `DocsAsideLeftBody`, `DocsAsideRightBottom`, `Footer`, `FooterLeft`, `FooterRight`, `ComponentExampleExtras`. Anything else is internal. Prefer `app.config` when only links or text change.
 
-## Internationalization (i18n)
-
-Multilingual is opt-in via `@nuxtjs/i18n`. Without it, set the single UI language in `app.config.ts`:
-
-```ts [app/app.config.ts]
-export default defineAppConfig({
-  i18n: {
-    locale: 'en', // UI language, defaults to 'zh-CN'
-  },
-})
-```
-
-For multiple languages, install `@nuxtjs/i18n` and configure `nuxt.config.ts`. The layer forces the `prefix_except_default` strategy: the default locale has no prefix, others are prefixed.
-
-```ts [nuxt.config.ts]
-export default defineNuxtConfig({
-  modules: ['@nuxtjs/i18n'],
-  i18n: {
-    defaultLocale: 'zh-CN',
-    locales: [
-      { code: 'zh-CN', name: '简体中文', file: 'zh-CN.json' },
-      { code: 'en', name: 'English', file: 'en.json' },
-    ],
-  },
-})
-```
-
-Content layout: default-locale content stays at the `content/` root (e.g. `content/docs/`); other locales live under `content/{locale}/` (e.g. `content/en/docs/`). A locale is filtered out at build time unless it has both a translation file `{code}.json` and a `content/{code}/` directory. Built-in translations cover `zh-CN` and `en`.
-
-## Content Collections
-
-Movk Nuxt Docs predefines three content collections:
-
-| Collection | Path | Description |
-|------|------|------|
-| `docs` | `content/docs/` | Documentation pages |
-| `landing` | `content/index.md` | Landing page |
-| `releases` | `content/releases.yml` | Release log |
-
-`releases.yml` or `releases.md` is auto-detected and exposes a `/releases` route.
-
-When i18n is enabled, the default locale keeps `docs` / `landing`, while other locales get suffixed collections such as `docs_en` / `landing_en` (the locale code's `-` becomes `_`).
-
-## Component Overrides
-
-Create a same-named file under `app/components/` to override the Layer default component:
-
-| Component | File path | Description |
-|------|----------|------|
-| Header | `components/header/Header.vue` | Full header |
-| HeaderLogo | `components/header/HeaderLogo.vue` | Logo and title |
-| HeaderCTA | `components/header/HeaderCTA.vue` | Right-side header actions |
-| Footer | `components/footer/Footer.vue` | Full footer |
-| DocsAsideLeftTop | `components/DocsAsideLeftTop.vue` | Top of the left sidebar |
-| DocsAsideLeftBody | `components/DocsAsideLeftBody.vue` | Body of the left sidebar |
-| DocsAsideRightBottom | `components/DocsAsideRightBottom.vue` | Bottom of the right TOC sidebar |
-| PageHeaderLinks | `components/PageHeaderLinks.vue` | Right-side actions on the page header |
-| ThemePicker | `components/theme-picker/ThemePicker.vue` | Theme picker |
-
-## Environment Variables
-
-Configure environment variables according to the features you enable:
+## Environment variables
 
 ```bash [.env]
-# Used to fetch docs content
-NUXT_GITHUB_TOKEN=
-# Enables AI Chat; works with AI Gateway or any OpenAI-compatible provider
-AI_API_KEY=
-# Optional: OpenAI-compatible endpoint. Leave empty to route through AI Gateway.
-# e.g. https://api.deepseek.com/v1
-AI_BASE_URL=
+NUXT_GITHUB_TOKEN=   # releases and commit history
+AI_API_KEY=          # enables AI Chat
+AI_BASE_URL=         # optional OpenAI-compatible endpoint, e.g. https://api.deepseek.com/v1
 ```
