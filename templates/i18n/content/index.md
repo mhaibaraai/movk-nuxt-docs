@@ -10,9 +10,6 @@ orientation: horizontal
 ui:
   container: lg:py-20
 ---
-#top
-:hero-background
-
 #title
   :::motion
   构建现代智能的[文档]{.text-primary}
