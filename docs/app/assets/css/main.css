@@ -1,2 +1,15 @@
 /* 中文衬线标题：按 unicode-range 分片，页面只下载用到的字 */
 @import "@fontsource/noto-serif-sc/700.css";
+
+/* 落地页特性网格：按顺序自动编号 01、02… */
+@utility landing-grid {
+  counter-reset: landing-feature;
+
+  & > * {
+    counter-increment: landing-feature;
+  }
+
+  & [data-index]::before {
+    content: counter(landing-feature, decimal-leading-zero);
+  }
+}
