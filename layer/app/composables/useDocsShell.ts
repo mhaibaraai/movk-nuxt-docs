@@ -12,6 +12,7 @@ const NAVIGATION_KEY = 'navigation'
 export async function useDocsShell() {
   const { locale, docsRoot, docsCollection } = useMovkI18n()
   const { style, color } = useTheme()
+  const appConfig = useAppConfig()
 
   const nuxtUiLocale = computed(() =>
     nuxtUiLocales[locale.value.replace('-', '_').toLowerCase() as keyof typeof nuxtUiLocales] || nuxtUiLocales.en
@@ -33,8 +34,10 @@ export async function useDocsShell() {
 
   useHead({
     htmlAttrs: {
-      lang: computed(() => nuxtUiLocale.value.code),
-      dir: computed(() => nuxtUiLocale.value.dir)
+      'lang': computed(() => nuxtUiLocale.value.code),
+      'dir': computed(() => nuxtUiLocale.value.dir),
+      'data-font': computed(() => appConfig.theme?.font === 'sans' ? 'sans' : undefined),
+      'data-grain': computed(() => appConfig.theme?.grain ? '' : undefined)
     },
     meta: [
       { name: 'viewport', content: 'width=device-width, initial-scale=1' },

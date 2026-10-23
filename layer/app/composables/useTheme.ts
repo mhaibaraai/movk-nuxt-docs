@@ -3,6 +3,11 @@ import { omit, kebabCase } from '@movk/core'
 import { useLocalStorage } from '@vueuse/core'
 import colors from 'tailwindcss/colors'
 
+/** 与 main.css 中自定义 neutral 色阶的首尾色保持一致，用于 theme-color */
+const CUSTOM_NEUTRALS: Record<string, Record<50 | 950, string>> = {
+  paper: { 50: '#faf9f5', 950: '#141413' }
+}
+
 export interface ThemeDefaults {
   primary: string
   neutral: string
@@ -30,13 +35,16 @@ export function useTheme() {
   const name = kebabCase(site.name)
   const defaults = useThemeDefaults()
 
-  const color = computed(() => colorMode.value === 'dark' ? (colors as any)[appConfig.ui.colors.neutral][900] : 'white')
+  const color = computed(() => {
+    const shades = (colors as any)[appConfig.ui.colors.neutral] ?? CUSTOM_NEUTRALS[appConfig.ui.colors.neutral]
+    return colorMode.value === 'dark' ? shades?.[950] : shades?.[50]
+  })
 
   const _radius = useLocalStorage(`${name}-ui-radius`, defaults.value.radius)
   const _iconSet = useLocalStorage(`${name}-ui-icons`, defaults.value.icons)
   const _blackAsPrimary = useLocalStorage(`${name}-ui-black-as-primary`, defaults.value.blackAsPrimary)
 
-  const neutralColors = ['slate', 'gray', 'zinc', 'neutral', 'stone', 'taupe', 'mauve', 'mist', 'olive']
+  const neutralColors = ['paper', 'slate', 'gray', 'zinc', 'neutral', 'stone', 'taupe', 'mauve', 'mist', 'olive']
   const neutral = computed({
     get() {
       return appConfig.ui.colors.neutral
@@ -48,7 +56,7 @@ export function useTheme() {
   })
 
   const colorsToOmit = ['inherit', 'current', 'transparent', 'black', 'white', ...neutralColors]
-  const primaryColors = Object.keys(omit(colors, colorsToOmit as any))
+  const primaryColors = ['vermilion', ...Object.keys(omit(colors, colorsToOmit as any))]
   const primary = computed({
     get() {
       return appConfig.ui.colors.primary

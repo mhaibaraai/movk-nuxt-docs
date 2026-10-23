@@ -83,17 +83,15 @@ async function copyPage() {
 </script>
 
 <template>
-  <UFieldGroup size="sm">
-    <UButton
-      :label="t('docs.copyPage')"
-      :icon="copied ? ui.icons.copyCheck : ui.icons.copy"
-      color="neutral"
-      variant="outline"
-      :ui="{
-        leadingIcon: [copied && 'text-primary', 'size-3.5']
-      }"
+  <div class="inline-flex items-center gap-1">
+    <button
+      type="button"
+      class="link-wipe inline-flex items-center gap-1.5 font-mono text-[11px] uppercase tracking-[0.12em] text-muted hover:text-highlighted transition-colors"
       @click="copyPage"
-    />
+    >
+      <UIcon :name="copied ? ui.icons.copyCheck : ui.icons.copy" class="size-3.5" :class="copied && 'text-primary'" />
+      {{ t('docs.copyPage') }}
+    </button>
     <UDropdownMenu
       size="sm"
       :items="items"
@@ -109,9 +107,11 @@ async function copyPage() {
       <UButton
         :icon="ui.icons.chevronDown"
         color="neutral"
-        variant="outline"
+        variant="link"
+        size="xs"
+        class="text-muted hover:text-highlighted"
         :aria-label="t('header.toggleMenu')"
       />
     </UDropdownMenu>
-  </UFieldGroup>
+  </div>
 </template>

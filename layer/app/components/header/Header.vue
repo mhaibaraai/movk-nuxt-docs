@@ -19,7 +19,16 @@ const links = computed<ButtonProps[]>(() => (github && github.url
 </script>
 
 <template>
-  <UHeader :ui="{ left: 'min-w-0', right: 'gap-0.5' }" :aria-label="t('header.site')" class="flex flex-col">
+  <UHeader
+    :ui="{
+      root: 'bg-default backdrop-blur-none border-inverted',
+      left: 'min-w-0',
+      center: 'lg:ms-10 lg:me-auto',
+      right: 'gap-0.5 lg:flex-none'
+    }"
+    :aria-label="t('header.site')"
+    class="flex flex-col"
+  >
     <template #left>
       <HeaderLogo />
     </template>
@@ -27,13 +36,22 @@ const links = computed<ButtonProps[]>(() => (github && github.url
     <HeaderCenter />
 
     <template #right>
+      <template v-if="header?.search">
+        <UContentSearchButton
+          :collapsed="false"
+          :label="t('header.search')"
+          color="neutral"
+          class="hidden lg:inline-flex w-56 me-2 rounded-none ring-default text-muted hover:text-highlighted hover:ring-inverted"
+          :ui="{ trailing: 'ms-auto' }"
+        />
+        <UContentSearchButton class="lg:hidden" />
+      </template>
+
       <HeaderCTA />
 
-      <ThemePicker />
+      <span class="hidden lg:block h-5 border-s border-default mx-1.5" aria-hidden="true" />
 
-      <UTooltip :text="t('header.search')" :kbds="['meta', 'K']">
-        <UContentSearchButton v-if="header?.search" />
-      </UTooltip>
+      <ThemePicker />
 
       <UTooltip :text="t('header.colorMode')">
         <UColorModeButton v-if="header?.colorMode" :aria-label="t('header.colorMode')" />
@@ -44,7 +62,7 @@ const links = computed<ButtonProps[]>(() => (github && github.url
           <LanguageSwitcher />
 
           <template #fallback>
-            <div class="h-8 w-8 animate-pulse bg-neutral-200 dark:bg-neutral-800 rounded-md" />
+            <div class="h-8 w-8 animate-pulse bg-elevated rounded-md" />
           </template>
         </ClientOnly>
       </template>

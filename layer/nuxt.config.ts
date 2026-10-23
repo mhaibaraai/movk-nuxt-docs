@@ -65,6 +65,7 @@ export default defineNuxtConfig({
     build: {
       markdown: {
         highlight: {
+          theme: { default: 'github-light', light: 'github-light', dark: 'github-dark' },
           langs: ['bash', 'diff', 'json', 'js', 'ts', 'html', 'css', 'vue', 'shell', 'mdc', 'md', 'yaml']
         },
         remarkPlugins: {
@@ -80,7 +81,8 @@ export default defineNuxtConfig({
 
   mdc: {
     highlight: {
-      noApiRoute: false
+      noApiRoute: false,
+      theme: { default: 'github-light', light: 'github-light', dark: 'github-dark' }
     }
   },
 

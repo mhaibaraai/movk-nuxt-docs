@@ -12,8 +12,6 @@ watch(() => route.path, () => {
 
 <template>
   <UMain class="relative" as="main">
-    <HeroBackground />
-
     <UContainer>
       <UPage>
         <template #left>

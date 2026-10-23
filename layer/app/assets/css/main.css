@@ -1,10 +1,47 @@
 /* 由 layer/modules/css.ts 生成的 movk-nuxt-docs.css 统一导入，勿在此另建 Tailwind 编译根 */
 
+/* 仅拉丁字体：按 unicode-range 分片，中文回退到系统字体，不打包中文 webfont */
+@import "@fontsource-variable/inter/index.css";
+@import "@fontsource-variable/fraunces/opsz.css";
+@import "@fontsource-variable/jetbrains-mono/index.css";
+
 @theme static {
   --container-8xl: 90rem;
 
-  /* 首选字体缺字或加载失败时，依次回退到 macOS、Windows 与 Linux 的系统中文字体 */
-  --font-sans: 'Alibaba PuHuiTi', ui-sans-serif, system-ui, -apple-system, 'PingFang SC', 'Hiragino Sans GB', 'Microsoft YaHei', 'Noto Sans CJK SC', sans-serif;
+  /* 拉丁字符走 Inter，中文依次回退到使用方加载的普惠体与各平台系统中文字体 */
+  --font-sans: 'Inter Variable', 'Alibaba PuHuiTi', ui-sans-serif, system-ui, -apple-system, 'PingFang SC', 'Hiragino Sans GB', 'Microsoft YaHei', 'Noto Sans CJK SC', sans-serif;
+  /* 中文衬线仅在使用方加载或已安装思源宋体时生效；系统宋体常缺粗体字重，不列入，直接回退到无衬线粗体 */
+  --font-serif: 'Fraunces Variable', 'Noto Serif SC', 'Source Han Serif SC', 'Noto Serif CJK SC', 'PingFang SC', 'Hiragino Sans GB', 'Microsoft YaHei', 'Noto Sans CJK SC', serif;
+  --font-display: var(--font-serif);
+  --font-display--font-variation-settings: "SOFT" 30, "WONK" 0;
+  --font-mono: 'JetBrains Mono Variable', ui-monospace, 'SFMono-Regular', Menlo, monospace;
+
+  --ease-editorial: cubic-bezier(0.22, 1, 0.36, 1);
+
+  /* 低彩度暖灰：只带一丝暖意，避免黄底让正文与代码发糊；50 为亮色底，950 为暗色底 */
+  --color-paper-50: #faf9f5;
+  --color-paper-100: #f0eee6;
+  --color-paper-200: #e8e6dc;
+  --color-paper-300: #d1cfc5;
+  --color-paper-400: #b0aea5;
+  --color-paper-500: #87867f;
+  --color-paper-600: #5e5d59;
+  --color-paper-700: #3d3d3a;
+  --color-paper-800: #262624;
+  --color-paper-900: #1a1918;
+  --color-paper-950: #141413;
+
+  --color-vermilion-50: #fdf3f1;
+  --color-vermilion-100: #fbe4df;
+  --color-vermilion-200: #f7cbc2;
+  --color-vermilion-300: #f0a495;
+  --color-vermilion-400: #e57461;
+  --color-vermilion-500: #d64b34;
+  --color-vermilion-600: #bf3a24;
+  --color-vermilion-700: #9f2f1d;
+  --color-vermilion-800: #842a1c;
+  --color-vermilion-900: #6e281d;
+  --color-vermilion-950: #3c110a;
 
   --color-green-50: #EFFDF5;
   --color-green-100: #D9FBE8;
@@ -19,8 +56,187 @@
   --color-green-950: #052E16;
 }
 
+/* 背景与墨色由 neutral 色阶派生：选择任意 neutral 时仍保持纸面与墨色的层次。
+   正文接近纯黑、次要文字整体加深一档，对比度优先于「柔和」 */
 :root {
   --ui-container: var(--container-8xl);
+  --ui-primary: var(--ui-color-primary-600);
+  --ui-bg: var(--ui-color-neutral-50);
+  --ui-bg-muted: var(--ui-color-neutral-100);
+  --ui-bg-elevated: var(--ui-color-neutral-100);
+  --ui-bg-accented: var(--ui-color-neutral-200);
+  --ui-text-dimmed: var(--ui-color-neutral-500);
+  --ui-text-muted: var(--ui-color-neutral-600);
+  --ui-text-toned: var(--ui-color-neutral-700);
+  --ui-text: var(--ui-color-neutral-900);
+  --ui-text-highlighted: var(--ui-color-neutral-950);
+  --ui-text-inverted: var(--ui-color-neutral-50);
+  --ui-border-inverted: var(--ui-color-neutral-950);
+}
+
+.dark {
+  --ui-primary: var(--ui-color-primary-400);
+  --ui-bg: var(--ui-color-neutral-950);
+  --ui-bg-muted: var(--ui-color-neutral-900);
+  --ui-bg-elevated: var(--ui-color-neutral-900);
+  --ui-bg-accented: var(--ui-color-neutral-800);
+  --ui-border: var(--ui-color-neutral-800);
+  --ui-border-muted: var(--ui-color-neutral-900);
+  --ui-text-dimmed: var(--ui-color-neutral-500);
+  --ui-text-muted: var(--ui-color-neutral-400);
+  --ui-text-toned: var(--ui-color-neutral-300);
+  --ui-text: var(--ui-color-neutral-200);
+  --ui-text-highlighted: var(--ui-color-neutral-50);
+  --ui-bg-inverted: var(--ui-color-neutral-50);
+  --ui-border-inverted: var(--ui-color-neutral-50);
+}
+
+:root[data-font="sans"] {
+  --font-display: var(--font-sans);
+}
+
+html {
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+}
+
+body {
+  background-color: var(--ui-bg);
+}
+
+::selection {
+  background: var(--ui-primary);
+  color: var(--ui-bg);
+}
+
+/* 纸张颗粒：z-index 为负，只铺在背景上，不覆盖内容与代码块 */
+:root[data-grain] body::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  z-index: -1;
+  pointer-events: none;
+  opacity: 0.35;
+  mix-blend-mode: multiply;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='3' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0.09 0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+}
+
+:root.dark[data-grain] body::before {
+  opacity: 0.18;
+  mix-blend-mode: screen;
+}
+
+/* 正文 H2 与目录一级条目共用编号：01、02… */
+@utility docs-body {
+  counter-reset: docs-h2;
+
+  & h2 {
+    counter-increment: docs-h2;
+  }
+
+  & h2::before {
+    content: counter(docs-h2, decimal-leading-zero);
+    margin-inline-end: 0.875rem;
+    font-family: var(--font-mono);
+    font-size: 0.75rem;
+    font-weight: 400;
+    letter-spacing: 0.12em;
+    vertical-align: 0.4em;
+    color: var(--ui-primary);
+  }
+}
+
+@utility docs-toc {
+  & [data-slot="content"] > ul {
+    counter-reset: docs-toc;
+  }
+
+  & [data-slot="content"] > ul > li {
+    counter-increment: docs-toc;
+    border-bottom: 1px solid var(--ui-border);
+  }
+
+  & [data-slot="content"] > ul > li > a::before {
+    content: counter(docs-toc, decimal-leading-zero);
+    flex-shrink: 0;
+    width: 1.75rem;
+    font-family: var(--font-mono);
+    font-size: 0.6875rem;
+    letter-spacing: 0.12em;
+    color: var(--ui-primary);
+  }
+}
+
+/* 导航元信息标签：侧栏分组、目录标题、眉题、面包屑 */
+@utility kicker {
+  font-family: var(--font-mono);
+  font-size: 0.6875rem;
+  line-height: 1rem;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--ui-text-muted);
+}
+
+@utility rule {
+  border-top: 1px solid var(--ui-text-highlighted);
+}
+
+@utility rule-double {
+  border-top: 3px double var(--ui-text-highlighted);
+}
+
+@utility link-wipe {
+  background-image: linear-gradient(currentColor, currentColor);
+  background-size: 0% 1px;
+  background-position: 100% 100%;
+  background-repeat: no-repeat;
+  transition: background-size 0.5s var(--ease-editorial);
+
+  &:hover,
+  &:focus-visible {
+    background-size: 100% 1px;
+    background-position: 0% 100%;
+  }
+}
+
+/* 阅读进度：滚动驱动动画，不支持的浏览器直接隐藏 */
+@utility reading-progress {
+  display: none;
+
+  @supports (animation-timeline: scroll()) {
+    display: block;
+    transform-origin: 0 50%;
+    animation: reading-progress linear both;
+    animation-timeline: scroll(root);
+  }
+}
+
+@keyframes reading-progress {
+  from { transform: scaleX(0); }
+  to { transform: scaleX(1); }
+}
+
+::view-transition-old(root),
+::view-transition-new(root) {
+  animation-duration: 0.35s;
+  animation-timing-function: var(--ease-editorial);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+
+  ::view-transition-group(*),
+  ::view-transition-old(*),
+  ::view-transition-new(*) {
+    animation: none !important;
+  }
 }
 
 /* Shiki 暗色模式样式；颜色色块保留转换器写入的背景与对比前景色 */

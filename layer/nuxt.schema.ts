@@ -42,6 +42,20 @@ export default defineNuxtSchema({
           description: '全局图标集名称',
           icon: 'i-lucide-icon',
           default: 'lucide'
+        }),
+        font: field({
+          type: 'string',
+          title: '标题字体',
+          description: '`editorial` 为衬线标题，`sans` 全站使用无衬线',
+          icon: 'i-lucide-type',
+          default: 'editorial'
+        }),
+        grain: field({
+          type: 'boolean',
+          title: '纸张颗粒',
+          description: '在页面背景叠加纸张颗粒质感',
+          icon: 'i-lucide-scan-line',
+          default: false
         })
       }
     }),
