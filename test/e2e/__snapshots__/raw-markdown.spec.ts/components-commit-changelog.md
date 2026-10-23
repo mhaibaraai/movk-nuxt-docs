@@ -13,7 +13,7 @@ canonical_url: "https://docs.mhaibaraai.cn/docs/components/commit-changelog"
 
 ## 前置要求
 
-- **GitHub 配置**：在 `app/app.config.ts` 中配置 GitHub 相关信息。详见 [GitHub 集成配置](https://docs.mhaibaraai.cn/docs/getting-started/configuration#github-%E9%9B%86%E6%88%90)。
+- **GitHub 配置**：在 `app/app.config.ts` 中配置 GitHub 相关信息。详见 [GitHub 集成配置](https://docs.mhaibaraai.cn/docs/guide/configuration#github-%E9%9B%86%E6%88%90)。
 - **环境变量**：在 `.env` 文件中配置 GitHub Token：
 ```bash
 NUXT_GITHUB_TOKEN=ghp_your_personal_access_token_here
@@ -193,7 +193,7 @@ interface CommitChangelogProps {
 ## 相关
 
 - [PageLastCommit](https://docs.mhaibaraai.cn/docs/components/page-last-commit) — 显示当前页面的最后更新信息
-- [useFetchComponentMeta](https://docs.mhaibaraai.cn/docs/composables/fetch-component-meta) — 获取组件元数据的 Composable
+- [useFetchComponentMeta](https://docs.mhaibaraai.cn/docs/reference/composables/fetch-component-meta) — 获取组件元数据的 Composable
 
 ## Changelog
 

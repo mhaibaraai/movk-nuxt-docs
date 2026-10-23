@@ -1,5 +1,36 @@
 import pkg from '../package.json'
 
+const moved = (slugs: string[], from: string, to: string) =>
+  Object.fromEntries(slugs.map(slug => [`${from}/${slug}`, `${to}/${slug}`]))
+
+// 区块首页跳到首篇
+const sectionRedirects: Record<string, string> = {
+  '/docs': '/docs/getting-started',
+  '/docs/guide': '/docs/guide/configuration',
+  '/docs/ai': '/docs/ai/ai-chat',
+  '/docs/writing': '/docs/writing/markdown-syntax',
+  '/docs/components': '/docs/components/component-props',
+  '/docs/reference': '/docs/reference/composables/use-header',
+  '/docs/reference/composables': '/docs/reference/composables/use-header'
+}
+
+// v2 旧路径永久跳到 v3 新位置
+const legacyRedirects: Record<string, string> = {
+  '/docs/typography': '/docs/writing/markdown-syntax',
+  '/docs/composables': '/docs/reference/composables/use-header',
+  '/docs/getting-started/nuxt': '/docs/guide/pages',
+  ...moved(['configuration', 'customization', 'i18n', 'deployment', 'troubleshooting'], '/docs/getting-started', '/docs/guide'),
+  ...moved(['ai-chat', 'mcp', 'skills', 'llms-txt'], '/docs/getting-started', '/docs/ai'),
+  ...moved(['markdown-syntax', 'code-blocks', 'mdc-components', 'media', 'mermaid'], '/docs/typography', '/docs/writing'),
+  ...moved(['use-header', 'use-navigation', 'use-category', 'use-theme', 'fetch-component-meta', 'fetch-component-example'], '/docs/composables', '/docs/reference/composables')
+}
+
+const redirectRules = (redirects: Record<string, string>, statusCode: number) =>
+  ['', '/en'].flatMap(prefix => Object.entries(redirects).map(([from, to]) => [
+    `${prefix}${from}`,
+    { redirect: { to: `${prefix}${to}`, statusCode }, prerender: false }
+  ]))
+
 export default defineNuxtConfig({
   extends: ['@movk/nuxt-docs'],
 
@@ -37,16 +68,10 @@ export default defineNuxtConfig({
     }
   },
 
-  routeRules: {
-    '/docs': { redirect: '/docs/getting-started', prerender: false },
-    '/docs/typography': { redirect: '/docs/typography/markdown-syntax', prerender: false },
-    '/docs/components': { redirect: '/docs/components/component-props', prerender: false },
-    '/docs/composables': { redirect: '/docs/composables/use-header', prerender: false },
-    '/en/docs': { redirect: '/en/docs/getting-started', prerender: false },
-    '/en/docs/typography': { redirect: '/en/docs/typography/markdown-syntax', prerender: false },
-    '/en/docs/components': { redirect: '/en/docs/components/component-props', prerender: false },
-    '/en/docs/composables': { redirect: '/en/docs/composables/use-header', prerender: false }
-  },
+  routeRules: Object.fromEntries([
+    ...redirectRules(sectionRedirects, 302),
+    ...redirectRules(legacyRedirects, 301)
+  ]),
 
   compatibilityDate: '2026-06-30',
 
@@ -108,7 +133,7 @@ export default defineNuxtConfig({
 
   mcp: {
     name: 'Movk Nuxt Docs',
-    browserRedirect: '/docs/getting-started/mcp'
+    browserRedirect: '/docs/ai/mcp'
   },
 
   movkNuxtDocs: {

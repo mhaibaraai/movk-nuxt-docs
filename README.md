@@ -47,7 +47,7 @@ Agent Skills 是一种开放格式，允许 AI 代理（Claude Code、Cursor、W
 npx skills add https://docs.mhaibaraai.cn
 ```
 
-详见 [Agent Skills 文档](https://docs.mhaibaraai.cn/docs/getting-started/skills)。
+详见 [Agent Skills 文档](https://docs.mhaibaraai.cn/docs/ai/skills)。
 
 ### 🧩 自动化文档生成
 
@@ -274,7 +274,7 @@ export default defineNuxtConfig({
 })
 ```
 
-默认语言内容保持在 `content/` 根目录（无前缀，如 `/docs`），其余语言放入 `content/{locale}/`（带前缀，如 `/en/docs`）。开箱即用可使用官方 i18n 模板：`npx nuxi init -t gh:mhaibaraai/movk-nuxt-docs/templates/i18n my-docs`。详见 [国际化文档](https://docs.mhaibaraai.cn/docs/getting-started/i18n)。
+默认语言内容保持在 `content/` 根目录（无前缀，如 `/docs`），其余语言放入 `content/{locale}/`（带前缀，如 `/en/docs`）。开箱即用可使用官方 i18n 模板：`npx nuxi init -t gh:mhaibaraai/movk-nuxt-docs/templates/i18n my-docs`。详见 [国际化文档](https://docs.mhaibaraai.cn/docs/guide/i18n)。
 
 ## 🛠️ 开发
 

@@ -9,8 +9,8 @@ const PAGES = [
   'components/component-code',
   'components/commit-changelog',
   'components/page-last-commit',
-  'typography/mdc-components',
-  'typography/code-blocks'
+  'writing/mdc-components',
+  'writing/code-blocks'
 ]
 
 for (const page of PAGES) {

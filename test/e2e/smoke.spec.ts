@@ -68,5 +68,5 @@ test('页头导航来自 app.config 并按语言本地化', async ({ page }) => 
   await page.goto('/en/docs/getting-started')
   const enNav = page.getByRole('navigation', { name: 'Main Navigation' })
   await expect(enNav.getByRole('link', { name: 'Docs' })).toHaveAttribute('href', '/en/docs/getting-started')
-  await expect(enNav.getByRole('link', { name: 'Examples' })).toHaveAttribute('href', '/en/templates')
+  await expect(enNav.getByRole('link', { name: 'Showcase' })).toHaveAttribute('href', '/en/templates')
 })

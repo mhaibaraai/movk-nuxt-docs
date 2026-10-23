@@ -139,7 +139,7 @@ Readers can ask the docs directly, while AI editors read the same content throug
   ---
   color: neutral
   variant: outline
-  to: /en/docs/getting-started/ai-chat
+  to: /en/docs/ai/ai-chat
   trailing-icon: i-lucide-arrow-right
   ---
   Learn about AI features

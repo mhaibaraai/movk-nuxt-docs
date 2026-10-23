@@ -139,7 +139,7 @@ seo:
   ---
   color: neutral
   variant: outline
-  to: /docs/getting-started/ai-chat
+  to: /docs/ai/ai-chat
   trailing-icon: i-lucide-arrow-right
   ---
   了解 AI 功能
