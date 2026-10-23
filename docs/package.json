@@ -10,6 +10,7 @@
     "@ai-sdk/openai": "^4.0.89",
     "@ai-sdk/vue": "^4.0.133",
     "@comark/vue": "^0.7.0",
+    "@fontsource/noto-serif-sc": "^5.3.1",
     "@movk/nuxt-docs": "workspace:*",
     "@nuxt/a11y": "^1.0.0-alpha.1",
     "@nuxt/content": "^3.16.1",

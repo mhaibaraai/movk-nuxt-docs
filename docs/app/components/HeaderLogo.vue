@@ -32,18 +32,15 @@ const items = [
 </script>
 
 <template>
-  <div class="flex items-center gap-2" aria-label="Site Logo">
+  <div class="flex items-center gap-3 min-w-0" aria-label="Site Logo">
     <UContextMenu :items="items">
-      <NuxtLink :to="logoTo" class="flex items-end gap-2 font-bold text-xl text-highlighted min-w-0 outline-primary/25 focus-visible:outline-3 shrink-0 rounded-md p-1 -ms-1" aria-label="Movk Nuxt Docs">
-        <Logo ref="logoRef" class="w-auto h-6 shrink-0" />
+      <NuxtLink :to="logoTo" class="font-display text-xl font-bold tracking-tight text-highlighted shrink-0 rounded-sm outline-primary/25 focus-visible:outline-3" aria-label="Movk Nuxt Docs">
+        Movk Nuxt Docs<span class="text-primary">.</span>
       </NuxtLink>
     </UContextMenu>
 
-    <UButton
-      :label="`v${config.version}`"
-      variant="subtle"
-      size="xs"
-      class="font-semibold rounded-full truncate"
-    />
+    <span class="kicker truncate">v{{ config.version }}</span>
+
+    <Logo ref="logoRef" class="hidden" aria-hidden="true" />
   </div>
 </template>
