@@ -1,9 +1,12 @@
 import { createResolver, defineNuxtModule, logger } from '@nuxt/kit'
-import { existsSync } from 'node:fs'
+import { existsSync, mkdirSync, readFileSync, writeFileSync } from 'node:fs'
 import { join } from 'pathe'
-import { filterValidLocales, localeCode, localeName, type I18nLocale } from '../utils/locale'
+import { filterValidLocales, localeCode, localeName, mergeLocaleMessages, type I18nLocale, type LocaleMessages } from '../utils/locale'
 
 const log = logger.withTag('movk-docs')
+
+const readMessages = (file: string): LocaleMessages | undefined =>
+  existsSync(file) ? JSON.parse(readFileSync(file, 'utf8')) : undefined
 
 interface I18nOptions {
   defaultLocale?: string
@@ -19,7 +22,7 @@ interface RegisterModuleOptions {
 
 /**
  * 条件激活 i18n：仅当消费方在 nuxt.config 配置了 i18n.locales 时生效。
- * 过滤无效 locale、强制 prefix_except_default 策略、注册内置翻译文件、
+ * 过滤无效 locale、强制 prefix_except_default 策略、合并站点 i18n/locales/ 与内置翻译后注册，
  * 暴露有效 locale 列表，并预渲染非默认语言入口。
  */
 export default defineNuxtModule({
@@ -35,18 +38,20 @@ export default defineNuxtModule({
     }
 
     const { resolve } = createResolver(import.meta.url)
-    const langDir = resolve('../i18n/locales')
+    const builtinDir = resolve('../i18n/locales')
+    // 站点翻译：新增内置没有的语言，或覆盖内置文案
+    const siteDir = join(nuxt.options.rootDir, 'i18n/locales')
     const defaultLocale = i18n.defaultLocale || localeCode(i18n.locales[0]!)
     const rootDir = nuxt.options.rootDir
 
     const { valid: filteredLocales, skipped } = filterValidLocales(i18n.locales, {
       defaultLocale,
-      hasTranslation: code => existsSync(join(langDir, `${code}.json`)),
+      hasTranslation: code => existsSync(join(builtinDir, `${code}.json`)) || existsSync(join(siteDir, `${code}.json`)),
       hasContent: code => existsSync(join(rootDir, 'content', code))
     })
 
     for (const { code, missing } of skipped) {
-      if (missing.includes('translation')) log.warn(`缺少翻译文件 ${code}.json，已跳过 locale "${code}"`)
+      if (missing.includes('translation')) log.warn(`缺少翻译文件 i18n/locales/${code}.json，已跳过 locale "${code}"`)
       if (missing.includes('content')) log.warn(`缺少内容目录 content/${code}/，已跳过 locale "${code}"`)
     }
 
@@ -72,6 +77,20 @@ export default defineNuxtModule({
       name: 'i18n:registerModule',
       cb: (register: (options: RegisterModuleOptions) => void) => void
     ) => void
+
+    // @nuxtjs/i18n 在模块阶段即读取翻译文件，合并结果需同步写入，且不能放在会被清理的 buildDir
+    const langDir = join(nuxt.options.rootDir, 'node_modules/.cache/movk-nuxt-docs/i18n')
+    mkdirSync(langDir, { recursive: true })
+    const fallback = readMessages(join(builtinDir, 'en.json'))!
+    for (const locale of filteredLocales) {
+      const code = localeCode(locale)
+      const messages = mergeLocaleMessages(
+        readMessages(join(siteDir, `${code}.json`)),
+        readMessages(join(builtinDir, `${code}.json`)),
+        fallback
+      )
+      writeFileSync(join(langDir, `${code}.json`), JSON.stringify(messages))
+    }
 
     registerI18n('i18n:registerModule', (register) => {
       register({

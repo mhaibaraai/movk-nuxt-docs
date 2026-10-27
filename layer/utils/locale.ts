@@ -1,3 +1,5 @@
+import { defu } from 'defu'
+
 export type I18nLocale = string | { code: string, name?: string }
 
 export const localeCode = (locale: I18nLocale): string =>
@@ -71,4 +73,18 @@ export function filterValidLocales(locales: I18nLocale[], { defaultLocale, hasTr
   }
 
   return { valid, skipped }
+}
+
+export type LocaleMessages = Record<string, unknown>
+
+/**
+ * 合并站点翻译与 layer 内置翻译：站点文案优先，缺失的键先取该语言的内置文案，
+ * 内置没有该语言时取英文内置文案补齐
+ */
+export function mergeLocaleMessages(
+  site: LocaleMessages | undefined,
+  builtin: LocaleMessages | undefined,
+  fallback: LocaleMessages
+): LocaleMessages {
+  return defu({}, site, builtin ?? fallback)
 }
