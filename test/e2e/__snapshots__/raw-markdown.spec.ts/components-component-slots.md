@@ -69,7 +69,7 @@ interface ComponentSlotsProps {
 
 ## Changelog
 
-See commit history for [layer/modules/component-docs/runtime/components/ComponentSlots.vue](https://github.com/mhaibaraai/movk-nuxt-docs/commits/v3/layer/modules/component-docs/runtime/components/ComponentSlots.vue).
+See commit history for [layer/modules/component-docs/runtime/components/ComponentSlots.vue](https://github.com/mhaibaraai/movk-nuxt-docs/commits/{branch}/layer/modules/component-docs/runtime/components/ComponentSlots.vue).
 
 ---
 

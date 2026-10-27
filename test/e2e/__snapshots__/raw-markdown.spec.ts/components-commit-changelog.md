@@ -172,7 +172,7 @@ interface CommitChangelogProps {
 
 ## Changelog
 
-See commit history for [layer/app/components/content/CommitChangelog.vue](https://github.com/mhaibaraai/movk-nuxt-docs/commits/v3/layer/app/components/content/CommitChangelog.vue).
+See commit history for [layer/app/components/content/CommitChangelog.vue](https://github.com/mhaibaraai/movk-nuxt-docs/commits/{branch}/layer/app/components/content/CommitChangelog.vue).
 
 ---
 
