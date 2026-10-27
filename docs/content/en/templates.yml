@@ -49,14 +49,27 @@ items:
       - label: Visit site
         to: https://nuxt.mhaibaraai.cn
         target: _blank
-  - title: '@movk/mapbox'
-    description: A declarative Mapbox GL v3 wrapper that composes maps, layers, markers, and controls as components.
+  - title: '@movk/maplibre'
+    description: A declarative MapLibre GL wrapper with no access token required, built-in 3D buildings, animated effects, drawing and multi-CRS support.
     features:
-      - title: Declarative Wrapper
+      - title: Declarative Components
         icon: i-lucide-code-xml
-      - title: Map Components
+      - title: Animated Effects
+        icon: i-lucide-sparkles
+      - title: Local Coordinate Systems
         icon: i-lucide-map
     links:
       - label: Visit site
-        to: https://mapbox.mhaibaraai.cn
+        to: https://maplibre.mhaibaraai.cn
+        target: _blank
+  - title: '@movk/sigma'
+    description: A Nuxt module for knowledge graph visualization on sigma v4, covering rendering, interaction, layout and analysis for graphs with 1000+ nodes.
+    features:
+      - title: Knowledge Graphs
+        icon: i-lucide-network
+      - title: Layout and Analysis
+        icon: i-lucide-chart-scatter
+    links:
+      - label: Visit site
+        to: https://sigma.mhaibaraai.cn
         target: _blank
