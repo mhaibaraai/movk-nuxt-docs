@@ -200,6 +200,19 @@ body {
   }
 }
 
+/* 落地页特性网格：按顺序自动编号 01、02… */
+@utility landing-grid {
+  counter-reset: landing-feature;
+
+  & > * {
+    counter-increment: landing-feature;
+  }
+
+  & [data-index]::before {
+    content: counter(landing-feature, decimal-leading-zero);
+  }
+}
+
 /* 阅读进度：滚动驱动动画，不支持的浏览器直接隐藏 */
 @utility reading-progress {
   display: none;

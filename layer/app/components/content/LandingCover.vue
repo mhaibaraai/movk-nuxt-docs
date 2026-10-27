@@ -6,14 +6,18 @@ defineProps<{
   aside?: string
 }>()
 
-const { version } = useRuntimeConfig().public
+// 站点在 runtimeConfig.public.version 声明版本号时显示在眉题前
+const version = useRuntimeConfig().public.version as string | undefined
 </script>
 
 <template>
   <section class="border-b border-default">
     <UContainer class="pt-12 pb-16 lg:pt-16 lg:pb-24">
       <div class="flex items-center justify-between gap-6 kicker">
-        <span><span class="text-primary">v{{ version }}</span> · {{ kicker }}</span>
+        <span>
+          <span v-if="version" class="text-primary">v{{ version }}</span>
+          <template v-if="version && kicker"> · </template>{{ kicker }}
+        </span>
         <span v-if="aside" class="hidden sm:inline">{{ aside }}</span>
       </div>
 
