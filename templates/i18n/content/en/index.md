@@ -1,89 +1,86 @@
 ---
-seo:
-  title: Movk Nuxt Docs
-  description: A modern Nuxt 4 documentation theme with automated component docs, an AI chat assistant, MCP server, and a polished developer experience.
+title: My Docs
+description: A documentation site built with Movk Nuxt Docs.
 ---
 
-::u-page-hero{class="dark:bg-gradient-to-b from-neutral-900 to-neutral-950"}
----
-orientation: horizontal
-ui:
-  container: lg:py-20
----
+::landing-cover{kicker="Docs" aside="MIT"}
 #title
-  :::motion
-  Build modern, intelligent [docs]{.text-primary}
-  :::
+My Docs[.]{.text-primary}
 
 #description
-  :::motion
-  ---
-  transition: { duration: 0.6, delay: 0.3 }
-  ---
-  A modern Nuxt 4 documentation theme with automated component docs, an AI chat assistant, MCP server, and a polished developer experience.
-  :::
+One sentence about your project: what it solves and who it is for.
 
 #links
-  :::motion{class="flex flex-wrap gap-x-6 gap-y-3"}
+  :::u-button
   ---
-  transition: { duration: 0.6, delay: 0.5 }
+  to: /en/docs/getting-started
+  size: xl
+  trailing-icon: i-lucide-arrow-right
   ---
-    ::::u-button
-    ---
-    to: /en/docs/getting-started
-    size: xl
-    trailing-icon: i-lucide-arrow-right
-    ---
-    Get Started
-    ::::
-
-    ::::u-button
-    ---
-    icon: i-simple-icons-github
-    color: neutral
-    variant: outline
-    size: xl
-    to: https://github.com/mhaibaraai/movk-nuxt-docs
-    target: _blank
-    ---
-    Use Template
-    ::::
+  Get started
   :::
 
 #default
-  :::motion{class="mx-auto"}
-  ---
-  transition: { duration: 0.6, delay: 0.1 }
-  ---
-    ::::prose-pre
-    ---
-    code: |
-      export default defineNuxtConfig({
-        extends: ['@movk/nuxt-docs'],
-        aiChat: {
-          model: 'zai/glm-4.7',
-          models: ['zai/glm-4.7', 'anthropic/claude-sonnet-5.5']
-        },
-        mcp: {
-          name: 'My Docs'
-        }
-      })
-    filename: nuxt.config.ts
-    ---
+  ```bash [Terminal]
+  pnpm add my-package
+  ```
 
-    ```ts [nuxt.config.ts]
-    export default defineNuxtConfig({
-      extends: ['@movk/nuxt-docs'],
-      aiChat: {
-        model: 'zai/glm-4.7',
-        models: ['zai/glm-4.7', 'anthropic/claude-sonnet-5.5']
-      },
-      mcp: {
-        name: 'My Docs'
-      }
-    })
-    ```
-    ::::
+  :landing-index{label="Contents"}
+::
+
+::landing-section{index="01" kicker="Features"}
+#title
+Highlights
+
+#description
+Summarize this group of features in two or three sentences, then give each one its own cell below.
+
+#default
+
+  :::landing-feature
+  #title
+  Ready to use
+
+  #description
+  Describe what the first feature brings.
+  :::
+
+  :::landing-feature
+  #title
+  Type safe
+
+  #description
+  Describe what the second feature brings.
+  :::
+
+  :::landing-feature
+  #title
+  Extensible
+
+  #description
+  Describe what the third feature brings.
+  :::
+
+  :::landing-feature
+  #title
+  Documented
+
+  #description
+  Describe what the fourth feature brings.
   :::
 ::
 
+::landing-closing
+#title
+Start here[.]{.text-primary}
+
+#links
+  :::u-button
+  ---
+  to: /en/docs/getting-started
+  size: xl
+  trailing-icon: i-lucide-arrow-right
+  ---
+  Get started
+  :::
+::

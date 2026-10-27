@@ -6,12 +6,5 @@ export default defineAppConfig({
     mobileNav: [
       { label: { 'zh-CN': '快速开始', 'en': 'Getting Started' }, icon: 'i-lucide-square-play', to: '/docs/getting-started' }
     ]
-  },
-  docs: {
-    categories: {
-      'getting-started': [
-        { id: 'core-concepts', title: { 'zh-CN': '核心概念', 'en': 'Core Concepts' }, icon: 'i-lucide-settings' }
-      ]
-    }
   }
 })

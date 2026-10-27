@@ -1,89 +1,86 @@
 ---
-seo:
-  title: Movk Nuxt Docs
-  description: 基于 Nuxt 4 的现代文档主题，集成组件自动化文档、AI 聊天助手、MCP Server 和完整的开发者体验优化。
+title: My Docs
+description: 用 Movk Nuxt Docs 搭建的文档站点。
 ---
 
-::u-page-hero{class="dark:bg-gradient-to-b from-neutral-900 to-neutral-950"}
----
-orientation: horizontal
-ui:
-  container: lg:py-20
----
+::landing-cover{kicker="文档" aside="MIT"}
 #title
-  :::motion
-  构建现代智能的[文档]{.text-primary}
-  :::
+My Docs[.]{.text-primary}
 
 #description
-  :::motion
-  ---
-  transition: { duration: 0.6, delay: 0.3 }
-  ---
-  基于 Nuxt 4 的现代文档主题，集成组件自动化文档、AI 聊天助手、MCP Server 和完整的开发者体验优化，助您轻松构建美观、专业、智能的文档网站。
-  :::
+一句话介绍你的项目：它解决什么问题，适合谁使用。
 
 #links
-  :::motion{class="flex flex-wrap gap-x-6 gap-y-3"}
+  :::u-button
   ---
-  transition: { duration: 0.6, delay: 0.5 }
+  to: /docs/getting-started
+  size: xl
+  trailing-icon: i-lucide-arrow-right
   ---
-    ::::u-button
-    ---
-    to: /docs/getting-started
-    size: xl
-    trailing-icon: i-lucide-arrow-right
-    ---
-    快速入门
-    ::::
-
-    ::::u-button
-    ---
-    icon: i-simple-icons-github
-    color: neutral
-    variant: outline
-    size: xl
-    to: https://github.com/mhaibaraai/movk-nuxt-docs
-    target: _blank
-    ---
-    使用模板
-    ::::
+  快速开始
   :::
 
 #default
-  :::motion{class="mx-auto"}
-  ---
-  transition: { duration: 0.6, delay: 0.1 }
-  ---
-    ::::prose-pre
-    ---
-    code: |
-      export default defineNuxtConfig({
-        extends: ['@movk/nuxt-docs'],
-        aiChat: {
-          model: 'zai/glm-4.7',
-          models: ['zai/glm-4.7', 'anthropic/claude-sonnet-5.5']
-        },
-        mcp: {
-          name: 'My Docs'
-        }
-      })
-    filename: nuxt.config.ts
-    ---
+  ```bash [Terminal]
+  pnpm add my-package
+  ```
 
-    ```ts [nuxt.config.ts]
-    export default defineNuxtConfig({
-      extends: ['@movk/nuxt-docs'],
-      aiChat: {
-        model: 'zai/glm-4.7',
-        models: ['zai/glm-4.7', 'anthropic/claude-sonnet-5.5']
-      },
-      mcp: {
-        name: 'My Docs'
-      }
-    })
-    ```
-    ::::
+  :landing-index{label="目录"}
+::
+
+::landing-section{index="01" kicker="Features"}
+#title
+主要特性
+
+#description
+用两三句话概括这一组特性，下面的每一格各写一项。
+
+#default
+
+  :::landing-feature
+  #title
+  开箱即用
+
+  #description
+  说明第一项特性带来的好处。
+  :::
+
+  :::landing-feature
+  #title
+  类型安全
+
+  #description
+  说明第二项特性带来的好处。
+  :::
+
+  :::landing-feature
+  #title
+  易于扩展
+
+  #description
+  说明第三项特性带来的好处。
+  :::
+
+  :::landing-feature
+  #title
+  文档齐全
+
+  #description
+  说明第四项特性带来的好处。
   :::
 ::
 
+::landing-closing
+#title
+从这里开始[.]{.text-primary}
+
+#links
+  :::u-button
+  ---
+  to: /docs/getting-started
+  size: xl
+  trailing-icon: i-lucide-arrow-right
+  ---
+  快速开始
+  :::
+::
