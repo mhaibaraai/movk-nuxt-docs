@@ -35,10 +35,8 @@ pnpm test:template default
 # 重新生成 Nuxt 类型（pnpm install 后自动执行）
 pnpm dev:prepare
 
-# 仅 bump layer 版本号（前置 lint + typecheck，发包由 CI 完成）
-pnpm release:layer
-
-# 完整发布：bump 版本 + 生成 changelog + 打 tag 推送（tag 触发 CI 发包）+ 创建 GitHub Release
+# 发布：前置 lint + typecheck，同步 bump 根与 layer 版本号 + 生成 changelog + 打 tag 推送（tag 触发 CI 发包）+ 创建 GitHub Release
+# 要求工作区干净
 pnpm release
 
 # 清理构建产物
@@ -187,7 +185,7 @@ i18n 基于 `@nuxtjs/i18n` v10，采用 **opt-in** 设计：layer 仅将其列�
   - `docs`：不注入 `AI_API_KEY` 构建文档站，拦截预渲染失败路由，运行 Playwright E2E
   - `templates`：以本地 layer 打包产物分别构建三套模板，预渲染出现失败路由即失败
 - **`.github/workflows/release.yml`** — 监听 `v*` tag 推送，通过 npm Trusted Publishing（OIDC）发布 `@movk/nuxt-docs`。无需 `NPM_TOKEN`，自动附带 provenance；发布前校验 tag 与 `layer/package.json` 版本一致。重新发布可用 workflow_dispatch 手动传入 tag。
-- **发布** — 本地执行 `pnpm release`：release-it 前置运行 lint + typecheck，bump 版本、生成 changelog、打 tag 并推送，随后由 `release.yml` 完成 npm 发包
+- **发布** — 本地在干净工作区执行 `pnpm release`（唯一配置 `.release-it.json`）：release-it 前置运行 lint + typecheck，同时 bump 根与 layer（`@release-it/bumper`）版本、生成 changelog、打 tag 并推送，随后由 `release.yml` 完成 npm 发包
 
 ## 注意事项
 
@@ -200,4 +198,4 @@ i18n 基于 `@nuxtjs/i18n` v10，采用 **opt-in** 设计：layer 仅将其列�
 - **测试分层** — 纯函数放 `layer/utils`、`layer/shared`、`layer/app/utils` 并在 `test/unit` 覆盖；依赖 Nitro 运行时的逻辑（如 `transformMDC`）通过 `test/e2e/raw-markdown.spec.ts` 的 raw markdown 快照做特征测试，重构这类代码时快照必须保持不变。
 - **预渲染死链** — layer 开启 `nitro.prerender.failOnError: false`，死链只会输出 `[request error]` 日志；CI 会对文档站与模板显式拦截该日志。
 - **i18n locales 不要声明 `file`** — 内置翻译由 layer 通过 `i18n:registerModule` 注册，消费方在 `locales` 中声明 `file` 会让 `@nuxtjs/i18n` 去站点自身的 `i18n/locales/` 查找并构建失败。
-- **上游同步** — Layer 源自 nuxt/ui 的 `docs/` 站点，同步时以最近一次 `同步 nuxt/ui` 提交为起点，对比上游 `docs/` 此后的提交，只移植 layer 有对应实现的改动；会改变消费方行为的项（如 `compatibilityVersion: 5`、`nuxt/server` 迁移、`icon.serverBundle.externalizeIconsJson`）不同步。
+- **上游同步** — Layer 源自 nuxt/ui 的 `docs/` 站点，同步基准 SHA、流程与 layer 覆盖的 Nuxt UI 组件见 `UPSTREAM.md`；只移植 layer 有对应实现的改动，会改变消费方行为的项不同步，同步后更新基准。
