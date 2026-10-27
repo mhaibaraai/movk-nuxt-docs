@@ -2,7 +2,7 @@ import { spawn } from 'node:child_process'
 import { existsSync, mkdirSync } from 'node:fs'
 import { fileURLToPath } from 'node:url'
 import { chromium } from '@playwright/test'
-import type { Page } from '@playwright/test'
+import { settle } from './settle.ts'
 import { SHOTS } from './shots.ts'
 
 const PORT = 3302
@@ -25,12 +25,6 @@ async function waitForServer(): Promise<void> {
     await new Promise(resolve => setTimeout(resolve, 500))
   }
   throw new Error(`Server did not start on ${BASE_URL}, run \`pnpm build\` first`)
-}
-
-// 去掉动画与光标闪烁，保证两次生成的截图一致
-async function settle(page: Page): Promise<void> {
-  await page.addStyleTag({ content: '*, *::before, *::after { transition: none !important; animation: none !important; caret-color: transparent !important; }' })
-  await page.evaluate(() => document.fonts.ready)
 }
 
 async function main(): Promise<void> {

@@ -26,7 +26,8 @@
     "test:e2e": "playwright test",
     "test:template": "bash scripts/test-template.sh",
     "docs:reference": "node scripts/config-reference/generate.ts",
-    "docs:screenshots": "node scripts/screenshots/index.ts"
+    "docs:screenshots": "node scripts/screenshots/index.ts",
+    "docs:screenshots:sites": "node scripts/screenshots/sites.ts"
   },
   "devDependencies": {
     "@movk/core": "^1.5.0",
