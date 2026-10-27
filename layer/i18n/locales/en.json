@@ -61,6 +61,10 @@
     "viewOnGitHub": "View on GitHub",
     "unavailable": "Release notes are unavailable right now, please check them on GitHub."
   },
+  "templates": {
+    "count": "{count} sites",
+    "figure": "Fig."
+  },
   "header": {
     "site": "Site Header",
     "mainNavigation": "Main Navigation",

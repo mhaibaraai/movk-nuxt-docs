@@ -61,6 +61,10 @@
     "viewOnGitHub": "在 GitHub 查看",
     "unavailable": "暂时无法获取版本说明，请前往 GitHub 查看。"
   },
+  "templates": {
+    "count": "共 {count} 个站点",
+    "figure": "图"
+  },
   "header": {
     "site": "站点头部",
     "mainNavigation": "主导航",
