@@ -18,7 +18,12 @@
     "pageNotFound": "页面未找到",
     "pageNotFoundDescription": "很抱歉，您访问的页面未找到。",
     "copyCode": "复制",
-    "codeCopied": "已复制"
+    "codeCopied": "已复制",
+    "requires": "要求",
+    "difficulty": "难度",
+    "difficultyBeginner": "入门",
+    "difficultyIntermediate": "进阶",
+    "difficultyAdvanced": "高级"
   },
   "assistant": {
     "title": "AI 助手",
@@ -64,6 +69,7 @@
     "categoryNavigation": "分类导航",
     "search": "搜索",
     "colorMode": "颜色模式",
+    "language": "切换语言",
     "toggleMenu": "更多操作"
   },
   "theme": {

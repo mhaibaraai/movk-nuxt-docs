@@ -18,7 +18,12 @@
     "pageNotFound": "Page not found",
     "pageNotFoundDescription": "We are sorry but this page could not be found.",
     "copyCode": "Copy",
-    "codeCopied": "Copied"
+    "codeCopied": "Copied",
+    "requires": "Requires",
+    "difficulty": "Difficulty",
+    "difficultyBeginner": "Beginner",
+    "difficultyIntermediate": "Intermediate",
+    "difficultyAdvanced": "Advanced"
   },
   "assistant": {
     "title": "AI Assistant",
@@ -64,6 +69,7 @@
     "categoryNavigation": "Category Navigation",
     "search": "Search",
     "colorMode": "Color Mode",
+    "language": "Change language",
     "toggleMenu": "Toggle Dropdown"
   },
   "theme": {
