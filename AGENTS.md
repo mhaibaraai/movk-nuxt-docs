@@ -197,5 +197,5 @@ i18n 基于 `@nuxtjs/i18n` v10，采用 **opt-in** 设计：layer 仅将其列�
 - **Component Meta 排除清单** — `layer/modules/component-docs/index.ts` 的 `COMPONENT_META_DEFAULTS.exclude` 排除 Nuxt 官方包与以包名注册组件的模块（component-meta 按需安装后会扫描到它们，并因无法从根目录解析而报错）。新增此类模块时按需追加。
 - **测试分层** — 纯函数放 `layer/utils`、`layer/shared`、`layer/app/utils` 并在 `test/unit` 覆盖；依赖 Nitro 运行时的逻辑（如 `transformMDC`）通过 `test/e2e/raw-markdown.spec.ts` 的 raw markdown 快照做特征测试，重构这类代码时快照必须保持不变。
 - **预渲染死链** — layer 开启 `nitro.prerender.failOnError: false`，死链只会输出 `[request error]` 日志；CI 会对文档站与模板显式拦截该日志。
-- **i18n locales 不要声明 `file`** — 内置翻译由 layer 通过 `i18n:registerModule` 注册，消费方在 `locales` 中声明 `file` 会让 `@nuxtjs/i18n` 去站点自身的 `i18n/locales/` 查找并构建失败。
+- **i18n locales 不要声明 `file`** — 内置与站点 `i18n/locales/` 翻译由 layer 合并后通过 `i18n:registerModule` 注册，消费方在 `locales` 中声明 `file` 会让 `@nuxtjs/i18n` 另行加载该文件，文件缺失时构建失败。
 - **上游同步** — Layer 源自 nuxt/ui 的 `docs/` 站点，同步基准 SHA、流程与 layer 覆盖的 Nuxt UI 组件见 `UPSTREAM.md`；只移植 layer 有对应实现的改动，会改变消费方行为的项不同步，同步后更新基准。
