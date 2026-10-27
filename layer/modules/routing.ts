@@ -1,5 +1,5 @@
-import { defineNuxtModule, extendPages, createResolver } from '@nuxt/kit'
-import { landingPageExists, releasesFileExists, templatesFileExists } from '../utils/pages'
+import { defineNuxtModule, extendPages, createResolver, logger } from '@nuxt/kit'
+import { docsFolderExists, landingPageExists, releasesFileExists, templatesFileExists } from '../utils/pages'
 
 export default defineNuxtModule({
   meta: {
@@ -12,6 +12,10 @@ export default defineNuxtModule({
     const hasReleasesFile = releasesFileExists(rootDir)
     const hasTemplatesFile = templatesFileExists(rootDir)
     const hasLandingPage = landingPageExists(rootDir)
+
+    if (!docsFolderExists(rootDir)) {
+      logger.withTag('@movk/nuxt-docs').warn('未找到 content/docs 目录，文档页面固定位于 /docs 下，请将文档放入 content/docs/')
+    }
 
     // 供 CommitChangelog 等组件判断能否链接到站内版本页
     nuxt.options.runtimeConfig.public.movkDocs = {

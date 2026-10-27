@@ -1,6 +1,8 @@
 export default defineNuxtConfig({
   extends: ['@movk/nuxt-docs'],
 
+  modules: ['@nuxt/eslint'],
+
   routeRules: {
     // redirects - default root pages
     '/docs': { redirect: '/docs/getting-started', prerender: false }
@@ -8,16 +10,20 @@ export default defineNuxtConfig({
 
   compatibilityDate: 'latest',
 
-  aiChat: {
-    model: 'zai/glm-4.7',
-    models: [
-      'zai/glm-4.7',
-      'anthropic/claude-sonnet-5.5',
-      'google/gemini-3-flash'
-    ]
+  site: {
+    name: 'My Docs'
+  },
+
+  eslint: {
+    config: {
+      stylistic: {
+        commaDangle: 'never',
+        braceStyle: '1tbs'
+      }
+    }
   },
 
   mcp: {
-    name: 'Movk Nuxt Docs'
+    name: 'My Docs'
   }
 })

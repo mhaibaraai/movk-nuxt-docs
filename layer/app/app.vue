@@ -1,46 +1,13 @@
 <script setup lang="ts">
-import * as nuxtUiLocales from '@nuxt/ui/locale'
-
 const site = useSiteConfig()
 const appConfig = useAppConfig()
 const route = useRoute()
 
-const { style, color } = useTheme()
 const { isEnabled: isAiChatEnabled } = useAIChat()
-const { locale, docsRoot, docsCollection } = useMovkI18n()
 const isDocsRoute = useDocsRoute()
-
-const nuxtUiLocale = computed(() =>
-  nuxtUiLocales[locale.value.replace('-', '_').toLowerCase() as keyof typeof nuxtUiLocales] || nuxtUiLocales.en
-)
+const { nuxtUiLocale, rootNavigation, files } = await useDocsShell()
 
 useLocaleSeo()
-
-const { data: navigation } = await useAsyncData(
-  () => `docs-navigation-${locale.value}`,
-  () => queryCollectionNavigation(docsCollection.value as 'docs', ['category', 'description']),
-  {
-    transform: data => transformNavigation(data, docsRoot.value)
-  }
-)
-
-const { data: files } = useLazyAsyncData(
-  () => `docs-search-${locale.value}`,
-  () => queryCollectionSearchSections(docsCollection.value as 'docs', { ignoredTags: ['style'] }),
-  { server: false }
-)
-
-useHead({
-  htmlAttrs: {
-    lang: computed(() => nuxtUiLocale.value.code),
-    dir: computed(() => nuxtUiLocale.value.dir)
-  },
-  meta: [
-    { name: 'viewport', content: 'width=device-width, initial-scale=1' },
-    { key: 'theme-color', name: 'theme-color', content: color }
-  ],
-  style
-})
 
 if (import.meta.server) {
   useSeoMeta({
@@ -62,9 +29,18 @@ const fuse = {
   resultLimit: 500
 }
 
-const { rootNavigation } = useNavigation(navigation)
+const { t } = useMovkI18n()
+const { pages: recentPages } = useRecentPages()
+const searchTerm = ref('')
 
-provide('navigation', rootNavigation)
+// 搜索词为空时只展示最近访问，输入后恢复完整的分类导航
+const recentItems = computed(() => recentPages.value
+  .filter(page => page.path !== route.path)
+  .map(page => ({ label: page.title, to: page.path, icon: 'i-lucide-history' })))
+
+const recentGroups = computed(() => !searchTerm.value && recentItems.value.length
+  ? [{ id: 'recent', label: t('search.recent'), items: recentItems.value }]
+  : [])
 </script>
 
 <template>
@@ -107,8 +83,10 @@ provide('navigation', rootNavigation)
             </template>
 
             <UContentSearch
+              v-model:search-term="searchTerm"
               :files="files"
-              :navigation="rootNavigation"
+              :navigation="recentGroups.length ? undefined : rootNavigation"
+              :groups="recentGroups"
               :fuse="fuse"
               :unmount-on-hide="false"
             />

@@ -8,17 +8,24 @@ on:
     branches:
       - main
 
+concurrency:
+  group: ci-${{ github.ref }}
+  cancel-in-progress: true
+
+env:
+  NODE_VERSION: 24
+
 jobs:
-  build:
+  check:
     runs-on: ubuntu-latest
-    timeout-minutes: 10
+    timeout-minutes: 15
 
     steps:
       - uses: actions/checkout@v7
       - uses: pnpm/action-setup@v6
       - uses: actions/setup-node@v7
         with:
-          node-version: lts/*
+          node-version: ${{ env.NODE_VERSION }}
           cache: pnpm
 
       - name: Install dependencies
@@ -30,5 +37,56 @@ jobs:
       - name: Typecheck
         run: pnpm run typecheck
 
-      - name: Publish
+      - name: Unit tests
+        run: pnpm run test:coverage
+
+      - name: Publish preview
         run: npx pkg-pr-new publish --compact './layer'
+
+  docs:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+
+    steps:
+      - uses: actions/checkout@v7
+      - uses: pnpm/action-setup@v6
+      - uses: actions/setup-node@v7
+        with:
+          node-version: ${{ env.NODE_VERSION }}
+          cache: pnpm
+
+      - name: Install dependencies
+        run: pnpm install
+
+      # 不注入 AI_API_KEY，覆盖未启用 AI Chat 的默认场景
+      - name: Build docs
+        run: pnpm run build 2>&1 | tee build.log
+
+      - name: Check prerender errors
+        run: "! grep '\\[request error\\]' build.log"
+
+      - name: Install Playwright
+        run: pnpm exec playwright install --with-deps chromium
+
+      - name: E2E tests
+        run: pnpm run test:e2e
+
+  templates:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+
+    strategy:
+      fail-fast: false
+      matrix:
+        template: [default, i18n, module, test/fixtures/features-off]
+
+    steps:
+      - uses: actions/checkout@v7
+      - uses: pnpm/action-setup@v6
+      - uses: actions/setup-node@v7
+        with:
+          node-version: ${{ env.NODE_VERSION }}
+          cache: pnpm
+
+      - name: Build template against local layer
+        run: bash scripts/test-template.sh ${{ matrix.template }}

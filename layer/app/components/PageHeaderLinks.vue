@@ -8,12 +8,14 @@ const site = useSiteConfig()
 const { ui } = useAppConfig()
 const { t } = useMovkI18n()
 
-const appBaseURL = useRuntimeConfig().app?.baseURL || '/'
+const runtimeConfig = useRuntimeConfig()
+const appBaseURL = runtimeConfig.app?.baseURL || '/'
+const mcpEnabled = runtimeConfig.public.movkDocs.features.mcp
 
 const mdPath = computed(() => `${site.url}/raw${route.path}.md`)
 const aiPrompt = computed(() => `I'm looking at this documentation: ${mdPath.value}\nHelp me understand how to use it. Be ready to explain concepts, give examples, or help debug based on it.`)
 
-const items = computed(() => [[
+const pageItems = computed(() => [
   {
     label: t('docs.copyMarkdownLink'),
     icon: 'i-lucide-link',
@@ -43,31 +45,37 @@ const items = computed(() => [[
     target: '_blank',
     to: `https://claude.ai/new?q=${encodeURIComponent(aiPrompt.value)}`
   }
-], [
-  {
-    label: t('docs.copyMcpUrl'),
-    icon: 'i-lucide-cpu',
-    onSelect() {
-      copy(`${window?.location?.origin}${appBaseURL}mcp`)
-      toast.add({
-        title: t('docs.copied'),
-        icon: 'i-lucide-circle-check'
-      })
-    }
-  },
-  {
-    label: t('docs.addMcpVscode'),
-    icon: 'i-simple-icons-visualstudiocode',
-    target: '_blank',
-    to: `/mcp/deeplink?ide=vscode`
-  },
-  {
-    label: t('docs.addMcpCursor'),
-    icon: 'i-simple-icons-cursor',
-    target: '_blank',
-    to: `/mcp/deeplink`
-  }
-]])
+])
+
+const mcpItems = computed(() => mcpEnabled
+  ? [
+      {
+        label: t('docs.copyMcpUrl'),
+        icon: 'i-lucide-cpu',
+        onSelect() {
+          copy(`${window?.location?.origin}${appBaseURL}mcp`)
+          toast.add({
+            title: t('docs.copied'),
+            icon: 'i-lucide-circle-check'
+          })
+        }
+      },
+      {
+        label: t('docs.addMcpVscode'),
+        icon: 'i-simple-icons-visualstudiocode',
+        target: '_blank',
+        to: `/mcp/deeplink?ide=vscode`
+      },
+      {
+        label: t('docs.addMcpCursor'),
+        icon: 'i-simple-icons-cursor',
+        target: '_blank',
+        to: `/mcp/deeplink`
+      }
+    ]
+  : [])
+
+const items = computed(() => [pageItems.value, mcpItems.value].filter(group => group.length))
 
 async function copyPage() {
   copy(await $fetch<string>(`/raw${route.path}.md`))
@@ -75,17 +83,15 @@ async function copyPage() {
 </script>
 
 <template>
-  <UFieldGroup size="sm">
-    <UButton
-      :label="t('docs.copyPage')"
-      :icon="copied ? ui.icons.copyCheck : ui.icons.copy"
-      color="neutral"
-      variant="outline"
-      :ui="{
-        leadingIcon: [copied && 'text-primary', 'size-3.5']
-      }"
+  <div class="inline-flex items-center gap-1">
+    <button
+      type="button"
+      class="link-wipe inline-flex items-center gap-1.5 font-mono text-[11px] uppercase tracking-[0.12em] text-muted hover:text-highlighted transition-colors"
       @click="copyPage"
-    />
+    >
+      <UIcon :name="copied ? ui.icons.copyCheck : ui.icons.copy" class="size-3.5" :class="copied && 'text-primary'" />
+      {{ t('docs.copyPage') }}
+    </button>
     <UDropdownMenu
       size="sm"
       :items="items"
@@ -101,9 +107,11 @@ async function copyPage() {
       <UButton
         :icon="ui.icons.chevronDown"
         color="neutral"
-        variant="outline"
-        aria-label="Toggle Dropdown"
+        variant="link"
+        size="xs"
+        class="text-muted hover:text-highlighted"
+        :aria-label="t('header.toggleMenu')"
       />
     </UDropdownMenu>
-  </UFieldGroup>
+  </div>
 </template>

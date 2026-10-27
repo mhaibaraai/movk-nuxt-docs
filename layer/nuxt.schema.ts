@@ -42,6 +42,20 @@ export default defineNuxtSchema({
           description: '全局图标集名称',
           icon: 'i-lucide-icon',
           default: 'lucide'
+        }),
+        font: field({
+          type: 'string',
+          title: '标题字体',
+          description: '`editorial` 为衬线标题，`sans` 全站使用无衬线',
+          icon: 'i-lucide-type',
+          default: 'editorial'
+        }),
+        grain: field({
+          type: 'boolean',
+          title: '纸张颗粒',
+          description: '在页面背景叠加纸张颗粒质感',
+          icon: 'i-lucide-scan-line',
+          default: false
         })
       }
     }),
@@ -118,9 +132,38 @@ export default defineNuxtSchema({
         links: field({
           type: 'array',
           title: 'Header 链接',
-          description: 'Header 中显示的导航链接按钮',
+          description: 'Header 右侧的图标按钮',
           icon: 'i-lucide-link',
           default: []
+        }),
+        nav: field({
+          type: 'array',
+          title: '桌面端导航',
+          description: '顶部导航链接，label 支持按语言区分的对象，站内链接自动加语言前缀',
+          icon: 'i-lucide-navigation',
+          default: []
+        }),
+        mobileNav: field({
+          type: 'array',
+          title: '移动端导航',
+          description: '移动端菜单中的导航链接，留空则沿用桌面端导航',
+          icon: 'i-lucide-smartphone',
+          default: []
+        })
+      }
+    }),
+
+    docs: group({
+      title: '文档',
+      description: '文档侧边栏配置',
+      icon: 'i-lucide-book-open',
+      fields: {
+        categories: field({
+          type: 'object',
+          title: '分类',
+          description: '按顶层目录对侧边栏导航分组，键为目录 slug，值为分类列表',
+          icon: 'i-lucide-folders',
+          default: {}
         })
       }
     }),
@@ -269,38 +312,38 @@ export default defineNuxtSchema({
         }),
         commitPath: field({
           type: 'string',
-          title: 'Commit 路径',
-          description: 'GitHub commit 页面路径模板',
+          title: '源码目录',
+          description: 'CommitChangelog 推导组件 / composable 源文件路径时使用的仓库内目录',
           icon: 'i-lucide-git-commit',
-          default: '/commit'
+          default: 'src'
+        }),
+        suffix: field({
+          type: 'string',
+          title: '源文件扩展名',
+          description: 'CommitChangelog 推导源文件路径时使用的扩展名，不含点',
+          icon: 'i-lucide-file',
+          default: 'vue'
         }),
         since: field({
           type: 'string',
           title: '开始日期',
-          description: '获取提交记录的开始日期',
+          description: '只获取该 ISO 日期之后的提交，留空不限制',
           icon: 'i-lucide-calendar',
           default: ''
-        }),
-        suffix: field({
-          type: 'string',
-          title: '文件后缀',
-          description: '文档文件的后缀',
-          icon: 'i-lucide-file',
-          default: '.md'
-        }),
-        per_page: field({
-          type: 'number',
-          title: '每页数量',
-          description: '每页显示的 commit 数量',
-          icon: 'i-lucide-hash',
-          default: 30
         }),
         until: field({
           type: 'string',
           title: '结束日期',
-          description: '获取提交记录的结束日期',
+          description: '只获取该 ISO 日期之前的提交，留空不限制',
           icon: 'i-lucide-calendar',
           default: ''
+        }),
+        perPage: field({
+          type: 'number',
+          title: '每页数量',
+          description: '单个文件获取的提交数量上限',
+          icon: 'i-lucide-hash',
+          default: 100
         }),
         author: field({
           type: 'string',

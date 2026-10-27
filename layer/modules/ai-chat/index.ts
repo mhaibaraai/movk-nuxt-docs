@@ -8,9 +8,14 @@ import {
   defineNuxtModule,
   logger
 } from '@nuxt/kit'
+import { getFeatures } from '../../utils/features'
 import { hasAnyAiKey } from './keys'
 
 export interface AiChatModuleOptions {
+  /**
+   * 是否启用 AI Chat；未设置时以构建期是否存在 AI_API_KEY 决定。启用时需要 movkNuxtDocs.mcp 同时开启
+   */
+  enabled?: boolean
   /**
    * 聊天 API 端点路径
    * @default '/api/ai-chat'
@@ -46,7 +51,7 @@ export default defineNuxtModule<AiChatModuleOptions>({
     models: []
   },
   setup(options, nuxt) {
-    const hasApiKey = hasAnyAiKey()
+    const hasApiKey = getFeatures(nuxt).aiChat
 
     const { resolve } = createResolver(import.meta.url)
 
@@ -60,7 +65,9 @@ export default defineNuxtModule<AiChatModuleOptions>({
     addImports([
       {
         name: 'useAIChat',
-        from: resolve('./runtime/composables/useAIChat')
+        from: hasApiKey
+          ? resolve('./runtime/composables/useAIChat')
+          : resolve('./runtime/composables/useAIChatDisabled')
       }
     ])
 
@@ -88,9 +95,28 @@ export default defineNuxtModule<AiChatModuleOptions>({
     }
 
     if (!hasApiKey) {
-      log.warn('[movk-nuxt-docs] Ai Chat Module disabled: no API key found in environment variables.')
       return
     }
+
+    if (!hasAnyAiKey()) {
+      log.warn('AI Chat 已启用，但构建期未检测到 AI_API_KEY，请确认运行环境已配置该变量')
+    }
+
+    nuxt.hook('vite:extendConfig', (config) => {
+      const cfg = config as { optimizeDeps?: { include?: string[], exclude?: string[] } }
+      cfg.optimizeDeps ??= {}
+      cfg.optimizeDeps.include ??= []
+      cfg.optimizeDeps.exclude ??= []
+      // @shikijs/langs/* 与 @shikijs/themes/* 在 useHighlighter 中动态导入，不预构建
+      cfg.optimizeDeps.include.push(
+        '@movk/nuxt-docs > @ai-sdk/vue',
+        '@movk/nuxt-docs > ai',
+        '@movk/nuxt-docs > @shikijs/core',
+        '@movk/nuxt-docs > @shikijs/engine-javascript'
+      )
+      // @comark/vue 由 AiMarkdown.client.ts 引入，裸模块名经虚拟模块发现后无法从消费方根目录解析
+      cfg.optimizeDeps.exclude.push('@comark/vue', '@comark/vue/plugins/highlight')
+    })
 
     nuxt.options.runtimeConfig.aiChat = {
       mcpPath: options.mcpPath!

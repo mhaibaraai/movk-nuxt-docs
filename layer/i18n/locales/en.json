@@ -16,7 +16,14 @@
     "addMcpCursor": "Add MCP Server to Cursor",
     "copied": "Copied to clipboard",
     "pageNotFound": "Page not found",
-    "pageNotFoundDescription": "We are sorry but this page could not be found."
+    "pageNotFoundDescription": "We are sorry but this page could not be found.",
+    "copyCode": "Copy",
+    "codeCopied": "Copied",
+    "requires": "Requires",
+    "difficulty": "Difficulty",
+    "difficultyBeginner": "Beginner",
+    "difficultyIntermediate": "Intermediate",
+    "difficultyAdvanced": "Advanced"
   },
   "assistant": {
     "title": "AI Assistant",
@@ -53,5 +60,34 @@
     "releasedOn": "Released on {date}",
     "viewOnGitHub": "View on GitHub",
     "unavailable": "Release notes are unavailable right now, please check them on GitHub."
+  },
+  "templates": {
+    "count": "{count} sites",
+    "figure": "Fig."
+  },
+  "header": {
+    "site": "Site Header",
+    "mainNavigation": "Main Navigation",
+    "mobileNavigation": "Mobile Navigation",
+    "docsNavigation": "Documentation Navigation",
+    "categoryNavigation": "Category Navigation",
+    "search": "Search",
+    "colorMode": "Color Mode",
+    "language": "Change language",
+    "toggleMenu": "Toggle Dropdown"
+  },
+  "theme": {
+    "picker": "Theme",
+    "primary": "Primary",
+    "neutral": "Neutral",
+    "radius": "Radius",
+    "icons": "Icons",
+    "colorMode": "Color Mode",
+    "export": "Export",
+    "reset": "Reset theme",
+    "black": "Black"
+  },
+  "search": {
+    "recent": "Recently viewed"
   }
 }

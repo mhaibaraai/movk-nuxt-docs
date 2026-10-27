@@ -1,0 +1,18 @@
+import { defineEventHandler, createError, appendHeader } from 'h3'
+import { pascalCase } from 'scule'
+import { getComponentExample } from '#component-example/nitro'
+
+export default defineEventHandler(async (event) => {
+  appendHeader(event, 'Access-Control-Allow-Origin', '*')
+  const componentName = (event.context.params?.['component?'] || '').replace(/\.json$/, '')
+  if (componentName) {
+    const component = await getComponentExample(pascalCase(componentName))
+    if (!component) {
+      throw createError({
+        statusMessage: 'Example not found!',
+        statusCode: 404
+      })
+    }
+    return component
+  }
+})

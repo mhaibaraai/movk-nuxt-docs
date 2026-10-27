@@ -4,6 +4,7 @@
   ],
   "timezone": "Asia/Shanghai",
   "schedule": ["* 6-9 * * 1"],
+  "minimumReleaseAge": "1 day",
   "packageRules": [
     {
       "matchDepTypes": ["peerDependencies", "resolutions"],
@@ -13,6 +14,26 @@
       "matchPackageNames": ["h3"],
       "matchUpdateTypes": ["major"],
       "enabled": false
+    },
+    {
+      "groupName": "nuxt",
+      "matchPackageNames": ["nuxt", "@nuxt/**", "@nuxtjs/**", "nuxt-*"]
+    },
+    {
+      "groupName": "ai sdk",
+      "matchPackageNames": ["ai", "@ai-sdk/**"]
+    },
+    {
+      "groupName": "test",
+      "matchPackageNames": ["vitest", "@vitest/**", "@playwright/test"]
+    },
+    {
+      "groupName": "lint",
+      "matchPackageNames": ["eslint", "eslint-*", "@nuxt/eslint", "@nuxt/eslint-config"]
+    },
+    {
+      "groupName": "release-it",
+      "matchPackageNames": ["release-it", "@release-it/**"]
     }
   ]
 }

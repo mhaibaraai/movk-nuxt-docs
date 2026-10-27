@@ -1,45 +1,5 @@
 <script setup lang="ts">
-const { locale, locales, switchLocalePath } = useMovkI18n()
-
-function getEmojiFlag(locale: string): string {
-  const languageToCountry: Record<string, string> = {
-    ar: 'sa',
-    bn: 'bd',
-    ca: 'es',
-    ckb: 'iq',
-    cs: 'cz',
-    da: 'dk',
-    el: 'gr',
-    en: 'gb',
-    et: 'ee',
-    he: 'il',
-    hi: 'in',
-    hy: 'am',
-    ja: 'jp',
-    kk: 'kz',
-    km: 'kh',
-    ko: 'kr',
-    ky: 'kg',
-    lb: 'lu',
-    ms: 'my',
-    nb: 'no',
-    sl: 'si',
-    sv: 'se',
-    uk: 'ua',
-    ur: 'pk',
-    vi: 'vn',
-    es: 'es',
-    id: 'id'
-  }
-
-  const baseLanguage = locale.split('-')[0]?.toLowerCase() || locale
-  const countryCode = languageToCountry[baseLanguage] || locale.replace(/^.*-/, '').slice(0, 2)
-
-  return countryCode.toUpperCase()
-    .split('')
-    .map(char => String.fromCodePoint(0x1F1A5 + char.charCodeAt(0)))
-    .join('')
-}
+const { locale, locales, switchLocalePath, t } = useMovkI18n()
 </script>
 
 <template>
@@ -47,32 +7,26 @@ function getEmojiFlag(locale: string): string {
     <UButton
       color="neutral"
       variant="ghost"
+      icon="i-lucide-languages"
       class="size-8"
-    >
-      <template #trailing>
-        <span class="text-lg">
-          {{ getEmojiFlag(locale) }}
-        </span>
-      </template>
-    </UButton>
+      :aria-label="t('header.language')"
+    />
 
     <template #content>
-      <ul class="flex flex-col">
+      <ul class="flex flex-col min-w-40 py-1">
         <li
           v-for="localeItem in locales"
           :key="localeItem.code"
         >
           <NuxtLink
-            class="flex justify-between py-1.5 px-2 gap-1 hover:bg-muted"
+            class="flex items-baseline justify-between gap-6 py-1.5 px-3 text-sm hover:bg-muted"
+            :class="localeItem.code === locale ? 'text-highlighted' : 'text-muted hover:text-highlighted'"
             :to="switchLocalePath(localeItem.code) as string"
-            :aria-label="localeItem.name"
+            :lang="localeItem.code"
+            :aria-current="localeItem.code === locale ? 'true' : undefined"
           >
-            <span class="text-sm">
-              {{ localeItem.name }}
-            </span>
-            <span class="size-5 text-center">
-              {{ getEmojiFlag(localeItem.code) }}
-            </span>
+            {{ localeItem.name }}
+            <span class="kicker" :class="localeItem.code === locale && 'text-primary'">{{ localeItem.code }}</span>
           </NuxtLink>
         </li>
       </ul>

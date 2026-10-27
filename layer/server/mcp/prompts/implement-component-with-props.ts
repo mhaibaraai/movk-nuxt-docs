@@ -5,12 +5,14 @@ export default defineMcpPrompt({
   description: 'Generate complete component implementation with proper props and styling',
   inputSchema: {
     componentName: z.string().describe('The component name (PascalCase)'),
-    requirements: z.string().optional().describe('Specific requirements or customizations needed')
+    requirements: z.string().optional().describe('Specific requirements or customizations needed'),
+    locale: docsLocaleInput
   },
-  async handler({ componentName, requirements }) {
+  async handler({ componentName, requirements, locale }) {
     const event = useEvent()
     const candidates = buildComponentNameCandidates(componentName)
-    const pages = await queryCollection(event, 'docs')
+    const { collection } = useDocsLocale(event, locale)
+    const pages = await queryCollection(event, collection as 'docs')
       .where('path', 'LIKE', '%/components/%')
       .where('extension', '=', 'md')
       .select('id', 'title', 'description', 'path', 'category', 'links')

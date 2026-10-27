@@ -1,5 +1,6 @@
 {
   "name": "movk-nuxt-docs-template",
+  "type": "module",
   "packageManager": "pnpm@12.10.1",
   "scripts": {
     "build": "nuxt build",

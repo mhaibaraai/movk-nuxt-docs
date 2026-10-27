@@ -16,7 +16,14 @@
     "addMcpCursor": "添加 MCP Server 到 Cursor",
     "copied": "已复制到剪贴板",
     "pageNotFound": "页面未找到",
-    "pageNotFoundDescription": "很抱歉，您访问的页面未找到。"
+    "pageNotFoundDescription": "很抱歉，您访问的页面未找到。",
+    "copyCode": "复制",
+    "codeCopied": "已复制",
+    "requires": "要求",
+    "difficulty": "难度",
+    "difficultyBeginner": "入门",
+    "difficultyIntermediate": "进阶",
+    "difficultyAdvanced": "高级"
   },
   "assistant": {
     "title": "AI 助手",
@@ -53,5 +60,34 @@
     "releasedOn": "发布于 {date}",
     "viewOnGitHub": "在 GitHub 查看",
     "unavailable": "暂时无法获取版本说明，请前往 GitHub 查看。"
+  },
+  "templates": {
+    "count": "共 {count} 个站点",
+    "figure": "图"
+  },
+  "header": {
+    "site": "站点头部",
+    "mainNavigation": "主导航",
+    "mobileNavigation": "移动端导航",
+    "docsNavigation": "文档导航",
+    "categoryNavigation": "分类导航",
+    "search": "搜索",
+    "colorMode": "颜色模式",
+    "language": "切换语言",
+    "toggleMenu": "更多操作"
+  },
+  "theme": {
+    "picker": "主题设置",
+    "primary": "主色",
+    "neutral": "中性色",
+    "radius": "圆角",
+    "icons": "图标",
+    "colorMode": "颜色模式",
+    "export": "导出",
+    "reset": "重置主题",
+    "black": "黑色"
+  },
+  "search": {
+    "recent": "最近访问"
   }
 }

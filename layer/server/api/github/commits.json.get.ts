@@ -1,7 +1,7 @@
-import { Octokit } from '@octokit/rest'
-
 export default defineCachedEventHandler(async (event) => {
-  if (!process.env.NUXT_GITHUB_TOKEN) {
+  const octokit = useOctokit(event, { requireToken: true })
+  const github = useGitHubConfig()
+  if (!octokit || !github) {
     return []
   }
 
@@ -15,30 +15,16 @@ export default defineCachedEventHandler(async (event) => {
     })
   }
 
-  const { github } = useAppConfig()
-
-  if (!github || typeof github === 'boolean') {
-    throw createError({
-      status: 500,
-      statusText: 'GitHub configuration is not available'
-    })
-  }
-
-  const octokit = new Octokit({
-    auth: process.env.NUXT_GITHUB_TOKEN,
-    request: { timeout: 10_000 }
-  })
-
   const allCommits = await Promise.all(
     paths.map(path =>
       octokit.rest.repos.listCommits({
-        sha: github.branch!,
-        owner: github.owner!,
-        repo: github.name!,
+        sha: github.branch,
+        owner: github.owner,
+        repo: github.name,
         path,
-        since: github.since,
-        per_page: github.per_page || 100,
-        until: github.until,
+        since: github.since || undefined,
+        until: github.until || undefined,
+        per_page: github.perPage || 100,
         author
       }).then(res => res.data).catch(() => [])
     )

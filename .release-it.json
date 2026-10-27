@@ -1,6 +1,6 @@
 {
   "git": {
-    "requireCleanWorkingDir": false,
+    "requireCleanWorkingDir": true,
     "commitMessage": "chore(release): v${version}",
     "tagName": "v${version}"
   },
@@ -22,6 +22,10 @@
     "after:release": "echo Successfully released ${name} v${version} to ${repo.repository}."
   },
   "plugins": {
+    "@release-it/bumper": {
+      "in": "layer/package.json",
+      "out": "layer/package.json"
+    },
     "@release-it/conventional-changelog": {
       "preset": {
         "name": "conventionalcommits",

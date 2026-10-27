@@ -1,25 +1,9 @@
 import type { ButtonProps } from '@nuxt/ui'
-import type { Options } from 'prettier'
-import type { FaqQuestions, LocalizedFaqQuestions } from '../../modules/ai-chat/runtime/types'
+import type { FaqQuestions, LocalizedFaqQuestions } from '../../shared/faq'
+import type { CategoryConfig, NavLinkConfig } from '../utils/nav-config'
 
 export interface ExtendedButtonProps extends ButtonProps {
   label?: string
-}
-
-export interface SimplePrettier {
-  format: (source: string, options?: Options) => Promise<string>
-}
-
-declare module '#app' {
-  interface NuxtApp {
-    $prettier: SimplePrettier
-  }
-}
-
-declare module 'vue' {
-  interface ComponentCustomProperties {
-    $prettier: SimplePrettier
-  }
 }
 
 declare module 'nuxt/schema' {
@@ -43,6 +27,14 @@ declare module 'nuxt/schema' {
       search: boolean
       colorMode: boolean
       links: ExtendedButtonProps[]
+      /** 桌面端导航，站内链接自动加语言前缀并计算激活状态 */
+      nav?: NavLinkConfig[]
+      /** 移动端菜单导航，未配置时沿用 nav */
+      mobileNav?: NavLinkConfig[]
+    }
+    docs?: {
+      /** 按文档顶层目录分组侧边栏导航，键为目录 slug（如 getting-started） */
+      categories?: Record<string, CategoryConfig[]>
     }
     footer: {
       credits: string
@@ -64,7 +56,7 @@ declare module 'nuxt/schema' {
       commitPath: string
       since: string
       suffix: string
-      per_page: number
+      perPage: number
       until: string
       author: string
       /**

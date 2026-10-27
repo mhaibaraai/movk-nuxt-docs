@@ -1,4 +1,4 @@
-import { decodeUnicodeEscapes } from '../../app/utils/unicode'
+import { decodeUnicodeEscapes } from '../../shared/unicode'
 
 export interface ComponentMetaTag {
   name: string

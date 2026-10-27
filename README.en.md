@@ -86,9 +86,19 @@ cd my-docs
 pnpm dev
 ```
 
+#### 🌐 Multilingual documentation site
+
+The full template with `@nuxtjs/i18n` enabled and content in Simplified Chinese and English.
+
+```bash
+npx nuxi init -t gh:mhaibaraai/movk-nuxt-docs/templates/i18n my-docs
+cd my-docs
+pnpm dev
+```
+
 #### 📦 Module documentation site
 
-Best for quickly documenting npm packages or libraries. Includes release pages for version history and keeps extra development tooling minimal.
+Best for documenting npm packages or libraries. The full template plus a release page for version history.
 
 ```bash
 # Create a new project with the module template
@@ -126,7 +136,7 @@ A project created from a template looks like this, using the `default` template 
 ```bash
 my-docs/
 |-- app/
-|   `-- composables/             # Custom composables
+|   `-- app.config.ts            # Runtime config for header navigation, sidebar categories and more
 |-- content/                     # Markdown content
 |   |-- index.md                 # Home page
 |   `-- docs/                    # Documentation pages
@@ -148,6 +158,7 @@ movk-nuxt-docs/
 |-- layer/                       # @movk/nuxt-docs layer package
 |-- templates/
 |   |-- default/                 # Full documentation site template
+|   |-- i18n/                    # Multilingual documentation site template
 |   `-- module/                  # Module documentation site template
 `-- scripts/                     # Build scripts
 ```
@@ -280,7 +291,7 @@ export default defineNuxtConfig({
 })
 ```
 
-Default-language content stays in the `content/` root (no prefix, e.g. `/docs`); other languages go into `content/{locale}/` (with prefix, e.g. `/zh-CN/docs`). You can also use the official i18n template to get started immediately: `npx nuxi init -t gh:mhaibaraai/movk-nuxt-docs/templates/i18n my-docs`. See the [Internationalization documentation](https://docs.mhaibaraai.cn/en/docs/getting-started/i18n) for details.
+Default-language content stays in the `content/` root (no prefix, e.g. `/docs`); other languages go into `content/{locale}/` (with prefix, e.g. `/en/docs`). You can also use the official i18n template to get started immediately: `npx nuxi init -t gh:mhaibaraai/movk-nuxt-docs/templates/i18n my-docs`. See the [Internationalization documentation](https://docs.mhaibaraai.cn/en/docs/guide/i18n) for details.
 
 ## 🛠️ Development
 
@@ -311,9 +322,7 @@ pnpm preview
 ### Release
 
 ```bash [Terminal]
-# Release the layer to npm
-pnpm release:layer
-# Release the full project
+# Bump versions, generate the changelog and push the tag; CI publishes to npm
 pnpm release
 ```
 

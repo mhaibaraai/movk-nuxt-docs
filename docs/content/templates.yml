@@ -1,19 +1,21 @@
 title: 案例展示
-description: 这些站点均由 Movk Nuxt Docs 构建，展示该主题在真实项目中的应用。
+description: 以下站点均由 Movk Nuxt Docs 构建，覆盖个人博客、工具库与组件库文档，可作为搭建自己站点时的参考。
 navigation: false
 hero:
   title: 案例展示
-  description: 这些站点均由 Movk Nuxt Docs 构建，展示该主题在真实项目中的应用。
+  description: 以下站点均由 Movk Nuxt Docs 构建，覆盖个人博客、工具库与组件库文档，可作为搭建自己站点时的参考。
   links:
+    - label: 提交你的站点
+      to: https://github.com/mhaibaraai/movk-nuxt-docs/edit/main/docs/content/templates.yml
+      target: _blank
+      icon: i-lucide-git-pull-request
     - label: 在 GitHub 上标星
-      color: neutral
-      variant: outline
       to: https://github.com/mhaibaraai/movk-nuxt-docs
       target: _blank
       icon: i-lucide-star
 items:
   - title: mhaibaraai.cn
-    description: 技术博客和知识库站点。
+    description: 个人技术博客与知识库，记录前端工程、Nuxt 生态与日常开发笔记。
     features:
       - title: 技术博客
         icon: i-lucide-notebook
@@ -23,9 +25,8 @@ items:
       - label: 访问站点
         to: https://mhaibaraai.cn
         target: _blank
-        icon: i-lucide-link
   - title: '@movk/core'
-    description: Vue.js 实用工具和 Composables 库。
+    description: Vue.js 实用工具与 Composables 库，文档包含完整的 API 参考与示例。
     features:
       - title: 实用工具
         icon: i-lucide-wrench
@@ -35,7 +36,6 @@ items:
       - label: 访问站点
         to: https://core.mhaibaraai.cn
         target: _blank
-        icon: i-lucide-link
   - title: '@movk/nuxt'
     description: Nuxt 4 模块化工程套件，提供 Schema 驱动表单、UI 组件和工具函数。
     features:
@@ -49,7 +49,6 @@ items:
       - label: 访问站点
         to: https://nuxt.mhaibaraai.cn
         target: _blank
-        icon: i-lucide-link
   - title: '@movk/mapbox'
     description: 声明式 Mapbox GL v3 封装库，组件化组合地图、图层、标记与控件。
     features:
@@ -61,4 +60,3 @@ items:
       - label: 访问站点
         to: https://mapbox.mhaibaraai.cn
         target: _blank
-        icon: i-lucide-link

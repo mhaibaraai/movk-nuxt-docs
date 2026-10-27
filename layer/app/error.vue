@@ -1,44 +1,14 @@
 <script setup lang="ts">
 import type { NuxtError } from '#app'
-import * as nuxtUiLocales from '@nuxt/ui/locale'
 
 defineProps<{
   error: NuxtError
 }>()
 
-const { style, color } = useTheme()
-const { locale, docsRoot, docsCollection, t } = useMovkI18n()
+const { t } = useMovkI18n()
 const isDocsRoute = useDocsRoute()
-
-const nuxtUiLocale = computed(() =>
-  nuxtUiLocales[locale.value.replace('-', '_').toLowerCase() as keyof typeof nuxtUiLocales] || nuxtUiLocales.en
-)
-
-const { data: navigation } = await useAsyncData(
-  () => `docs-navigation-${locale.value}`,
-  () => queryCollectionNavigation(docsCollection.value as 'docs', ['category', 'description']),
-  {
-    transform: data => transformNavigation(data, docsRoot.value)
-  }
-)
-
-const { data: files } = useLazyAsyncData(
-  () => `docs-search-${locale.value}`,
-  () => queryCollectionSearchSections(docsCollection.value as 'docs', { ignoredTags: ['style'] }),
-  { server: false }
-)
-
-useHead({
-  htmlAttrs: {
-    lang: computed(() => nuxtUiLocale.value.code),
-    dir: computed(() => nuxtUiLocale.value.dir)
-  },
-  meta: [
-    { name: 'viewport', content: 'width=device-width, initial-scale=1' },
-    { key: 'theme-color', name: 'theme-color', content: color }
-  ],
-  style
-})
+const { isEnabled: isAiChatEnabled } = useAIChat()
+const { nuxtUiLocale, rootNavigation, files } = await useDocsShell()
 
 if (import.meta.server) {
   useSeoMeta({
@@ -46,10 +16,6 @@ if (import.meta.server) {
     description: t('docs.pageNotFoundDescription')
   })
 }
-
-const { rootNavigation } = useNavigation(navigation)
-
-provide('navigation', rootNavigation)
 </script>
 
 <template>
@@ -66,9 +32,11 @@ provide('navigation', rootNavigation)
       </div>
 
       <ClientOnly>
-        <AiChatPanel />
+        <template v-if="isAiChatEnabled">
+          <AiChatPanel />
 
-        <AiChatFloatingInput />
+          <AiChatFloatingInput />
+        </template>
 
         <UContentSearch :files="files" :navigation="rootNavigation" />
       </ClientOnly>

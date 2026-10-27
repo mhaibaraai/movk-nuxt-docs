@@ -1,30 +1,17 @@
-import { existsSync } from 'node:fs'
-import { join } from 'pathe'
-import { addComponent, addComponentsDir, createResolver, defineNuxtModule, logger } from '@nuxt/kit'
+import { addComponentsDir, addImports, createResolver, defineNuxtModule, logger } from '@nuxt/kit'
 import type { ModuleDependencies, NuxtModule } from 'nuxt/schema'
 import { defu } from 'defu'
 import { getGitBranch, getGitEnv, getLocalGitInfo } from '../utils/git'
 import { getPackageJsonMetadata, inferSiteURL } from '../utils/meta'
-import { createComponentMetaExcludeFilters } from '../utils/component-meta'
-import { applyEmitDocs } from '../utils/component-meta-emits'
+import { getFeatures, type FeatureOptions } from '../utils/features'
+import { assertFeatureDependencies } from '../utils/feature-dependencies'
+import { excludeFeatureTypes } from '../utils/feature-types'
+import { syncCodeGroups, type MinimarkNode } from '../utils/code-groups'
 import { startCase, kebabCase } from '@movk/core'
 import { updateSiteConfig } from 'nuxt-site-config/kit'
 import type { SiteConfigInput } from 'nuxt-site-config/kit'
 
-export interface ModuleOptions {
-  /**
-   * 是否启用 @nuxt/a11y 无障碍支持
-   * @defaultValue true
-   * @see https://a11y.nuxtjs.org/
-   */
-  a11y?: boolean
-  /**
-   * 是否启用 Mermaid 图表支持
-   * - 启用前需安装依赖: `pnpm add mermaid dompurify`
-   * @defaultValue false
-   */
-  mermaid?: boolean
-}
+export type ModuleOptions = FeatureOptions
 
 const log = logger.withTag('@movk/nuxt-docs')
 
@@ -34,17 +21,16 @@ const movkNuxtDocsModule: NuxtModule<ModuleOptions> = defineNuxtModule<ModuleOpt
     configKey: 'movkNuxtDocs',
     docs: 'https://docs.mhaibaraai.cn/'
   },
-  defaults: {
-    a11y: true,
-    mermaid: false
-  },
+  // 默认值见 utils/features.ts，模块与 nuxt.config 中的内联模块共用同一份解析逻辑
   moduleDependencies(nuxt): ModuleDependencies {
-    const userOptions = nuxt.options.movkNuxtDocs || {}
+    assertFeatureDependencies(nuxt)
+    const features = getFeatures(nuxt)
 
     return {
-      ...userOptions.a11y !== false && {
+      ...features.mcp && { '@nuxtjs/mcp-toolkit': {} },
+      ...features.ogImage && { 'nuxt-og-image': {} },
+      ...features.a11y && {
         '@nuxt/a11y': {
-          version: '^1.0.0-alpha.1',
           defaults: {
             logIssues: false
           }
@@ -52,78 +38,85 @@ const movkNuxtDocsModule: NuxtModule<ModuleOptions> = defineNuxtModule<ModuleOpt
       }
     }
   },
-  async setup(options, nuxt) {
+  async setup(_options, nuxt) {
     const { resolve } = createResolver(import.meta.url)
+    const features = getFeatures(nuxt)
 
     nuxt.options.alias['#ai-chat'] = resolve('./ai-chat/runtime')
 
-    const consumerExtrasCandidates = [
-      join(nuxt.options.srcDir, 'components/content/ComponentExampleExtras.vue'),
-      join(nuxt.options.rootDir, 'app/components/content/ComponentExampleExtras.vue')
-    ]
-    const consumerExtrasPath = consumerExtrasCandidates.find(existsSync)
+    nuxt.options.runtimeConfig.public.movkDocs = {
+      ...nuxt.options.runtimeConfig.public.movkDocs,
+      features: {
+        mcp: features.mcp,
+        aiChat: features.aiChat,
+        componentDocs: features.componentDocs,
+        ogImage: features.ogImage
+      }
+    }
 
-    addComponent({
-      name: 'ComponentExampleExtras',
-      filePath: consumerExtrasPath ?? resolve('./components/content/ComponentExampleExtras.vue')
+    excludeFeatureTypes(nuxt, [
+      ...features.aiChat ? [] : [resolve('./ai-chat/runtime')],
+      ...features.componentDocs ? [] : [resolve('./component-docs/runtime')]
+    ])
+
+    // 关闭 OG 图片时保留 defineOgImage 调用点，替换为空实现
+    if (!features.ogImage) {
+      addImports({ name: 'defineOgImage', from: resolve('./runtime/og-image-stub') })
+    }
+
+    nuxt.hook('content:file:afterParse', ({ content }) => {
+      const body = content.body as { type?: string, value?: unknown[] } | undefined
+      if (body?.type === 'minimark' && Array.isArray(body.value)) {
+        content.body = { ...body, value: syncCodeGroups(body.value as MinimarkNode[]) }
+      }
     })
 
-    if (options.a11y !== false) {
+    if (features.a11y) {
       const a11yOptions = (nuxt.options as Record<string, any>).a11y ??= {}
       a11yOptions.axe = defu(a11yOptions.axe, {
         runOptions: { preload: false }
       })
     }
 
-    if (options.mermaid) {
-      let mermaidAvailable = true
-      try {
-        import.meta.resolve('mermaid')
-      } catch {
-        log.warn('mermaid package not found. install it with: pnpm add mermaid dompurify')
-        mermaidAvailable = false
-      }
+    if (features.mermaid) {
+      addComponentsDir({
+        path: resolve('./components/prose'),
+        pathPrefix: false,
+        prefix: 'Prose',
+        global: true
+      })
 
-      if (mermaidAvailable) {
-        addComponentsDir({
-          path: resolve('./components/prose'),
-          pathPrefix: false,
-          prefix: 'Prose',
-          global: true
-        })
-
-        const contentOptions = nuxt.options.content as Record<string, any> | false
-        if (contentOptions) {
-          const build = contentOptions.build ??= {}
-          const markdown = build.markdown ??= {}
-          const highlight = markdown.highlight ??= {}
-          const langs = highlight.langs ??= [] as string[]
-          if (!langs.includes('mermaid')) {
-            langs.push('mermaid')
-          }
+      const contentOptions = nuxt.options.content as Record<string, any> | false
+      if (contentOptions) {
+        const build = contentOptions.build ??= {}
+        const markdown = build.markdown ??= {}
+        const highlight = markdown.highlight ??= {}
+        const langs = highlight.langs ??= [] as string[]
+        if (!langs.includes('mermaid')) {
+          langs.push('mermaid')
         }
-
-        nuxt.hooks.hook('vite:extendConfig', (config) => {
-          const cfg = config as { optimizeDeps?: { include?: string[] } }
-          cfg.optimizeDeps ??= {}
-          cfg.optimizeDeps.include ??= []
-          cfg.optimizeDeps.include.push(
-            '@movk/nuxt-docs > mermaid',
-            '@movk/nuxt-docs > mermaid > dayjs',
-            '@movk/nuxt-docs > mermaid > @braintree/sanitize-url',
-            '@movk/nuxt-docs > mermaid > d3',
-            '@movk/nuxt-docs > mermaid > dompurify'
-          )
-        })
-
-        const appConfig = nuxt.options.appConfig as Record<string, any>
-        appConfig.ui ??= {}
-        appConfig.ui.prose ??= {}
-        appConfig.ui.prose.codeIcon ??= {}
-        appConfig.ui.prose.codeIcon.mmd ??= 'i-vscode-icons-file-type-mermaid'
-
-        log.info('mermaid diagram support enabled')
       }
+
+      nuxt.hooks.hook('vite:extendConfig', (config) => {
+        const cfg = config as { optimizeDeps?: { include?: string[] } }
+        cfg.optimizeDeps ??= {}
+        cfg.optimizeDeps.include ??= []
+        cfg.optimizeDeps.include.push(
+          '@movk/nuxt-docs > mermaid',
+          '@movk/nuxt-docs > mermaid > dayjs',
+          '@movk/nuxt-docs > mermaid > @braintree/sanitize-url',
+          '@movk/nuxt-docs > mermaid > d3',
+          '@movk/nuxt-docs > mermaid > dompurify'
+        )
+      })
+
+      const appConfig = nuxt.options.appConfig as Record<string, any>
+      appConfig.ui ??= {}
+      appConfig.ui.prose ??= {}
+      appConfig.ui.prose.codeIcon ??= {}
+      appConfig.ui.prose.codeIcon.mmd ??= 'i-vscode-icons-file-type-mermaid'
+
+      log.info('mermaid diagram support enabled')
     }
 
     const dir = nuxt.options.rootDir
@@ -161,33 +154,16 @@ const movkNuxtDocsModule: NuxtModule<ModuleOptions> = defineNuxtModule<ModuleOpt
       description: meta.description || ''
     })
 
-    nuxt.options.appConfig.github = defu(nuxt.options.appConfig.github as Record<string, any>, {
-      owner: gitInfo?.owner,
-      name: gitInfo?.name,
-      url: gitInfo?.url,
-      commitPath: 'src',
-      suffix: 'vue',
-      since: '2025-01-31T04:00:00Z',
-      branch: getGitBranch(),
-      per_page: 100,
-      until: new Date().toISOString()
-    })
-
-    const layerPath = resolve('..')
-    // @ts-ignore - component-meta is not typed
-    nuxt.hook('component-meta:extend', (options: any) => {
-      const userInclude = (nuxt.options.componentMeta && typeof nuxt.options.componentMeta === 'object')
-        ? nuxt.options.componentMeta.include || []
-        : []
-
-      options.exclude = [
-        ...(options.exclude || []),
-        ...createComponentMetaExcludeFilters(resolve, dir, layerPath, userInclude)
-      ]
-    })
-
-    // @ts-ignore - component-meta is not typed
-    nuxt.hook('component-meta:schema', (schema: any) => applyEmitDocs(schema))
+    // 仅补充从 git 推断的仓库信息，其余默认值以 nuxt.schema.ts 为准
+    // github: false 表示关闭集成，不能交给 defu（会被默认值整体替换）
+    if ((nuxt.options.appConfig.github as unknown) !== false) {
+      nuxt.options.appConfig.github = defu(nuxt.options.appConfig.github as Record<string, any>, {
+        owner: gitInfo?.owner,
+        name: gitInfo?.name,
+        url: gitInfo?.url,
+        branch: getGitBranch()
+      })
+    }
   }
 })
 

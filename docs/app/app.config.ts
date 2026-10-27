@@ -1,4 +1,32 @@
 export default defineAppConfig({
+  header: {
+    avatar: 'https://docs.mhaibaraai.cn/avatar.png',
+    nav: [
+      { label: { 'zh-CN': '文档', 'en': 'Docs' }, to: '/docs/getting-started', activeMatch: '/docs' },
+      { label: { 'zh-CN': '案例', 'en': 'Showcase' }, to: '/templates' },
+      { label: { 'zh-CN': '版本发布', 'en': 'Releases' }, to: '/releases' }
+    ],
+    mobileNav: [
+      { label: { 'zh-CN': '开始', 'en': 'Get Started' }, icon: 'i-lucide-square-play', to: '/docs/getting-started' },
+      { label: { 'zh-CN': '指南', 'en': 'Guide' }, icon: 'i-lucide-compass', to: '/docs/guide/configuration' },
+      { label: 'AI', icon: 'i-lucide-sparkles', to: '/docs/ai/ai-chat' },
+      { label: { 'zh-CN': '写作', 'en': 'Writing' }, icon: 'i-lucide-square-pilcrow', to: '/docs/writing/markdown-syntax' },
+      { label: { 'zh-CN': '组件', 'en': 'Components' }, icon: 'i-lucide-component', to: '/docs/components/component-props' },
+      { label: { 'zh-CN': '参考', 'en': 'Reference' }, icon: 'i-lucide-book-marked', to: '/docs/reference/app-config' },
+      { label: { 'zh-CN': '案例', 'en': 'Showcase' }, icon: 'i-lucide-layout-template', to: '/templates' },
+      { label: { 'zh-CN': '版本发布', 'en': 'Releases' }, icon: 'i-lucide-newspaper', to: '/releases' },
+      { label: 'GitHub', icon: 'i-simple-icons-github', to: 'https://github.com/mhaibaraai/movk-nuxt-docs' }
+    ]
+  },
+  docs: {
+    categories: {
+      guide: [
+        { id: 'basics', title: { 'zh-CN': '基础', 'en': 'Basics' }, icon: 'i-lucide-settings' },
+        { id: 'customization', title: { 'zh-CN': '定制', 'en': 'Customization' }, icon: 'i-lucide-paintbrush' },
+        { id: 'shipping', title: { 'zh-CN': '发布', 'en': 'Shipping' }, icon: 'i-lucide-rocket' }
+      ]
+    }
+  },
   aside: {
     filter: {
       enabled: true
@@ -7,7 +35,17 @@ export default defineAppConfig({
   github: {
     rootDir: 'docs',
     commitPath: 'layer/app/components/content',
-    since: '2025-07-01T04:00:00Z'
+    since: '2025-07-01T04:00:00Z',
+    dateFormat: {
+      options: {
+        year: 'numeric',
+        month: 'numeric',
+        day: 'numeric',
+        hour: '2-digit',
+        minute: '2-digit',
+        timeZone: 'Asia/Shanghai'
+      }
+    }
   },
   toc: {
     bottom: {

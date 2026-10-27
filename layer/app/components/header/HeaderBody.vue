@@ -1,29 +1,32 @@
 <script setup lang="ts">
-import type { ContentNavigationItem } from '@nuxt/content'
-
-const navigation = inject<Ref<ContentNavigationItem[]>>('navigation')
-
 const { mobileLinks } = useHeader()
-const { navigationByCategory } = useNavigation(navigation!)
+const { t } = useMovkI18n()
 const isDocsRoute = useDocsRoute()
 </script>
 
 <template>
-  <UNavigationMenu
-    orientation="vertical"
-    :items="mobileLinks"
-    class="-mx-2.5"
-    aria-label="Mobile Navigation"
-  />
+  <nav :aria-label="t('header.mobileNavigation')">
+    <NuxtLink
+      v-for="(link, index) in mobileLinks"
+      :key="link.to"
+      :to="link.to"
+      :target="link.target"
+      class="flex items-baseline gap-4 border-b border-default py-3.5"
+    >
+      <span class="font-mono text-[11px] tracking-[0.14em]" :class="link.active ? 'text-primary' : 'text-dimmed'">
+        {{ String(index + 1).padStart(2, '0') }}
+      </span>
+      <span class="font-display text-xl font-bold" :class="link.active ? 'text-highlighted' : 'text-toned'">
+        {{ link.label }}
+      </span>
+    </NuxtLink>
+  </nav>
 
   <template v-if="isDocsRoute">
-    <USeparator type="dashed" class="mt-4 mb-6" />
+    <p class="kicker mt-8 mb-4">
+      {{ t('header.docsNavigation') }}
+    </p>
 
-    <UContentNavigation
-      :navigation="navigationByCategory"
-      highlight
-      :ui="{ linkTrailingBadge: 'font-semibold uppercase' }"
-      aria-label="Documentation Navigation"
-    />
+    <DocsAsideLeftBody />
   </template>
 </template>

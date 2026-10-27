@@ -20,87 +20,41 @@ const props = withDefaults(defineProps<{
   height: 600
 })
 
-const themeColor = computed(() => props.isPro ? '124, 58, 237' : '34, 197, 94')
+// 渲染器不解析 CSS 变量，直接使用 paper / vermilion token 的色值
+const palette = computed(() => props.colorMode === 'dark'
+  ? { background: '#141413', ink: '#faf9f5', muted: '#b0aea5', rule: '#3d3d3a', accent: '#e57461' }
+  : { background: '#faf9f5', ink: '#141413', muted: '#5e5d59', rule: '#d1cfc5', accent: '#bf3a24' })
 </script>
 
 <template>
   <div
-    class="w-full h-full flex flex-col justify-center items-center relative p-10 lg:p-15 bg-white text-neutral-900 dark:bg-neutral-900 dark:text-neutral-50"
+    class="w-full h-full flex flex-col justify-between px-20 py-16"
+    :style="{ backgroundColor: palette.background, color: palette.ink }"
   >
-    <!-- Gradient background -->
-    <div
-      class="absolute top-0 left-0 right-0 bottom-0"
-      :style="{
-        backgroundImage: `radial-gradient(at 100% 100%, rgba(${themeColor}, 0.15), transparent)`
-      }"
-    />
-    <div
-      class="absolute top-0 left-0 right-0 bottom-0"
-      :style="{
-        backgroundImage: `radial-gradient(at 0% 0%, rgba(${themeColor}, 0.1), transparent)`
-      }"
-    />
+    <div class="flex items-center justify-between pb-5" :style="{ borderBottom: `2px solid ${palette.ink}` }">
+      <span class="text-[26px] font-bold tracking-tight">{{ siteName }}</span>
+      <span class="text-[18px] uppercase tracking-[0.2em]" :style="{ color: palette.accent }">Docs</span>
+    </div>
 
-    <div class="relative flex flex-col items-center text-center gap-5 lg:gap-8">
-      <!-- Logo -->
-      <div class="flex items-center gap-3">
-        <svg viewBox="0 0 64 64" class="w-10 h-10 lg:w-16 lg:h-16">
-          <defs>
-            <linearGradient
-              :id="isPro ? 'nsLine2' : 'nsLine1'"
-              x1="0%"
-              y1="100%"
-              x2="100%"
-              y2="0%"
-            >
-              <stop offset="0%" :stop-color="isPro ? '#7c3aed' : '#22c55e'" />
-              <stop offset="100%" :stop-color="isPro ? '#c4b5fd' : '#86efac'" />
-            </linearGradient>
-            <linearGradient
-              :id="isPro ? 'nsFill2' : 'nsFill1'"
-              x1="0%"
-              y1="0%"
-              x2="0%"
-              y2="100%"
-            >
-              <stop offset="0%" :stop-color="isPro ? '#7c3aed' : '#22c55e'" stop-opacity="0.6" />
-              <stop offset="100%" :stop-color="isPro ? '#7c3aed' : '#22c55e'" stop-opacity="0" />
-            </linearGradient>
-          </defs>
-          <path d="M8 52 Q20 48 24 36 T40 20 T56 12 L56 56 L8 56 Z" :fill="`url(#${isPro ? 'nsFill2' : 'nsFill1'})`" />
-          <path
-            d="M8 52 Q20 48 24 36 T40 20 T56 12"
-            fill="none"
-            :stroke="`url(#${isPro ? 'nsLine2' : 'nsLine1'})`"
-            stroke-width="4"
-            stroke-linecap="round"
-          />
-          <circle
-            cx="56"
-            cy="12"
-            r="6"
-            :fill="`url(#${isPro ? 'nsLine2' : 'nsLine1'})`"
-          />
-        </svg>
-        <span class="text-[32px] lg:text-[42px] font-bold tracking-tight text-green-500">
-          {{ siteName }}
-        </span>
-      </div>
-
-      <div class="items-center justify-center w-full">
-        <!-- Title -->
-        <h1
-          class="text-[48px] lg:text-[80px] font-bold m-0 leading-tight max-w-175 lg:max-w-250"
-          style="display: block; line-clamp: 3; text-overflow: ellipsis; text-wrap: balance;"
-        >
-          {{ title }}
-        </h1>
-      </div>
-
-      <!-- Description -->
-      <p v-if="description" class="text-[24px] lg:text-[32px] opacity-70 max-w-162.5 lg:max-w-225 leading-relaxed">
+    <div class="flex flex-col gap-6">
+      <h1
+        class="text-[76px] font-bold m-0 leading-[1.08] tracking-tight max-w-250"
+        style="display: block; line-clamp: 3; text-overflow: ellipsis; text-wrap: balance;"
+      >
+        {{ title }}
+      </h1>
+      <p
+        v-if="description"
+        class="text-[28px] m-0 leading-relaxed max-w-225"
+        style="display: block; line-clamp: 2; text-overflow: ellipsis;"
+        :style="{ color: palette.muted }"
+      >
         {{ description }}
       </p>
+    </div>
+
+    <div class="flex items-center gap-4 pt-5" :style="{ borderTop: `1px solid ${palette.rule}` }">
+      <span class="w-10 h-1.5" :style="{ backgroundColor: palette.accent }" />
     </div>
   </div>
 </template>

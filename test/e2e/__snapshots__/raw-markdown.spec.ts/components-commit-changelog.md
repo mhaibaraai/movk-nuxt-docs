@@ -1,0 +1,184 @@
+---
+title: "CommitChangelog"
+description: "用 `:commit-changelog` 从 GitHub 拉取组件或源文件的提交记录，按版本分组展示为时间线；文件路径由组件名推导，可按目录、扩展名、命名格式与作者调整，一篇文档也可关联多个文件。"
+canonical_url: "https://docs.mhaibaraai.cn/docs/components/commit-changelog"
+---
+# CommitChangelog
+
+> 用 `:commit-changelog` 从 GitHub 拉取组件或源文件的提交记录，按版本分组展示为时间线；文件路径由组件名推导，可按目录、扩展名、命名格式与作者调整，一篇文档也可关联多个文件。
+
+`CommitChangelog` 根据文件路径请求 GitHub 提交记录，并按发布版本分组：已发布的提交归入对应版本，尚未发布的归入 `Soon`。站点有 [版本发布页](https://docs.mhaibaraai.cn/docs/guide/pages) 时，版本标签链接到站内页面，否则跳转到 GitHub Release。
+
+该组件不依赖 `componentDocs` 开关，开启 GitHub 集成即可使用。
+
+## 前置条件
+
+- **仓库信息**：`github.owner`、`github.name`、`github.url` 与 `github.branch` 默认从本地 git remote 推断，推断失败时在 `app/app.config.ts` 中手动填写，见 [app.config 参考](https://docs.mhaibaraai.cn/docs/reference/app-config)
+- **访问令牌**：在环境变量中配置 `NUXT_GITHUB_TOKEN`
+
+```bash [.env]
+NUXT_GITHUB_TOKEN=<your-github-token>
+```
+
+> [!WARNING]
+> See: https://github.com/settings/tokens
+> 
+> 令牌需要读取仓库提交记录的权限：公开仓库可使用只读的 fine-grained token，私有仓库需要授予 Contents 读取权限。
+
+> [!TIP]
+> 
+> 未配置令牌或设置了 
+> 
+> github: false
+> 
+>  时，组件显示 
+> 
+> No recent changes
+> 
+> ，不会导致构建失败。
+
+## 用法
+
+### 推导文件路径
+
+```mdc
+:commit-changelog
+```
+
+文件路径按 `{commitPath}/{prefix}/{name}.{suffix}` 拼接：
+
+| 片段 | 来源 |
+| --- | --- |
+| `commitPath` | 组件的 `commitPath`，其次 `github.commitPath`，默认 `src` |
+| `prefix` | 组件的 `prefix`，默认为空 |
+| `name` | 组件的 `name`，默认取当前路由最后一段 |
+| `suffix` | 组件的 `suffix`，其次 `github.suffix`，默认 `vue` |
+
+`name` 按 `casing` 转换：默认的 `auto` 对 `.vue` 文件使用 PascalCase，其他文件使用 camelCase；`kebab`、`camel`、`pascal` 强制使用对应格式。例如在 `/docs/components/accordion` 页面中，上面的写法对应 `src/Accordion.vue`。
+
+### 指定文件
+
+```mdc
+:commit-changelog{name="useUser" suffix="ts" commitPath="src/composables"}
+```
+
+文件统一使用 kebab-case 命名时，在 `app/app.config.ts` 中全局设置，省去每处单独指定：
+
+```ts [app/app.config.ts]
+export default defineAppConfig({
+  github: {
+    commitPath: 'src/composables',
+    suffix: 'ts',
+    casing: 'kebab'
+  }
+})
+```
+
+### 关联多个文件
+
+`files` 中的每一项是对顶层字段（`commitPath`、`prefix`、`suffix`、`name`、`casing`）的局部覆盖，未写的字段沿用顶层值。各文件的提交合并去重后按时间倒序展示：
+
+```mdc
+::commit-changelog
+---
+commitPath: layer/app/composables
+suffix: ts
+files:
+  - name: useHeader
+  - name: useNavigation
+---
+::
+```
+
+### 按作者过滤
+
+`author` 传入 GitHub 用户名或提交邮箱：
+
+```mdc
+:commit-changelog{author="octocat"}
+```
+
+> [!TIP]
+> 
+> 获取范围受 
+> 
+> github.since
+> 
+> 、
+> 
+> github.until
+> 
+>  与 
+> 
+> github.perPage
+> 
+>  控制，默认不限制日期，每个文件最多获取 100 条。
+
+## AI 与 raw markdown
+
+在 `/raw/**.md` 与 MCP 返回的 Markdown 中，组件被替换为指向 GitHub 提交历史的链接，路径推导规则相同；此时未指定 `name` 会使用页面标题。
+
+## API
+
+### Props
+
+```ts
+/**
+ * Props for the CommitChangelog component
+ */
+interface CommitChangelogProps {
+  /**
+   * 仓库中的文件路径
+   * @default 'src'
+   */
+  commitPath?: string | undefined;
+  /**
+   * 文件路径的前缀
+   */
+  prefix?: string | undefined;
+  /**
+   * 文件扩展名
+   * @default 'vue'
+   */
+  suffix?: string | undefined;
+  /**
+   * 要获取更新日志的组件或文件名
+   */
+  name?: string | undefined;
+  /**
+   * 按作者筛选提交
+   */
+  author?: string | undefined;
+  /**
+   * 文件名的命名格式
+   * - 'auto': Vue 文件使用 PascalCase，其他使用 camelCase（默认）
+   * - 'kebab': 保持 kebab-case（如 use-user.ts）
+   * - 'camel': 转换为 camelCase（如 useUser.ts）
+   * - 'pascal': 转换为 PascalCase（如 UseUser.ts）
+   * @default 'auto'
+   */
+  casing?: "auto" | "kebab" | "camel" | "pascal" | undefined;
+  /**
+   * 关联多个文件：每一项与顶层 props 合并后各自解析出一个文件路径，
+   * 对应的提交记录会合并去重并按时间倒序展示
+   */
+  files?: CommitChangelogFile[] | undefined;
+}
+```
+
+## 相关
+
+- [PageLastCommit](https://docs.mhaibaraai.cn/docs/components/page-last-commit)：在页头显示当前页面的最后一次提交
+
+## Changelog
+
+See commit history for [layer/app/components/content/CommitChangelog.vue](https://github.com/mhaibaraai/movk-nuxt-docs/commits/v3/layer/app/components/content/CommitChangelog.vue).
+
+---
+
+- [GitHub](https://github.com/mhaibaraai/movk-nuxt-docs/blob/main/layer/app/components/content/CommitChangelog.vue)
+
+
+## Sitemap
+
+See the full [sitemap](https://docs.mhaibaraai.cn/sitemap.md) for all pages.

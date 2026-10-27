@@ -12,12 +12,10 @@ watch(() => route.path, () => {
 
 <template>
   <UMain class="relative" as="main">
-    <HeroBackground />
-
     <UContainer>
       <UPage>
         <template #left>
-          <UPageAside>
+          <UPageAside class="[view-transition-name:docs-aside]">
             <template v-if="showFilter" #top>
               <DocsAsideLeftTop />
             </template>

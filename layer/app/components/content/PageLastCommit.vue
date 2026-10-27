@@ -1,4 +1,6 @@
 <script setup lang="ts">
+import { ULink } from '#components'
+
 interface LastCommit {
   sha: string
   date: string
@@ -66,64 +68,33 @@ const authorUrl = computed(() => {
 </script>
 
 <template>
-  <div v-if="commit" class="flex items-center flex-wrap gap-1.5 text-sm text-muted mt-2">
-    <span class="text-muted">最后更新于</span>
-    <time class="font-medium text-default" :datetime="commit.date">{{ commit.dateFormatted }}</time>
-    <span class="text-muted">由</span>
-    <ULink
-      v-if="authorUrl"
-      :to="authorUrl"
-      target="_blank"
-      class="inline-flex items-center gap-1.5 hover:opacity-80 transition-opacity"
+  <div v-if="commit" class="flex items-center flex-wrap gap-x-2 gap-y-1 font-mono text-[11px] tracking-[0.04em] text-muted">
+    <span class="uppercase tracking-[0.12em]">最后更新于</span>
+    <time class="text-highlighted" :datetime="commit.date">{{ commit.dateFormatted }}</time>
+    <span>·</span>
+    <component
+      :is="authorUrl ? ULink : 'span'"
+      v-bind="authorUrl ? { to: authorUrl, target: '_blank', raw: true } : {}"
+      class="inline-flex items-center gap-1.5 hover:text-highlighted transition-colors"
     >
       <UAvatar
         v-if="showAvatar && commit.author.avatar"
         :src="commit.author.avatar"
         alt="Author Avatar"
-        size="2xs"
+        size="3xs"
         loading="lazy"
       />
-      <UBadge color="neutral" variant="outline" size="sm">
-        {{ commit.author.name || commit.author.login }}
-      </UBadge>
-    </ULink>
-    <span v-else class="inline-flex items-center gap-1.5">
-      <UAvatar
-        v-if="showAvatar && commit.author.avatar"
-        :src="commit.author.avatar"
-        alt="Author Avatar"
-        size="2xs"
-      />
-      <UBadge color="neutral" variant="outline" size="sm">
-        {{ commit.author.name || commit.author.login }}
-      </UBadge>
-    </span>
+      {{ commit.author.name || commit.author.login }}
+    </component>
     <template v-if="showMessage && commit.message">
-      <span class="text-muted">提交</span>
-      <ULink
-        v-if="commitUrl"
-        :to="commitUrl"
-        target="_blank"
-        class="hover:opacity-80 transition-opacity max-w-62.5"
+      <span>·</span>
+      <component
+        :is="commitUrl ? ULink : 'span'"
+        v-bind="commitUrl ? { to: commitUrl, target: '_blank', raw: true } : {}"
+        class="max-w-62.5 truncate hover:text-highlighted transition-colors"
       >
-        <UBadge
-          color="neutral"
-          variant="outline"
-          size="sm"
-          class="font-mono text-xs"
-        >
-          <span class="truncate">{{ commit.message }}</span>
-        </UBadge>
-      </ULink>
-      <UBadge
-        v-else
-        color="neutral"
-        variant="outline"
-        size="sm"
-        class="max-w-62.5 font-mono text-xs"
-      >
-        <span class="truncate">{{ commit.message }}</span>
-      </UBadge>
+        {{ commit.message }}
+      </component>
     </template>
   </div>
 </template>

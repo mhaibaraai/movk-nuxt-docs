@@ -4,9 +4,9 @@ Evaluate the clarity and readability of Movk Nuxt Docs content.
 
 ## Writing Conventions
 
-### Punctuation
+### Punctuation (English)
 
-Use straight ASCII punctuation. Common errors to flag:
+Use straight ASCII punctuation in English text. Common errors to flag:
 
 | Case | Correct | Incorrect |
 |------|---------|-----------|
@@ -23,14 +23,28 @@ Use the Oxford comma in lists of three or more items: `components, themes, and l
 
 Add a single space after sentence-ending punctuation. No space between numbers and units:
 
-✅ `Width is 16px` — not `Width is 16 px`.
+Good: `Width is 16px` — not `Width is 16 px`.
 
 Add a space between an inline code identifier and surrounding text:
 
-✅ `Install the @movk/nuxt-docs dependency.`
-❌ `Install the@movk/nuxt-docsdependency.`
+Good: `Install the @movk/nuxt-docs dependency.`
+Avoid: `Install the@movk/nuxt-docsdependency.`
 
-✅ `The default port is 3000.`
+Good: `The default port is 3000.`
+
+### Chinese Text
+
+For pages in `zh-CN` (or any Chinese locale):
+
+| Check | Correct | Incorrect |
+|-------|---------|-----------|
+| Full-width punctuation in prose | 安装依赖，然后启动。 | 安装依赖,然后启动. |
+| Space between Chinese and Latin / numbers | 基于 Nuxt 4 构建 | 基于Nuxt4构建 |
+| No space between number and unit | 16px、300ms | 16 px |
+| Quotes | 「配置」或“配置” | "配置" |
+| Half-width inside code spans | `app.config.ts`、`useHeader()` | `app.config。ts`、`useHeader（）` |
+
+Missing spaces and half-width punctuation are Suggested; mixed punctuation within one page is Important.
 
 ### Proper Noun Capitalization
 
@@ -50,16 +64,16 @@ Add a space between an inline code identifier and surrounding text:
 ## Tone and Voice
 
 ### Active Voice
-✅ Good: "Configure your app by adding..."
-❌ Avoid: "The app can be configured by adding..."
+Good: "Configure your app by adding..."
+Avoid: "The app can be configured by adding..."
 
 ### Present Tense
-✅ Good: "The server handles the request..."
-❌ Avoid: "The server will handle the request..."
+Good: "The server handles the request..."
+Avoid: "The server will handle the request..."
 
 ### Second Person
-✅ Good: "You can customize the theme..."
-❌ Avoid: "Users can customize the theme..."
+Good: "You can customize the theme..."
+Avoid: "Users can customize the theme..."
 
 ## Sentence Structure
 
@@ -226,8 +240,8 @@ Use `::code-preview` to show rendered output beside the source code. This is ide
 ## Common Clarity Issues
 
 ### Passive Voice in Instructions
-❌ "The file should be created in the root directory."
-✅ "Create the file in the root directory."
+Avoid: "The file should be created in the root directory."
+Good: "Create the file in the root directory."
 
 ### Wordy Phrases
 | Wordy | Concise |
@@ -238,9 +252,9 @@ Use `::code-preview` to show rendered output beside the source code. This is ide
 | Due to the fact that | Because |
 
 ### Vague Pronouns
-❌ "This allows you to..."
-✅ "This configuration allows you to..."
+Avoid: "This allows you to..."
+Good: "This configuration allows you to..."
 
 ### Unexplained Jargon
-❌ "Use SSR for better performance."
-✅ "Use server-side rendering (SSR) for better performance."
+Avoid: "Use SSR for better performance."
+Good: "Use server-side rendering (SSR) for better performance."

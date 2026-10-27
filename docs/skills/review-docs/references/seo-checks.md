@@ -2,7 +2,9 @@
 
 SEO best practices for Movk Nuxt Docs documentation sites.
 
-## Title Optimization (`title`)
+## Title Optimization (`seo.title`)
+
+`title` is the short sidebar and H1 label (1-4 words, or 2-8 Chinese characters). The length rules below apply to `seo.title`, which falls back to `title` when missing.
 
 ### Length Recommendations
 
@@ -14,12 +16,12 @@ SEO best practices for Movk Nuxt Docs documentation sites.
 
 ### Title Quality
 
-✅ Good titles:
+Good titles:
 - "Configure the AI chat feature"
 - "Install the Movk Nuxt Docs theme"
 - "Customize theme colors and fonts"
 
-❌ Needs improvement:
+Needs improvement:
 - "Configuration" (too short, not descriptive)
 - "Documentation" (too generic)
 - "Movk Nuxt Docs Complete Installation Configuration Theme Customization Guide" (too long)
@@ -50,15 +52,17 @@ seo:
 
 ### Description Quality
 
-✅ Good description:
+Good description:
 ```
 Add a built-in AI chat assistant to your docs site, with multi-model switching, FAQ lists, and a customizable UI. Connect to OpenAI, DeepSeek, and other models via AI Gateway.
 ```
 
-❌ Needs improvement:
+Needs improvement:
 ```
 AI chat feature overview.   ← Too short, no information
 ```
+
+Chinese descriptions carry more information per character: 60-120 Chinese characters is the equivalent range for a `zh-CN` `description`.
 
 ### Description Writing Guidelines
 
@@ -124,12 +128,12 @@ H2 and H3 headings should:
 
 ### Examples
 
-✅ Good:
+Good:
 - `/docs/getting-started/installation`
 - `/docs/guide/authentication`
 - `/docs/api/composables`
 
-❌ Avoid:
+Avoid:
 - `/docs/getting_started/installation` (underscores)
 - `/docs/GetStarted/Installation` (not lowercase)
 - `/docs/p/123` (not descriptive)
@@ -163,7 +167,7 @@ For important related links, use the frontmatter `links` array:
 links:
   - label: "API reference"
     icon: "i-lucide-book"
-    to: "/api/reference"
+    to: "/docs/api/reference"
   - label: "GitHub repository"
     icon: "i-simple-icons-github"
     to: "https://github.com/..."
@@ -202,26 +206,36 @@ Always provide light and dark variants:
 
 ---
 
+## Handled by Movk Nuxt Docs
+
+Do not report these as missing on Movk Nuxt Docs sites; the layer provides them:
+
+- Canonical URLs, `hreflang` alternates, `x-default` and `og:locale` for i18n sites (`useLocaleSeo`).
+- OG images generated from `title` / `description` when `movkNuxtDocs.ogImage` is on (default).
+- `sitemap.xml` (per-locale index with i18n), `robots.txt`, `llms.txt`, Markdown versions at `/raw/**.md`.
+
+They all depend on `site.url` in `nuxt.config.ts`: a missing `site.url` is Important.
+
 ## Common SEO Issues
 
 ### Duplicate Metadata
-❌ Multiple pages share the same title or description.
-✅ Each page has unique, descriptive metadata.
+Avoid: Multiple pages share the same title or description.
+Good: Each page has unique, descriptive metadata.
 
 ### Missing Metadata
-❌ No `seo.title` or `seo.description` in frontmatter.
-✅ Every page defines SEO metadata.
+Avoid: No `seo.title` or `seo.description` in frontmatter.
+Good: Every page defines SEO metadata.
 
 ### Keyword Stuffing
-❌ "Movk Nuxt Docs documentation Movk Nuxt Docs theme Movk Nuxt Docs guide"
-✅ Natural language with keywords integrated in context.
+Avoid: "Movk Nuxt Docs documentation Movk Nuxt Docs theme Movk Nuxt Docs guide"
+Good: Natural language with keywords integrated in context.
 
 ## Validation Checklist
 
 Run this checklist for every page:
 
-- [ ] Title: 50–60 characters, includes keywords, unique.
-- [ ] Description: 120–160 characters, compelling, accurate.
+- [ ] `seo.title`: 50–60 characters, includes keywords, unique; `title` short.
+- [ ] `seo.description`: 120–160 characters, compelling, accurate.
 - [ ] Single H1 that matches the title.
 - [ ] Heading hierarchy is logical (no skipped levels).
 - [ ] H2/H3 headings are descriptive, not generic.

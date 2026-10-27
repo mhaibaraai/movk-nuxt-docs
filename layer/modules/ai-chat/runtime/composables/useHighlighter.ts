@@ -20,8 +20,8 @@ export const useHighlighter = async () => {
         import('@shikijs/langs/bash')
       ],
       themes: [
-        import('@shikijs/themes/material-theme-palenight'),
-        import('@shikijs/themes/material-theme-lighter')
+        import('@shikijs/themes/github-dark'),
+        import('@shikijs/themes/github-light')
       ],
       engine: createJavaScriptRegexEngine()
     })

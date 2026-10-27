@@ -11,7 +11,8 @@ export default defineMcpTool({
   },
   inputSchema: {
     componentName: z.string().describe('Component name. Accepts `Button` or `button`.'),
-    full: z.boolean().optional().describe('Return raw metadata with recursive prop schemas (very large). Defaults to false (compact props)')
+    full: z.boolean().optional().describe('Return raw metadata with recursive prop schemas (very large). Defaults to false (compact props)'),
+    locale: docsLocaleInput
   },
   inputExamples: [
     { componentName: 'Button' },
@@ -19,10 +20,11 @@ export default defineMcpTool({
     { componentName: 'Modal', full: true }
   ],
   cache: '30m',
-  async handler({ componentName, full }) {
+  async handler({ componentName, full, locale }) {
     const event = useEvent()
     const candidates = buildComponentNameCandidates(componentName)
-    const pages = await queryCollection(event, 'docs')
+    const { collection } = useDocsLocale(event, locale)
+    const pages = await queryCollection(event, collection as 'docs')
       .where('path', 'LIKE', '%/components/%')
       .where('extension', '=', 'md')
       .select('id', 'title', 'description', 'path', 'category', 'links')

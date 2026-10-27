@@ -1,5 +1,59 @@
 import pkg from '../package.json'
 
+const moved = (slugs: string[], from: string, to: string) =>
+  Object.fromEntries(slugs.map(slug => [`${from}/${slug}`, `${to}/${slug}`]))
+
+// 组合式函数参考页的 slug 改为与函数名一致
+const renamedComposables = (from: string) => Object.fromEntries(Object.entries({
+  'fetch-component-meta': 'use-fetch-component-meta',
+  'fetch-component-example': 'use-fetch-component-example',
+  'use-docs-filter': 'use-docs-filter-config'
+}).map(([oldSlug, newSlug]) => [`${from}/${oldSlug}`, `/docs/reference/composables/${newSlug}`]))
+
+// 区块首页跳到首篇
+const sectionRedirects: Record<string, string> = {
+  '/docs': '/docs/getting-started',
+  '/docs/guide': '/docs/guide/configuration',
+  '/docs/ai': '/docs/ai/ai-chat',
+  '/docs/writing': '/docs/writing/markdown-syntax',
+  '/docs/components': '/docs/components/component-props',
+  '/docs/reference': '/docs/reference/app-config',
+  '/docs/reference/composables': '/docs/reference/composables/use-movk-i18n'
+}
+
+// v2 旧路径永久跳到 v3 新位置
+const legacyRedirects: Record<string, string> = {
+  '/docs/typography': '/docs/writing/markdown-syntax',
+  '/docs/composables': '/docs/reference/composables/use-header',
+  '/docs/getting-started/nuxt': '/docs/guide/pages',
+  ...moved(['configuration', 'customization', 'i18n', 'deployment', 'troubleshooting'], '/docs/getting-started', '/docs/guide'),
+  ...moved(['ai-chat', 'mcp', 'skills', 'llms-txt'], '/docs/getting-started', '/docs/ai'),
+  ...moved(['markdown-syntax', 'code-blocks', 'mdc-components', 'media', 'mermaid'], '/docs/typography', '/docs/writing'),
+  ...moved(['use-header', 'use-navigation', 'use-category', 'use-theme'], '/docs/composables', '/docs/reference/composables'),
+  ...renamedComposables('/docs/composables'),
+  ...renamedComposables('/docs/reference/composables')
+}
+
+// llms.txt 按文档分区列出中文页面，英文页面通过 details 说明路径规则
+const llmsSections = [
+  ['Getting Started', 'getting-started'],
+  ['Guide', 'guide'],
+  ['AI', 'ai'],
+  ['Writing', 'writing'],
+  ['Components', 'components'],
+  ['Reference', 'reference']
+].map(([title, slug]) => ({
+  title,
+  contentCollection: 'docs',
+  contentFilters: [{ field: 'path', operator: 'LIKE', value: `/docs/${slug}%` }]
+}))
+
+const redirectRules = (redirects: Record<string, string>, statusCode: number) =>
+  ['', '/en'].flatMap(prefix => Object.entries(redirects).map(([from, to]) => [
+    `${prefix}${from}`,
+    { redirect: { to: `${prefix}${to}`, statusCode }, prerender: false }
+  ]))
+
 export default defineNuxtConfig({
   extends: ['@movk/nuxt-docs'],
 
@@ -21,22 +75,30 @@ export default defineNuxtConfig({
     }
   },
 
+  app: {
+    head: {
+      // 中文字体经 unicode-range 分包托管在 CDN，按需加载；crossorigin 需与 woff2 的 CORS 请求一致才能复用预热连接
+      link: [
+        { rel: 'preconnect', href: 'https://cdn.mhaibaraai.cn', crossorigin: '' },
+        { rel: 'stylesheet', href: 'https://cdn.mhaibaraai.cn/fonts/alibaba-puhuiti.css' }
+      ]
+    }
+  },
+
+  site: {
+    name: 'Movk Nuxt Docs'
+  },
+
   runtimeConfig: {
     public: {
       version: pkg.version
     }
   },
 
-  routeRules: {
-    '/docs': { redirect: '/docs/getting-started', prerender: false },
-    '/docs/typography': { redirect: '/docs/typography/markdown-syntax', prerender: false },
-    '/docs/components': { redirect: '/docs/components/component-props', prerender: false },
-    '/docs/composables': { redirect: '/docs/composables/use-header', prerender: false },
-    '/en/docs': { redirect: '/en/docs/getting-started', prerender: false },
-    '/en/docs/typography': { redirect: '/en/docs/typography/markdown-syntax', prerender: false },
-    '/en/docs/components': { redirect: '/en/docs/components/component-props', prerender: false },
-    '/en/docs/composables': { redirect: '/en/docs/composables/use-header', prerender: false }
-  },
+  routeRules: Object.fromEntries([
+    ...redirectRules(sectionRedirects, 302),
+    ...redirectRules(legacyRedirects, 301)
+  ]),
 
   compatibilityDate: '2026-06-30',
 
@@ -49,6 +111,17 @@ export default defineNuxtConfig({
         '@unhead/schema-org/vue',
         'shiki-transformer-color-highlight'
       ]
+    }
+  },
+
+  agentDiscovery: {
+    llms: {
+      details: ['Chinese docs live under /docs and English docs under /en/docs. Append .md to any page URL to get its Markdown.']
+    },
+    sitemap: {
+      markdown: {
+        labels: { ai: 'AI' }
+      }
     }
   },
 
@@ -67,41 +140,39 @@ export default defineNuxtConfig({
   i18n: {
     defaultLocale: 'zh-CN',
     locales: [
-      { code: 'zh-CN', name: '简体中文', file: 'zh-CN.json' },
-      { code: 'en', name: 'English', file: 'en.json' }
+      { code: 'zh-CN', name: '简体中文' },
+      { code: 'en', name: 'English' }
     ]
   },
 
   llms: {
     domain: 'https://docs.mhaibaraai.cn',
     title: 'Movk Nuxt Docs',
-    description: '基于 Nuxt 4 的现代文档主题，集成组件自动化文档、AI 聊天助手、MCP Server 和完整的开发者体验优化。',
+    description: 'A Nuxt 4 documentation layer built on Nuxt UI and Nuxt Content, with editorial typography, search, SEO, MCP Server, llms.txt, AI Chat and automated component docs.',
     notes: [
       'Nuxt 4',
       'Nuxt UI',
       'Nuxt Content',
-      'LLM 集成',
-      '文档主题',
-      '组件自动化文档',
-      'AI 聊天助手',
+      'MDC',
       'MCP Server',
-      'MDC 语法',
-      'SEO 优化',
-      '暗黑模式',
-      '全文搜索'
+      'AI Chat',
+      'Component docs',
+      'i18n'
     ],
+    sections: llmsSections,
     full: {
-      title: 'Movk Nuxt Docs - 现代化 Nuxt 文档主题',
-      description: '一款由 Nuxt UI 和 Nuxt Content 强力驱动的 Nuxt 优雅文档主题，内置组件文档自动生成、AI 聊天助手、MCP Server 支持、SEO 优化、暗黑模式、全文搜索等功能，助您轻松构建美观、专业、智能的文档网站。'
+      title: 'Movk Nuxt Docs',
+      description: 'Full Chinese documentation of Movk Nuxt Docs, a Nuxt 4 documentation layer built on Nuxt UI and Nuxt Content.'
     }
   },
 
   mcp: {
     name: 'Movk Nuxt Docs',
-    browserRedirect: '/docs/getting-started/mcp'
+    browserRedirect: '/docs/ai/mcp'
   },
 
   movkNuxtDocs: {
+    componentDocs: true,
     a11y: true,
     mermaid: true
   }

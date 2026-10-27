@@ -1,257 +1,224 @@
 ---
 title: Modern Nuxt Documentation Theme
-description: A modern Nuxt 4 documentation theme with automated component docs, an AI chat assistant, MCP Server, and a complete developer experience optimization.
+description: A Nuxt Layer you can extend to write docs in Markdown, with editorial typography, full-text search, SEO, an MCP Server and llms.txt built in, plus opt-in AI chat and component docs.
 seo:
   title: Modern Nuxt Documentation Theme
   description: Build modern Nuxt 4 documentation sites with automated component docs, AI Chat, MCP Server support, SEO, and a polished developer experience.
 ---
 
-::u-page-hero{class="dark:bg-gradient-to-b from-neutral-900 to-neutral-950"}
----
-orientation: horizontal
-ui:
-  container: lg:py-20
----
-#top
-:hero-background
-
+::landing-cover{kicker="Documentation theme for Nuxt" aside="Nuxt Layer · MIT"}
 #title
-  :::motion
-  Build modern, intelligent [documentation]{.text-primary}
-  :::
+Write docs for Nuxt[.]{.text-primary}
 
 #description
-  :::motion
-  ---
-  transition: { duration: 0.6, delay: 0.3 }
-  ---
-  A modern Nuxt 4 documentation theme with automated component docs, an AI chat assistant, MCP Server, and a complete developer experience optimization, helping you build beautiful, professional, and intelligent documentation sites.
-  :::
+A Nuxt Layer you can simply `extends`: Markdown authoring, generated component docs, an AI assistant and an MCP Server out of the box, so your docs read like a carefully typeset book.
 
 #links
-  :::motion{class="flex flex-wrap gap-x-6 gap-y-3"}
+  :::u-button
   ---
-  transition: { duration: 0.6, delay: 0.5 }
+  to: /en/docs/getting-started
+  size: xl
+  trailing-icon: i-lucide-arrow-right
   ---
-    ::::u-button
-    ---
-    to: /en/docs/getting-started
-    size: xl
-    trailing-icon: i-lucide-arrow-right
-    ---
-    Get started
-    ::::
+  Get started
+  :::
 
-    ::::u-button
-    ---
-    icon: i-simple-icons-github
-    color: neutral
-    variant: outline
-    size: xl
-    to: https://github.com/mhaibaraai/movk-nuxt-docs
-    target: _blank
-    ---
-    Use this template
-    ::::
+  :::u-button
+  ---
+  icon: i-simple-icons-github
+  color: neutral
+  variant: outline
+  size: xl
+  to: https://github.com/mhaibaraai/movk-nuxt-docs
+  target: _blank
+  ---
+  GitHub
   :::
 
 #default
-  :::motion{class="mx-auto"}
-  ---
-  transition: { duration: 0.6, delay: 0.1 }
-  ---
-    ::::code-group
-    ```ts [nuxt.config.ts]
-    export default defineNuxtConfig({
-      extends: ['@movk/nuxt-docs'],
-      aiChat: {
-          model: 'zai/glm-4.7',
-          models: ['zai/glm-4.7', 'anthropic/claude-sonnet-5.5']
-      },
-      mcp: {
-        name: 'My Docs'
-      }
-    })
-    ```
-    ::::
+  :::code-group
+  ```bash [pnpm]
+  pnpm add @movk/nuxt-docs @nuxt/content tailwindcss
+  ```
+
+  ```bash [npm]
+  npm install @movk/nuxt-docs @nuxt/content tailwindcss
+  ```
+
+  ```ts [nuxt.config.ts]
+  export default defineNuxtConfig({
+    extends: ['@movk/nuxt-docs'],
+    aiChat: {
+      model: 'alibaba/qwen3.8-27b',
+      models: ['alibaba/qwen3.8-27b', 'deepseek/deepseek-v4-pro-0813']
+    }
+  })
+  ```
   :::
+
+  :landing-index{label="Contents"}
 ::
 
-::u-page-section{class="dark:bg-neutral-950"}
+::landing-section{index="01" kicker="Docs"}
 #title
-Automated documentation generation
+Docs that write themselves
+
+#description
+Props, Slots and Emits are extracted from source; examples, commit history and type highlighting come from built-in components. Your content stays plain Markdown.
 
 #links
   :::u-button
   ---
   color: neutral
-  size: lg
-  to: /en/docs/components
-  trailingIcon: i-lucide-arrow-right
-  variant: subtle
+  variant: outline
+  to: /en/docs/components/component-props
+  trailing-icon: i-lucide-arrow-right
   ---
   Explore component docs
   :::
 
-#features
-  :::u-page-feature
-  ---
-  icon: i-lucide-file-code
-  ---
+#default
+  :::landing-feature
   #title
-  Automatic component metadata extraction
+  Component metadata extraction
 
   #description
-  Powered by `nuxt-component-meta`, automatically extracts the Props, Slots, and Emits definitions of Vue components, with no manual docs to maintain.
+  With `componentDocs` on, Vue component definitions are read with `nuxt-component-meta`, so API tables never drift.
   :::
 
-  :::u-page-feature
-  ---
-  icon: i-lucide-code
-  ---
+  :::landing-feature
   #title
-  Interactive example showcase
+  Interactive examples
 
   #description
-  The `ComponentExample` component automatically loads and renders component examples, with code highlighting and live preview.
+  `ComponentExample` loads examples and renders the preview alongside the source.
   :::
 
-  :::u-page-feature
-  ---
-  icon: i-lucide-git-commit
-  ---
+  :::landing-feature
   #title
-  Git commit history integration
+  Git commit history
 
   #description
-  Use the `CommitChangelog` and `PageLastCommit` components to automatically display a file's commit history and last update time.
+  `CommitChangelog` and `PageLastCommit` show a file's changes and last update time.
   :::
 
-  :::u-page-feature
-  ---
-  icon: i-lucide-palette
-  ---
+  :::landing-feature
   #title
-  Type definition highlighting
+  Type highlighting
 
   #description
-  Intelligently parses TypeScript type definitions, with inline type highlighting and type navigation to improve the readability of API docs.
+  Parses TypeScript types and highlights them inline for readable API docs.
   :::
 
-  :::u-page-feature
-  ---
-  icon: i-lucide-layers
-  ---
+  :::landing-feature
   #title
-  Rich documentation components
+  Documentation components
 
   #description
-  Built-in documentation components such as Accordion, Callout, Card, Steps, and Tabs, powered by Nuxt UI.
+  Callout, Steps, Tabs, Card and more from Nuxt UI, restyled with editorial typography.
   :::
 
-  :::u-page-feature
-  ---
-  icon: i-lucide-search
-  ---
+  :::landing-feature
   #title
-  Full-text search
+  Search and i18n
 
   #description
-  Based on the `ContentSearch` component from Nuxt Content, with keyboard shortcut (⌘K) support for quickly searching documentation content.
-  :::
-
-  :::u-page-feature
-  ---
-  icon: i-lucide-languages
-  ---
-  #title
-  Internationalization
-
-  #description
-  Opt-in multilingual support powered by `@nuxtjs/i18n`, with per-locale content collections, a built-in language switcher, and hreflang SEO.
+  ⌘K search across every page; opt-in locales with per-language collections and hreflang.
   :::
 ::
 
-::u-page-section{class="dark:bg-neutral-950"}
+::landing-section{index="02" kicker="AI"}
 #title
-AI-enhanced experience
+Typeset for people and AI
+
+#description
+Readers can ask the docs directly, while AI editors read the same content through the MCP Server, `llms.txt` and Agent Skills.
 
 #links
   :::u-button
   ---
   color: neutral
-  size: lg
-  to: /en/docs/getting-started/ai-chat
-  trailingIcon: i-lucide-arrow-right
-  variant: subtle
+  variant: outline
+  to: /en/docs/ai/ai-chat
+  trailing-icon: i-lucide-arrow-right
   ---
   Learn about AI features
   :::
 
-#features
-  :::u-page-feature
-  ---
-  icon: i-lucide-bot
-  ---
+#aside
+  :landing-figure{src="/screenshots/ai-chat-light.png" dark="/screenshots/ai-chat-dark.png" alt="The built-in Movk Nuxt Docs AI chat assistant" label="Fig. 1" caption="The built-in assistant answers right beside the docs."}
+
+#default
+  :::landing-feature
   #title
   AI chat assistant
 
   #description
-  A built-in intelligent documentation assistant, powered by the Vercel AI SDK with support for multiple LLM models, answering documentation questions in real time.
+  Built on the Vercel AI SDK, with streaming output and live code highlighting.
   :::
 
-  :::u-page-feature
-  ---
-  icon: i-lucide-plug
-  ---
+  :::landing-feature
   #title
-  MCP Server support
+  MCP Server
 
   #description
-  Integrates a Model Context Protocol server to give AI assistants structured access to your docs, improving conversation accuracy.
+  Structured docs access for Cursor, VS Code and other editors, added in one click.
   :::
 
-  :::u-page-feature
-  ---
-  icon: i-lucide-sparkles
-  ---
+  :::landing-feature
   #title
-  LLM optimization
+  llms.txt
 
   #description
-  The `nuxt-llms` module automatically generates `llms.txt` and `llms-full.txt`, providing an optimized documentation index for AI tools.
+  Generates `llms.txt` and `llms-full.txt` as an index for AI tools.
   :::
 
-  :::u-page-feature
-  ---
-  icon: i-lucide-zap
-  ---
+  :::landing-feature
   #title
-  Streaming responses
+  Agent Skills
 
   #description
-  Supports streaming AI output and code highlighting, working with `shiki-stream` for real-time syntax highlighting.
+  Publishes your `skills/` directory at `/.well-known/skills` so assistants learn your project.
   :::
 
-  :::u-page-feature
-  ---
-  icon: i-lucide-wrench
-  ---
+  :::landing-feature
   #title
-  Tool calling support
+  Tool calling
 
   #description
-  The AI assistant can call built-in tool functions to search docs, query components, and more, delivering more precise answers.
+  The assistant searches and reads pages through tools, so answers cite the docs.
   :::
 
-  :::u-page-feature
-  ---
-  icon: i-lucide-settings
-  ---
+  :::landing-feature
   #title
-  Flexible model configuration
+  Flexible model routing
 
   #description
-  Supports custom AI model lists, API endpoints, and parameters, making it easy to switch between LLM service providers.
+  AI Gateway, any OpenAI-compatible endpoint, or your own registered provider.
+  :::
+::
+
+::landing-closing
+#title
+Start with a single Markdown file[.]{.text-primary}
+
+#links
+  :::u-button
+  ---
+  to: /en/docs/getting-started/installation
+  size: xl
+  trailing-icon: i-lucide-arrow-right
+  ---
+  Install
+  :::
+
+  :::u-button
+  ---
+  color: neutral
+  variant: ghost
+  size: xl
+  to: /en/templates
+  ---
+  See examples
   :::
 ::

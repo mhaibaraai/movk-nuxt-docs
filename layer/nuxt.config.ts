@@ -2,8 +2,7 @@ import { defineNuxtConfig } from 'nuxt/config'
 import { createResolver, useNuxt } from '@nuxt/kit'
 import { join } from 'pathe'
 import { defu } from 'defu'
-import { hasAnyAiKey } from './modules/ai-chat/keys'
-import { docsFolderExists } from './utils/pages'
+import { getFeatures } from './utils/features'
 
 const { resolve } = createResolver(import.meta.url)
 
@@ -23,25 +22,24 @@ export default defineNuxtConfig({
     '@nuxt/image',
     '@nuxtjs/robots',
     '@nuxtjs/sitemap',
-    '@nuxtjs/mcp-toolkit',
-    // nuxt-agent-discovery 在 setup 里就读走了自己的选项，所以依赖 rootDir 的两项
-    // 必须在它之前写入：docs 前缀是运行期探测的（见 content.config.ts），
-    // MCP 端点则由 aiChat.mcpPath 决定。服务卡片的名称、版本、仓库等消费方元数据
+    // nuxt-agent-discovery 在 setup 里就读走了自己的选项，依赖消费方配置的项必须在它之前写入：
+    // MCP 服务卡片取决于功能开关与 aiChat.mcpPath。服务卡片的名称、版本、仓库等消费方元数据
     // 留给 server/plugins/agent-discovery.ts 在请求期补全
     () => {
       const nuxt = useNuxt()
       const options = nuxt.options as unknown as Record<string, any>
-      const docsPrefix = docsFolderExists(nuxt.options.rootDir) ? '/docs' : '/'
 
       options.agentDiscovery = defu(options.agentDiscovery, {
         discovery: {
-          mcpServerCard: {
-            endpoint: options.aiChat?.mcpPath || '/mcp',
-            name: '',
-            documentation: options.mcp?.browserRedirect || docsPrefix
-          },
+          mcpServerCard: getFeatures(nuxt).mcp
+            ? {
+                endpoint: options.aiChat?.mcpPath || '/mcp',
+                name: '',
+                documentation: options.mcp?.browserRedirect || '/docs'
+              }
+            : false,
           links: [
-            { href: docsPrefix, rel: 'service-doc', type: 'text/html', title: 'Documentation', anchor: '/' },
+            { href: '/docs', rel: 'service-doc', type: 'text/html', title: 'Documentation', anchor: '/' },
             // agent 从错误页恢复用的入口，不进 Link 头——Link 头只通告发现文档本身
             { href: '/raw/index.md', rel: 'start', type: 'text/markdown', title: 'Homepage', header: false }
           ]
@@ -50,9 +48,7 @@ export default defineNuxtConfig({
     },
     'nuxt-agent-discovery',
     '@vueuse/nuxt',
-    'nuxt-component-meta',
     'nuxt-llms',
-    'nuxt-og-image',
     'nuxt-schema-org',
     'motion-v/nuxt'
   ],
@@ -61,14 +57,6 @@ export default defineNuxtConfig({
     rootAttrs: {
       'data-vaul-drawer-wrapper': '',
       'class': 'bg-default'
-    },
-    head: {
-      // 字体在构建期静态声明，随 SSR 直出。crossorigin 不可省：
-      // woff2 经 CSS 加载是 anonymous CORS 请求，属性不匹配的预热连接不会被复用
-      link: [
-        { rel: 'preconnect', href: 'https://cdn.mhaibaraai.cn', crossorigin: '' },
-        { rel: 'stylesheet', href: 'https://cdn.mhaibaraai.cn/fonts/alibaba-puhuiti.css' }
-      ]
     }
   },
 
@@ -77,6 +65,7 @@ export default defineNuxtConfig({
     build: {
       markdown: {
         highlight: {
+          theme: { default: 'github-light', light: 'github-light', dark: 'github-dark' },
           langs: ['bash', 'diff', 'json', 'js', 'ts', 'html', 'css', 'vue', 'shell', 'mdc', 'md', 'yaml']
         },
         remarkPlugins: {
@@ -92,7 +81,8 @@ export default defineNuxtConfig({
 
   mdc: {
     highlight: {
-      noApiRoute: false
+      noApiRoute: false,
+      theme: { default: 'github-light', light: 'github-light', dark: 'github-dark' }
     }
   },
 
@@ -117,16 +107,26 @@ export default defineNuxtConfig({
 
   // 由 modules/i18n.ts 与 modules/routing.ts 在构建期写入，这里声明默认值以生成完整类型
   runtimeConfig: {
+    // GitHub API 令牌，对应环境变量 NUXT_GITHUB_TOKEN
+    githubToken: '',
     public: {
       movkDocs: {
         filteredLocales: [] as { code: string, name: string }[],
-        releasesPage: false
+        releasesPage: false,
+        features: {
+          mcp: true,
+          aiChat: false,
+          componentDocs: false,
+          ogImage: true
+        }
       }
     }
   },
 
   experimental: {
     asyncContext: true,
+    // 页面切换时标题形变、页头与侧栏保持静止；Nuxt 在 prefers-reduced-motion 下自动跳过
+    viewTransition: true,
     defaults: {
       nuxtLink: {
         externalRelAttribute: 'noopener'
@@ -164,10 +164,7 @@ export default defineNuxtConfig({
       cfg.optimizeDeps.exclude ||= []
 
       // tailwindcss/colors is a peer dep resolved in the consumer project directly.
-      cfg.optimizeDeps.include.push(
-        'tailwindcss/colors',
-        '@movk/nuxt-docs > prettier'
-      )
+      cfg.optimizeDeps.include.push('tailwindcss/colors')
 
       // shiki-transformer-color-highlight is inlined into the mdc highlighter
       // bundle via app/mdc.config.ts; its bare specifier is discovered from a
@@ -175,25 +172,21 @@ export default defineNuxtConfig({
       // Exclude it from pre-bundling so it resolves on demand instead of warning.
       cfg.optimizeDeps.exclude.push('shiki-transformer-color-highlight')
 
-      // AI Chat static deps — only pre-bundle when the feature is actually enabled.
-      // @shikijs/langs/* and @shikijs/themes/* are dynamically imported in useHighlighter.ts
-      if (hasAnyAiKey()) {
-        cfg.optimizeDeps.include.push(
-          '@movk/nuxt-docs > @ai-sdk/vue',
-          '@movk/nuxt-docs > ai',
-          '@movk/nuxt-docs > @shikijs/core',
-          '@movk/nuxt-docs > @shikijs/engine-javascript'
-        )
-        // @comark/vue (+ highlight plugin) is imported by AiMarkdown.client.ts;
-        // same bare-specifier resolution constraint as above.
-        cfg.optimizeDeps.exclude.push(
-          '@comark/vue',
-          '@comark/vue/plugins/highlight'
-        )
-      }
+      // @nuxtjs/i18n 在 package.json 声明了 imports 字段，依赖扫描器会把其运行时文件里的
+      // #components 当作包内 subpath import 解析并报错，导致整轮预构建被跳过。
+      // 扫描阶段将 Nuxt 虚拟模块标记为外部即可，正常编译仍由 Nuxt 的插件解析
+      const scanOptions = cfg.optimizeDeps as { rolldownOptions?: { plugins?: unknown[] } }
+      scanOptions.rolldownOptions ||= {}
+      scanOptions.rolldownOptions.plugins = [
+        ...(scanOptions.rolldownOptions.plugins || []),
+        {
+          name: 'movk:scan-nuxt-virtual',
+          resolveId: (id: string) => id === '#components' ? { id, external: true } : null
+        }
+      ]
 
-      // Transform all remaining 'pkg > dep' entries added by Nuxt modules
-      // (e.g. @nuxt/a11y > axe-core, @nuxtjs/mdc > remark-gfm) to use the
+      // 其余模块追加的嵌套依赖（如 @nuxt/a11y > axe-core、@nuxtjs/mdc > remark-gfm）
+      // 在 pnpm 下无法从消费方根目录解析，统一改为经由 @movk/nuxt-docs 解析
       cfg.optimizeDeps.include = cfg.optimizeDeps.include
         .map(id => (id.startsWith('@movk/nuxt-docs > ') || !id.includes(' > '))
           ? id
@@ -203,9 +196,8 @@ export default defineNuxtConfig({
   },
 
   // siteUrl/siteName 留空：由消费方的 site.url / site.name 解析，layer 无从得知。
-  // routes 保持默认 ['/', '/**']——docs 前缀是运行期探测的（见 content.config.ts），
-  // i18n 前缀也一并被覆盖，无需按 locale 枚举。
-  // 依赖 rootDir 的 mcpServerCard 与 discovery.links 由 modules 数组里的内联模块补齐。
+  // routes 保持默认 ['/', '/**']，i18n 前缀也一并被覆盖，无需按 locale 枚举。
+  // 依赖消费方配置的 mcpServerCard 与 discovery.links 由 modules 数组里的内联模块补齐。
   agentDiscovery: {
     sitemap: {
       markdown: {
@@ -216,29 +208,6 @@ export default defineNuxtConfig({
     skills: {
       dir: 'skills'
     }
-  },
-
-  componentMeta: {
-    metaFields: {
-      type: false,
-      props: true,
-      slots: 'no-schema',
-      events: 'no-schema',
-      exposed: false
-    },
-    exclude: [
-      '@nuxt/ui',
-      '@nuxt/content',
-      '@nuxt/icon',
-      '@nuxt/image',
-      '@nuxtjs/color-mode',
-      '@nuxtjs/mcp-toolkit',
-      '@nuxtjs/mdc',
-      '@nuxtjs/plausible',
-      '@comark/vue',
-      'nuxt/dist',
-      'nuxt-og-image'
-    ]
   },
 
   icon: {
@@ -273,15 +242,6 @@ export default defineNuxtConfig({
   robots: {
     // agent 的 Allow 分组与 Content-Signal 由 nuxt-agent-discovery 通过 robots:config 注入，
     // 与内容协商共用同一份 user-agent 列表
-    disallow: [
-      '/vercel/',
-      '/node_modules/',
-      '/docs/src/',
-      '/home/',
-      '/_nuxt/',
-      '/_plausible',
-      '/dev/',
-      '/api/'
-    ]
+    disallow: ['/_nuxt/', '/api/']
   }
 })

@@ -7,6 +7,7 @@ const open = ref(false)
 
 const { copy: copyCSS, copied: copiedCSS } = useClipboard()
 const { copy: copyConfig, copied: copiedConfig } = useClipboard()
+const { t } = useMovkI18n()
 
 const {
   neutralColors,
@@ -38,7 +39,7 @@ const {
         color="neutral"
         :variant="open ? 'soft' : 'ghost'"
         square
-        aria-label="Color picker"
+        :aria-label="t('theme.picker')"
         :ui="{ leadingIcon: 'text-primary' }"
       />
     </template>
@@ -46,7 +47,7 @@ const {
     <template #content>
       <fieldset>
         <legend class="text-[11px] leading-none font-semibold mb-2 select-none flex items-center gap-1">
-          Primary
+          {{ t('theme.primary') }}
 
           <UButton
             to="https://ui.nuxt.com/docs/getting-started/theme/css-variables#colors"
@@ -61,7 +62,7 @@ const {
 
         <div class="grid grid-cols-3 gap-1 -mx-2">
           <ThemePickerButton
-            label="Black"
+            :label="t('theme.black')"
             :selected="blackAsPrimary"
             @click="setBlackAsPrimary(true)"
           >
@@ -83,7 +84,7 @@ const {
 
       <fieldset>
         <legend class="text-[11px] leading-none font-semibold mb-2 select-none flex items-center gap-1">
-          Neutral
+          {{ t('theme.neutral') }}
 
           <UButton
             to="https://ui.nuxt.com/docs/getting-started/theme/css-variables#text"
@@ -110,7 +111,7 @@ const {
 
       <fieldset>
         <legend class="text-[11px] leading-none font-semibold mb-2 select-none flex items-center gap-1">
-          Radius
+          {{ t('theme.radius') }}
 
           <UButton
             to="https://ui.nuxt.com/docs/getting-started/theme/css-variables#radius"
@@ -137,7 +138,7 @@ const {
 
       <fieldset>
         <legend class="text-[11px] leading-none font-semibold mb-2 select-none flex items-center gap-1">
-          Icons
+          {{ t('theme.icons') }}
 
           <UButton
             to="https://ui.nuxt.com/docs/getting-started/integrations/icons"
@@ -165,7 +166,7 @@ const {
 
       <fieldset>
         <legend class="text-[11px] leading-none font-semibold mb-2 select-none flex items-center gap-1">
-          Color Mode
+          {{ t('theme.colorMode') }}
 
           <UButton
             to="https://ui.nuxt.com/docs/getting-started/integrations/color-mode"
@@ -191,7 +192,7 @@ const {
 
       <fieldset v-if="hasCSSChanges || hasConfigChanges">
         <legend class="text-[11px] leading-none font-semibold mb-2 select-none">
-          Export
+          {{ t('theme.export') }}
         </legend>
 
         <div class="flex items-center justify-between gap-1 -mx-2">
@@ -215,7 +216,7 @@ const {
             class="flex-1 text-[11px]"
             @click="copyConfig(exportConfig())"
           />
-          <UTooltip text="Reset theme">
+          <UTooltip :text="t('theme.reset')">
             <UButton
               color="neutral"
               variant="outline"

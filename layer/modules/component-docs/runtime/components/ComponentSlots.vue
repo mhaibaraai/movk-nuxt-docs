@@ -1,0 +1,53 @@
+<script setup lang="ts">
+import { useFetchComponentMeta } from '../composables/useFetchComponentMeta'
+import { camelCase, kebabCase } from 'scule'
+
+const props = defineProps<{
+  /**
+   * 获取组件插槽的 slug 标识
+   * @defaultValue 路由路径的最后一段
+   */
+  slug?: string
+}>()
+
+const route = useRoute()
+
+const componentName = camelCase(props.slug ?? route.path.split('/').pop() ?? '')
+const { data: meta } = await useFetchComponentMeta(componentName as any)
+</script>
+
+<template>
+  <ProseTable>
+    <ProseThead>
+      <ProseTr>
+        <ProseTh>
+          Slot
+        </ProseTh>
+        <ProseTh>
+          Type
+        </ProseTh>
+      </ProseTr>
+    </ProseThead>
+    <ProseTbody>
+      <ProseTr v-for="slot in (meta?.meta?.slots || [])" :key="slot.name">
+        <ProseTd>
+          <ProseCode>
+            {{ slot.name }}
+          </ProseCode>
+        </ProseTd>
+        <ProseTd>
+          <HighlightInlineType v-if="slot.type" :type="slot.type" />
+
+          <MDC
+            v-if="slot.description"
+            :value="slot.description"
+            class="text-toned mt-1"
+            :cache-key="`${kebabCase(route.path)}-slot-${slot.name}-description`"
+          />
+
+          <ComponentPropsLinks v-if="slot.tags?.length" :prop="slot" kind="slot" />
+        </ProseTd>
+      </ProseTr>
+    </ProseTbody>
+  </ProseTable>
+</template>

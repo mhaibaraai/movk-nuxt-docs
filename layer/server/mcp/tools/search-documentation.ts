@@ -11,21 +11,25 @@ export default defineMcpTool({
   },
   inputSchema: {
     search: z.string().optional().describe('Search terms to filter pages by title, path or description. Every term has to match.'),
-    section: z.string().optional().describe('Filter by documentation section (e.g., "getting-started", "components", "composables")')
+    section: z.string().optional().describe('Filter by documentation section (e.g., "getting-started", "components", "composables")'),
+    locale: docsLocaleInput
   },
   inputExamples: [
     {},
     { section: 'getting-started' },
     { search: 'installation' },
-    { search: 'color', section: 'getting-started' }
+    { search: 'color', section: 'getting-started' },
+    { section: 'components', locale: 'en' }
   ],
   cache: '30m',
-  async handler({ search, section }) {
+  async handler({ search, section, locale }) {
+    const event = useEvent()
+    const { docsRoot } = useDocsLocale(event, locale)
     // 两个 URL 都来自内容协商与 CDN 重写共用的那份路由配置，
     // markdown_url 因此不会与页面的真实位置漂移，站点地址也不再写死在这里
-    const pages = await listAgentPages(useEvent(), {
+    const pages = await listAgentPages(event, {
       search,
-      prefix: section ? `/docs/${section}/` : '/docs/'
+      prefix: section ? `${docsRoot}/${section}/` : `${docsRoot}/`
     })
 
     return {

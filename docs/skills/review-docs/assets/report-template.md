@@ -3,6 +3,9 @@
 **Generated:** [date and time]
 **Project:** [project name from package.json or directory]
 **Content directory:** [actual path]
+**Project type:** [Movk Nuxt Docs v3 | Nuxt Content | Generic Markdown]
+**Locales:** [zh-CN (default), en | single language]
+**Features:** [componentDocs on/off, mermaid on/off, mcp on/off, aiChat on/off]
 **Scope reviewed:** [X] pages, [Y] sections
 
 ---
@@ -28,7 +31,7 @@
 
 #### Issue 1: [Short description]
 
-**File:** [/path/to/file.md:line-number]
+**File:** `content/docs/[section]/[page].md:[line]`
 
 **Issue:**
 [Detailed description of the problem]
@@ -62,7 +65,7 @@
 
 #### Issue 1: [Short description]
 
-**File:** [/path/to/file.md]
+**File:** `content/docs/[section]/[page].md`
 
 **Issue:** [Description]
 
@@ -79,6 +82,10 @@
 ### Structural Issues
 
 [Use the same structure]
+
+### i18n Issues
+
+[Missing locale pages, mismatched headings, links pointing to another locale. Omit for single-language sites.]
 
 ---
 
@@ -103,13 +110,15 @@
 
 ---
 
+## Statistics
+
 ### Content Overview
 
 | Section | Pages | Avg. words / page |
 |---------|-------|-------------------|
 | Getting started | X | ~XXX |
 | Guide | X | ~XXX |
-| API | X | ~XXX |
+| Reference | X | ~XXX |
 
 ### Issue Breakdown
 
@@ -119,6 +128,7 @@
 | SEO | [X] | [X] | [X] | [X] |
 | Clarity | [X] | [X] | [X] | [X] |
 | Structure | [X] | [X] | [X] | [X] |
+| i18n | [X] | [X] | [X] | [X] |
 | **Total** | **[X]** | **[X]** | **[X]** | **[X]** |
 
 ---
@@ -138,9 +148,10 @@
 
 ### Priority 1: Fix Critical Issues (today)
 
-1. Fix every MDC syntax error (missing `u-` prefix).
-2. Backfill required frontmatter fields.
-3. Repair broken navigation structure.
+1. Fix MDC component names and prefixes.
+2. Repair dead internal links and pages outside `content/docs/`.
+3. Backfill required frontmatter fields.
+4. Enable the feature flags (or remove the components) that pages depend on.
 
 **Estimated fix:** X files.
 
@@ -181,20 +192,21 @@
 <details>
 <summary>Click to expand the full per-file analysis</summary>
 
-### /1.getting-started/1.introduction.md
+### content/docs/1.getting-started/1.index.md
 
-**Frontmatter:** ✅ Valid
-**MDC syntax:** ✅ No issues
-**SEO:** ⚠️ Description too short (85 chars, recommended 120–160)
-**Clarity:** ✅ Active voice, clear structure
-**Structure:** ✅ Logical flow, includes next-step guidance
+**Frontmatter:** Pass
+**MDC syntax:** Pass
+**SEO:** Important: `seo.description` too short (85 characters, recommended 120–160)
+**Clarity:** Pass
+**Structure:** Pass
+**Locale counterpart:** Present, headings match
 
 **Suggestions:**
 - Extend the meta description to 120–160 characters.
 
 ---
 
-### /1.getting-started/2.installation.md
+### content/docs/1.getting-started/2.installation.md
 
 [Use the same detailed structure for each file]
 

@@ -1,14 +1,8 @@
-<script setup lang="ts">
-const route = useRoute()
-</script>
-
 <template>
-  <USeparator :icon="route.path === '/' ? undefined : 'i-simple-icons-nuxtdotjs'" class="h-px" />
-
   <UFooter
     :ui="{
-      left: 'text-sm text-muted',
-      root: 'border-t border-default'
+      root: 'mt-16 border-t-[3px] border-double border-inverted',
+      left: 'font-mono text-[11px] uppercase tracking-[0.12em] text-muted'
     }"
   >
     <template #left>

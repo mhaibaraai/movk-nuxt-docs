@@ -14,18 +14,21 @@ export default defineMcpTool({
   },
   inputSchema: {
     componentName: z.string().describe('Component name. Accepts `Button` or `button`.'),
-    sections: z.array(sectionEnum).optional().describe('Specific sections to return: usage, examples, api, theme, changelog. If omitted, returns full documentation.')
+    sections: z.array(sectionEnum).optional().describe('Specific sections to return: usage, examples, api, theme, changelog. If omitted, returns full documentation.'),
+    locale: docsLocaleInput
   },
   inputExamples: [
     { componentName: 'Button', sections: ['usage', 'api'] },
     { componentName: 'Modal' },
-    { componentName: 'Table', sections: ['examples'] }
+    { componentName: 'Table', sections: ['examples'] },
+    { componentName: 'Button', locale: 'en' }
   ],
   cache: '30m',
-  async handler({ componentName, sections }) {
+  async handler({ componentName, sections, locale }) {
     const event = useEvent()
     const candidates = buildComponentNameCandidates(componentName)
-    const pages = await queryCollection(event, 'docs')
+    const { collection } = useDocsLocale(event, locale)
+    const pages = await queryCollection(event, collection as 'docs')
       .where('path', 'LIKE', '%/components/%')
       .where('extension', '=', 'md')
       .select('id', 'title', 'description', 'path', 'category', 'links')

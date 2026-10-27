@@ -5,7 +5,7 @@ import { defineSitemapSchema } from '@nuxtjs/sitemap/content'
 import { joinURL } from 'ufo'
 import { z } from 'zod'
 import { collectionName, localeCode } from './utils/locale'
-import { docsFolderExists, landingPageExists } from './utils/pages'
+import { landingPageExists } from './utils/pages'
 
 const { options } = useNuxt()
 const cwd = joinURL(options.rootDir, 'content')
@@ -15,7 +15,6 @@ const locales = i18n?.locales
 const defaultLocale = i18n?.defaultLocale
 
 const hasLandingPage = landingPageExists(options.rootDir)
-const hasDocsFolder = docsFolderExists(options.rootDir)
 
 const Avatar = z.object({
   src: z.string(),
@@ -52,6 +51,9 @@ const docsSchema = z.object({
   index: z.boolean().optional(),
   links: z.array(Button),
   category: z.string().optional(),
+  // 页面元信息：版本要求（自由文本）与难度，显示在导语下方
+  requires: z.string().optional(),
+  difficulty: z.enum(['beginner', 'intermediate', 'advanced']).optional(),
   // 其他生态中的别名（如 dialog、combobox），供 MCP 按意图匹配组件
   keywords: z.array(z.string()).optional(),
   navigation: z.object({
@@ -66,22 +68,19 @@ function defineDocsCollection(code: string | null): DefinedCollection {
       type: 'page',
       source: {
         cwd,
-        include: hasDocsFolder ? 'docs/**' : '**',
-        prefix: hasDocsFolder ? '/docs' : '/',
-        exclude: ['index.md']
+        include: 'docs/**',
+        prefix: '/docs'
       },
       schema: docsSchema
     })
   }
 
-  const hasLocaleDocs = docsFolderExists(options.rootDir, code)
   return defineCollection({
     type: 'page',
     source: {
       cwd,
-      include: hasLocaleDocs ? `${code}/docs/**` : `${code}/**/*`,
-      prefix: hasLocaleDocs ? `/${code}/docs` : `/${code}`,
-      exclude: [`${code}/index.md`]
+      include: `${code}/docs/**`,
+      prefix: `/${code}/docs`
     },
     schema: docsSchema
   })

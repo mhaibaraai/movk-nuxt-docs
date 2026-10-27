@@ -1,5 +1,5 @@
 <script lang="ts" setup>
-const searchTerm = inject<Ref<string>>('docsFilterSearch') ?? ref('')
+const searchTerm = inject<Ref<string>>('docsFilterSearch', ref(''), false)
 
 const { placeholder, shortcut } = useDocsFilterConfig()
 
@@ -27,9 +27,11 @@ defineShortcuts(shortcuts)
   <UInput
     ref="input"
     v-model="searchTerm"
-    variant="soft"
+    variant="none"
     :placeholder="placeholder"
-    class="group"
+    icon="i-lucide-search"
+    class="group w-full border-b border-default focus-within:border-inverted transition-colors"
+    :ui="{ base: 'px-0 ps-6 text-sm placeholder:text-dimmed', leading: 'ps-0', leadingIcon: 'size-3.5 text-dimmed' }"
   >
     <template v-if="shortcut" #trailing>
       <div class="flex items-center gap-0.5">
@@ -37,8 +39,8 @@ defineShortcuts(shortcuts)
           v-for="key in shortcutKeys"
           :key="key"
           :value="key"
-          variant="subtle"
-          class="ring-muted bg-transparent text-muted"
+          variant="outline"
+          class="font-mono text-dimmed"
         />
       </div>
     </template>

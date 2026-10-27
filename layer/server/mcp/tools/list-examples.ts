@@ -1,4 +1,3 @@
-// @ts-expect-error - no types available
 import { listComponentExamples } from '#component-example/nitro'
 
 export default defineMcpTool({

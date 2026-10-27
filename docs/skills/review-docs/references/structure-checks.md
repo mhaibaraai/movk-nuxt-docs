@@ -6,26 +6,31 @@ Guidelines for evaluating documentation structure, organization, and navigation 
 
 ### Recommended Directory Structure
 
-```
+Movk Nuxt Docs v3 requires every docs page under `content/docs/` (routes `/docs/**`). With i18n, each extra locale mirrors the tree under `content/{locale}/docs/` (routes `/{locale}/docs/**`).
+
+```text
 content/
-├── index.md                      # Landing page (required)
-├── 1.getting-started/
-│   ├── .navigation.yml
-│   ├── 1.introduction.md
-│   ├── 2.installation.md
-│   └── 3.quick-start.md
-├── 2.guide/                      # or 2.concepts/
-│   ├── .navigation.yml
-│   ├── 1.configuration.md
-│   ├── 2.authentication.md
-│   └── 3.deployment.md
-├── 3.api/                        # If applicable
-│   ├── .navigation.yml
-│   └── 1.reference.md
-├── 4.advanced/                   # Optional
-│   ├── .navigation.yml
-│   └── 1.customization.md
+├── index.md                      # Landing page
+├── releases.yml                  # Optional: /releases
+├── templates.yml                 # Optional: /templates (showcase)
+├── docs/
+│   ├── 1.getting-started/
+│   │   ├── .navigation.yml
+│   │   ├── 1.index.md            # /docs/getting-started
+│   │   └── 2.installation.md
+│   ├── 2.guide/
+│   │   ├── .navigation.yml
+│   │   ├── 1.configuration.md
+│   │   └── 2.deployment.md
+│   └── 3.api/                    # If applicable
+│       ├── .navigation.yml
+│       └── 1.composables/        # Subdirectory = its own sidebar group
+└── en/                           # Only with i18n
+    ├── index.md
+    └── docs/                     # Same tree, same file names
 ```
+
+Docs pages placed directly under `content/` (outside `docs/`) are not part of the docs collection and do not render as docs pages.
 
 ### Depth Guidelines
 
@@ -87,8 +92,16 @@ icon: i-lucide-rocket
 ```
 
 **Required fields:**
-- `title`: section display name in the sidebar.
+- `title`: section display name in the sidebar and section bar. With i18n, each locale's file uses its own language.
 - `icon`: a Lucide icon (format: `i-lucide-{name}`).
+
+### Sidebar grouping
+
+The sidebar shows the current top-level section only:
+
+- Pages without `category` and without children form an "Overview" group.
+- Each subdirectory becomes its own group.
+- Pages with `category: <id>` are grouped by `app.config` `docs.categories[<section-slug>]`. A `category` id that is not declared there makes the page disappear from the sidebar: flag it as Important.
 
 ### Recommended Icons by Section
 
@@ -156,14 +169,14 @@ More content.
 ```markdown
 ## Next steps
 
-- [Configure your theme](/guide/configuration)
-- [Add custom components](/guide/customization)
-- [Deploy to production](/guide/deployment)
+- [Configure your theme](/docs/guide/configuration)
+- [Add custom components](/docs/guide/customization)
+- [Deploy to production](/docs/guide/deployment)
 
 ## Related
 
-- [API reference](/api/reference) — Detailed API documentation.
-- [Examples](/examples) — Real-world usage examples.
+- [API reference](/docs/api/reference) — Detailed API documentation.
+- [Examples](/docs/examples) — Real-world usage examples.
 ```
 
 ## Cross-References
@@ -172,12 +185,12 @@ More content.
 
 **Use relative links from the content root:**
 
-✅ Good:
+Good:
 ```markdown
-Learn more about [authentication](/guide/authentication).
+Learn more about [authentication](/docs/guide/authentication).
 ```
 
-❌ Avoid:
+Avoid:
 ```markdown
 Learn more about [authentication](../guide/authentication.md).
 ```
@@ -186,13 +199,13 @@ Learn more about [authentication](../guide/authentication.md).
 
 **Inline links** for contextual references:
 ```markdown
-Configure your app by setting [environment variables](/guide/configuration#environment-variables).
+Configure your app by setting [environment variables](/docs/guide/configuration#environment-variables).
 ```
 
 **Callout links** for important related content:
 ```markdown
 ::note
-This feature requires authentication. See the [authentication guide](/guide/authentication) for setup instructions.
+This feature requires authentication. See the [authentication guide](/docs/guide/authentication) for setup instructions.
 ::
 ```
 
@@ -201,7 +214,7 @@ This feature requires authentication. See the [authentication guide](/guide/auth
 ---
 links:
   - label: API reference
-    to: /api/reference
+    to: /docs/api/reference
     icon: i-lucide-book
 ---
 ```
@@ -238,11 +251,10 @@ links:
 
 **Fix:** merge or clearly differentiate the purpose.
 
-### Missing Landing Page
-- Section without an `index.md`.
-- Jumps directly to numbered pages (causing 404 on the section root URL).
+### Missing Section Entry
+- Section root URL (`/docs/guide`) has no page and no redirect, so it returns 404.
 
-**Fix:** add an `index.md` with a section overview. If the page should not appear in the sidebar navigation, use `navigation: false` in frontmatter:
+**Fix (Movk Nuxt Docs):** add a redirect in `nuxt.config.ts`, e.g. `routeRules: { '/docs/guide': { redirect: '/docs/guide/configuration', prerender: false } }` (and `/{locale}/docs/guide` for each extra locale). Alternatively add an `index.md` overview; if it should not appear in the sidebar, use `navigation: false`:
 
 ```yaml
 ---
@@ -304,7 +316,11 @@ description: Project tagline
 
 ## Validation Checklist
 
-- [ ] Landing page (`index.md`) exists at the root.
+- [ ] Landing page (`index.md`) exists at the content root.
+- [ ] All docs pages are under `content/docs/` (and `content/{locale}/docs/` for other locales).
+- [ ] Every locale has the same files and headings as the default locale.
+- [ ] Every section root URL has a page or a redirect.
+- [ ] Every `category` used in frontmatter is declared in `docs.categories`.
 - [ ] Every section has `.navigation.yml` with title and icon.
 - [ ] Numbered directories follow a consistent pattern (`1.`, `2.`, `3.`).
 - [ ] Page numbering is consistent within a section.
