@@ -1,59 +1,7 @@
 import type { ContentNavigationItem } from '@nuxt/content'
 import { findPageBreadcrumb, findPageChildren } from '@nuxt/content/utils'
 import { mapContentNavigation } from '@nuxt/ui/utils/content'
-
-type Translate = (key: string, params?: Record<string, string | number>) => string
-type Categories = Record<string, { id: string, title: string, icon: string }[]>
-
-function groupChildrenByCategory(items: ContentNavigationItem[], slug: string, docsRoot: string, t: Translate, categories: Categories): ContentNavigationItem[] {
-  if (!items.length) return []
-
-  const groups: ContentNavigationItem[] = []
-
-  const categorizedMap = new Map<string, ContentNavigationItem[]>()
-  const withChildren: ContentNavigationItem[] = []
-  const withoutChildren: ContentNavigationItem[] = []
-
-  for (const item of items) {
-    if (item.category) {
-      const key = item.category as string
-      if (!categorizedMap.has(key)) {
-        categorizedMap.set(key, [])
-      }
-      categorizedMap.get(key)!.push(item)
-    } else if (item.children?.length) {
-      withChildren.push(item)
-    } else {
-      withoutChildren.push(item)
-    }
-  }
-
-  if (withoutChildren.length) {
-    groups.push({
-      title: t('docs.overview'),
-      path: `${docsRoot}/${slug}`,
-      icon: 'i-lucide-house',
-      children: withoutChildren
-    })
-  }
-
-  groups.push(...withChildren)
-
-  const categoryList = categories[slug as keyof typeof categories] ?? []
-  for (const category of categoryList) {
-    const children = categorizedMap.get(category.id)
-    if (children?.length) {
-      groups.push({
-        title: category.title,
-        path: `${docsRoot}/${slug}`,
-        icon: category.icon,
-        children
-      })
-    }
-  }
-
-  return groups
-}
+import { groupByCategory, undeclaredCategories } from '../utils/navigation'
 
 function processNavigationItem(item: ContentNavigationItem, parent?: ContentNavigationItem): ContentNavigationItem | ContentNavigationItem[] {
   return {
@@ -82,7 +30,14 @@ export function useNavigation(navigation: Ref<ContentNavigationItem[] | undefine
     const slug = route.params.slug?.[0] as string
     const children = findPageChildren(root, `${docsRoot.value}/${slug}`, { indexAsChild: true })
 
-    return groupChildrenByCategory(children, slug, docsRoot.value, t, toValue(categories))
+    if (import.meta.dev) {
+      const missing = undeclaredCategories(children, categories.value[slug] ?? [])
+      if (missing.length) {
+        console.warn(`[movk-nuxt-docs] 栏目 "${slug}" 的页面使用了未在 app.config docs.categories 中声明的分类：${missing.join(', ')}，已归入概览分组`)
+      }
+    }
+
+    return groupByCategory(children, { slug, docsRoot: docsRoot.value, overviewTitle: t('docs.overview'), categories: categories.value })
   })
 
   function findBreadcrumb(path: string) {

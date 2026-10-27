@@ -6,7 +6,7 @@ const navigation = useDocsNavigation()
 
 const items = computed(() => (navigation.value ?? []).map((item, index) => ({
   label: item.title,
-  to: item.path,
+  to: sectionLink(item),
   index: String(index + 1).padStart(2, '0'),
   active: route.path.startsWith(item.path)
 })))

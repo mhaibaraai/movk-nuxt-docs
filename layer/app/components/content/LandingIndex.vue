@@ -10,7 +10,7 @@ const items = computed(() => (navigation.value ?? []).map((item, index) => ({
   index: String(index + 1).padStart(2, '0'),
   title: item.title,
   description: item.description as string | undefined,
-  to: item.path
+  to: sectionLink(item)
 })))
 </script>
 
