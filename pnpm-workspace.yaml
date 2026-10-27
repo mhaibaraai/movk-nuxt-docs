@@ -4,7 +4,7 @@ packages:
 
 ignoreWorkspaceRootCheck: true
 linkWorkspacePackages: true
-minimumReleaseAge: 0
+minimumReleaseAge: 1440
 
 overrides:
   h3: 1.15.11

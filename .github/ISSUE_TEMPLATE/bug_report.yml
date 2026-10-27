@@ -1,0 +1,40 @@
+name: 问题反馈
+description: 报告 @movk/nuxt-docs 的缺陷
+labels: [bug]
+body:
+  - type: input
+    id: version
+    attributes:
+      label: '@movk/nuxt-docs 版本'
+      placeholder: 3.0.0
+    validations:
+      required: true
+  - type: input
+    id: environment
+    attributes:
+      label: 运行环境
+      description: Node.js 版本、包管理器、部署平台
+      placeholder: Node 24.1.0、pnpm 12.10.1、Vercel
+    validations:
+      required: true
+  - type: input
+    id: reproduction
+    attributes:
+      label: 复现仓库
+      description: 最小可复现的仓库或 StackBlitz 链接，可从官方模板创建
+      placeholder: https://github.com/...
+    validations:
+      required: true
+  - type: textarea
+    id: description
+    attributes:
+      label: 问题描述
+      description: 复现步骤、期望行为与实际行为
+    validations:
+      required: true
+  - type: textarea
+    id: logs
+    attributes:
+      label: 日志
+      description: 构建或运行时的报错输出，粘贴前请移除令牌与密钥
+      render: text
