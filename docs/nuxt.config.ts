@@ -3,6 +3,13 @@ import pkg from '../package.json'
 const moved = (slugs: string[], from: string, to: string) =>
   Object.fromEntries(slugs.map(slug => [`${from}/${slug}`, `${to}/${slug}`]))
 
+// 组合式函数参考页的 slug 改为与函数名一致
+const renamedComposables = (from: string) => Object.fromEntries(Object.entries({
+  'fetch-component-meta': 'use-fetch-component-meta',
+  'fetch-component-example': 'use-fetch-component-example',
+  'use-docs-filter': 'use-docs-filter-config'
+}).map(([oldSlug, newSlug]) => [`${from}/${oldSlug}`, `/docs/reference/composables/${newSlug}`]))
+
 // 区块首页跳到首篇
 const sectionRedirects: Record<string, string> = {
   '/docs': '/docs/getting-started',
@@ -22,7 +29,9 @@ const legacyRedirects: Record<string, string> = {
   ...moved(['configuration', 'customization', 'i18n', 'deployment', 'troubleshooting'], '/docs/getting-started', '/docs/guide'),
   ...moved(['ai-chat', 'mcp', 'skills', 'llms-txt'], '/docs/getting-started', '/docs/ai'),
   ...moved(['markdown-syntax', 'code-blocks', 'mdc-components', 'media', 'mermaid'], '/docs/typography', '/docs/writing'),
-  ...moved(['use-header', 'use-navigation', 'use-category', 'use-theme', 'fetch-component-meta', 'fetch-component-example'], '/docs/composables', '/docs/reference/composables')
+  ...moved(['use-header', 'use-navigation', 'use-category', 'use-theme'], '/docs/composables', '/docs/reference/composables'),
+  ...renamedComposables('/docs/composables'),
+  ...renamedComposables('/docs/reference/composables')
 }
 
 // llms.txt 按文档分区列出中文页面，英文页面通过 details 说明路径规则
