@@ -132,6 +132,8 @@ bun add @movk/nuxt-docs
 ::
 ````
 
+标签页全部是包管理器（`pnpm`、`npm`、`yarn`、`bun`、`deno`）或全部是 TypeScript / JavaScript 代码的代码组会自动全站同步：在任意一处切换到 `npm`，其他页面的同类代码组也会切换，并在下次访问时保持。layer 会把这类代码组的标签页排成统一顺序。需要独立切换时，给代码组声明自己的 `sync` 值即可，例如 `::code-group{sync="my-group"}`。
+
 ### `CodeTree`
 
 `code-tree` 以文件树展示一组相关文件，`default-value` 指定默认打开的文件：

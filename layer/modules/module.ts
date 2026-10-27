@@ -6,6 +6,7 @@ import { getPackageJsonMetadata, inferSiteURL } from '../utils/meta'
 import { getFeatures, type FeatureOptions } from '../utils/features'
 import { assertFeatureDependencies } from '../utils/feature-dependencies'
 import { excludeFeatureTypes } from '../utils/feature-types'
+import { syncCodeGroups, type MinimarkNode } from '../utils/code-groups'
 import { startCase, kebabCase } from '@movk/core'
 import { updateSiteConfig } from 'nuxt-site-config/kit'
 import type { SiteConfigInput } from 'nuxt-site-config/kit'
@@ -62,6 +63,13 @@ const movkNuxtDocsModule: NuxtModule<ModuleOptions> = defineNuxtModule<ModuleOpt
     if (!features.ogImage) {
       addImports({ name: 'defineOgImage', from: resolve('./runtime/og-image-stub') })
     }
+
+    nuxt.hook('content:file:afterParse', ({ content }) => {
+      const body = content.body as { type?: string, value?: unknown[] } | undefined
+      if (body?.type === 'minimark' && Array.isArray(body.value)) {
+        content.body = { ...body, value: syncCodeGroups(body.value as MinimarkNode[]) }
+      }
+    })
 
     if (features.a11y) {
       const a11yOptions = (nuxt.options as Record<string, any>).a11y ??= {}
