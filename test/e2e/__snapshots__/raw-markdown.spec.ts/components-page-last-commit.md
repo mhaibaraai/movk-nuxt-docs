@@ -120,7 +120,7 @@ interface PageLastCommitProps {
 
 ## Changelog
 
-See commit history for [layer/app/components/content/PageLastCommit.vue](https://github.com/mhaibaraai/movk-nuxt-docs/commits/v3/layer/app/components/content/PageLastCommit.vue).
+See commit history for [layer/app/components/content/PageLastCommit.vue](https://github.com/mhaibaraai/movk-nuxt-docs/commits/{branch}/layer/app/components/content/PageLastCommit.vue).
 
 ---
 

@@ -69,7 +69,7 @@ interface ComponentEmitsProps {
 
 ## Changelog
 
-See commit history for [layer/modules/component-docs/runtime/components/ComponentEmits.vue](https://github.com/mhaibaraai/movk-nuxt-docs/commits/v3/layer/modules/component-docs/runtime/components/ComponentEmits.vue).
+See commit history for [layer/modules/component-docs/runtime/components/ComponentEmits.vue](https://github.com/mhaibaraai/movk-nuxt-docs/commits/{branch}/layer/modules/component-docs/runtime/components/ComponentEmits.vue).
 
 ---
 
