@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { useFetchComponentMeta } from '../composables/fetchComponentMeta'
+import { useFetchComponentMeta } from '../composables/useFetchComponentMeta'
 import type { ComponentMeta } from 'vue-component-meta'
 import { camelCase, kebabCase, upperFirst } from 'scule'
 import { decodeUnicodeEscapes } from '../../../../shared/unicode'

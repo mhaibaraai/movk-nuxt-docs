@@ -66,7 +66,7 @@ Layer 即 npm 包 `@movk/nuxt-docs`，是仓库的核心。关键入口：
 - **`nuxt.schema.ts`** — 用 `@nuxt/content/preview` 的 `field`/`group` API 定义所有 `appConfig` 字段（`theme`、`header`、`footer`、`toc`、`github`、`aiChat` 等）的类型与默认值。这是配置的**权威来源**：修改这里会同时影响类型推断、Studio 编辑界面 schema、appConfig 默认值。改 schema 时务必同步 `app/app.config.ts` 的默认值。
 - **`content.config.ts`** — 定义 `docs`、`releases`、`landing` 三个 Nuxt Content 集合。会在构建期检测消费方 `content/docs/` 是否存在来动态决定路由前缀（存在 → `/docs`，不存在 → `/`）；`landing` 集合仅当 `content/index.md` 缺失时注册。
 - **`app/app.config.ts`** — 所有 appConfig 默认值。
-- **`app/components/`、`app/composables/`** — 共享 UI 与 Composable（`useCategory`、`useHeader`、`useNavigation`、`useTheme`、`fetchComponentMeta`、`fetchComponentExample` 等）。
+- **`app/components/`、`app/composables/`** — 共享 UI 与 Composable（`useCategory`、`useHeader`、`useNavigation`、`useTheme` 等；组件文档的 `useFetchComponentMeta`、`useFetchComponentExample` 位于 `modules/component-docs/runtime/composables/`）。
 - **`server/`**（顶层，与 modules 内的 `runtime/server/` 互补）— Layer 直接提供的 Nitro `api/`、`mcp/`、`plugins/`、`routes/`、`utils/`。
 - **`modules/`** — 自定义 Nuxt 模块：`ai-chat/`、`component-code.ts`、`component-example.ts`、`components/`、`css.ts`、`i18n.ts`、`module.ts`、`routing.ts`。
 

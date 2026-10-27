@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { useFetchComponentMeta } from '../composables/fetchComponentMeta'
+import { useFetchComponentMeta } from '../composables/useFetchComponentMeta'
 import { generateComponentCode } from '../../../../shared/component-code'
 import type { ChipProps } from '@nuxt/ui'
 import { camelCase, upperFirst } from 'scule'
