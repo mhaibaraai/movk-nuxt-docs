@@ -10,7 +10,7 @@ export interface GitInfo {
 
 export function getGitBranch(): string {
   const env = process.env
-  const fromEnv = env.CF_PAGES_BRANCH || env.CI_COMMIT_BRANCH || env.VERCEL_GIT_COMMIT_REF || env.BRANCH || env.GITHUB_REF_NAME
+  const fromEnv = env.CF_PAGES_BRANCH || env.CI_COMMIT_BRANCH || env.VERCEL_GIT_COMMIT_REF || env.BRANCH || env.GITHUB_HEAD_REF || env.GITHUB_REF_NAME
   if (fromEnv && fromEnv !== 'HEAD') return fromEnv
 
   try {
