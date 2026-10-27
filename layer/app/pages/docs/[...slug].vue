@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { kebabCase } from 'scule'
+import { kebabCase, upperFirst } from 'scule'
 
 definePageMeta({
   layout: 'docs'
@@ -162,6 +162,24 @@ useSeoMeta({
       </template>
 
       <div class="mt-8 flex flex-wrap items-center gap-x-6 gap-y-2 border-y border-default py-2.5">
+        <dl v-if="page.requires || page.difficulty" class="flex flex-wrap items-baseline gap-x-6 gap-y-1 font-mono text-[11px] uppercase tracking-[0.12em]">
+          <div v-if="page.requires" class="flex items-baseline gap-2">
+            <dt class="text-dimmed">
+              {{ t('docs.requires') }}
+            </dt>
+            <dd class="text-highlighted normal-case tracking-normal">
+              {{ page.requires }}
+            </dd>
+          </div>
+          <div v-if="page.difficulty" class="flex items-baseline gap-2">
+            <dt class="text-dimmed">
+              {{ t('docs.difficulty') }}
+            </dt>
+            <dd class="text-highlighted">
+              {{ t(`docs.difficulty${upperFirst(page.difficulty)}`) }}
+            </dd>
+          </div>
+        </dl>
         <PageLastCommit v-if="github && page?.stem && page?.extension" :stem="page.stem" :extension="page.extension" />
 
         <div class="ms-auto flex items-center gap-5">
