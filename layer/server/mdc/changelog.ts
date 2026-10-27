@@ -52,8 +52,7 @@ export async function transformChangelog(event: H3Event, doc: Document): Promise
     })
   }
 
-  // Transform callout components (tip, note, warning, caution, callout) to blockquotes
-  const calloutTypes = ['tip', 'note', 'warning', 'caution', 'callout']
+  // Transform callout components (tip, note, warning, caution, callout) to blockquotes, including prose-* full names
   const calloutLabels: Record<string, string> = {
     tip: 'TIP',
     note: 'NOTE',
@@ -62,28 +61,30 @@ export async function transformChangelog(event: H3Event, doc: Document): Promise
     callout: 'NOTE'
   }
 
-  for (const calloutType of calloutTypes) {
-    visitAndReplace(doc, calloutType, (node) => {
-      const attrs = node[1] || {}
-      const content = node.slice(2)
-      const label = calloutLabels[calloutType]
+  for (const [type, label] of Object.entries(calloutLabels)) {
+    visitAndReplace(doc, type, node => replaceCallout(node, label))
+    visitAndReplace(doc, `prose-${type}`, node => replaceCallout(node, label))
+  }
+}
 
-      const blockquoteChildren: any[] = []
+function replaceCallout(node: any[], label: string) {
+  const attrs = node[1] || {}
+  const content = node.slice(2)
 
-      let firstLine = `[!${label}]`
-      if (attrs.to) {
-        firstLine += `\nSee: ${attrs.to}`
-      }
-      blockquoteChildren.push(['p', {}, firstLine])
+  const blockquoteChildren: any[] = []
 
-      blockquoteChildren.push(...collectBlockChildren(content))
+  let firstLine = `[!${label}]`
+  if (attrs.to) {
+    firstLine += `\nSee: ${attrs.to}`
+  }
+  blockquoteChildren.push(['p', {}, firstLine])
 
-      node[0] = 'blockquote'
-      node[1] = {}
-      node.length = 2
-      for (const child of blockquoteChildren) {
-        node.push(child)
-      }
-    })
+  blockquoteChildren.push(...collectBlockChildren(content))
+
+  node[0] = 'blockquote'
+  node[1] = {}
+  node.length = 2
+  for (const child of blockquoteChildren) {
+    node.push(child)
   }
 }

@@ -9,9 +9,10 @@ canonical_url: "https://docs.mhaibaraai.cn/docs/writing/mdc-components"
 
 [MDC 语法](https://content.nuxt.com/docs/files/markdown#mdc-syntax) 允许在 Markdown 中使用 Vue 组件：块级组件写作 `::name`，行内组件写作 `:name`，属性放在 `{}` 或 YAML 块中，嵌套时每层多加一个冒号。
 
-::prose-note{to="https://ui.nuxt.com/docs/typography"}
-本页只列出文档中最常用的 Prose 组件。任何全局注册的 Vue 组件都能以同样的方式在 Markdown 中使用，完整列表见 [Nuxt UI 文档](https://ui.nuxt.com/docs/typography)。
-::
+> [!NOTE]
+> See: https://ui.nuxt.com/docs/typography
+> 
+> 本页只列出文档中最常用的 Prose 组件。任何全局注册的 Vue 组件都能以同样的方式在 Markdown 中使用，完整列表见 Nuxt UI 文档。
 
 ## `Callout`
 

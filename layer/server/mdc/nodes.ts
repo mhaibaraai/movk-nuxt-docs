@@ -153,3 +153,15 @@ export function flattenMarkers(node: any, start = 2): void {
     }
   }
 }
+
+// 根层级处于块级上下文：只含纯文本的组件会被 stringifier 写成行内语法并与下一块粘连，
+// 把文本包进段落使其按块输出
+export function wrapBlockText(nodes: any[]): void {
+  for (const node of nodes) {
+    if (!Array.isArray(node) || BLOCK_ELEMENTS.has(node[0])) continue
+    const children = node.slice(2)
+    if (children.length && children.every(child => typeof child === 'string')) {
+      node.splice(2, children.length, ['p', {}, children.join('')])
+    }
+  }
+}

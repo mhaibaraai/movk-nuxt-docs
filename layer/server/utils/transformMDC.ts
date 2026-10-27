@@ -1,7 +1,7 @@
 import type { H3Event } from 'h3'
 import { camelCase } from 'scule'
 import type { Document } from '../mdc/nodes'
-import { flattenMarkers } from '../mdc/nodes'
+import { flattenMarkers, wrapBlockText } from '../mdc/nodes'
 import { transformComponentDocs } from '../mdc/component-docs'
 import { transformChangelog } from '../mdc/changelog'
 import { transformProse } from '../mdc/prose'
@@ -18,10 +18,10 @@ export async function transformMDC(event: H3Event, doc: Document): Promise<Docum
   await transformProse(event, doc)
 
   // Flatten __flatten markers by splicing their children into parents
-  if (Array.isArray(doc.body)) {
-    flattenMarkers(doc.body, 0)
-  } else if (doc.body?.value && Array.isArray(doc.body.value)) {
-    flattenMarkers(doc.body.value, 0)
+  const root = Array.isArray(doc.body) ? doc.body : doc.body?.value
+  if (Array.isArray(root)) {
+    flattenMarkers(root, 0)
+    wrapBlockText(root)
   }
 
   return doc
