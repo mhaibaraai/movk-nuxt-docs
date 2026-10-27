@@ -86,9 +86,19 @@ cd my-docs
 pnpm dev
 ```
 
-#### 📦 模块文档站点（精简）
+#### 🌐 多语言文档站点
 
-适合为 npm 包或库快速创建文档，内置 Release 页面展示版本发布历史，无额外开发工具。
+在完整模板基础上启用 `@nuxtjs/i18n`，内置简体中文与英文两套内容。
+
+```bash
+npx nuxi init -t gh:mhaibaraai/movk-nuxt-docs/templates/i18n my-docs
+cd my-docs
+pnpm dev
+```
+
+#### 📦 模块文档站点
+
+适合为 npm 包或库创建文档，在完整模板基础上内置 Release 页面展示版本发布历史。
 
 ```bash
 # 使用模块模板创建新项目
@@ -126,7 +136,7 @@ export default defineNuxtConfig({
 ```bash
 my-docs/
 ├── app/
-│   └── composables/             # 自定义 Composables
+│   └── app.config.ts            # 页头导航、侧栏分类等运行时配置
 ├── content/                     # Markdown 内容
 │   ├── index.md                 # 首页
 │   └── docs/                    # 文档页面
@@ -148,7 +158,8 @@ movk-nuxt-docs/
 ├── layer/                       # @movk/nuxt-docs layer 包
 ├── templates/
 │   ├── default/                 # 完整文档站点模板
-│   └── module/                  # 模块文档站点模板（精简）
+│   ├── i18n/                    # 多语言文档站点模板
+│   └── module/                  # 模块文档站点模板
 └── scripts/                     # 构建脚本
 ```
 
@@ -305,9 +316,7 @@ pnpm preview
 ### 发布
 
 ```bash [Terminal]
-# 发布 layer 到 npm
-pnpm release:layer
-# 发布完整项目
+# bump 版本、生成 changelog、打 tag 推送，由 CI 发布到 npm
 pnpm release
 ```
 

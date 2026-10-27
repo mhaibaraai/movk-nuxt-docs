@@ -303,9 +303,7 @@ pnpm preview
 ### 发布
 
 ```bash [Terminal]
-# 发布 layer 到 npm
-pnpm release:layer
-# 发布完整项目
+# bump 版本、生成 changelog、打 tag 推送，由 CI 发布到 npm
 pnpm release
 ```
 
