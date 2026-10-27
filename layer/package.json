@@ -24,6 +24,9 @@
     "url": "git+https://github.com/mhaibaraai/movk-nuxt-docs.git"
   },
   "main": "./nuxt.config.ts",
+  "engines": {
+    "node": ">=22.5"
+  },
   "peerDependencies": {
     "@ai-sdk/openai": "^4.0.89",
     "@ai-sdk/vue": "^4.0.133",
