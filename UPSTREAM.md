@@ -29,4 +29,4 @@ Layer 源自 [nuxt/ui](https://github.com/nuxt/ui) 的 `docs/` 站点。本文�
 
 | 组件 | 文件 | 上游来源 | 差异 |
 |------|------|----------|------|
-| `ProsePre` | `layer/app/components/content/ProsePre.vue` | `src/runtime/components/prose/Pre.vue` | 复制按钮改为「复制 / 已复制」文字反馈 |
+| `ProsePre` | `layer/app/components/content/ProsePre.global.vue` | `src/runtime/components/prose/Pre.vue` | 复制按钮改为「复制 / 已复制」文字反馈；`mermaid` 代码块分发到 `ProseMermaid` |
