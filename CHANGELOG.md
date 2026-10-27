@@ -1,5 +1,122 @@
 # 📋 Changelog
 
+## [3.0.0](https://github.com/mhaibaraai/movk-nuxt-docs/compare/v2.4.4...v3.0.0) (2026-10-27)
+
+### ⚠ BREAKING CHANGES
+
+* componentDocs 默认关闭，使用 ComponentProps / ComponentSlots / ComponentEmits / ComponentCode / ComponentExample 需设置 movkNuxtDocs.componentDocs: true；@nuxt/a11y 默认关闭
+* **github:** github.per_page 重命名为 github.perPage；不再默认过滤 2025-01-31 之前及构建之后的提交
+* layer 不再加载 Alibaba PuHuiTi 字体 CDN，不再默认 Asia/Shanghai 时区与头像
+* **deps:** 启用 AI Chat、组件文档、a11y 时需自行安装对应依赖
+* 文档必须放在 content/docs（其余语言为 content/{locale}/docs）
+* **theme:** 移除 HeroBackground 组件与 heroBackground page meta；默认主色由 green 改为 vermilion，neutral 由 slate 改为 paper；PageHeaderLinks 挂载位置改为导语下方的元信息行
+
+### ✨ Features
+
+* **aside:** 侧栏当前项指示条随路由平滑滑动 ([06fe2a7](https://github.com/mhaibaraai/movk-nuxt-docs/commit/06fe2a7b1783205580b1b596e3dae1d330b0ca22))
+* **content:** 包管理器与 TS/JS 代码组全站同步 ([3c1f62b](https://github.com/mhaibaraai/movk-nuxt-docs/commit/3c1f62b5643146ca499ba9098cf1fd5f154ae277))
+* **docs:** frontmatter 新增 requires 与 difficulty 页面元信息 ([55c8101](https://github.com/mhaibaraai/movk-nuxt-docs/commit/55c8101228b284adfd3fcc9b9339d9cfcf038ff2))
+* **docs:** 文档站引入 Noto Serif SC 并改用文字字标 ([c8ccf14](https://github.com/mhaibaraai/movk-nuxt-docs/commit/c8ccf147a73329e6c9abed3414579ed388f8f0c8))
+* **docs:** 新增 A–Z 索引页 ([e2d69b0](https://github.com/mhaibaraai/movk-nuxt-docs/commit/e2d69b09084e111aad72a9b9dea343f6a7ec4cdb))
+* **docs:** 新增截图脚本并重新生成文档配图 ([75960a2](https://github.com/mhaibaraai/movk-nuxt-docs/commit/75960a271c9726059a1759c88d56a3c1608901a0))
+* **docs:** 由 nuxt.schema.ts 自动生成 app.config 配置参考 ([4122e63](https://github.com/mhaibaraai/movk-nuxt-docs/commit/4122e639598cf8d1ba182afdb40862666b415991))
+* **docs:** 落地页改为编辑式排版 ([7d50c16](https://github.com/mhaibaraai/movk-nuxt-docs/commit/7d50c16729e06cb1dd91c83bd1117ef8b47e0348))
+* **docs:** 落地页配图支持亮暗两张截图 ([b04e0af](https://github.com/mhaibaraai/movk-nuxt-docs/commit/b04e0af124946634c41c1b28ed158ceffc6e0bb8))
+* **header:** 文档页页头底线叠加阅读进度 ([4113c6d](https://github.com/mhaibaraai/movk-nuxt-docs/commit/4113c6dbaa8983d5bfb6c45444d409457d18ff3b))
+* **header:** 语言切换器改用图标与语言代码 ([df41067](https://github.com/mhaibaraai/movk-nuxt-docs/commit/df410677569727e7a4fa24e03be2d15236f2a984))
+* **i18n:** 支持站点 i18n/locales 翻译文件 ([529faea](https://github.com/mhaibaraai/movk-nuxt-docs/commit/529faea719d37ef4858100b80db58142bd8d6507))
+* **landing:** 落地页组件提升为 layer 内容组件 ([cc61fdb](https://github.com/mhaibaraai/movk-nuxt-docs/commit/cc61fdb4b9b2dbf3a97f118d0590da360371549d))
+* **mcp:** 工具与提示词支持 locale 参数 ([43d02c7](https://github.com/mhaibaraai/movk-nuxt-docs/commit/43d02c7494b71c122d5fd9c390598ccb95b738cf))
+* **nav:** 页头导航与侧边栏分类改由 app.config 声明 ([72b6132](https://github.com/mhaibaraai/movk-nuxt-docs/commit/72b613218fa63c0cbb1e9d40bd3ec4533fba7f77))
+* **og-image:** 默认 OG 图片改为 paper / vermilion 编辑风 ([2159ef8](https://github.com/mhaibaraai/movk-nuxt-docs/commit/2159ef897acc9ff856d5a2b60c39339b7e5ab39f))
+* **prose:** 代码块复制按钮显示文字反馈 ([103227d](https://github.com/mhaibaraai/movk-nuxt-docs/commit/103227d3fe681d8289ed67c7c248ca5569bbc6d0))
+* **search:** ⌘K 面板新增最近访问 ([c344ac2](https://github.com/mhaibaraai/movk-nuxt-docs/commit/c344ac2d08a2be81b2ef4062647df14a21520903))
+* **templates:** 三套模板改为中性起步内容 ([044d830](https://github.com/mhaibaraai/movk-nuxt-docs/commit/044d83015f82fd2e9d16e0ab7822c6c4dec30e41))
+* **templates:** 案例展示页改为编辑式排版 ([71b17d1](https://github.com/mhaibaraai/movk-nuxt-docs/commit/71b17d13ff2dfd70e2b3b000710a693d658709da))
+* **theme:** 文档外壳改为编辑风视觉 ([e3b5310](https://github.com/mhaibaraai/movk-nuxt-docs/commit/e3b5310d448a83a0c960d707c04c3568c345e0b8))
+* 可选功能改为显式开关并按需加载 ([da0d9f1](https://github.com/mhaibaraai/movk-nuxt-docs/commit/da0d9f106b14d23ab4de7632002a32fb88572566))
+* 启用 View Transitions 页面切换 ([3ab1ea7](https://github.com/mhaibaraai/movk-nuxt-docs/commit/3ab1ea7b4358f67a982d566619dbf4df8d1964aa))
+
+### 🐛 Bug Fixes
+
+* **ai-chat:** 代码高亮主题与正文统一为 github-light / github-dark ([825c606](https://github.com/mhaibaraai/movk-nuxt-docs/commit/825c606a04c8989ca92b81a57b651bc67d0ca808))
+* **dev:** 修复依赖扫描因 @nuxtjs/i18n 的 [#components](https://github.com/mhaibaraai/movk-nuxt-docs/issues/components) 解析失败而跳过预构建 ([90cf4e1](https://github.com/mhaibaraai/movk-nuxt-docs/commit/90cf4e1918e361fe7e126c37f0980bcc2f625d65))
+* **git:** GitHub Actions 的 PR 构建使用源分支生成提交历史链接 ([8dcfb06](https://github.com/mhaibaraai/movk-nuxt-docs/commit/8dcfb065326229f1b3830b66755d6ee45303bbba))
+* **i18n:** 页头与主题面板的固定英文文案改为内置翻译 ([d1aeedd](https://github.com/mhaibaraai/movk-nuxt-docs/commit/d1aeedda1ec7a06252a0f15e22917a4d24ca856c))
+* **mcp:** examples 资源未 await 导致返回空对象 ([d44c90c](https://github.com/mhaibaraai/movk-nuxt-docs/commit/d44c90cdd6cf3a2a5a70c87dd575fd2e0b7e4fba))
+* **mcp:** search-composables 匹配嵌套目录下的组合式函数页面 ([7b04054](https://github.com/mhaibaraai/movk-nuxt-docs/commit/7b04054d0961185b704a256e8bd19db3ba3ddaab))
+* **mdc:** 纯文本提示块在 raw markdown 中与下一行标题粘连 ([26854be](https://github.com/mhaibaraai/movk-nuxt-docs/commit/26854be1294cc20fc44a82eed12a85c6deb40ac5))
+* **navigation:** 未声明分类的页面回退到概览，栏目链接指向首篇 ([a4b9f99](https://github.com/mhaibaraai/movk-nuxt-docs/commit/a4b9f997bf93bd20dc2eadf4bfaf2ae9f26fa46c))
+* **prose:** 合并 ProsePre 覆盖并注册为全局组件 ([96f9a40](https://github.com/mhaibaraai/movk-nuxt-docs/commit/96f9a4075bfdd9e6cfe235618c930fec025b27e0))
+* **prose:** 表格单元格增加左右内边距 ([26ae53b](https://github.com/mhaibaraai/movk-nuxt-docs/commit/26ae53b5904997f2ebe4c01175e66dbbe1fc8af1))
+* **templates:** 移除落地页中已删除的 hero-background ([159f382](https://github.com/mhaibaraai/movk-nuxt-docs/commit/159f3826fbbd91bd8735b2e6ed55f13b5cf5f855))
+* **theme:** 接通 theme 配置并以站点配置为重置基准 ([95a8ce2](https://github.com/mhaibaraai/movk-nuxt-docs/commit/95a8ce234d0cb07fb903d60fe69b9382508f99af))
+* **theme:** 暗色模式下反色文字改为墨色 ([ee4ec99](https://github.com/mhaibaraai/movk-nuxt-docs/commit/ee4ec990d56625b21bc96636fd8c8945dab02b32))
+
+### ⚡ Performance Improvements
+
+* Markdown 解析缓存改为容量 200 的 LRU ([d9d42b5](https://github.com/mhaibaraai/movk-nuxt-docs/commit/d9d42b59d04b793134d221b337e4afadd295198f))
+
+### 📝 Documentation
+
+* **agents:** 精简 AGENTS.md 并修正过时的模块与路由描述 ([9e3df81](https://github.com/mhaibaraai/movk-nuxt-docs/commit/9e3df811f7ad1365176c7c8741d6f31abd5e0f03))
+* **agents:** 补充功能开关、可选依赖与类型隔离约定 ([f103e5f](https://github.com/mhaibaraai/movk-nuxt-docs/commit/f103e5fb6e31889b82eec2fe9e85ab59eea31e1f))
+* **agents:** 补充测试命令、CI 结构与 i18n 注意事项 ([8373922](https://github.com/mhaibaraai/movk-nuxt-docs/commit/8373922afb1da8628f2c6677ebaf671e65980840))
+* **ai:** 重写 AI 区并新增代理发现页 ([10e57f5](https://github.com/mhaibaraai/movk-nuxt-docs/commit/10e57f5a695ca4b2dd20865b098da0d4ed2045b6))
+* **composables:** 参考页 slug 与函数名保持一致 ([c471054](https://github.com/mhaibaraai/movk-nuxt-docs/commit/c471054fce83918369bca5d8b0c0a9a2a0413d6a))
+* **getting-started:** 重写开始区并新增 v2 迁移指南 ([0d9c25f](https://github.com/mhaibaraai/movk-nuxt-docs/commit/0d9c25fe5d1f704f972e908b38a197b9b05f78da))
+* **guide:** 重写国际化、部署、故障排查并新增 OG 图片与常见问题 ([7f00162](https://github.com/mhaibaraai/movk-nuxt-docs/commit/7f00162aae856b895e3760dbd00a6b6afe26e9d6))
+* **guide:** 重写配置总览与定制页并新增主题、导航、功能开关 ([c7346d2](https://github.com/mhaibaraai/movk-nuxt-docs/commit/c7346d2208b7499f28ee179a4375e474966ac761))
+* **i18n:** 更正 locales 声明 file 的说明以匹配站点翻译 ([814b4b0](https://github.com/mhaibaraai/movk-nuxt-docs/commit/814b4b0a763236edd34a85412c28b18171bcd946))
+* **llms:** llms.txt 按文档分区列出页面并改用英文描述 ([2ca0552](https://github.com/mhaibaraai/movk-nuxt-docs/commit/2ca05529a11cffb309ea87d7bc7ae03db2ccb278))
+* **migration:** 新增用 AI 迁移的完整提示词 ([05071b8](https://github.com/mhaibaraai/movk-nuxt-docs/commit/05071b83f1240efff067ab0fdabeb5856b04d162))
+* README 列全三套模板并注明模板不含 AI 依赖 ([55e642a](https://github.com/mhaibaraai/movk-nuxt-docs/commit/55e642add6b5c482007edac0dae84dfff45fefc1))
+* **reference:** 重写组合式函数参考并补全未文档化的函数 ([979e239](https://github.com/mhaibaraai/movk-nuxt-docs/commit/979e239cd1a59de64f83076db79abd16be173951))
+* **skills:** 按 v3 约定重写 create-docs 与 review-docs ([da780b3](https://github.com/mhaibaraai/movk-nuxt-docs/commit/da780b3a03f6a6097c8871204c72eb28a6e1aa2f))
+* **templates:** 完善案例描述并新增提交站点入口 ([2f8efc0](https://github.com/mhaibaraai/movk-nuxt-docs/commit/2f8efc0efd7a47f6c3a943bcb520f630ea5248fa))
+* **writing:** 重写写作区与组件区并新增内容组件页 ([a8cdd7d](https://github.com/mhaibaraai/movk-nuxt-docs/commit/a8cdd7dfb59a6466a767f9138d72adf40684d30e))
+* 以 v3.0.0 版本号重新生成文档截图 ([1911969](https://github.com/mhaibaraai/movk-nuxt-docs/commit/19119699c1490120d1c62177e0ed6e2e478d45d9))
+* 新增可覆盖组件契约表并说明 MCP 的 locale 参数 ([9def064](https://github.com/mhaibaraai/movk-nuxt-docs/commit/9def064af8eb4a7b0b5656c08c84a95f907f49cd))
+* 覆盖契约表更新 PageHeaderLinks 挂载位置 ([167bc30](https://github.com/mhaibaraai/movk-nuxt-docs/commit/167bc30c907fbb38128321ee079e24f8ea54d4ed))
+
+### ♻️ Code Refactoring
+
+* **component-docs:** ComponentCode 与 raw markdown 共用代码片段生成 ([7192fcc](https://github.com/mhaibaraai/movk-nuxt-docs/commit/7192fcc1478e8b40a144e9f3cdeb55821651d4e3))
+* **component-docs:** ComponentExampleExtras 改为最低优先级兜底注册 ([a21bc23](https://github.com/mhaibaraai/movk-nuxt-docs/commit/a21bc2345ea0b3f3bdc68d9bb47efa3b30d98f24))
+* **composables:** 文件名与导出的组合式函数保持一致 ([82b5e55](https://github.com/mhaibaraai/movk-nuxt-docs/commit/82b5e551712beb4e35848d805a603a078e9c1d31))
+* **docs:** 文档重排为开始、指南、AI、写作、组件、参考六区 ([d7c9342](https://github.com/mhaibaraai/movk-nuxt-docs/commit/d7c9342c90ad0d2677a3640e1a01741dc145431c))
+* **github:** 统一 GitHub 配置默认值与 API 访问 ([3c9b9f3](https://github.com/mhaibaraai/movk-nuxt-docs/commit/3c9b9f3b20ad2a10dd1706122157ee7b9a27fc7b))
+* **i18n:** 抽取 filterValidLocales 纯函数便于测试 ([7263192](https://github.com/mhaibaraai/movk-nuxt-docs/commit/7263192f28ce17648fc5edbc014e4bf4c0a5ca11))
+* **mdc:** 拆分 873 行的 transformMDC ([2dbc7e1](https://github.com/mhaibaraai/movk-nuxt-docs/commit/2dbc7e1d4c399a50013d7b3cc83897527029ebb4))
+* **types:** 解除核心代码对可选功能的类型依赖 ([7195ca8](https://github.com/mhaibaraai/movk-nuxt-docs/commit/7195ca8f5c1338380b2f685d11cb2596850524bf))
+* 抽取 useDocsShell 消除 app.vue 与 error.vue 的重复 ([2346be4](https://github.com/mhaibaraai/movk-nuxt-docs/commit/2346be4149147090e7e9b6b2eab1d046aaec76a6))
+* 文档固定位于 content/docs 与 /docs 前缀 ([64d98d5](https://github.com/mhaibaraai/movk-nuxt-docs/commit/64d98d5b4836d278d5e694d487b22ae960906d0d))
+* 文档站与模板改用 app.config 声明导航 ([9d5af19](https://github.com/mhaibaraai/movk-nuxt-docs/commit/9d5af191f49aaa3abbd500198181b528a9294d7f))
+* 移除发布包中的作者私有配置 ([51ff5e9](https://github.com/mhaibaraai/movk-nuxt-docs/commit/51ff5e91edb0681dd050c4f47b531ccd57b4c21f))
+
+### ✅ Tests
+
+* **e2e:** raw markdown 快照忽略提交历史链接中的分支 ([9eac4e0](https://github.com/mhaibaraai/movk-nuxt-docs/commit/9eac4e0b207368b443983a0faa282acb3202b2eb))
+* **e2e:** 覆盖 app.config 导航的本地化与激活状态 ([1f99519](https://github.com/mhaibaraai/movk-nuxt-docs/commit/1f99519b29786918233460be0d50ed97df9d6f18))
+* 引入 vitest 单元测试、Playwright 冒烟与模板构建脚本 ([451a2bc](https://github.com/mhaibaraai/movk-nuxt-docs/commit/451a2bc864c56589ee00248bd3a6e2a81dbfd53d))
+* 新增全部可选功能关闭的构建夹具并纳入 CI 矩阵 ([acfd550](https://github.com/mhaibaraai/movk-nuxt-docs/commit/acfd5506d2be728932512e67b12a0d77f929fa5a))
+
+### 📦 Build System
+
+* **deps:** 默认关闭功能的依赖改为 optional peer ([2947011](https://github.com/mhaibaraai/movk-nuxt-docs/commit/29470113652be805d7ed5fade275ea4677557daf))
+* **layer:** 声明 engines.node >=22.5 ([646062e](https://github.com/mhaibaraai/movk-nuxt-docs/commit/646062ec14f8a17c960d72bdabb41d93b32202a6))
+* **release:** 合并 release-it 配置并要求干净工作区 ([3393698](https://github.com/mhaibaraai/movk-nuxt-docs/commit/33936982e0950a30460bb4b38fa9d187cd3025fd))
+
+### 👷 CI
+
+* 拆分 check / docs / templates 三个 job ([9247194](https://github.com/mhaibaraai/movk-nuxt-docs/commit/92471944c2019e11dd1e6b9b96c6071a1ba65b36))
+
+### 🔧 Chores
+
+* **docs:** 新增 nuxtseo-layer-devtools 开发依赖 ([6b76210](https://github.com/mhaibaraai/movk-nuxt-docs/commit/6b76210b5ad76cca52da3d54655f4d693ae58be6))
+* 新增上游同步记录、issue 与 PR 模板并收紧依赖更新策略 ([e8f57bf](https://github.com/mhaibaraai/movk-nuxt-docs/commit/e8f57bf67d37a4a204ec0a4e4e29f55323668ccd))
+* 移除 CLAUDE.md ([8ff7ea0](https://github.com/mhaibaraai/movk-nuxt-docs/commit/8ff7ea0873ec48c51f5c59227a284518217ea576))
+
 ## [2.4.4](https://github.com/mhaibaraai/movk-nuxt-docs/compare/v2.4.3...v2.4.4) (2026-10-21)
 
 ### 🐛 Bug Fixes
