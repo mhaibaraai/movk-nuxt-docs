@@ -150,10 +150,10 @@ export default defineAppConfig({
         }
       },
       th: {
-        base: 'border-0 border-b border-inverted first:border-s-0 px-3 first:ps-0 font-mono text-[11px] font-medium uppercase tracking-[0.12em] text-muted'
+        base: 'border-0 border-b border-inverted first:border-s-0 px-4 font-mono text-[11px] font-medium uppercase tracking-[0.12em] text-muted'
       },
       td: {
-        base: 'border-0 border-b border-default first:border-s-0 px-3 first:ps-0'
+        base: 'border-0 border-b border-default first:border-s-0 px-4'
       },
       codeGroup: {
         slots: {
