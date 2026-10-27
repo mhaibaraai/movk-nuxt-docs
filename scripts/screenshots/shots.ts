@@ -105,7 +105,7 @@ export const SHOTS: Shot[] = [
     setup: async page => page.evaluate(() => window.scrollTo(0, document.body.scrollHeight * 0.3)),
     selector: 'nav[aria-label="分类导航"]'
   },
-  { name: 'component-LanguageSwitcher', path: DOC, setup: click('header button:has-text("🇨🇳")'), selector: POPOVER },
+  { name: 'component-LanguageSwitcher', path: DOC, setup: click('header button[aria-label="切换语言"]'), selector: POPOVER },
   { name: 'component-ThemePicker', path: DOC, setup: click('button[aria-label="主题设置"]'), selector: POPOVER },
   {
     name: 'component-PageHeaderLinks',
