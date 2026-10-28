@@ -80,6 +80,7 @@ opt-in：消费方在 `modules` 加入 `@nuxtjs/i18n` 并配置 `i18n.locales` �
 - **功能开关** — `movkNuxtDocs.componentDocs / mcp / ogImage / mermaid / a11y` 与 `aiChat.enabled`。默认开启的功能依赖放 `dependencies`，默认关闭的为 optional peer，启用未安装时构建期报错。关闭的功能其虚拟模块、`defineOgImage`、`useAIChat` 指向空实现；新增可选功能沿用此模式，并在 `test/fixtures/features-off` 覆盖
 - **optimizeDeps 前缀** — `vite:extendConfig` 中非 `@movk/nuxt-docs > ` 前缀的嵌套依赖会被自动加前缀
 - **代理发现配置顺序** — 依赖 `rootDir` 的 `agentDiscovery` 选项必须由位于 `nuxt-agent-discovery` 之前的内联模块写入，否则模块已在 `setup` 中读走
+- **Nuxt UI 组件检测** — `ui.experimental.componentDetection` 只扫描 `.vue` / `.ts`，只在 Markdown 中使用的组件由 `modules/content-components.ts` 扫描 `content/` 补入，否则其主题类不会生成
 - **Component Meta 排除** — 以包名注册组件的模块需追加到 `layer/modules/component-docs/index.ts` 的 `COMPONENT_META_DEFAULTS.exclude`
 - **测试分层** — 纯函数放 `layer/utils`、`layer/shared`、`layer/app/utils` 并由 `test/unit` 覆盖；`transformMDC` 等依赖 Nitro 的逻辑以 `test/e2e/raw-markdown.spec.ts` 快照做特征测试，重构时快照须保持不变
 - **预渲染死链** — `failOnError: false` 只输出 `[request error]` 日志，CI 显式拦截
