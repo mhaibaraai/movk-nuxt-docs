@@ -1,7 +1,6 @@
 import type { ContentNavigationItem } from '@nuxt/content'
 import { findPageBreadcrumb, findPageChildren } from '@nuxt/content/utils'
-import { mapContentNavigation } from '@nuxt/ui/utils/content'
-import { groupByCategory, undeclaredCategories } from '../utils/navigation'
+import { breadcrumbLinks, groupByCategory, undeclaredCategories } from '../utils/navigation'
 
 function processNavigationItem(item: ContentNavigationItem, parent?: ContentNavigationItem): ContentNavigationItem | ContentNavigationItem[] {
   return {
@@ -41,9 +40,7 @@ export function useNavigation(navigation: Ref<ContentNavigationItem[] | undefine
   })
 
   function findBreadcrumb(path: string) {
-    const breadcrumb = findPageBreadcrumb(navigation?.value, path, { indexAsChild: true })
-
-    return mapContentNavigation(breadcrumb).map(({ icon, ...link }) => link)
+    return breadcrumbLinks(findPageBreadcrumb(navigation?.value, path, { indexAsChild: true }))
   }
 
   return {
