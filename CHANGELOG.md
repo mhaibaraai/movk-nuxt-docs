@@ -1,5 +1,21 @@
 # 📋 Changelog
 
+## [3.0.1](https://github.com/mhaibaraai/movk-nuxt-docs/compare/v3.0.0...v3.0.1) (2026-10-28)
+
+### 🐛 Bug Fixes
+
+* **ci:** docs 构建步骤启用 pipefail ([7b84a20](https://github.com/mhaibaraai/movk-nuxt-docs/commit/7b84a206715d38f805070a26564e84c4b2e84fdb))
+* **component-docs:** 代码注册表跳过导入未安装可选依赖的组件 ([5c349ba](https://github.com/mhaibaraai/movk-nuxt-docs/commit/5c349bab4a75eff8ad7e549464f00717abf22d2e))
+* **navigation:** 面包屑中没有首页的目录指向其第一篇页面 ([2fadbce](https://github.com/mhaibaraai/movk-nuxt-docs/commit/2fadbce70d883716d29bf9ae7257df3fb48614ac))
+
+### ✅ Tests
+
+* **e2e:** 更新 mdc 代码块首行缩进的 raw markdown 快照 ([fe6097f](https://github.com/mhaibaraai/movk-nuxt-docs/commit/fe6097f7184997b751ee7b2c64179e95b346b881))
+
+### 🔧 Chores
+
+* **deps:** 升级非 major 依赖并放宽可选 peer 范围 ([5d7b5a5](https://github.com/mhaibaraai/movk-nuxt-docs/commit/5d7b5a544f94488167d6487c2b74f9704c70d0ee))
+
 ## [3.0.0](https://github.com/mhaibaraai/movk-nuxt-docs/compare/v2.4.4...v3.0.0) (2026-10-27)
 
 ### ⚠ BREAKING CHANGES
