@@ -42,8 +42,11 @@ async function capture(browser: Browser, url: string, viewport: typeof OG_VIEWPO
 }
 
 async function main(): Promise<void> {
-  const only = process.argv.slice(2)
-  const sites = SITES.filter(site => !only.length || only.includes(site.slug))
+  // 参数为 slug 或 slug=url；后者用于截取尚未部署到生产的版本（如本地预览）
+  const args = new Map(process.argv.slice(2).map(arg => arg.split('=', 2) as [string, string?]))
+  const sites = SITES
+    .filter(site => !args.size || args.has(site.slug))
+    .map(site => ({ ...site, url: args.get(site.slug) ?? site.url }))
 
   mkdirSync(TEMPLATES_DIR, { recursive: true })
   mkdirSync(OG_DIR, { recursive: true })
