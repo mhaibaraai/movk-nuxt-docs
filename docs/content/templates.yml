@@ -49,14 +49,27 @@ items:
       - label: 访问站点
         to: https://nuxt.mhaibaraai.cn
         target: _blank
-  - title: '@movk/mapbox'
-    description: 声明式 Mapbox GL v3 封装库，组件化组合地图、图层、标记与控件。
+  - title: '@movk/maplibre'
+    description: 声明式 MapLibre GL 封装库，无需 access token，内置 3D 建筑、动态效果、绘制与多坐标系支持。
     features:
-      - title: 声明式封装
+      - title: 声明式组件
         icon: i-lucide-code-xml
-      - title: 地图组件
+      - title: 动态效果
+        icon: i-lucide-sparkles
+      - title: 本土化坐标系
         icon: i-lucide-map
     links:
       - label: 访问站点
-        to: https://mapbox.mhaibaraai.cn
+        to: https://maplibre.mhaibaraai.cn
+        target: _blank
+  - title: '@movk/sigma'
+    description: 基于 sigma v4 的知识图谱可视化 Nuxt 模块，覆盖渲染、交互、布局与分析，面向 1000+ 节点的大规模图谱。
+    features:
+      - title: 知识图谱
+        icon: i-lucide-network
+      - title: 布局与分析
+        icon: i-lucide-chart-scatter
+    links:
+      - label: 访问站点
+        to: https://sigma.mhaibaraai.cn
         target: _blank

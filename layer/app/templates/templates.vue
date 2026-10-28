@@ -163,7 +163,7 @@ const items = computed(() => (page.value?.items || []).map((item, index) => {
               :alt="item.title"
               class="w-full h-auto object-cover object-top transition-transform duration-500 group-hover:scale-[1.01] motion-reduce:transition-none"
               width="1200"
-              height="466"
+              height="630"
               sizes="100vw lg:1200px"
               format="webp"
               loading="lazy"
