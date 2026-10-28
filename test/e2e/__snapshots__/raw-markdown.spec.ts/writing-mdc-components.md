@@ -47,7 +47,7 @@ canonical_url: "https://docs.mhaibaraai.cn/docs/writing/mdc-components"
 >  提交到公开仓库。
 
 ```mdc
-::note
+  ::note
   页面标题来自 frontmatter 的 `title`，正文从二级标题开始。
   ::
 
@@ -152,7 +152,7 @@ github: false
 。
 
 ```mdc
-::accordion
+  ::accordion
     :::accordion-item{icon="i-lucide-circle-help" label="文档必须放在哪个目录？"}
     默认语言的文档放在 `content/docs/`，其他语言放在 `content/{locale}/docs/`，路由前缀固定为 `/docs`。
     :::
