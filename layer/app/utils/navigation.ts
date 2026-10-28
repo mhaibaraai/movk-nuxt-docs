@@ -81,3 +81,8 @@ export function sectionLink(item: ContentNavigationItem): string {
   }
   return item.path
 }
+
+/** 面包屑链接：没有首页的目录与栏目链接保持一致，避免指向不存在的页面 */
+export function breadcrumbLinks(items: ContentNavigationItem[]): { label: string, to: string }[] {
+  return items.map(item => ({ label: item.title, to: sectionLink(item) }))
+}

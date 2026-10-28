@@ -1,10 +1,20 @@
+import { existsSync, readFileSync } from 'node:fs'
 import { addTemplate, updateTemplates } from '@nuxt/kit'
 import type { Nuxt } from '@nuxt/schema'
+import { resolveModulePath } from 'exsolve'
 import { join } from 'pathe'
+import { runtimeBareImports } from '../../utils/component-imports'
 
 interface ComponentEntry {
   pascalName: string
   filePath: string
+}
+
+// 依赖包中的组件可能导入未安装的可选 peer（如 UChart 的 @tanstack/charts），打包时会解析失败
+function hasResolvableImports(filePath: string): boolean {
+  if (!filePath.includes('/node_modules/') || !existsSync(filePath)) return true
+  return runtimeBareImports(readFileSync(filePath, 'utf8'))
+    .every(specifier => resolveModulePath(specifier, { from: filePath, try: true }))
 }
 
 /** 为 ComponentCode 生成全部组件的异步注册表 */
@@ -18,7 +28,8 @@ export function setupCodeRegistry(nuxt: Nuxt): void {
         c.pascalName
         && c.filePath
         && !c.pascalName.startsWith('Nuxt')
-        && !c.pascalName.startsWith('ServerPlaceholder'))
+        && !c.pascalName.startsWith('ServerPlaceholder')
+        && hasResolvableImports(c.filePath))
       .map(c => ({ pascalName: c.pascalName, filePath: c.filePath }))
   })
 

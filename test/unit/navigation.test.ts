@@ -1,6 +1,6 @@
 import type { ContentNavigationItem } from '@nuxt/content'
 import { describe, expect, it } from 'vitest'
-import { groupByCategory, sectionLink, transformNavigation, undeclaredCategories } from '../../layer/app/utils/navigation'
+import { breadcrumbLinks, groupByCategory, sectionLink, transformNavigation, undeclaredCategories } from '../../layer/app/utils/navigation'
 
 const section = (path: string): ContentNavigationItem => ({ title: path, path })
 
@@ -72,5 +72,21 @@ describe('sectionLink', () => {
 
   it('没有任何页面时回退到目录路径', () => {
     expect(sectionLink({ title: 'Empty', path: '/docs/empty', page: false })).toBe('/docs/empty')
+  })
+})
+
+describe('breadcrumbLinks', () => {
+  it('没有首页的目录链接到其中第一篇页面', () => {
+    const mcp: ContentNavigationItem = { title: 'MCP', path: '/docs/getting-started/ai/mcp', icon: 'i-lucide-bot' }
+    const items: ContentNavigationItem[] = [
+      { title: '开始', path: '/docs/getting-started' },
+      { title: 'AI', path: '/docs/getting-started/ai', page: false, children: [mcp] },
+      mcp
+    ]
+    expect(breadcrumbLinks(items)).toEqual([
+      { label: '开始', to: '/docs/getting-started' },
+      { label: 'AI', to: '/docs/getting-started/ai/mcp' },
+      { label: 'MCP', to: '/docs/getting-started/ai/mcp' }
+    ])
   })
 })
