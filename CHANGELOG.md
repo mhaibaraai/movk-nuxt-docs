@@ -1,5 +1,11 @@
 # 📋 Changelog
 
+## [3.0.2](https://github.com/mhaibaraai/movk-nuxt-docs/compare/v3.0.1...v3.0.2) (2026-10-28)
+
+### 🐛 Bug Fixes
+
+* **ui:** 扫描 content 中使用的 Nuxt UI 组件补入 componentDetection ([a89933a](https://github.com/mhaibaraai/movk-nuxt-docs/commit/a89933a384877c266b89df5c276129bbbb23b83c))
+
 ## [3.0.1](https://github.com/mhaibaraai/movk-nuxt-docs/compare/v3.0.0...v3.0.1) (2026-10-28)
 
 ### 🐛 Bug Fixes
