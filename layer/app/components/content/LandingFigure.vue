@@ -13,7 +13,7 @@ defineProps<{
 
 <template>
   <figure class="mt-12">
-    <div class="border border-default bg-muted overflow-hidden max-h-[34rem]">
+    <div class="border border-default bg-soft overflow-hidden max-h-[34rem]">
       <UColorModeImage
         v-if="dark"
         :light="src"
@@ -31,7 +31,7 @@ defineProps<{
       >
     </div>
     <figcaption v-if="caption" class="mt-3 text-sm text-muted">
-      <span v-if="label" class="kicker me-2 text-highlighted">{{ label }}</span>{{ caption }}
+      <span v-if="label" class="kicker me-2 text-strong">{{ label }}</span>{{ caption }}
     </figcaption>
   </figure>
 </template>

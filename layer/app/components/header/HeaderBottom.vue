@@ -23,12 +23,12 @@ const items = computed(() => (navigation.value ?? []).map((item, index) => ({
         :to="item.to"
         :aria-current="item.active ? 'page' : undefined"
         class="group relative flex items-center gap-2.5 font-mono text-[11px] uppercase tracking-[0.14em] transition-colors"
-        :class="item.active ? 'text-highlighted' : 'text-muted hover:text-highlighted'"
+        :class="item.active ? 'text-strong' : 'text-muted hover:text-strong'"
       >
-        <span class="transition-colors" :class="item.active ? 'text-primary' : 'text-dimmed group-hover:text-primary'">{{ item.index }}</span>
+        <span class="transition-colors" :class="item.active ? 'text-primary' : 'text-faint group-hover:text-primary'">{{ item.index }}</span>
         {{ item.label }}
         <span
-          class="absolute inset-x-0 -bottom-px h-0.5 bg-inverted origin-left transition-transform duration-500 ease-editorial"
+          class="absolute inset-x-0 -bottom-px h-0.5 bg-(--ui-text-strong) origin-left transition-transform duration-500 ease-editorial"
           :class="item.active ? 'scale-x-100' : 'scale-x-0'"
           aria-hidden="true"
         />

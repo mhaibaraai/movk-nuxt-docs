@@ -21,7 +21,7 @@ const links = computed<ButtonProps[]>(() => (github && github.url
 <template>
   <UHeader
     :ui="{
-      root: 'bg-default backdrop-blur-none border-inverted [view-transition-name:site-header]',
+      root: 'bg-default backdrop-blur-none border-(--ui-text-strong) [view-transition-name:site-header]',
       left: 'min-w-0',
       center: 'lg:ms-10 lg:me-auto',
       right: 'gap-0.5 lg:flex-none'
@@ -41,7 +41,7 @@ const links = computed<ButtonProps[]>(() => (github && github.url
           :collapsed="false"
           :label="t('header.search')"
           color="neutral"
-          class="hidden lg:inline-flex w-56 me-2 rounded-none ring-default text-muted hover:text-highlighted hover:ring-inverted"
+          class="hidden lg:inline-flex w-56 me-2 rounded-none ring-default text-muted hover:text-strong hover:ring-(--ui-text-strong)"
           :ui="{ trailing: 'ms-auto' }"
         />
         <UContentSearchButton class="lg:hidden" />
@@ -62,7 +62,7 @@ const links = computed<ButtonProps[]>(() => (github && github.url
           <LanguageSwitcher />
 
           <template #fallback>
-            <div class="h-8 w-8 animate-pulse bg-elevated rounded-md" />
+            <div class="h-8 w-8 animate-pulse bg-soft rounded-md" />
           </template>
         </ClientOnly>
       </template>

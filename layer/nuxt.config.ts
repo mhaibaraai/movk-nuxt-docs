@@ -90,19 +90,14 @@ export default defineNuxtConfig({
     // 中文字体经 unicode-range 分包，交给 @nuxt/fonts 会让它在构建期把
     // 全部分片下载进产物，既失去按需加载也丢掉跨项目共享的 CDN 缓存
     fonts: false,
-    theme: {
-      colors: ['primary', 'secondary', 'info', 'success', 'warning', 'error', 'important']
-    },
-    experimental: {
-      componentDetection: [
-        'Sidebar',
-        'ChatMessages',
-        'ChatPrompt',
-        'ChatPromptSubmit',
-        'ChatReasoning',
-        'ChatTool'
-      ]
-    }
+    componentDetection: [
+      'Sidebar',
+      'ChatMessages',
+      'ChatPrompt',
+      'ChatPromptSubmit',
+      'ChatReasoning',
+      'ChatTool'
+    ]
   },
 
   // 由 modules/i18n.ts 与 modules/routing.ts 在构建期写入，这里声明默认值以生成完整类型

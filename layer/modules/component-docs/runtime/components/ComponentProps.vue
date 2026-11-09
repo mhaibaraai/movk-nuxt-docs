@@ -122,7 +122,7 @@ const metaProps: ComputedRef<ComponentMeta['props']> = computed(() => {
           <MDC
             v-if="prop.description"
             :value="prop.description"
-            class="text-toned mt-1"
+            class="text-default mt-1"
             :cache-key="`${kebabCase(route.path)}-prop-${prop.name}-description`"
           />
 

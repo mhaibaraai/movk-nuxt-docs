@@ -70,12 +70,12 @@ const authorUrl = computed(() => {
 <template>
   <div v-if="commit" class="flex items-center flex-wrap gap-x-2 gap-y-1 font-mono text-[11px] tracking-[0.04em] text-muted">
     <span class="uppercase tracking-[0.12em]">最后更新于</span>
-    <time class="text-highlighted" :datetime="commit.date">{{ commit.dateFormatted }}</time>
+    <time class="text-strong" :datetime="commit.date">{{ commit.dateFormatted }}</time>
     <span>·</span>
     <component
       :is="authorUrl ? ULink : 'span'"
       v-bind="authorUrl ? { to: authorUrl, target: '_blank', raw: true } : {}"
-      class="inline-flex items-center gap-1.5 hover:text-highlighted transition-colors"
+      class="inline-flex items-center gap-1.5 hover:text-strong transition-colors"
     >
       <UAvatar
         v-if="showAvatar && commit.author.avatar"
@@ -91,7 +91,7 @@ const authorUrl = computed(() => {
       <component
         :is="commitUrl ? ULink : 'span'"
         v-bind="commitUrl ? { to: commitUrl, target: '_blank', raw: true } : {}"
-        class="max-w-62.5 truncate hover:text-highlighted transition-colors"
+        class="max-w-62.5 truncate hover:text-strong transition-colors"
       >
         {{ commit.message }}
       </component>

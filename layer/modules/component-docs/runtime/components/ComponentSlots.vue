@@ -41,7 +41,7 @@ const { data: meta } = await useFetchComponentMeta(componentName as any)
           <MDC
             v-if="slot.description"
             :value="slot.description"
-            class="text-toned mt-1"
+            class="text-default mt-1"
             :cache-key="`${kebabCase(route.path)}-slot-${slot.name}-description`"
           />
 

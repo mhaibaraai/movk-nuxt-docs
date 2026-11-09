@@ -164,18 +164,18 @@ useSeoMeta({
       <div class="mt-8 flex flex-wrap items-center gap-x-6 gap-y-2 border-y border-default py-2.5">
         <dl v-if="page.requires || page.difficulty" class="flex flex-wrap items-baseline gap-x-6 gap-y-1 font-mono text-[11px] uppercase tracking-[0.12em]">
           <div v-if="page.requires" class="flex items-baseline gap-2">
-            <dt class="text-dimmed">
+            <dt class="text-faint">
               {{ t('docs.requires') }}
             </dt>
-            <dd class="text-highlighted normal-case tracking-normal">
+            <dd class="text-strong normal-case tracking-normal">
               {{ page.requires }}
             </dd>
           </div>
           <div v-if="page.difficulty" class="flex items-baseline gap-2">
-            <dt class="text-dimmed">
+            <dt class="text-faint">
               {{ t('docs.difficulty') }}
             </dt>
-            <dd class="text-highlighted">
+            <dd class="text-strong">
               {{ t(`docs.difficulty${upperFirst(page.difficulty)}`) }}
             </dd>
           </div>
@@ -189,7 +189,7 @@ useSeoMeta({
             :to="link.to ?? undefined"
             :target="link.to?.startsWith('http') ? '_blank' : undefined"
             raw
-            class="link-wipe inline-flex items-center gap-1.5 font-mono text-[11px] uppercase tracking-[0.12em] text-muted hover:text-highlighted transition-colors"
+            class="link-wipe inline-flex items-center gap-1.5 font-mono text-[11px] uppercase tracking-[0.12em] text-muted hover:text-strong transition-colors"
           >
             <UIcon v-if="link.icon" :name="link.icon" class="size-3.5" />
             {{ link.label }}

@@ -1,5 +1,7 @@
 import { resolveThemeIcons } from '../utils/theme'
 import { kebabCase } from '@movk/core'
+import { applyPaletteVars, colorsStorageKey, createColorRestoreScript, parsePaletteVars, resolvePaletteVars } from '../utils/theme-palette'
+import type { PaletteVars } from '../utils/theme-palette'
 
 export default defineNuxtPlugin({
   enforce: 'post',
@@ -17,11 +19,31 @@ export default defineNuxtPlugin({
     }
 
     if (import.meta.client) {
+      const blackAsPrimary = localStorage.getItem(`${name}-ui-black-as-primary`)
+      const theme = useTheme()
       const primary = localStorage.getItem(`${name}-ui-primary`)
-      if (primary) appConfig.ui.colors.primary = primary
-
+      if (primary) theme.primary.value = primary
       const neutral = localStorage.getItem(`${name}-ui-neutral`)
-      if (neutral) appConfig.ui.colors.neutral = neutral
+      if (neutral) theme.neutral.value = neutral
+      // 恢复色板不是一次用户切色操作，不应清除已保存的黑白主色偏好。
+      theme.setBlackAsPrimary(blackAsPrimary === null ? defaults.value.blackAsPrimary : blackAsPrimary === 'true')
+
+      let previous: PaletteVars = parsePaletteVars(localStorage.getItem(colorsStorageKey(name)))
+      watch(() => resolvePaletteVars({
+        primary: theme.primary.value !== defaults.value.primary ? theme.primary.value : null,
+        neutral: theme.neutral.value !== defaults.value.neutral ? theme.neutral.value : null
+      }), (next) => {
+        applyPaletteVars(document.documentElement, next, previous)
+        previous = next
+        localStorage.setItem(colorsStorageKey(name), JSON.stringify(next))
+      }, { immediate: true })
+
+      const colorMode = useColorMode()
+      watch([theme.radius, theme.blackAsPrimary, () => colorMode.value], ([radius, black, mode]) => {
+        document.documentElement.style.setProperty('--ui-radius', `${radius}rem`)
+        if (black) document.documentElement.style.setProperty('--ui-primary', mode === 'dark' ? 'white' : 'black')
+        else document.documentElement.style.removeProperty('--ui-primary')
+      }, { immediate: true })
 
       const icons = localStorage.getItem(`${name}-ui-icons`)
       if (icons) appConfig.ui.icons = resolveThemeIcons(icons, appConfig.ui.icons) as any
@@ -30,47 +52,7 @@ export default defineNuxtPlugin({
     if (import.meta.server) {
       useHead({
         script: [{
-          innerHTML: `
-            (function() {
-              var primaryColor = localStorage.getItem('${name}-ui-primary');
-              var neutralColor = localStorage.getItem('${name}-ui-neutral');
-              if (!primaryColor && !neutralColor) return;
-              function swapColors(el) {
-                var html = el.innerHTML;
-                if (primaryColor && primaryColor !== 'black') {
-                  html = html.replace(
-                    /(--ui-color-primary-\\d{2,3}:\\s*var\\(--color-)${appConfig.ui.colors.primary}(-\\d{2,3}.*?\\))/g,
-                    \`$1\${primaryColor}$2\`
-                  );
-                }
-                if (neutralColor) {
-                  html = html.replace(
-                    /(--ui-color-neutral-\\d{2,3}:\\s*var\\(--color-)${appConfig.ui.colors.neutral}(-\\d{2,3}.*?\\))/g,
-                    \`$1\${neutralColor === 'neutral' ? 'old-neutral' : neutralColor}$2\`
-                  );
-                }
-                el.innerHTML = html;
-              }
-              var colorsEl = document.querySelector('style#nuxt-ui-colors');
-              if (colorsEl) {
-                swapColors(colorsEl);
-              } else {
-                var obs = new MutationObserver(function(mutations) {
-                  for (var i = 0; i < mutations.length; i++) {
-                    for (var j = 0; j < mutations[i].addedNodes.length; j++) {
-                      var node = mutations[i].addedNodes[j];
-                      if (node.id === 'nuxt-ui-colors') {
-                        swapColors(node);
-                        obs.disconnect();
-                        return;
-                      }
-                    }
-                  }
-                });
-                obs.observe(document.head, { childList: true });
-              }
-            })();
-            `.replace(/\s+/g, ' '),
+          innerHTML: createColorRestoreScript(name),
           type: 'text/javascript',
           tagPriority: -1
         }, {

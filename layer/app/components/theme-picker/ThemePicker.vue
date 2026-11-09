@@ -158,7 +158,7 @@ const {
             color="neutral"
             :icon="icons.find(i => i.value === icon)?.icon"
             :items="icons"
-            class="w-full ring-default rounded-sm hover:bg-elevated/50 capitalize text-[11px] data-[state=open]:bg-elevated/50"
+            class="w-full ring-default rounded-sm hover:bg-soft/50 capitalize text-[11px] data-[state=open]:bg-soft/50"
             :ui="{ item: 'capitalize text-[11px]', trailingIcon: 'group-data-[state=open]:rotate-180 transition-transform duration-200' }"
           />
         </div>
@@ -222,7 +222,7 @@ const {
               variant="outline"
               size="sm"
               icon="i-lucide-rotate-ccw"
-              class="ms-auto ring-default hover:bg-elevated/50"
+              class="ms-auto ring-default hover:bg-soft/50"
               @click="resetTheme"
             />
           </UTooltip>

@@ -49,7 +49,7 @@ useResizeObserver(container, measure)
       :key="group.path"
       class="py-5 first:pt-0 border-b border-default last:border-b-0"
     >
-      <p class="mb-2.5 flex items-baseline gap-2.5 text-[13px] font-semibold text-highlighted">
+      <p class="mb-2.5 flex items-baseline gap-2.5 text-[13px] font-semibold text-strong">
         <span class="font-mono text-[11px] font-normal tracking-[0.12em] text-primary">{{ String(index + 1).padStart(2, '0') }}</span>
         {{ group.title }}
       </p>

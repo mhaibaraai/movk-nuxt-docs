@@ -30,8 +30,8 @@ defineShortcuts(shortcuts)
     variant="none"
     :placeholder="placeholder"
     icon="i-lucide-search"
-    class="group w-full border-b border-default focus-within:border-inverted transition-colors"
-    :ui="{ base: 'px-0 ps-6 text-sm placeholder:text-dimmed', leading: 'ps-0', leadingIcon: 'size-3.5 text-dimmed' }"
+    class="group w-full border-b border-default focus-within:border-(--ui-text-strong) transition-colors"
+    :ui="{ base: 'px-0 ps-6 text-sm placeholder:text-faint', leading: 'ps-0', leadingIcon: 'size-3.5 text-faint' }"
   >
     <template v-if="shortcut" #trailing>
       <div class="flex items-center gap-0.5">
@@ -40,7 +40,7 @@ defineShortcuts(shortcuts)
           :key="key"
           :value="key"
           variant="outline"
-          class="font-mono text-dimmed"
+          class="font-mono text-faint"
         />
       </div>
     </template>

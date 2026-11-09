@@ -16,7 +16,7 @@ const title = computed(() => header.title || site.name)
       class="size-6 shrink-0 rounded-sm"
       loading="lazy"
     >
-    <span v-if="title" class="font-display text-xl font-bold tracking-tight text-highlighted truncate">
+    <span v-if="title" class="font-display text-xl font-bold tracking-tight text-strong truncate">
       {{ title }}<span class="text-primary">.</span>
     </span>
   </NuxtLink>

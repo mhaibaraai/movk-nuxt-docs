@@ -86,7 +86,7 @@ async function copyPage() {
   <div class="inline-flex items-center gap-1">
     <button
       type="button"
-      class="link-wipe inline-flex items-center gap-1.5 font-mono text-[11px] uppercase tracking-[0.12em] text-muted hover:text-highlighted transition-colors"
+      class="link-wipe inline-flex items-center gap-1.5 font-mono text-[11px] uppercase tracking-[0.12em] text-muted hover:text-strong transition-colors"
       @click="copyPage"
     >
       <UIcon :name="copied ? ui.icons.copyCheck : ui.icons.copy" class="size-3.5" :class="copied && 'text-primary'" />
@@ -109,7 +109,7 @@ async function copyPage() {
         color="neutral"
         variant="link"
         size="xs"
-        class="text-muted hover:text-highlighted"
+        class="text-muted hover:text-strong"
         :aria-label="t('header.toggleMenu')"
       />
     </UDropdownMenu>

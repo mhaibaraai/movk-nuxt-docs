@@ -18,10 +18,6 @@ export default defineAppConfig({
     grain: false
   },
   ui: {
-    colors: {
-      primary: 'vermilion',
-      neutral: 'paper'
-    },
     // 去掉树形竖线与选中底色：当前项墨色，左侧朱红指示条由 DocsAsideLeftBody 统一绘制并滑动
     contentNavigation: {
       slots: {
@@ -33,10 +29,10 @@ export default defineAppConfig({
       variants: {
         active: {
           true: {
-            link: 'text-highlighted font-medium'
+            link: 'text-strong font-medium'
           },
           false: {
-            link: 'text-muted hover:text-highlighted'
+            link: 'text-muted hover:text-strong'
           }
         }
       }
@@ -50,7 +46,7 @@ export default defineAppConfig({
       variants: {
         active: {
           false: {
-            item: 'data-highlighted:not-data-disabled:before:bg-muted'
+            item: 'data-highlighted:not-data-disabled:before:bg-soft'
           }
         }
       }
@@ -59,7 +55,7 @@ export default defineAppConfig({
       slots: {
         root: 'bg-default lg:bg-transparent backdrop-blur-none',
         container: 'border-solid',
-        trigger: 'text-[13px] font-semibold text-highlighted',
+        trigger: 'text-[13px] font-semibold text-strong',
         listWithChildren: 'ms-4',
         link: 'py-1.5 text-[13px]'
       }
@@ -67,7 +63,7 @@ export default defineAppConfig({
     // 上下篇：去卡片，细线分栏 + kicker + 衬线标题
     contentSurround: {
       slots: {
-        root: 'gap-0 border-t border-inverted',
+        root: 'gap-0 border-t border-(--ui-text-strong)',
         link: 'px-0 py-6 sm:even:ps-8 sm:odd:pe-8 sm:even:border-s border-default rounded-none border-0 hover:bg-transparent',
         linkLeading: 'p-0 mb-3 bg-transparent ring-0 rounded-none group-hover:bg-transparent',
         linkLeadingIcon: 'size-4 text-muted group-hover:text-primary',
@@ -77,8 +73,8 @@ export default defineAppConfig({
     },
     pageLinks: {
       slots: {
-        title: 'text-[13px] font-semibold text-highlighted',
-        link: 'text-[13px] text-muted hover:text-highlighted'
+        title: 'text-[13px] font-semibold text-strong',
+        link: 'text-[13px] text-muted hover:text-strong'
       }
     },
     pageHeader: {
@@ -86,7 +82,7 @@ export default defineAppConfig({
         root: 'pt-10 pb-8',
         headline: 'mb-5',
         title: '[view-transition-name:page-title] font-display text-4xl sm:text-5xl font-bold tracking-tight leading-[1.08] text-balance',
-        description: 'text-lg/relaxed sm:text-xl/relaxed text-toned max-w-3xl'
+        description: 'text-lg/relaxed sm:text-xl/relaxed text-default max-w-3xl'
       }
     },
     prose: {
@@ -104,23 +100,23 @@ export default defineAppConfig({
         slots: { base: 'font-semibold' }
       },
       a: {
-        base: 'border-primary/40'
+        slots: { base: 'border-primary/40' }
       },
       pre: {
         slots: {
-          header: 'border-muted bg-muted border-b border-dashed px-4 py-2',
+          header: 'border-default bg-soft border-b border-dashed px-4 py-2',
           filename: 'font-mono text-xs text-muted',
-          copy: 'inline-flex items-center gap-1.5 top-2 end-2 px-2 py-1 bg-muted font-mono text-[11px] uppercase tracking-[0.12em] transition-[color,opacity]',
-          base: 'bg-muted'
+          copy: 'inline-flex items-center gap-1.5 top-2 end-2 px-2 py-1 bg-soft font-mono text-[11px] uppercase tracking-[0.12em] transition-[color,opacity]',
+          base: 'bg-soft'
         }
       },
       // 左侧色线代替整块着色，正文保持默认墨色
       code: {
-        base: 'border-0! bg-muted rounded-sm px-1.5 py-px text-[0.875em] font-normal'
+        slots: { base: 'border-0! bg-soft rounded-sm px-1.5 py-px text-[0.875em] font-normal' }
       },
       card: {
         slots: {
-          base: 'rounded-none bg-transparent border-default hover:border-inverted p-5 sm:p-5',
+          base: 'rounded-none bg-transparent border-default hover:border-(--ui-text-strong) p-5 sm:p-5',
           icon: 'size-5 mb-4 text-primary',
           title: 'font-display text-lg font-bold',
           externalIcon: 'end-3 top-3'
@@ -138,8 +134,9 @@ export default defineAppConfig({
             success: { base: 'border-success' },
             warning: { base: 'border-warning' },
             error: { base: 'border-error' },
-            important: { base: 'border-important' },
-            neutral: { base: 'border-inverted' }
+            // 非内置色：借 --ui-accent 让图标与链接同步取 important 色
+            important: { base: '[--ui-accent:var(--ui-important)] border-important' },
+            neutral: { base: 'border-(--ui-text-strong)' }
           }
         }
       },
@@ -150,16 +147,16 @@ export default defineAppConfig({
         }
       },
       th: {
-        base: 'border-0 border-b border-inverted first:border-s-0 px-4 font-mono text-[11px] font-medium uppercase tracking-[0.12em] text-muted'
+        slots: { base: 'border-0 border-b border-(--ui-text-strong) first:border-s-0 px-4 font-mono text-[11px] font-medium uppercase tracking-[0.12em] text-muted' }
       },
       td: {
-        base: 'border-0 border-b border-default first:border-s-0 px-4'
+        slots: { base: 'border-0 border-b border-default first:border-s-0 px-4' }
       },
       codeGroup: {
         slots: {
-          list: 'border-muted bg-muted p-0 gap-0 border-b border-dashed',
+          list: 'border-default bg-soft p-0 gap-0 border-b border-dashed',
           indicator: 'inset-y-auto bottom-0 h-0.5 bg-primary rounded-none shadow-none',
-          trigger: 'rounded-none px-4 py-2 hover:bg-transparent font-mono text-xs text-muted data-[state=active]:text-highlighted'
+          trigger: 'rounded-none px-4 py-2 hover:bg-transparent font-mono text-xs text-muted data-[state=active]:text-strong'
         }
       }
     }

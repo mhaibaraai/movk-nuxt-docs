@@ -23,13 +23,13 @@ const version = useRuntimeConfig().public.version as string | undefined
 
       <div class="rule-double mt-4" />
 
-      <h1 class="mt-10 font-display font-bold tracking-tight leading-[0.95] text-balance text-highlighted text-[clamp(3rem,8.5vw,7.5rem)]">
+      <h1 class="mt-10 font-display font-bold tracking-tight leading-[0.95] text-balance text-strong text-[clamp(3rem,8.5vw,7.5rem)]">
         <slot name="title" mdc-unwrap="p" />
       </h1>
 
       <div class="mt-12 lg:mt-16 grid gap-12 lg:grid-cols-12">
         <div class="lg:col-span-5">
-          <p class="text-xl/relaxed text-toned text-pretty">
+          <p class="text-xl/relaxed text-default text-pretty">
             <slot name="description" mdc-unwrap="p" />
           </p>
 

@@ -14,8 +14,8 @@ const { t } = useMovkI18n()
       :aria-current="link.active ? 'page' : undefined"
       raw
       class="link-wipe py-1 text-sm transition-colors"
-      active-class="text-highlighted font-medium bg-size-[100%_1px]!"
-      inactive-class="text-muted hover:text-highlighted"
+      active-class="text-strong font-medium bg-size-[100%_1px]!"
+      inactive-class="text-muted hover:text-strong"
     >
       {{ link.label }}
     </ULink>

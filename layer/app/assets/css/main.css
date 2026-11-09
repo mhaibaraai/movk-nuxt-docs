@@ -5,6 +5,12 @@
 @import "@fontsource-variable/fraunces/opsz.css";
 @import "@fontsource-variable/jetbrains-mono/index.css";
 
+/* 默认色板；使用方在自己的 main.css 中再次声明该插件即可覆盖（后声明者生效） */
+@plugin "@nuxt/ui/colors" {
+  primary: vermilion;
+  neutral: paper;
+}
+
 @theme static {
   --container-8xl: 90rem;
 
@@ -56,40 +62,40 @@
   --color-green-950: #052E16;
 }
 
+/* Nuxt UI v5 只保留 7 个颜色别名，callout 的 important 色由 Layer 自行提供 */
+@theme inline {
+  --color-important: var(--ui-important);
+}
+
 /* 背景与墨色由 neutral 色阶派生：选择任意 neutral 时仍保持纸面与墨色的层次。
    正文接近纯黑、次要文字整体加深一档，对比度优先于「柔和」 */
 :root {
-  --ui-container: var(--container-8xl);
+  --ui-container-width: var(--container-8xl);
   --ui-primary: var(--ui-color-primary-600);
-  --ui-bg: var(--ui-color-neutral-50);
-  --ui-bg-muted: var(--ui-color-neutral-100);
-  --ui-bg-elevated: var(--ui-color-neutral-100);
-  --ui-bg-accented: var(--ui-color-neutral-200);
-  --ui-text-dimmed: var(--ui-color-neutral-500);
+  --ui-bg-default: var(--ui-color-neutral-50);
+  --ui-bg-soft: var(--ui-color-neutral-100);
+  --ui-bg-strong: var(--ui-color-neutral-200);
+  --ui-text-faint: var(--ui-color-neutral-500);
   --ui-text-muted: var(--ui-color-neutral-600);
-  --ui-text-toned: var(--ui-color-neutral-700);
-  --ui-text: var(--ui-color-neutral-900);
-  --ui-text-highlighted: var(--ui-color-neutral-950);
-  --ui-text-inverted: var(--ui-color-neutral-50);
-  --ui-border-inverted: var(--ui-color-neutral-950);
+  --ui-text-default: var(--ui-color-neutral-900);
+  --ui-text-strong: var(--ui-color-neutral-950);
+  --ui-text-contrast: var(--ui-color-neutral-50);
+  --ui-important: var(--color-violet-600);
 }
 
 .dark {
   --ui-primary: var(--ui-color-primary-400);
-  --ui-bg: var(--ui-color-neutral-950);
-  --ui-bg-muted: var(--ui-color-neutral-900);
-  --ui-bg-elevated: var(--ui-color-neutral-900);
-  --ui-bg-accented: var(--ui-color-neutral-800);
-  --ui-border: var(--ui-color-neutral-800);
-  --ui-border-muted: var(--ui-color-neutral-900);
-  --ui-text-dimmed: var(--ui-color-neutral-500);
+  --ui-bg-default: var(--ui-color-neutral-950);
+  --ui-bg-soft: var(--ui-color-neutral-900);
+  --ui-bg-strong: var(--ui-color-neutral-800);
+  --ui-border-default: var(--ui-color-neutral-800);
+  --ui-text-faint: var(--ui-color-neutral-500);
   --ui-text-muted: var(--ui-color-neutral-400);
-  --ui-text-toned: var(--ui-color-neutral-300);
-  --ui-text: var(--ui-color-neutral-200);
-  --ui-text-highlighted: var(--ui-color-neutral-50);
-  --ui-text-inverted: var(--ui-color-neutral-950);
-  --ui-bg-inverted: var(--ui-color-neutral-50);
-  --ui-border-inverted: var(--ui-color-neutral-50);
+  --ui-text-default: var(--ui-color-neutral-200);
+  --ui-text-strong: var(--ui-color-neutral-50);
+  --ui-text-contrast: var(--ui-color-neutral-950);
+
+  --ui-important: var(--color-violet-400);
 }
 
 :root[data-font="sans"] {
@@ -102,12 +108,12 @@ html {
 }
 
 body {
-  background-color: var(--ui-bg);
+  background-color: var(--ui-bg-default);
 }
 
 ::selection {
   background: var(--ui-primary);
-  color: var(--ui-bg);
+  color: var(--ui-bg-default);
 }
 
 /* 纸张颗粒：z-index 为负，只铺在背景上，不覆盖内容与代码块 */
@@ -154,7 +160,7 @@ body {
 
   & [data-slot="content"] > ul > li {
     counter-increment: docs-toc;
-    border-bottom: 1px solid var(--ui-border);
+    border-bottom: 1px solid var(--ui-border-default);
   }
 
   & [data-slot="content"] > ul > li > a::before {
@@ -179,11 +185,11 @@ body {
 }
 
 @utility rule {
-  border-top: 1px solid var(--ui-text-highlighted);
+  border-top: 1px solid var(--ui-text-strong);
 }
 
 @utility rule-double {
-  border-top: 3px double var(--ui-text-highlighted);
+  border-top: 3px double var(--ui-text-strong);
 }
 
 @utility link-wipe {
@@ -269,7 +275,7 @@ html.dark .shiki span:not([style*="background-color"], .shiki-color-highlight) {
   height: 1.25em;
   vertical-align: -0.25em;
   margin-right: 0.125em;
-  background-color: var(--ui-text-highlighted);
+  background-color: var(--ui-text-strong);
   -webkit-mask-repeat: no-repeat;
   mask-repeat: no-repeat;
   -webkit-mask-size: 100% 100%;

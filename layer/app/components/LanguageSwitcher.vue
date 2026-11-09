@@ -19,8 +19,8 @@ const { locale, locales, switchLocalePath, t } = useMovkI18n()
           :key="localeItem.code"
         >
           <NuxtLink
-            class="flex items-baseline justify-between gap-6 py-1.5 px-3 text-sm hover:bg-muted"
-            :class="localeItem.code === locale ? 'text-highlighted' : 'text-muted hover:text-highlighted'"
+            class="flex items-baseline justify-between gap-6 py-1.5 px-3 text-sm hover:bg-soft"
+            :class="localeItem.code === locale ? 'text-strong' : 'text-muted hover:text-strong'"
             :to="switchLocalePath(localeItem.code) as string"
             :lang="localeItem.code"
             :aria-current="localeItem.code === locale ? 'true' : undefined"

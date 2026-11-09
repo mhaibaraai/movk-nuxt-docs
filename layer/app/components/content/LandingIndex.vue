@@ -20,15 +20,15 @@ const items = computed(() => (navigation.value ?? []).map((item, index) => ({
       {{ label }}
     </p>
 
-    <ol class="border-t border-inverted">
+    <ol class="border-t border-(--ui-text-strong)">
       <li v-for="item in items" :key="item.to" class="border-b border-default">
         <NuxtLink :to="item.to" class="group grid grid-cols-[2.5rem_1fr_auto] items-baseline gap-x-4 py-3.5">
           <span class="font-mono text-[11px] tracking-[0.12em] text-primary">{{ item.index }}</span>
           <span class="min-w-0">
-            <span class="block font-display text-lg font-bold text-highlighted transition-transform duration-500 ease-editorial group-hover:translate-x-1.5">{{ item.title }}</span>
+            <span class="block font-display text-lg font-bold text-strong transition-transform duration-500 ease-editorial group-hover:translate-x-1.5">{{ item.title }}</span>
             <span v-if="item.description" class="block text-sm text-muted truncate">{{ item.description }}</span>
           </span>
-          <UIcon name="i-lucide-arrow-up-right" class="size-4 text-dimmed transition-colors group-hover:text-primary" />
+          <UIcon name="i-lucide-arrow-up-right" class="size-4 text-faint transition-colors group-hover:text-primary" />
         </NuxtLink>
       </li>
     </ol>

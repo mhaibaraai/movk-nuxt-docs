@@ -1,6 +1,5 @@
 <script setup lang="ts">
 import { useFetchComponentExample } from '../composables/useFetchComponentExample'
-import type { ChipProps } from '@nuxt/ui'
 import { camelCase, upperFirst } from 'scule'
 import { hash } from 'ohash'
 import { useElementSize } from '@vueuse/core'
@@ -197,10 +196,10 @@ const urlSearchParams = computed(() => {
     <template v-if="preview">
       <div ref="wrapperContainer" class="relative group/component">
         <div
-          class="border border-muted relative z-1"
+          class="border border-default relative z-1"
           :class="[{ 'border-b-0 rounded-t-md': props.source, 'rounded-md': !props.source, 'overflow-hidden': props.overflowHidden }]"
         >
-          <div v-if="props.options?.length || !!slots.options" class="flex gap-4 p-4 border-b border-muted">
+          <div v-if="props.options?.length || !!slots.options" class="flex gap-4 p-4 border-b border-default">
             <slot name="options" />
 
             <UFormField
@@ -209,9 +208,9 @@ const urlSearchParams = computed(() => {
               :label="option.label"
               :name="option.name"
               size="sm"
-              class="inline-flex ring ring-accented rounded-sm"
+              class="inline-flex ring ring-strong rounded-sm"
               :ui="{
-                wrapper: 'bg-elevated/50 rounded-l-sm flex border-r border-accented',
+                wrapper: 'bg-soft/50 rounded-l-sm flex border-r border-strong',
                 label: 'text-muted px-2 py-1.5',
                 container: 'mt-0'
               }"
@@ -230,12 +229,11 @@ const urlSearchParams = computed(() => {
                 :ui="{ itemLeadingChip: 'w-2' }"
                 @update:model-value="set(optionsValues, option.name, $event)"
               >
-                <template v-if="option.name.toLowerCase().endsWith('color')" #leading="{ modelValue, ui }">
+                <template v-if="option.name.toLowerCase().endsWith('color')" #leading="{ modelValue }">
                   <UChip
                     inset
                     standalone
                     :color="(modelValue as any)"
-                    :size="(ui.itemLeadingChipSize() as ChipProps['size'])"
                     class="size-2"
                   />
                 </template>

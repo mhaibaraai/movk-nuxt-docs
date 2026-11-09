@@ -13,10 +13,10 @@ const isDocsRoute = useDocsRoute()
       :target="link.target"
       class="flex items-baseline gap-4 border-b border-default py-3.5"
     >
-      <span class="font-mono text-[11px] tracking-[0.14em]" :class="link.active ? 'text-primary' : 'text-dimmed'">
+      <span class="font-mono text-[11px] tracking-[0.14em]" :class="link.active ? 'text-primary' : 'text-faint'">
         {{ String(index + 1).padStart(2, '0') }}
       </span>
-      <span class="font-display text-xl font-bold" :class="link.active ? 'text-highlighted' : 'text-toned'">
+      <span class="font-display text-xl font-bold" :class="link.active ? 'text-strong' : 'text-default'">
         {{ link.label }}
       </span>
     </NuxtLink>

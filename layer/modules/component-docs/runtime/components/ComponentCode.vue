@@ -1,7 +1,6 @@
 <script setup lang="ts">
 import { useFetchComponentMeta } from '../composables/useFetchComponentMeta'
 import { generateComponentCode } from '../../../../shared/component-code'
-import type { ChipProps } from '@nuxt/ui'
 import { camelCase, upperFirst } from 'scule'
 import { hash } from 'ohash'
 import { registry as componentRegistry } from '#component-code/registry'
@@ -161,15 +160,15 @@ const { data: ast } = useAsyncData(codeKey.value, async () => {
 <template>
   <div class="my-5" :style="{ '--ui-header-height': '4rem' }">
     <div ref="wrapperContainer" class="relative group/component">
-      <div v-if="options.length" class="flex flex-wrap items-center gap-2.5 border border-muted border-b-0 relative rounded-t-md px-4 py-2.5 overflow-x-auto">
+      <div v-if="options.length" class="flex flex-wrap items-center gap-2.5 border border-default border-b-0 relative rounded-t-md px-4 py-2.5 overflow-x-auto">
         <UFormField
           v-for="option in options"
           :key="option.name"
           :label="option.label"
           size="sm"
-          class="inline-flex ring ring-accented rounded-sm"
+          class="inline-flex ring ring-strong rounded-sm"
           :ui="{
-            wrapper: 'bg-elevated/50 rounded-l-sm flex border-r border-accented',
+            wrapper: 'bg-soft/50 rounded-l-sm flex border-r border-strong',
             label: 'text-muted px-2 py-1.5',
             container: 'mt-0'
           }"
@@ -187,13 +186,12 @@ const { data: ast } = useAsyncData(codeKey.value, async () => {
             :ui="{ itemLeadingChip: 'w-2' }"
             @update:model-value="setComponentProp(option.name, $event)"
           >
-            <template v-if="option.name.toLowerCase().endsWith('color')" #leading="{ modelValue, ui }">
+            <template v-if="option.name.toLowerCase().endsWith('color')" #leading="{ modelValue }">
               <UChip
                 v-if="modelValue"
                 inset
                 standalone
                 :color="(modelValue as any)"
-                :size="(ui.itemLeadingChipSize() as ChipProps['size'])"
                 class="size-2"
               />
             </template>
@@ -212,7 +210,7 @@ const { data: ast } = useAsyncData(codeKey.value, async () => {
 
       <div
         ref="componentContainer"
-        class="flex justify-center border border-b-0 border-muted relative p-4 z-1"
+        class="flex justify-center border border-b-0 border-default relative p-4 z-1"
         :class="[!options.length && 'rounded-t-md', props.class, { 'overflow-hidden': props.overflowHidden, 'dark:bg-neutral-950/50': props.elevated }]"
       >
         <component

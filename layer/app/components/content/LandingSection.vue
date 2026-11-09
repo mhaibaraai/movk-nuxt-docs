@@ -18,7 +18,7 @@ defineProps<{
           </template>
         </p>
 
-        <h2 class="mt-4 font-display text-4xl sm:text-5xl font-bold tracking-tight leading-[1.05] text-balance text-highlighted">
+        <h2 class="mt-4 font-display text-4xl sm:text-5xl font-bold tracking-tight leading-[1.05] text-balance text-strong">
           <slot name="title" mdc-unwrap="p" />
         </h2>
 

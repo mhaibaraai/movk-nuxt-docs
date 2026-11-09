@@ -7,19 +7,21 @@ import {
   useEventListener,
   useToggle
 } from '@vueuse/core'
+import { useComponentOverrides, useThemeConfig } from '@nuxt/ui/composables/useComponentProps'
 import { tv } from '@nuxt/ui/utils/tv'
+import { defineTheme } from '@nuxt/ui/utils/theme'
 
 type ClassNameValue = ClassNameArray | string | null | undefined | 0 | 0n | false
 type ClassNameArray = ClassNameValue[]
 
-const theme = {
+const theme = defineTheme({
   slots: {
-    root: 'relative my-5 group border border-muted rounded-md overflow-hidden',
-    header: 'flex items-center gap-1.5 border-b border-muted bg-default px-4 py-3',
+    root: 'relative my-5 group border border-default rounded-md overflow-hidden',
+    header: 'flex items-center gap-1.5 border-b border-default bg-default px-4 py-3',
     filename: 'text-default text-sm/6',
     icon: 'size-4 shrink-0',
     toolbar: 'absolute top-2 right-2 flex gap-1 z-10 opacity-0 group-hover:opacity-100 transition-opacity',
-    diagram: 'p-4 flex justify-center bg-elevated overflow-x-auto',
+    diagram: 'p-4 flex justify-center bg-soft overflow-x-auto',
     loading: 'p-4 flex items-center justify-center gap-2 text-sm text-muted',
     error: 'p-4 flex items-center justify-center gap-2 text-sm text-error bg-error/10'
   },
@@ -37,7 +39,7 @@ const theme = {
       }
     }
   }
-}
+})
 
 export interface MermaidProps {
   /** 图表代码 */
@@ -61,13 +63,11 @@ const props = defineProps<MermaidProps>()
 
 defineSlots<MermaidSlots>()
 
-const appConfig = useAppConfig() as { ui?: { icons?: { copy?: string, copyCheck?: string }, prose?: { mermaid?: typeof theme } } }
+const appConfig = useThemeConfig()
+const overrides = useComponentOverrides((ui: { prose?: { mermaid?: Partial<typeof theme> } }) => ui.prose?.mermaid)
 const colorMode = useColorMode()
 
-const ui = computed(() => tv({
-  extend: tv(theme),
-  ...(appConfig.ui?.prose?.mermaid || {})
-})({
+const ui = computed(() => tv(theme, overrides.value)({
   fullscreen: isFullscreen.value,
   filename: !!props.filename
 }))

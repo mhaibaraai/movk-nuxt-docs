@@ -37,17 +37,10 @@ export function useFaviconFromTheme() {
   }
 
   function setupMutationObserver() {
-    const styleTag = document.getElementById('nuxt-ui-colors')
-    if (!styleTag) return
-
-    const observer = new MutationObserver(() => {
-      updateFavicon()
-    })
-
-    observer.observe(styleTag, {
-      characterData: true,
-      subtree: true,
-      childList: true
+    const observer = new MutationObserver(updateFavicon)
+    observer.observe(document.documentElement, {
+      attributes: true,
+      attributeFilter: ['style', 'class']
     })
   }
 

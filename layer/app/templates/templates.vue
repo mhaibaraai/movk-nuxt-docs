@@ -63,12 +63,12 @@ const items = computed(() => (page.value?.items || []).map((item, index) => {
         <div class="rule-double mt-4" />
 
         <div class="mt-10 grid gap-10 lg:grid-cols-12 lg:items-end">
-          <h1 class="lg:col-span-7 font-display font-bold tracking-tight leading-[0.95] text-balance text-highlighted text-[clamp(3rem,7vw,6rem)]">
+          <h1 class="lg:col-span-7 font-display font-bold tracking-tight leading-[0.95] text-balance text-strong text-[clamp(3rem,7vw,6rem)]">
             {{ page.hero?.title || page.title }}
           </h1>
 
           <div class="lg:col-span-5">
-            <p class="text-lg/relaxed text-toned text-pretty">
+            <p class="text-lg/relaxed text-default text-pretty">
               {{ page.hero?.description || page.description }}
             </p>
 
@@ -88,7 +88,7 @@ const items = computed(() => (page.value?.items || []).map((item, index) => {
           <li v-for="item in items" :key="item.slug" class="border-b border-default sm:odd:border-e lg:border-e lg:last:border-e-0">
             <a :href="`#${item.slug}`" class="group flex items-baseline gap-3 py-4 sm:px-4">
               <span class="kicker text-primary">{{ item.index }}</span>
-              <span class="font-display font-bold text-highlighted truncate group-hover:text-primary transition-colors">{{ item.title }}</span>
+              <span class="font-display font-bold text-strong truncate group-hover:text-primary transition-colors">{{ item.title }}</span>
             </a>
           </li>
         </ol>
@@ -111,7 +111,7 @@ const items = computed(() => (page.value?.items || []).map((item, index) => {
               </template>
             </p>
 
-            <h2 class="mt-4 font-display text-4xl sm:text-5xl font-bold tracking-tight leading-[1.05] text-balance text-highlighted">
+            <h2 class="mt-4 font-display text-4xl sm:text-5xl font-bold tracking-tight leading-[1.05] text-balance text-strong">
               {{ item.title }}
             </h2>
           </div>
@@ -122,7 +122,7 @@ const items = computed(() => (page.value?.items || []).map((item, index) => {
               unwrap="p"
               tag="p"
               :cache-key="`templates-${item.slug}-description`"
-              class="text-lg/relaxed text-toned text-pretty"
+              class="text-lg/relaxed text-default text-pretty"
             />
 
             <ul v-if="item.features?.length" class="mt-6 flex flex-wrap border-t border-s border-default">
@@ -155,7 +155,7 @@ const items = computed(() => (page.value?.items || []).map((item, index) => {
             :href="item.href"
             :target="item.href ? '_blank' : undefined"
             :rel="item.href ? 'noopener' : undefined"
-            class="group block border border-default bg-muted overflow-hidden"
+            class="group block border border-default bg-soft overflow-hidden"
           >
             <UColorModeImage
               :light="`/assets/templates/${item.slug}-light.png`"
@@ -171,7 +171,7 @@ const items = computed(() => (page.value?.items || []).map((item, index) => {
           </component>
 
           <figcaption class="mt-3 text-sm text-muted">
-            <span class="kicker me-2 text-highlighted">{{ t('templates.figure') }} {{ item.index }}</span>{{ item.host || item.title }}
+            <span class="kicker me-2 text-strong">{{ t('templates.figure') }} {{ item.index }}</span>{{ item.host || item.title }}
           </figcaption>
         </figure>
       </UContainer>

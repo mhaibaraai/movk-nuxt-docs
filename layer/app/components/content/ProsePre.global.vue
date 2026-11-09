@@ -4,6 +4,7 @@
 import theme from '#build/ui/prose/pre'
 import { useClipboard } from '@vueuse/core'
 import { useLocale } from '@nuxt/ui/composables'
+import { useComponentOverrides, useThemeConfig } from '@nuxt/ui/composables/useComponentProps'
 import { tv } from '@nuxt/ui/utils/tv'
 
 const props = withDefaults(defineProps<{
@@ -24,14 +25,15 @@ const props = withDefaults(defineProps<{
 const { t: tUi } = useLocale()
 const { t } = useMovkI18n()
 const { copy: copyToClipboard, copied } = useClipboard({ copiedDuring: 2000 })
-const appConfig = useAppConfig() as ReturnType<typeof useAppConfig> & { ui: { prose?: { pre?: Partial<typeof theme> } } }
+const appConfig = useThemeConfig()
+const overrides = useComponentOverrides(ui => ui.prose?.pre)
 const baseRef = useTemplateRef('baseRef')
 
 type PreSlot = 'root' | 'header' | 'icon' | 'filename' | 'copy' | 'base'
 type PreStyles = Record<PreSlot, (options?: { class?: unknown, filename?: boolean }) => string>
 
 // 使用方环境中 #build 主题的类型可能无法推断，显式声明各插槽的类名函数
-const styles = computed(() => tv({ extend: tv(theme), ...(appConfig.ui.prose?.pre || {}) })() as unknown as PreStyles)
+const styles = computed(() => tv(theme, overrides.value)() as unknown as PreStyles)
 
 // movkNuxtDocs.mermaid 开启时才会注册 ProseMermaid，未注册则按普通代码块展示
 const mermaid = computed(() => {
@@ -65,7 +67,7 @@ function copyCode() {
       v-if="props.copy"
       type="button"
       :aria-label="tUi('prose.pre.copy')"
-      :class="styles.copy({ class: [props.ui?.copy, copied ? 'text-primary opacity-100!' : 'text-muted hover:text-highlighted'] })"
+      :class="styles.copy({ class: [props.ui?.copy, copied ? 'text-primary opacity-100!' : 'text-muted hover:text-strong'] })"
       @click="copyCode"
     >
       <UIcon :name="copied ? appConfig.ui.icons.copyCheck : appConfig.ui.icons.copy" class="size-3.5" />
