@@ -34,7 +34,7 @@ const items = [
 <template>
   <div class="flex items-center gap-3 min-w-0" aria-label="Site Logo">
     <UContextMenu :items="items">
-      <NuxtLink :to="logoTo" class="font-display text-xl font-bold tracking-tight text-highlighted shrink-0 rounded-sm outline-primary/25 focus-visible:outline-3" aria-label="Movk Nuxt Docs">
+      <NuxtLink :to="logoTo" class="font-display text-xl font-bold tracking-tight text-strong shrink-0 rounded-sm outline-primary/25 focus-visible:outline-3" aria-label="Movk Nuxt Docs">
         Movk Nuxt Docs<span class="text-primary">.</span>
       </NuxtLink>
     </UContextMenu>

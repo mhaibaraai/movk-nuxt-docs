@@ -46,7 +46,7 @@ const groups = computed(() => {
       v-for="group in groups"
       :id="`index-${group.letter}`"
       :key="group.letter"
-      class="mt-8 grid grid-cols-[2.5rem_1fr] gap-x-4 border-t border-inverted pt-3"
+      class="mt-8 grid grid-cols-[2.5rem_1fr] gap-x-4 border-t border-strong pt-3"
     >
       <span class="font-display text-2xl font-bold text-primary">{{ group.letter }}</span>
 
@@ -54,10 +54,10 @@ const groups = computed(() => {
         <li v-for="item in group.items" :key="item.to" class="border-b border-default last:border-b-0">
           <NuxtLink :to="item.to" class="group flex items-baseline justify-between gap-4 py-2.5">
             <span class="min-w-0">
-              <span class="text-highlighted transition-colors group-hover:text-primary">{{ item.title }}</span>
-              <span v-if="item.subtitle" class="ms-2 text-sm text-dimmed">{{ item.subtitle }}</span>
+              <span class="text-strong transition-colors group-hover:text-primary">{{ item.title }}</span>
+              <span v-if="item.subtitle" class="ms-2 text-sm text-faint">{{ item.subtitle }}</span>
             </span>
-            <UIcon name="i-lucide-arrow-right" class="size-4 shrink-0 text-dimmed transition-colors group-hover:text-primary" />
+            <UIcon name="i-lucide-arrow-right" class="size-4 shrink-0 text-faint transition-colors group-hover:text-primary" />
           </NuxtLink>
         </li>
       </ul>
