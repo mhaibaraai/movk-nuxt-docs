@@ -6,7 +6,11 @@ ignoreWorkspaceRootCheck: true
 linkWorkspacePackages: true
 minimumReleaseAge: 1440
 
+# v5 预览期以固定 URL 统一子依赖，正式发布到 npm 后移除此项与预览覆盖。
+blockExoticSubdeps: false
+
 overrides:
+  '@nuxt/ui': https://pkg.pr.new/@nuxt/ui@19681d4
   h3: 1.15.11
   typescript: ^6.0.3
 
