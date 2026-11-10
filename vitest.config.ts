@@ -8,6 +8,7 @@ const layerDep = (name: string) => ({
 })
 
 export default defineConfig({
+  define: { 'import.meta.server': true, 'import.meta.client': false },
   resolve: {
     alias: [layerDep('ai'), layerDep('@ai-sdk/openai')]
   },
