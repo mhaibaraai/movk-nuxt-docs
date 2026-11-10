@@ -28,7 +28,7 @@ const {
   exportCSS,
   exportConfig,
   resetTheme
-} = useTheme()
+} = useDocsTheme()
 </script>
 
 <template>

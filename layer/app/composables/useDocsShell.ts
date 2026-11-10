@@ -11,7 +11,7 @@ const NAVIGATION_KEY = 'navigation'
  */
 export async function useDocsShell() {
   const { locale, docsRoot, docsCollection } = useMovkI18n()
-  const { style, color } = useTheme()
+  const { style, color } = useDocsTheme()
   const appConfig = useAppConfig()
 
   const nuxtUiLocale = computed(() =>

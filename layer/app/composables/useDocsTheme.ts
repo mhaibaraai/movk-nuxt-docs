@@ -1,10 +1,11 @@
+import type { DocsTheme } from '../types/theme'
 import { resolveThemeIcons, themeIcons } from '../utils/theme'
 import { omit, kebabCase } from '@movk/core'
 import { useLocalStorage } from '@vueuse/core'
 import colors from 'tailwindcss/colors'
 import { DEFAULT_PALETTES, paletteShade, resolveThemeColor } from '../utils/theme-palette'
 
-export interface ThemeDefaults {
+export interface DocsThemeDefaults {
   primary: string
   neutral: string
   radius: number
@@ -13,9 +14,9 @@ export interface ThemeDefaults {
 }
 
 /** 站点在 app.config 中配置的主题，访客偏好覆盖前的基准值 */
-export function useThemeDefaults() {
+export function useDocsThemeDefaults() {
   const appConfig = useAppConfig()
-  return useState<ThemeDefaults>('movk-theme-defaults', () => ({
+  return useState<DocsThemeDefaults>('movk-theme-defaults', () => ({
     primary: DEFAULT_PALETTES.primary,
     neutral: DEFAULT_PALETTES.neutral,
     radius: appConfig.theme?.radius ?? 0.25,
@@ -24,12 +25,15 @@ export function useThemeDefaults() {
   }))
 }
 
-export function useTheme() {
+export function useDocsTheme(): DocsTheme {
+  const provider = useNuxtApp().$docsTheme
+  if (provider) return provider
+
   const appConfig = useAppConfig()
   const colorMode = useColorMode()
   const site = useSiteConfig()
   const name = kebabCase(site.name)
-  const defaults = useThemeDefaults()
+  const defaults = useDocsThemeDefaults()
 
   const _primary = useState('movk-theme-primary', () => defaults.value.primary)
   const _neutral = useState('movk-theme-neutral', () => defaults.value.neutral)

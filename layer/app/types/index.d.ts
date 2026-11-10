@@ -9,10 +9,6 @@ export interface ExtendedButtonProps extends ButtonProps {
 declare module 'nuxt/schema' {
   interface AppConfig {
     ui: {
-      colors: {
-        primary: string
-        neutral: string
-      }
       icons: Record<string, string>
     }
     seo: {
