@@ -12,9 +12,9 @@
   },
   "dependencies": {
     "@movk/nuxt-docs": "latest",
-    "@nuxt/content": "^3.16.1",
+    "@nuxt/content": "^3.16.2",
     "@nuxtjs/i18n": "^10.6.0",
-    "nuxt": "^4.6.0",
+    "nuxt": "^4.6.4",
     "tailwindcss": "^4.3.3"
   },
   "devDependencies": {
