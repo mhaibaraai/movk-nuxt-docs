@@ -147,8 +147,8 @@
     "zod": "^4.6.7"
   },
   "devDependencies": {
-    "@ai-sdk/openai": "^4.0.103",
-    "@ai-sdk/vue": "^4.0.154",
+    "@ai-sdk/openai": "^4.0.117",
+    "@ai-sdk/vue": "^4.0.172",
     "@comark/vue": "^0.8.1",
     "@nuxt/a11y": "^1.0.0-alpha.1",
     "@nuxt/content": "^3.16.2",
@@ -157,7 +157,7 @@
     "@shikijs/langs": "^4.5.0",
     "@shikijs/themes": "^4.5.0",
     "@valibot/to-json-schema": "^1.8.0",
-    "ai": "^7.0.154",
+    "ai": "^7.0.172",
     "nuxt-component-meta": "^0.19.0",
     "prettier": "^3.9.10",
     "vue-component-meta": "^3.3.13"
