@@ -59,6 +59,34 @@ test('访客主题偏好生效且无水合错误', async ({ page }) => {
   expect(errors).toEqual([])
 })
 
+test('主题设置切换图标与颜色模式偏好', async ({ page }) => {
+  await page.emulateMedia({ colorScheme: 'dark' })
+  await page.goto('/docs/getting-started')
+  await page.waitForLoadState('networkidle')
+  await page.getByRole('button', { name: '主题设置', exact: true }).click()
+
+  const modes = page.getByRole('group', { name: '颜色模式' })
+  await modes.getByRole('button', { name: 'light', exact: true }).click()
+  await expect(page.locator('html')).toHaveClass(/light/)
+  await expect(modes.getByRole('button', { name: 'light', exact: true })).toHaveClass(/(^|\s)bg-elevated(\s|$)/)
+
+  await modes.getByRole('button', { name: 'system', exact: true }).click()
+  await expect(page.locator('html')).toHaveClass(/dark/)
+  await expect(modes.getByRole('button', { name: 'system', exact: true })).toHaveClass(/(^|\s)bg-elevated(\s|$)/)
+
+  const icons = page.getByRole('group', { name: '图标', exact: true })
+  await icons.getByRole('combobox').click()
+  await page.getByRole('option', { name: 'Tabler', exact: true }).click()
+  await expect(icons.getByRole('combobox')).toContainText('Tabler')
+  await expect.poll(() => page.evaluate(() => localStorage.getItem('movk-nuxt-docs-ui-icons'))).toBe('tabler')
+
+  await page.reload()
+  await page.waitForLoadState('networkidle')
+  await page.getByRole('button', { name: '主题设置', exact: true }).click()
+  await expect(icons.getByRole('combobox')).toContainText('Tabler')
+  await expect(modes.getByRole('button', { name: 'system', exact: true })).toHaveClass(/(^|\s)bg-elevated(\s|$)/)
+})
+
 test('页头导航来自 app.config 并按语言本地化', async ({ page }) => {
   await page.goto('/docs/getting-started')
   const zhNav = page.getByRole('navigation', { name: '主导航' })
