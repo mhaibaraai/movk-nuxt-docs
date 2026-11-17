@@ -1,6 +1,7 @@
 import { addComponentsDir, addImports, createResolver, defineNuxtModule, logger } from '@nuxt/kit'
 import type { ModuleDependencies, NuxtModule } from 'nuxt/schema'
 import { defu } from 'defu'
+import { resolveModulePath } from 'exsolve'
 import { getGitBranch, getGitEnv, getLocalGitInfo } from '../utils/git'
 import { getPackageJsonMetadata, inferSiteURL } from '../utils/meta'
 import { getFeatures, type FeatureOptions } from '../utils/features'
@@ -41,6 +42,11 @@ const movkNuxtDocsModule: NuxtModule<ModuleOptions> = defineNuxtModule<ModuleOpt
   async setup(_options, nuxt) {
     const { resolve } = createResolver(import.meta.url)
     const features = getFeatures(nuxt)
+
+    // 构建期工具需要 Node 类型，不能依赖其他模块间接注入。
+    nuxt.hook('prepare:types', ({ nodeReferences }) => {
+      nodeReferences.push({ path: resolveModulePath('@types/node/index.d.ts', { from: import.meta.url }) })
+    })
 
     nuxt.options.alias['#ai-chat'] = resolve('./ai-chat/runtime')
 
