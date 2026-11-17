@@ -41,6 +41,32 @@ test('组件示例接口', async ({ request }) => {
   expect(await response.json()).toHaveProperty('code')
 })
 
+test('文档 SEO 元数据、OG 图片与站点信息可用', async ({ page, request }) => {
+  const pageResponse = await page.goto('/docs/getting-started')
+  expect(pageResponse?.ok()).toBe(true)
+
+  await expect(page.locator('link[rel="canonical"]')).toHaveAttribute('href', /\/docs\/getting-started$/)
+  const structuredData = JSON.parse(await page.locator('script[type="application/ld+json"]').first().textContent() || '{}')
+  expect(structuredData['@context']).toBe('https://schema.org')
+  expect(Array.isArray(structuredData['@graph'])).toBe(true)
+
+  // OG 处于 zeroRuntime 模式，元数据来自预渲染 HTML。
+  const prerendered = await request.get('/docs/getting-started.html')
+  expect(prerendered.ok()).toBe(true)
+  const image = await page.evaluate(html => new DOMParser().parseFromString(html, 'text/html')
+    .querySelector('meta[property="og:image"]')?.getAttribute('content'), await prerendered.text())
+  expect(image).toBeTruthy()
+  const imageUrl = new URL(image!, page.url())
+  const response = await request.get(imageUrl.pathname + imageUrl.search)
+  expect(response.status()).toBe(200)
+  expect(response.headers()['content-type']).toMatch(/^image\//)
+  expect((await response.body()).byteLength).toBeGreaterThan(0)
+
+  const card = await request.get('/.well-known/mcp/server-card.json')
+  expect(card.status()).toBe(200)
+  expect((await card.json()).serverInfo.name).toBe('Movk Nuxt Docs')
+})
+
 test('访客主题偏好生效且无水合错误', async ({ page }) => {
   const errors: string[] = []
   page.on('pageerror', error => errors.push(error.message))

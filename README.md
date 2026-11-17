@@ -71,6 +71,8 @@ npx skills add https://docs.mhaibaraai.cn
 
 ## 🚀 快速开始
 
+需要 Nuxt 4.6.1+（4.x），以及 Node.js 22.22.3+（22.x）、24.15.0+（24.x）或 26+。
+
 ### 使用模板创建项目
 
 根据您的需求选择合适的模板：
