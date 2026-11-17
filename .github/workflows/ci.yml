@@ -80,6 +80,8 @@ jobs:
   templates:
     runs-on: ubuntu-latest
     timeout-minutes: 20
+    permissions:
+      contents: read
 
     strategy:
       fail-fast: false
@@ -95,4 +97,6 @@ jobs:
           cache: pnpm
 
       - name: Build template against local layer
+        env:
+          NUXT_GITHUB_TOKEN: ${{ github.token }}
         run: bash scripts/test-template.sh ${{ matrix.template }}
