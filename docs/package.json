@@ -7,8 +7,8 @@
     "dev": "nuxt dev"
   },
   "dependencies": {
-    "@ai-sdk/openai": "^4.0.103",
-    "@ai-sdk/vue": "^4.0.154",
+    "@ai-sdk/openai": "^4.0.118",
+    "@ai-sdk/vue": "^4.0.173",
     "@comark/vue": "^0.9.2",
     "@fontsource/noto-serif-sc": "^5.3.1",
     "@movk/nuxt-docs": "workspace:*",
@@ -21,10 +21,10 @@
     "@shikijs/themes": "^4.6.0",
     "@vercel/analytics": "^2.0.1",
     "@vercel/speed-insights": "^2.1.0",
-    "ai": "^7.0.154",
+    "ai": "^7.0.173",
     "dompurify": "^3.4.18",
     "mermaid": "^12.3.0",
-    "nuxt": "^4.6.3",
+    "nuxt": "^4.6.4",
     "nuxt-component-meta": "^0.19.0",
     "prettier": "^3.10.1",
     "tailwindcss": "^4.3.5",
