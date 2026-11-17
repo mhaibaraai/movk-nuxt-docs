@@ -46,6 +46,8 @@ jobs:
   docs:
     runs-on: ubuntu-latest
     timeout-minutes: 20
+    permissions:
+      contents: read
 
     steps:
       - uses: actions/checkout@v7
@@ -60,6 +62,8 @@ jobs:
 
       # 不注入 AI_API_KEY，覆盖未启用 AI Chat 的默认场景
       - name: Build docs
+        env:
+          NUXT_GITHUB_TOKEN: ${{ github.token }}
         # 显式 bash 启用 pipefail，避免 tee 吞掉构建失败的退出码
         shell: bash
         run: pnpm run build 2>&1 | tee build.log
