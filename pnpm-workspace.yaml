@@ -5,6 +5,9 @@ packages:
 ignoreWorkspaceRootCheck: true
 linkWorkspacePackages: true
 minimumReleaseAge: 1440
+minimumReleaseAgeExclude:
+  # Security fix for markdown rendering (GHSA-x9jw-j844-v24h).
+  - '@nuxt/ui@4.12.2'
 
 overrides:
   h3: 1.15.11
