@@ -1,7 +1,9 @@
 import pkg from '../package.json'
-import cloudflare from './build/cloudflare'
+import docsPkg from './package.json'
 
 const chatModel = process.env.NUXT_PUBLIC_AI_CHAT_MODEL || 'cloudflare/@cf/qwen/qwen3.8-27b'
+const localD1Id = '00000000-0000-0000-0000-000000000000'
+const databaseId = process.env.CLOUDFLARE_D1_DATABASE_ID || localD1Id
 
 const moved = (slugs: string[], from: string, to: string) =>
   Object.fromEntries(slugs.map(slug => [`${from}/${slug}`, `${to}/${slug}`]))
@@ -69,12 +71,21 @@ export default defineNuxtConfig({
   },
 
   $production: {
-    modules: [cloudflare],
     site: {
       url: 'https://docs.mhaibaraai.cn'
     },
     nitro: {
       preset: 'cloudflare_module',
+      cloudflare: {
+        deployConfig: true,
+        wrangler: {
+          d1_databases: [{
+            binding: 'DB',
+            database_name: `${docsPkg.name}-content`,
+            database_id: databaseId
+          }]
+        }
+      },
       // Cloudflare merges matching headers. Set these cache headers in public/_headers in override order.
       routeRules: {
         '/_nuxt/**': { cache: { maxAge: 0 } },
@@ -82,8 +93,15 @@ export default defineNuxtConfig({
         '/_nuxt/builds/meta/**': { cache: { maxAge: 0 } }
       }
     },
+    hooks: {
+      'nitro:build:before'() {
+        if (process.env.WORKERS_CI === '1' && databaseId === localD1Id) {
+          throw new Error('Set CLOUDFLARE_D1_DATABASE_ID in Workers Builds before deploying.')
+        }
+      }
+    },
     ogImage: {
-      buildCache: { base: '../node_modules/.cache/nuxt/og-image' }
+      buildCache: { base: 'node_modules/.cache/nuxt/og-image' }
     }
   },
 

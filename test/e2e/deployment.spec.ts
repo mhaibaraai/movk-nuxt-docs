@@ -1,16 +1,20 @@
 import { expect, test } from '@playwright/test'
 
-for (const path of ['/', '/docs/getting-started', '/en/docs/getting-started']) {
-  test(`HTML 与 Markdown 内容协商 ${path}`, async ({ request }) => {
-    for (const accept of ['text/html', 'text/markdown', 'text/html']) {
-      const response = await request.get(path, { headers: { accept }, maxRedirects: 0 })
-      expect(response.status()).toBe(200)
-      expect(response.headers()['content-type']).toContain(accept)
-      expect(response.headers().vary?.toLowerCase().split(/,\s*/)).toContain('accept')
-      if (accept === 'text/html') {
-        expect((await response.text()).includes('property="og:image"'), path).toBe(true)
-      }
-    }
+for (const [page, raw] of [
+  ['/', '/raw/index.md'],
+  ['/docs/getting-started', '/raw/docs/getting-started.md'],
+  ['/en/docs/getting-started', '/raw/en/docs/getting-started.md']
+] as const) {
+  test(`页面直接返回 HTML，独立 URL 返回 Markdown ${page}`, async ({ request }) => {
+    const options = { headers: { accept: 'text/markdown' }, maxRedirects: 0 }
+    const html = await request.get(page, options)
+    expect(html.status()).toBe(200)
+    expect(html.headers()['content-type']).toContain('text/html')
+    expect(await html.text()).toContain('property="og:image"')
+
+    const markdown = await request.get(raw, options)
+    expect(markdown.status()).toBe(200)
+    expect(markdown.headers()['content-type']).toContain('text/markdown')
   })
 }
 
