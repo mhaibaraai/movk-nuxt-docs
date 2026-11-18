@@ -1,6 +1,8 @@
 import pkg from '../package.json'
 import cloudflare from './build/cloudflare'
 
+const chatModel = process.env.NUXT_PUBLIC_AI_CHAT_MODEL || 'cloudflare/@cf/qwen/qwen3.8-27b'
+
 const moved = (slugs: string[], from: string, to: string) =>
   Object.fromEntries(slugs.map(slug => [`${from}/${slug}`, `${to}/${slug}`]))
 
@@ -136,11 +138,8 @@ export default defineNuxtConfig({
   },
 
   aiChat: {
-    model: 'alibaba/qwen3.8-27b',
-    models: [
-      'alibaba/qwen3.8-27b',
-      'deepseek/deepseek-v4-pro-0813'
-    ]
+    model: chatModel,
+    models: [chatModel]
   },
 
   componentMeta: {

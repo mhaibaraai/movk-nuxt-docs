@@ -13,8 +13,7 @@ export function useModels() {
   function formatModelName(modelId: string): string {
     const acronyms = ['gpt', 'llm', 'ai'] // words that should be uppercase
 
-    // 处理常规模型格式:provider/model
-    const modelName = modelId.split('/')[1] || modelId
+    const modelName = modelId.split('/').at(-1) || modelId
 
     return modelName
       .split('-')

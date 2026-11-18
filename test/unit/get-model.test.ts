@@ -39,6 +39,11 @@ describe('getModel 优先级', () => {
     expect(getModel('gpt-5')).toEqual({ via: 'openai', id: 'gpt-5' })
   })
 
+  it('兼容直连保留完整的 Workers AI 模型 ID', () => {
+    vi.stubEnv('AI_BASE_URL', 'https://api.example.com/ai/v1')
+    expect(getModel('cloudflare/@cf/qwen/qwen3.8-27b')).toEqual({ via: 'openai', id: '@cf/qwen/qwen3.8-27b' })
+  })
+
   it('已注册的提供商优先', () => {
     vi.stubEnv('AI_BASE_URL', 'https://api.example.com/v1')
     modelProviderRegistry.register('custom', ({ modelId }) => ({ via: 'custom', id: modelId }) as never)
