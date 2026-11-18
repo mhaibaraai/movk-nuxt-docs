@@ -33,6 +33,6 @@ pnpm docs:reference            # 从 nuxt.schema.ts 生成 app.config 参考
 ## 官方站部署与发布
 
 - 官方站 `docs.mhaibaraai.cn` 部署到 `movk-nuxt-docs` Worker。Workers Builds 监听 `main`，根目录为 `docs`，依次运行 `pnpm build` 和 `pnpm exec wrangler deploy`。使用 Node.js 24.15+ 和根 `packageManager` 指定的 pnpm，开启 Build cache。
-- 构建时设置 `CLOUDFLARE_D1_DATABASE_ID`，由 Nitro 生成 `DB` 绑定。构建和运行时都设置 `NUXT_GITHUB_TOKEN`。启用 AI Chat 时两处都设置 `AI_API_KEY`，运行时可选 `AI_BASE_URL`。
+- 构建时设置 `CLOUDFLARE_D1_DATABASE_ID`，由 Nitro 生成 `DB` 绑定。`NUXT_GITHUB_TOKEN` 配在构建和运行时，分别供预渲染和在线请求使用。官方站生产构建显式启用 AI Chat，`AI_API_KEY` 和直连模型所需的 `AI_BASE_URL` 配在运行时即可。可在构建区用 `NUXT_PUBLIC_AI_CHAT_MODEL` 覆盖默认模型和模型列表。
 - 本地用 `pnpm --dir docs exec wrangler deploy --dry-run` 校验产物。部署后在 Worker 临时域名核对搜索、双语页面、OG 图片、Markdown 协商、MCP 和已启用的 AI Chat，再切换自定义域名。
 - `pnpm release` 要求工作区干净，并运行检查、更新版本和 changelog、推送 tag。`v*` tag 触发 npm Trusted Publishing 并校验 Layer 版本。

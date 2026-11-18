@@ -103,6 +103,9 @@ export default defineNuxtConfig({
         }
       }
     },
+    aiChat: {
+      enabled: true
+    },
     ogImage: {
       buildCache: { base: 'node_modules/.cache/nuxt/og-image' }
     }

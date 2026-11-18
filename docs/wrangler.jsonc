@@ -11,6 +11,11 @@
       "persist": true,
       "head_sampling_rate": 0.1
     },
-    "traces": { "enabled": false }
+    "traces": {
+      "enabled": false
+    },
+    "issues": {
+      "enabled": true
+    }
   }
 }
