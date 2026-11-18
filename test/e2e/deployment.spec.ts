@@ -7,7 +7,7 @@ for (const path of ['/', '/docs/getting-started', '/en/docs/getting-started']) {
       expect(response.status()).toBe(200)
       expect(response.headers()['content-type']).toContain(accept)
       expect(response.headers().vary?.toLowerCase().split(/,\s*/)).toContain('accept')
-      if (accept === 'text/html' && process.env.E2E_RUNTIME === 'cloudflare') {
+      if (accept === 'text/html') {
         expect((await response.text()).includes('property="og:image"'), path).toBe(true)
       }
     }
@@ -50,9 +50,13 @@ test('MCP 客户端可以初始化并列出工具', async ({ request }) => {
   }
 })
 
-test('Worker 的最新构建清单保持短缓存', async ({ request }) => {
-  test.skip(process.env.E2E_RUNTIME !== 'cloudflare')
+test('Worker 按构建清单路径设置缓存期限', async ({ request }) => {
   const response = await request.get('/_nuxt/builds/latest.json')
   expect(response.status()).toBe(200)
   expect(response.headers()['cache-control']).toBe('public, max-age=1, immutable')
+
+  const { id } = await response.json()
+  const metadata = await request.get(`/_nuxt/builds/meta/${id}.json`)
+  expect(metadata.status()).toBe(200)
+  expect(metadata.headers()['cache-control']).toBe('public, max-age=31536000, immutable')
 })

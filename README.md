@@ -312,7 +312,7 @@ pnpm dev
 # 构建应用
 pnpm build
 # 本地预览生产构建
-pnpm preview
+pnpm --dir docs exec wrangler dev --local
 ```
 
 ### 发布

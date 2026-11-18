@@ -1,10 +1,5 @@
-import { readFile, writeFile } from 'node:fs/promises'
-import { join } from 'node:path'
-import { fileURLToPath } from 'node:url'
 import pkg from '../package.json'
-
-const buildForWorkers = process.env.NITRO_PRESET?.replaceAll('_', '-') === 'cloudflare-module'
-const localD1Id = '00000000-0000-0000-0000-000000000000'
+import cloudflare from './build/cloudflare'
 
 const moved = (slugs: string[], from: string, to: string) =>
   Object.fromEntries(slugs.map(slug => [`${from}/${slug}`, `${to}/${slug}`]))
@@ -72,8 +67,21 @@ export default defineNuxtConfig({
   },
 
   $production: {
+    modules: [cloudflare],
     site: {
       url: 'https://docs.mhaibaraai.cn'
+    },
+    nitro: {
+      preset: 'cloudflare_module',
+      // Cloudflare merges matching headers. Set these cache headers in public/_headers in override order.
+      routeRules: {
+        '/_nuxt/**': { cache: { maxAge: 0 } },
+        '/_nuxt/builds/**': { cache: { maxAge: 0 } },
+        '/_nuxt/builds/meta/**': { cache: { maxAge: 0 } }
+      }
+    },
+    ogImage: {
+      buildCache: { base: '../node_modules/.cache/nuxt/og-image' }
     }
   },
 
@@ -103,55 +111,6 @@ export default defineNuxtConfig({
   ]),
 
   compatibilityDate: '2026-06-30',
-
-  ...(buildForWorkers && {
-    image: { provider: 'none' },
-    ogImage: {
-      buildCache: { base: '../node_modules/.cache/nuxt/og-image' }
-    },
-    nitro: {
-      output: { dir: '.output-cloudflare' },
-      cloudflare: {
-        deployConfig: true,
-        nodeCompat: true,
-        wrangler: {
-          d1_databases: [{
-            binding: 'DB',
-            database_name: 'movk-nuxt-docs-content',
-            database_id: process.env.CLOUDFLARE_D1_DATABASE_ID || localD1Id
-          }]
-        }
-      }
-    },
-    hooks: {
-      'nitro:init': (nitro) => {
-        nitro.hooks.hook('compiled', async () => {
-          const path = join(nitro.options.output.publicDir, '_headers')
-          const headers = await readFile(path, 'utf8')
-          const buildRules = headers.match(/^\/_nuxt\/builds\/[^\n]*\n(?:[ \t][^\n]*\n?)*/gm) || []
-          if (!buildRules.length) return
-
-          // Cloudflare combines matching headers. Apply the build rules after /_nuxt/*
-          // so the latest manifest keeps its short lifetime and hashed metadata stays immutable.
-          let output = headers
-          for (const rule of buildRules) output = output.replace(rule, '')
-          const overrides = buildRules
-            .sort((a, b) => a.indexOf('\n') - b.indexOf('\n'))
-            .map(rule => rule.replace(/^([ \t]+)cache-control:/m, '$1! cache-control\n$1cache-control:'))
-          await writeFile(path, `${output.trimEnd()}\n${overrides.join('').trimEnd()}\n`)
-        })
-      },
-      'nitro:config': (config) => {
-        // Agent discovery handles negotiated requests before the HTML asset fallback.
-        config.handlers ||= []
-        config.handlers.push({
-          middleware: true,
-          env: 'cloudflare-module',
-          handler: fileURLToPath(new URL('./runtime/cloudflare/prerendered.ts', import.meta.url))
-        })
-      }
-    }
-  }),
 
   vite: {
     optimizeDeps: {

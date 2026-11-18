@@ -17,8 +17,6 @@
   "scripts": {
     "postinstall": "pnpm dev:prepare",
     "build": "nuxt build docs --extends ../layer",
-    "build:cloudflare": "NITRO_PRESET=cloudflare_module nuxt build docs --extends ../layer",
-    "deploy:cloudflare": "node scripts/deploy-cloudflare.mjs",
     "dev": "nuxt dev docs --extends ../layer",
     "dev:prepare": "nuxt prepare layer && nuxt prepare docs --extends ../layer",
     "release": "release-it",
@@ -29,7 +27,6 @@
     "test": "vitest run",
     "test:coverage": "vitest run --coverage",
     "test:e2e": "playwright test",
-    "test:e2e:cloudflare": "E2E_RUNTIME=cloudflare playwright test",
     "test:template": "bash scripts/test-template.sh",
     "docs:reference": "node scripts/config-reference/generate.ts",
     "docs:screenshots": "node scripts/screenshots/index.ts",

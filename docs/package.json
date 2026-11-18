@@ -3,7 +3,7 @@
   "type": "module",
   "description": "An elegant documentation theme for Nuxt, powered by Nuxt UI and Nuxt Content.",
   "scripts": {
-    "build": "nuxt prepare ../layer && nuxt build",
+    "build": "pnpm -w build",
     "dev": "nuxt dev"
   },
   "dependencies": {
