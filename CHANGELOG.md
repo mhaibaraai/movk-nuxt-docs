@@ -1,5 +1,64 @@
 # 📋 Changelog
 
+## [3.0.3](https://github.com/mhaibaraai/movk-nuxt-docs/compare/v3.0.2...v3.0.3) (2026-11-18)
+
+### ⚠ BREAKING CHANGES
+
+* **seo:** 需要 Nuxt ^4.6.1，Node ^22.22.3 || ^24.15.0 || >=26.0.0；运行时 OG 签名需要配置 NUXT_APP_SECRET。
+
+### ✨ Features
+
+* **docs:** 迁移官方文档站到 Cloudflare Workers ([0f68170](https://github.com/mhaibaraai/movk-nuxt-docs/commit/0f68170fc6cf438396d44dc3056fea4eeb38a2a7))
+* **seo:** 调整模块升级兼容与环境要求 ([bc89fab](https://github.com/mhaibaraai/movk-nuxt-docs/commit/bc89fab7da82cc8b718bf2730d4e4b5375a60d85))
+
+### 🐛 Bug Fixes
+
+* **ai-chat:** 切换官方站默认模型并修复模型名称显示 ([1947cc4](https://github.com/mhaibaraai/movk-nuxt-docs/commit/1947cc4a1391b65c4be58920b6dee7e274cedd75))
+* **deps:** 补齐 Nuxt UI 安全更新锁文件 ([efebcc4](https://github.com/mhaibaraai/movk-nuxt-docs/commit/efebcc44c8e1312c457c5f485ad66572c727e323))
+* **deps:** 调整 Comark 兼容范围支持新版 ([d95a162](https://github.com/mhaibaraai/movk-nuxt-docs/commit/d95a162ab4bd8c600db220ca63c2320e9daf3ff7))
+* **docs:** 补全 Workers 观测与安装配置 ([ed53afb](https://github.com/mhaibaraai/movk-nuxt-docs/commit/ed53afbfec5b98beaa5d34100969373c736fa745))
+* **nuxt:** 修复开发准备阶段的模块警告 ([16d3973](https://github.com/mhaibaraai/movk-nuxt-docs/commit/16d3973d95fcb2f7f3ae91629894956713b02680))
+* **templates:** 案例图尺寸提示改为 1200x630 ([eb14445](https://github.com/mhaibaraai/movk-nuxt-docs/commit/eb144457540853fb5b926a2ea17246487d7dc852))
+* **theme:** 修复消费项目主题选择器类型检查 ([a179e77](https://github.com/mhaibaraai/movk-nuxt-docs/commit/a179e77945f515820a7ce3b672d45bf80bdf6293))
+
+### 📝 Documentation
+
+* 按 v3 视觉重截 README OG 图 ([fd49fe5](https://github.com/mhaibaraai/movk-nuxt-docs/commit/fd49fe5ba2a240510510911aa66e95decfe97d4f))
+* 按 v3 视觉重截案例截图 ([f88deea](https://github.com/mhaibaraai/movk-nuxt-docs/commit/f88deeacbc58e46f69704f28154a297548c25610))
+* 更新 README OG 图与案例页截图 ([f5a0b4c](https://github.com/mhaibaraai/movk-nuxt-docs/commit/f5a0b4c4e7240757526011e8b09b27ce0486819a))
+* 更新中英文 README 的 OG 图片链接 ([cc996e3](https://github.com/mhaibaraai/movk-nuxt-docs/commit/cc996e3d6cc7a5ffe3cb7902c69b77a1894744f5))
+* 案例展示以 @movk/maplibre 与 @movk/sigma 替换 @movk/mapbox ([d670bb5](https://github.com/mhaibaraai/movk-nuxt-docs/commit/d670bb5ae2f3a9d2a11cd5a5c8c4cc6ec29f5bff))
+
+### 📦 Build System
+
+* **docs:** 简化官方站 Cloudflare 部署配置 ([b2e92a1](https://github.com/mhaibaraai/movk-nuxt-docs/commit/b2e92a128a3b42a970a70a88b3f5c2c5efa4c346))
+* **docs:** 统一官方站的 Cloudflare 构建与部署流程 ([424b69d](https://github.com/mhaibaraai/movk-nuxt-docs/commit/424b69d14e2001f3efb166556cf035ba36113044))
+
+### 👷 CI
+
+* **docs:** 修复预渲染 GitHub API 匿名限流 ([515658f](https://github.com/mhaibaraai/movk-nuxt-docs/commit/515658fcc16cde92214bf12bc75dc23011619876))
+* **templates:** 修复模板构建 GitHub API 匿名限流 ([a3a167c](https://github.com/mhaibaraai/movk-nuxt-docs/commit/a3a167c2351351b123ad2aa813d01259947095b9))
+
+### 🔧 Chores
+
+* **config:** 恢复主分支工具配置 ([1acd0ad](https://github.com/mhaibaraai/movk-nuxt-docs/commit/1acd0ad9aee5784e28e0506926dd71dc1f21be67))
+* **config:** 移除项目级 MCP 服务配置 ([8f504dd](https://github.com/mhaibaraai/movk-nuxt-docs/commit/8f504ddf9a8f682bdf8d3b09d262954e381d78e4))
+* **deps:** lock file maintenance ([11a74c8](https://github.com/mhaibaraai/movk-nuxt-docs/commit/11a74c85e7580393c869b31817c8e3a9d53db377))
+* **deps:** update ai sdk ([c2ed15c](https://github.com/mhaibaraai/movk-nuxt-docs/commit/c2ed15c3d978817d94a54f88897be641472066ac))
+* **deps:** update all non-major dependencies ([d3e0ee7](https://github.com/mhaibaraai/movk-nuxt-docs/commit/d3e0ee77f552621f2caaaec175341fb5468ac771))
+* **deps:** update dependency @nuxt/ui to ^4.12.2 ([204e56e](https://github.com/mhaibaraai/movk-nuxt-docs/commit/204e56e18147606edc5648def5b98a80107b751d))
+* **deps:** update devdependency release-it to ^21.1.2 ([1c25adf](https://github.com/mhaibaraai/movk-nuxt-docs/commit/1c25adf29b334b7d0cc90056eb25144d914984ed))
+* **deps:** update lint ([e96dfcd](https://github.com/mhaibaraai/movk-nuxt-docs/commit/e96dfcdeb3271c933438ba2e5d36bf7d8e084b55))
+* **deps:** update nuxt ([33e7675](https://github.com/mhaibaraai/movk-nuxt-docs/commit/33e7675d00a5816791fce1032d85de95df3ca6fe))
+* **deps:** update nuxt ([82a775b](https://github.com/mhaibaraai/movk-nuxt-docs/commit/82a775bb980297bc64ed9a4673d077167ff1286e))
+* **deps:** update nuxt ([ea9781c](https://github.com/mhaibaraai/movk-nuxt-docs/commit/ea9781c146765d0a534204e54526b6dee0fa195b))
+* **deps:** update test ([0fb5834](https://github.com/mhaibaraai/movk-nuxt-docs/commit/0fb583490959218597c6ec19418d706b8e9ea1f9))
+* **docs:** 简化官方站 AI Chat 部署配置 ([77c5cb9](https://github.com/mhaibaraai/movk-nuxt-docs/commit/77c5cb9ee7719597d80a20c09be37271869de568))
+* **scripts:** 截图脚本支持 slug=url 覆盖站点地址 ([7082002](https://github.com/mhaibaraai/movk-nuxt-docs/commit/708200268c08c619a06244dfbe3006eab35f62ea))
+* **scripts:** 新增案例站点与 README OG 图截图脚本 ([4e4032b](https://github.com/mhaibaraai/movk-nuxt-docs/commit/4e4032b7e19649dffb455a96d957c68daa5e7843))
+* **scripts:** 案例图与 OG 图统一按 1.905:1 截取完整首屏 ([5c8ba94](https://github.com/mhaibaraai/movk-nuxt-docs/commit/5c8ba94bd97a1a0c5accb2234bef21a5b4fb75ec))
+* **workers:** 启用文档站 Worker 问题检测 ([2ae6e23](https://github.com/mhaibaraai/movk-nuxt-docs/commit/2ae6e233ab1bb8fb1eba9dd661f8180505f6bf75))
+
 ## [3.0.2](https://github.com/mhaibaraai/movk-nuxt-docs/compare/v3.0.1...v3.0.2) (2026-10-28)
 
 ### 🐛 Bug Fixes
