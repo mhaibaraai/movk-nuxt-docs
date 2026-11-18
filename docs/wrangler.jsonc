@@ -1,0 +1,22 @@
+{
+  "$schema": "./node_modules/wrangler/config-schema.json",
+  "name": "movk-nuxt-docs",
+  "keep_vars": true,
+  "assets": {
+    "run_worker_first": ["/", "/docs", "/docs/*", "/en", "/en/*", "/releases", "/releases/*", "/templates"]
+  },
+  "observability": {
+    "redact_query_string": true,
+    "logs": {
+      "enabled": true,
+      "invocation_logs": true,
+      "persist": true,
+      "head_sampling_rate": 0.1
+    },
+    "traces": {
+      "enabled": true,
+      "persist": true,
+      "head_sampling_rate": 0.05
+    }
+  }
+}

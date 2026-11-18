@@ -1,6 +1,7 @@
 import { defineConfig, devices } from '@playwright/test'
 
 const PORT = 3301
+const cloudflare = process.env.E2E_RUNTIME === 'cloudflare'
 
 export default defineConfig({
   testDir: 'test/e2e',
@@ -15,8 +16,10 @@ export default defineConfig({
   },
   projects: [{ name: 'chromium', use: { ...devices['Desktop Chrome'] } }],
   webServer: {
-    command: `PORT=${PORT} node docs/.output/server/index.mjs`,
+    command: cloudflare
+      ? `pnpm --dir docs exec wrangler dev --config .output-cloudflare/server/wrangler.json --local --port ${PORT}`
+      : `PORT=${PORT} node docs/.output/server/index.mjs`,
     url: `http://localhost:${PORT}`,
-    reuseExistingServer: !process.env.CI
+    reuseExistingServer: !cloudflare && !process.env.CI
   }
 })

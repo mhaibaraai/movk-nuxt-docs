@@ -74,6 +74,13 @@ opt-in：消费方在 `modules` 加入 `@nuxtjs/i18n` 并配置 `i18n.locales` �
 - `ci.yml` — `check`（lint、typecheck、单测、pkg-pr-new 预览包）、`docs`（无 `AI_API_KEY` 构建 + E2E）、`templates`（三套模板与 `test/fixtures/features-off`）
 - `release.yml` — `v*` tag 触发，npm Trusted Publishing 发布，校验 tag 与 `layer/package.json` 版本一致
 
+### 官方文档站部署
+
+- Cloudflare Worker 名为 `movk-nuxt-docs`。Workers Builds 从仓库根目录和 `main` 分支执行 `pnpm build:cloudflare` 与 `pnpm deploy:cloudflare`。开启 Build cache，使用 Node.js 24.15+ 和根目录 `packageManager` 指定的 pnpm 版本。
+- 创建 D1 数据库 `movk-nuxt-docs-content`，在 Workers Builds 设置 `CLOUDFLARE_D1_DATABASE_ID`，由构建生成 `DB` 绑定。构建和 Worker 运行时都配置 `NUXT_GITHUB_TOKEN`，启用 AI Chat 时也分别配置 `AI_API_KEY`，运行时可选 `AI_BASE_URL`。
+- 本地运行 `pnpm build:cloudflare && pnpm test:e2e:cloudflare`。未设置 D1 ID 时，预览使用模拟数据库。可用 `pnpm --dir docs exec wrangler deploy --config .output-cloudflare/server/wrangler.json --dry-run` 校验产物。
+- 先通过 Worker 临时地址检查 D1、搜索、双语页面、OG 图片、Markdown 协商、MCP 和 AI Chat。核对当前 DNS 后，把 `docs.mhaibaraai.cn` 绑定为 Worker Custom Domain。到 Observability 核对调用日志、追踪、错误率和 CPU 时间。首次切换保留旧源站的恢复配置，后续发布可从 Workers Deployments 回滚到已验证的版本。
+
 ## 注意事项
 
 - **内容路径** — 文档固定位于 `content/docs`，路由前缀固定为 `/docs`

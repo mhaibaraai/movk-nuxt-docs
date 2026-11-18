@@ -19,8 +19,7 @@
     "@shikijs/engine-javascript": "^4.6.0",
     "@shikijs/langs": "^4.6.0",
     "@shikijs/themes": "^4.6.0",
-    "@vercel/analytics": "^2.0.1",
-    "@vercel/speed-insights": "^2.1.0",
+    "agents": "0.33.0",
     "ai": "^7.0.173",
     "dompurify": "^3.4.18",
     "mermaid": "^12.3.0",
@@ -31,6 +30,7 @@
     "vue-component-meta": "^3.3.14"
   },
   "devDependencies": {
-    "nuxtseo-layer-devtools": "^6.0.2"
+    "nuxtseo-layer-devtools": "^6.0.2",
+    "wrangler": "4.161.0"
   }
 }

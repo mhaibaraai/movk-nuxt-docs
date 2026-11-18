@@ -45,7 +45,7 @@ jobs:
 
   docs:
     runs-on: ubuntu-latest
-    timeout-minutes: 20
+    timeout-minutes: 35
     permissions:
       contents: read
 
@@ -76,6 +76,21 @@ jobs:
 
       - name: E2E tests
         run: pnpm run test:e2e
+
+      - name: Build Cloudflare Worker
+        env:
+          NUXT_GITHUB_TOKEN: ${{ github.token }}
+        shell: bash
+        run: pnpm run build:cloudflare 2>&1 | tee build-cloudflare.log
+
+      - name: Check Worker prerender errors
+        run: "! grep '\\[request error\\]' build-cloudflare.log"
+
+      - name: Validate Worker bundle
+        run: pnpm --dir docs exec wrangler deploy --config .output-cloudflare/server/wrangler.json --dry-run
+
+      - name: Worker E2E tests
+        run: pnpm run test:e2e:cloudflare
 
   templates:
     runs-on: ubuntu-latest
