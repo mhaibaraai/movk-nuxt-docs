@@ -316,7 +316,7 @@ The development server starts at `http://localhost:3000`.
 # Build the app
 pnpm build
 # Preview the production build locally
-pnpm preview
+pnpm --dir docs exec wrangler dev --local
 ```
 
 ### Release

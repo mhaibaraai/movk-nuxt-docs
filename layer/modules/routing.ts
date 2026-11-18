@@ -13,7 +13,8 @@ export default defineNuxtModule({
     const hasTemplatesFile = templatesFileExists(rootDir)
     const hasLandingPage = landingPageExists(rootDir)
 
-    if (!docsFolderExists(rootDir)) {
+    const preparingLayer = nuxt.options._prepare && rootDir === resolve('..')
+    if (!preparingLayer && !docsFolderExists(rootDir)) {
       logger.withTag('@movk/nuxt-docs').warn('未找到 content/docs 目录，文档页面固定位于 /docs 下，请将文档放入 content/docs/')
     }
 

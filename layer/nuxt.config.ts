@@ -2,6 +2,7 @@ import { defineNuxtConfig } from 'nuxt/config'
 import { createResolver, useNuxt } from '@nuxt/kit'
 import { join } from 'pathe'
 import { defu } from 'defu'
+import { setupSiteMetadata } from './modules/module'
 import { getFeatures } from './utils/features'
 
 const { resolve } = createResolver(import.meta.url)
@@ -48,6 +49,8 @@ export default defineNuxtConfig({
     },
     'nuxt-agent-discovery',
     '@vueuse/nuxt',
+    // Set site metadata before nuxt-llms reads its options during setup.
+    () => setupSiteMetadata(useNuxt()),
     'nuxt-llms',
     'nuxt-schema-org',
     'motion-v/nuxt'
@@ -242,6 +245,6 @@ export default defineNuxtConfig({
   robots: {
     // agent 的 Allow 分组与 Content-Signal 由 nuxt-agent-discovery 通过 robots:config 注入，
     // 与内容协商共用同一份 user-agent 列表
-    disallow: ['/_nuxt/', '/api/']
+    disallow: ['/api/github/']
   }
 })

@@ -8,7 +8,7 @@ import { SHOTS } from './shots.ts'
 const PORT = 3302
 const BASE_URL = `http://localhost:${PORT}`
 const OUT_DIR = fileURLToPath(new URL('../../docs/public/screenshots/', import.meta.url))
-const SERVER = fileURLToPath(new URL('../../docs/.output/server/index.mjs', import.meta.url))
+const DOCS_DIR = fileURLToPath(new URL('../../docs/', import.meta.url))
 const SCHEMES = ['light', 'dark'] as const
 const ENV_FILE = fileURLToPath(new URL('../../docs/.env', import.meta.url))
 
@@ -33,7 +33,13 @@ async function main(): Promise<void> {
   const hasAiKey = Boolean(process.env.AI_API_KEY)
 
   mkdirSync(OUT_DIR, { recursive: true })
-  const server = spawn('node', [SERVER], { env: { ...process.env, PORT: String(PORT) }, stdio: 'ignore' })
+  const args = ['exec', 'wrangler', 'dev', '--local', '--port', String(PORT)]
+  if (existsSync(ENV_FILE)) args.push('--env-file', ENV_FILE)
+  const server = spawn('pnpm', args, {
+    cwd: DOCS_DIR,
+    env: { ...process.env, CLOUDFLARE_INCLUDE_PROCESS_ENV: 'true' },
+    stdio: 'ignore'
+  })
 
   try {
     await waitForServer()

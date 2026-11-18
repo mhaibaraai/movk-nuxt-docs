@@ -15,8 +15,7 @@ export default defineConfig({
   },
   projects: [{ name: 'chromium', use: { ...devices['Desktop Chrome'] } }],
   webServer: {
-    command: `PORT=${PORT} node docs/.output/server/index.mjs`,
-    url: `http://localhost:${PORT}`,
-    reuseExistingServer: !process.env.CI
+    command: `pnpm --dir docs exec wrangler dev --local --port ${PORT}`,
+    url: `http://localhost:${PORT}`
   }
 })

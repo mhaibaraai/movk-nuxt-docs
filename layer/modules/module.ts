@@ -1,5 +1,5 @@
 import { addComponentsDir, addImports, createResolver, defineNuxtModule, logger } from '@nuxt/kit'
-import type { ModuleDependencies, NuxtModule } from 'nuxt/schema'
+import type { ModuleDependencies, Nuxt, NuxtModule } from 'nuxt/schema'
 import { defu } from 'defu'
 import { resolveModulePath } from 'exsolve'
 import { getGitBranch, getGitEnv, getLocalGitInfo } from '../utils/git'
@@ -124,53 +124,55 @@ const movkNuxtDocsModule: NuxtModule<ModuleOptions> = defineNuxtModule<ModuleOpt
 
       log.info('mermaid diagram support enabled')
     }
-
-    const dir = nuxt.options.rootDir
-    const url = inferSiteURL()
-    const meta = await getPackageJsonMetadata(dir)
-    const gitInfo = await getLocalGitInfo(dir) || getGitEnv()
-
-    const site = defu(nuxt.options.site, {
-      url,
-      name: kebabCase(meta.name || gitInfo?.name || ''),
-      debug: false
-    })
-
-    updateSiteConfig(site as SiteConfigInput)
-
-    const siteName = (typeof nuxt.options.site === 'object' && nuxt.options.site?.name) || meta.name || gitInfo?.name || ''
-
-    nuxt.options.llms = defu(nuxt.options.llms, {
-      domain: url || 'https://example.com',
-      title: siteName,
-      description: meta.description || '',
-      full: {
-        title: siteName,
-        description: meta.description || ''
-      }
-    })
-
-    nuxt.options.appConfig.header = defu(nuxt.options.appConfig.header as Record<string, any>, {
-      title: startCase(siteName)
-    })
-
-    nuxt.options.appConfig.seo = defu(nuxt.options.appConfig.seo as Record<string, any>, {
-      titleTemplate: `%s - ${siteName}`,
-      title: siteName,
-      description: meta.description || ''
-    })
-
-    // 仅补充从 git 推断的仓库信息，其余默认值以 nuxt.schema.ts 为准
-    // github: false 表示关闭集成，不能交给 defu（会被默认值整体替换）
-    if ((nuxt.options.appConfig.github as unknown) !== false) {
-      nuxt.options.appConfig.github = defu(nuxt.options.appConfig.github as Record<string, any>, {
-        owner: gitInfo?.owner,
-        name: gitInfo?.name,
-        url: gitInfo?.url,
-        branch: getGitBranch()
-      })
-    }
   }
 })
+
+export async function setupSiteMetadata(nuxt: Nuxt) {
+  const dir = nuxt.options.rootDir
+  const url = inferSiteURL()
+  const meta = await getPackageJsonMetadata(dir)
+  const gitInfo = await getLocalGitInfo(dir) || getGitEnv()
+
+  const site = defu(nuxt.options.site, {
+    url,
+    name: kebabCase(meta.name || gitInfo?.name || ''),
+    debug: false
+  })
+
+  updateSiteConfig(site as SiteConfigInput)
+
+  const siteName = (typeof nuxt.options.site === 'object' && nuxt.options.site?.name) || meta.name || gitInfo?.name || ''
+
+  nuxt.options.llms = defu(nuxt.options.llms, {
+    domain: url || 'https://example.com',
+    title: siteName,
+    description: meta.description || '',
+    full: {
+      title: siteName,
+      description: meta.description || ''
+    }
+  })
+
+  nuxt.options.appConfig.header = defu(nuxt.options.appConfig.header as Record<string, any>, {
+    title: startCase(siteName)
+  })
+
+  nuxt.options.appConfig.seo = defu(nuxt.options.appConfig.seo as Record<string, any>, {
+    titleTemplate: `%s - ${siteName}`,
+    title: siteName,
+    description: meta.description || ''
+  })
+
+  // 仅补充从 git 推断的仓库信息，其余默认值以 nuxt.schema.ts 为准
+  // github: false 表示关闭集成，不能交给 defu（会被默认值整体替换）
+  if ((nuxt.options.appConfig.github as unknown) !== false) {
+    nuxt.options.appConfig.github = defu(nuxt.options.appConfig.github as Record<string, any>, {
+      owner: gitInfo?.owner,
+      name: gitInfo?.name,
+      url: gitInfo?.url,
+      branch: getGitBranch()
+    })
+  }
+}
 
 export default movkNuxtDocsModule
