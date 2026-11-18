@@ -74,6 +74,9 @@ export default defineNuxtConfig({
     site: {
       url: 'https://docs.mhaibaraai.cn'
     },
+    content: {
+      database: { type: 'd1', bindingName: 'DB' }
+    },
     nitro: {
       preset: 'cloudflare_module',
       cloudflare: {

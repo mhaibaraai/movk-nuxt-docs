@@ -29,10 +29,18 @@ test('未配置 AI Key 时搜索可用', async ({ page }) => {
 })
 
 test('llms.txt 与 sitemap 可访问', async ({ request }) => {
-  for (const path of ['/llms.txt', '/llms-full.txt', '/sitemap.xml', '/robots.txt']) {
+  for (const path of ['/llms.txt', '/llms-full.txt', '/sitemap.xml']) {
     const response = await request.get(path)
     expect(response.status(), path).toBe(200)
   }
+})
+
+test('robots.txt 允许抓取前端资源并限制 GitHub API', async ({ request }) => {
+  const response = await request.get('/robots.txt')
+  expect(response.status()).toBe(200)
+  const robots = await response.text()
+  expect(robots).not.toMatch(/^Disallow:\s*\/(?:_nuxt(?:\/|$)|api\/?\s*$)/m)
+  expect(robots).toMatch(/^Disallow:\s*\/api\/github\/$/m)
 })
 
 test('组件示例接口', async ({ request }) => {
