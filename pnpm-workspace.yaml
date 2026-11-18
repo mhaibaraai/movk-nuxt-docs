@@ -16,7 +16,9 @@ overrides:
 allowBuilds:
   '@parcel/watcher': false
   better-sqlite3: false
+  core-js-pure: false
   esbuild: false
   sharp: true
   unrs-resolver: false
   vue-demi: false
+  workerd: false
