@@ -1,5 +1,11 @@
 # 📋 Changelog
 
+## [3.0.4](https://github.com/mhaibaraai/movk-nuxt-docs/compare/v3.0.3...v3.0.4) (2026-11-19)
+
+### 🐛 Bug Fixes
+
+* 修复预渲染文档的字符编码声明 ([bf95056](https://github.com/mhaibaraai/movk-nuxt-docs/commit/bf95056173f7195666ef5de5d6d29ac62664b730))
+
 ## [3.0.3](https://github.com/mhaibaraai/movk-nuxt-docs/compare/v3.0.2...v3.0.3) (2026-11-18)
 
 ### ⚠ BREAKING CHANGES

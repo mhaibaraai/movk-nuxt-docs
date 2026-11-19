@@ -1,6 +1,6 @@
 {
   "git": {
-    "requireCleanWorkingDir": true,
+    "requireCleanWorkingDir": false,
     "commitMessage": "chore(release): v${version}",
     "tagName": "v${version}"
   },
@@ -27,8 +27,13 @@
       "out": "layer/package.json"
     },
     "@release-it/conventional-changelog": {
+      "gitRawCommitsOpts": {
+        "path": "layer"
+      },
       "preset": {
         "name": "conventionalcommits",
+        "scope": "layer",
+        "scopeOnly": true,
         "types": [
           { "type": "feat", "section": "✨ Features" },
           { "type": "fix", "section": "🐛 Bug Fixes" },
