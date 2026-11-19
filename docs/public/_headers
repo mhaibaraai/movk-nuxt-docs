@@ -1,3 +1,6 @@
+/*.md
+  Content-Type: text/markdown; charset=utf-8
+
 /_nuxt/*
   Cache-Control: public, max-age=31536000, immutable
 

@@ -1,4 +1,16 @@
+import { readFile } from 'node:fs/promises'
 import { expect, test } from '@playwright/test'
+
+test('Cloudflare 静态 Markdown 文件显式声明 UTF-8', async ({ request }) => {
+  // 本地 Wrangler 会自动补字符集，线上静态资源需要构建产物中的显式规则。
+  const headers = await readFile(new URL('../../docs/.output/public/_headers', import.meta.url), 'utf8')
+  expect(headers).toMatch(/^\/\*\.md\n +Content-Type: text\/markdown; charset=utf-8$/m)
+
+  const response = await request.get('/raw/docs/ai/agent-discovery.md')
+  expect(response.status()).toBe(200)
+  expect(response.headers()['content-type']).toBe('text/markdown; charset=utf-8')
+  expect(await response.text()).toContain('代理发现')
+})
 
 for (const [page, raw] of [
   ['/', '/raw/index.md'],
@@ -14,7 +26,7 @@ for (const [page, raw] of [
 
     const markdown = await request.get(raw, options)
     expect(markdown.status()).toBe(200)
-    expect(markdown.headers()['content-type']).toContain('text/markdown')
+    expect(markdown.headers()['content-type']).toBe('text/markdown; charset=utf-8')
   })
 }
 
