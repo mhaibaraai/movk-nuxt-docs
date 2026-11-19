@@ -1,16 +1,30 @@
 import { readFile } from 'node:fs/promises'
 import { expect, test } from '@playwright/test'
 
-test('Cloudflare 静态 Markdown 文件显式声明 UTF-8', async ({ request }) => {
-  // 本地 Wrangler 会自动补字符集，线上静态资源需要构建产物中的显式规则。
-  const headers = await readFile(new URL('../../docs/.output/public/_headers', import.meta.url), 'utf8')
-  expect(headers).toMatch(/^\/\*\.md\n +Content-Type: text\/markdown; charset=utf-8$/m)
+for (const [path, pattern, mime, body] of [
+  ['/raw/docs/ai/agent-discovery.md', '/raw/*.md', 'text/markdown', /代理发现/],
+  ['/sitemap.md', '/sitemap.md', 'text/markdown', /\p{Script=Han}/u],
+  ['/llms.txt', '/llms.txt', 'text/plain', /\p{Script=Han}/u],
+  ['/llms-full.txt', '/llms-full.txt', 'text/plain', /\p{Script=Han}/u],
+  ['/.well-known/skills/create-docs/SKILL.md', '/.well-known/skills/:skill/*.md', 'text/markdown', /创建文档/],
+  ['/.well-known/skills/index.json', '/.well-known/skills/index.json', 'application/json', /create-docs/]
+] as const) {
+  test(`Cloudflare 静态文件显式声明 UTF-8 ${path}`, async ({ request }) => {
+    // 本地 Wrangler 会自动补字符集，线上静态资源需要构建产物中的显式规则。
+    const headers = await readFile(new URL('../../docs/.output/public/_headers', import.meta.url), 'utf8')
+    const contentType = `${mime}; charset=utf-8`
+    expect(headers.toLowerCase()).toContain(`${pattern}\n  content-type: ${contentType}`)
 
-  const response = await request.get('/raw/docs/ai/agent-discovery.md')
-  expect(response.status()).toBe(200)
-  expect(response.headers()['content-type']).toBe('text/markdown; charset=utf-8')
-  expect(await response.text()).toContain('代理发现')
-})
+    const response = await request.get(path)
+    expect(response.status()).toBe(200)
+    expect(response.headers()['content-type']).toBe(contentType)
+    expect(new TextDecoder('utf-8', { fatal: true }).decode(await response.body())).toMatch(body)
+
+    const head = await request.head(path)
+    expect(head.status()).toBe(200)
+    expect(head.headers()['content-type']).toBe(contentType)
+  })
+}
 
 for (const [page, raw] of [
   ['/', '/raw/index.md'],

@@ -4,6 +4,7 @@ import { join } from 'pathe'
 import { defu } from 'defu'
 import { setupSiteMetadata } from './modules/module'
 import { getFeatures } from './utils/features'
+import { setupPrerenderContentTypes } from './utils/prerender-content-types'
 
 const { resolve } = createResolver(import.meta.url)
 
@@ -160,6 +161,7 @@ export default defineNuxtConfig({
   telemetry: false,
 
   hooks: {
+    'nitro:init': setupPrerenderContentTypes,
     'vite:extendConfig': async (config) => {
       const cfg = config as { optimizeDeps?: { include?: string[], exclude?: string[] } }
       cfg.optimizeDeps ||= {}
