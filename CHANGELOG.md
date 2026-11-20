@@ -1,5 +1,11 @@
 # 📋 Changelog
 
+## [3.0.5](https://github.com/mhaibaraai/movk-nuxt-docs/compare/v3.0.4...v3.0.5) (2026-11-20)
+
+### 🐛 Bug Fixes
+
+* 修复中文分享图并完善页面 SEO ([9a34400](https://github.com/mhaibaraai/movk-nuxt-docs/commit/9a3440012d2c3b57b7ff68c6edebcb1b7ea7e301))
+
 ## [3.0.4](https://github.com/mhaibaraai/movk-nuxt-docs/compare/v3.0.3...v3.0.4) (2026-11-19)
 
 ### 🐛 Bug Fixes
