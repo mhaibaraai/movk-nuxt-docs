@@ -32,6 +32,7 @@
   "devDependencies": {
     "eslint-plugin-better-tailwindcss": "^4.11.0",
     "nuxtseo-layer-devtools": "^6.0.2",
+    "nuxtseo-devtools-host": "^1.0.3",
     "wrangler": "4.161.0"
   }
 }
