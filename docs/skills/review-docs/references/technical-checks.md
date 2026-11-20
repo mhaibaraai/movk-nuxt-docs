@@ -25,9 +25,6 @@ Broken links do not fail a Movk build (`nitro.prerender.failOnError` is `false`)
 ---
 title: Navigation              # Required
 description: Declare header links and sidebar groups in app.config.ts.   # Required
-seo:
-  title: Configure navigation in Movk Nuxt Docs        # Recommended
-  description: Declare desktop and mobile header links ...   # Recommended
 navigation:                    # Optional
   icon: i-lucide-panel-left
   title: Nav
@@ -46,7 +43,6 @@ keywords: [sidebar, menu]      # Optional, used by MCP search
 |-------|----------|
 | `title` and `description` present and non-empty | Critical |
 | Valid YAML (quotes around values containing `:` or starting with `@`, `*`, `[`) | Critical |
-| `seo.title` and `seo.description` present | Important |
 | `description` unique across pages | Important |
 | `links` is an array of objects with `label` and `to`; external links have `target: _blank` | Important |
 | `category` declared in `docs.categories` for the page's top-level section; an undeclared id hides the page from the sidebar | Important |

@@ -103,7 +103,7 @@ For each extra locale, diff the relative file list against the default locale. M
 Follow [references/technical-checks.md](./references/technical-checks.md). Summary:
 
 1. **Location and links** — `/docs/` prefix, locale-correct links, every link resolves, section roots redirect.
-2. **Frontmatter** — `title`, `description`, `seo.title`, `seo.description`; `category` declared in `docs.categories`; `links` objects; icon format.
+2. **Frontmatter** — `title` and `description`, any optional SEO overrides, `category` in `docs.categories`, `links` objects, and icon format.
 3. **MDC components** — `u-` prefix only for Nuxt UI components (`::u-page-hero`); prose components without prefix (`::note`, `::code-group`, `:badge`); every name resolves to Nuxt UI, the layer or the project.
 4. **Feature-dependent components** — `component-props` / `slots` / `emits` / `example` / `code` need `componentDocs`; ` ```mermaid ` needs `mermaid`; `commit-changelog` needs GitHub config.
 5. **Override advice** — only components in the v3 override contract; navigation changes via `app.config`, not `useHeader` / `useCategory`.
@@ -132,7 +132,7 @@ Applies to every project type.
 
 ### SEO — [references/seo-checks.md](./references/seo-checks.md)
 
-- `seo.title` 50-60 characters, `seo.description` 120-160 characters, unique per page.
+- Search and social previews have a unique, descriptive title and description in the page language, using frontmatter defaults or explicit overrides.
 - Single H1 (from `title`), no skipped heading levels.
 - Descriptive link text, related links at the end of guides.
 - Image `alt` text.
@@ -159,7 +159,7 @@ Copy [assets/report-template.md](./assets/report-template.md) and fill every sec
 - Two or three positive highlights.
 - A short action plan per priority.
 
-Keep the report proportional: for large sites, list every Critical issue, the top Important ones per category, and summarize repeated patterns ("12 pages lack `seo.description`") instead of repeating them.
+Keep the report proportional: for large sites, list every Critical issue, the top Important ones per category, and summarize repeated patterns ("12 pages have duplicate descriptions") instead of repeating them.
 
 End by offering to:
 
@@ -180,6 +180,6 @@ Most common issues in Movk Nuxt Docs projects:
 - `component-props` on a site where `componentDocs` is off.
 - Translated page missing or with different headings.
 - Screenshot without a dark variant.
-- `seo.description` missing or shorter than 120 characters.
+- Page description missing, duplicated, or too vague to identify what the page covers.
 - Code block without language or file label; install commands missing a package manager.
 - Install and config steps merged into one `::code-group`.

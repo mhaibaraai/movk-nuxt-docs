@@ -1,11 +1,11 @@
 ---
 title: "ComponentCode"
-description: "用 `::component-code` 以属性矩阵驱动任意已注册的 Vue 组件实时渲染，读者在预览上方切换属性值，下方的 Vue 代码片段同步更新，可直接复制使用。"
+description: "用 `::component-code` 调整组件属性，并同步更新可复制的 Vue 示例。"
 canonical_url: "https://docs.mhaibaraai.cn/docs/components/component-code"
 ---
 # ComponentCode
 
-> 用 `::component-code` 以属性矩阵驱动任意已注册的 Vue 组件实时渲染，读者在预览上方切换属性值，下方的 Vue 代码片段同步更新，可直接复制使用。
+> 用 `::component-code` 调整组件属性，并同步更新可复制的 Vue 示例。
 
 `ComponentCode` 不需要单独的示例文件：在 frontmatter 中给出组件名与初始 props，即可得到可交互的预览和对应的 Vue 代码。
 

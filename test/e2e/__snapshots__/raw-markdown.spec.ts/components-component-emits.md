@@ -1,11 +1,11 @@
 ---
 title: "ComponentEmits"
-description: "用一行 `:component-emits` 列出 Vue 组件的全部事件，事件名、参数签名与 JSDoc 说明来自 `defineEmits` 的类型定义，与 Props、Slots 表格配套组成完整 API 文档。"
+description: "用 `:component-emits` 根据 `defineEmits` 展示事件名称、参数和说明。"
 canonical_url: "https://docs.mhaibaraai.cn/docs/components/component-emits"
 ---
 # ComponentEmits
 
-> 用一行 `:component-emits` 列出 Vue 组件的全部事件，事件名、参数签名与 JSDoc 说明来自 `defineEmits` 的类型定义，与 Props、Slots 表格配套组成完整 API 文档。
+> 用 `:component-emits` 根据 `defineEmits` 展示事件名称、参数和说明。
 
 `ComponentEmits` 读取组件的 `defineEmits` 类型，渲染事件名、参数签名与说明。
 

@@ -1,11 +1,11 @@
 ---
 title: "MDC 组件"
-description: "在 Markdown 中用 MDC 语法嵌入 Nuxt UI 的 Prose 组件：提示块、徽标、卡片、折叠面板、选项卡、步骤、字段说明、图标与按键，无需编写 Vue 代码即可组织更有层次的文档内容。"
+description: "用 MDC 在 Markdown 中插入 Nuxt UI 的提示块、卡片、选项卡和其他组件。"
 canonical_url: "https://docs.mhaibaraai.cn/docs/writing/mdc-components"
 ---
 # MDC 组件
 
-> 在 Markdown 中用 MDC 语法嵌入 Nuxt UI 的 Prose 组件：提示块、徽标、卡片、折叠面板、选项卡、步骤、字段说明、图标与按键，无需编写 Vue 代码即可组织更有层次的文档内容。
+> 用 MDC 在 Markdown 中插入 Nuxt UI 的提示块、卡片、选项卡和其他组件。
 
 [MDC 语法](https://content.nuxt.com/docs/files/markdown#mdc-syntax) 允许在 Markdown 中使用 Vue 组件：块级组件写作 `::name`，行内组件写作 `:name`，属性放在 `{}` 或 YAML 块中，嵌套时每层多加一个冒号。
 

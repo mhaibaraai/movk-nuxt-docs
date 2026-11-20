@@ -1,11 +1,11 @@
 ---
 title: "ComponentExample"
-description: "用 `:component-example` 把示例目录中的 Vue 文件渲染为实时预览，并在下方展示带高亮的源码；支持行高亮、折叠、可调参数与仅客户端渲染，适合展示组件在真实场景下的组合用法。"
+description: "用 `:component-example` 在文档中展示 Vue 示例的实时预览和高亮源码。"
 canonical_url: "https://docs.mhaibaraai.cn/docs/components/component-example"
 ---
 # ComponentExample
 
-> 用 `:component-example` 把示例目录中的 Vue 文件渲染为实时预览，并在下方展示带高亮的源码；支持行高亮、折叠、可调参数与仅客户端渲染，适合展示组件在真实场景下的组合用法。
+> 用 `:component-example` 在文档中展示 Vue 示例的实时预览和高亮源码。
 
 `ComponentExample` 渲染一个示例组件的实时预览，并在下方展示该示例文件的源码。源码在构建期读取，与预览始终一致。
 

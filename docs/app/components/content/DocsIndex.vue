@@ -3,17 +3,23 @@ const route = useRoute()
 const { docsCollection, locale } = useMovkI18n()
 
 const collection = docsCollection.value as 'docs'
+const englishPrefix = '/en'
 
-const { data: pages } = await useAsyncData(`docs-index-${locale.value}`, () =>
-  queryCollection(collection).select('title', 'path', 'seo').all()
-)
+const { data } = await useAsyncData(`docs-index-${locale.value}`, async () => {
+  const [pages, englishPages] = await Promise.all([
+    queryCollection(collection).select('title', 'path').all(),
+    locale.value === 'en' ? [] : queryCollection('docs_en').select('title', 'path').all()
+  ])
+  return { pages, englishPages }
+})
 
-// 按英文 seo.title 首字母分组：中英文页面共用同一套字母顺序，避免中文按拼音排序
+// 用英文文档的标题分组，让两种语言的索引共用字母顺序。
 const groups = computed(() => {
-  const entries = (pages.value ?? [])
+  const englishTitles = new Map(data.value?.englishPages.map(page => [page.path.slice(englishPrefix.length), page.title]))
+  const entries = (data.value?.pages ?? [])
     .filter(page => page.path !== route.path)
     .map((page) => {
-      const sortKey = (page.seo?.title || page.title).trim()
+      const sortKey = (englishTitles.get(page.path) || page.title).trim()
       const letter = sortKey.charAt(0).toUpperCase()
       return {
         title: page.title,

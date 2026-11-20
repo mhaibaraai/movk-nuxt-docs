@@ -8,10 +8,8 @@ Conventions for docs written in English, Chinese, or both. When a site has sever
 |-------|---------|---------|
 | `title` | 1-4 words, noun for concepts, function / component name for API | 2-8 characters |
 | `description` | One or two sentences, 120-160 characters, says what the reader can do after reading | 60-120 characters, same intent |
-| `seo.title` | 50-60 characters, includes the project name or main keyword | Same, or English when the site targets English search |
-| `seo.description` | 120-160 characters, unique per page | Same |
 
-Never copy the same description to several pages.
+Keep descriptions unique. By default, search and social previews use the page's own title and description. Add `seo.title` or `seo.description` only for pages that need separate copy, such as the homepage.
 
 ## English
 
