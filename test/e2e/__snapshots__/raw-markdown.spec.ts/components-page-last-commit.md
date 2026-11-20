@@ -1,11 +1,11 @@
 ---
 title: "PageLastCommit"
-description: "文档页导语下方的元信息行会显示当前 Markdown 文件的最后一次提交，包括时间、作者与提交信息；本页说明它的启用条件、日期格式配置与 PR squash merge 的作者识别。"
+description: "在文档页显示 Markdown 文件最后一次提交的时间、作者与说明。"
 canonical_url: "https://docs.mhaibaraai.cn/docs/components/page-last-commit"
 ---
 # PageLastCommit
 
-> 文档页导语下方的元信息行会显示当前 Markdown 文件的最后一次提交，包括时间、作者与提交信息；本页说明它的启用条件、日期格式配置与 PR squash merge 的作者识别。
+> 在文档页显示 Markdown 文件最后一次提交的时间、作者与说明。
 
 `PageLastCommit` 已挂载在每个文档页导语下方的元信息行，与「查看源码 / 复制页面」并列，无需在 Markdown 中手动添加。它显示：
 

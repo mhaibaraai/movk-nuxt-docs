@@ -35,6 +35,20 @@ test('llms.txt 与 sitemap 可访问', async ({ request }) => {
   }
 })
 
+test('双语站点地图收录各自的文档版本', async ({ request }) => {
+  const index = await request.get('/sitemap_index.xml')
+  expect(index.ok()).toBe(true)
+  const xml = await index.text()
+
+  for (const [locale, prefix] of [['zh-CN', ''], ['en', '/en']]) {
+    const path = `/__sitemap__/${locale}.xml`
+    expect(xml).toContain(path)
+    const response = await request.get(path)
+    expect(response.ok()).toBe(true)
+    expect(await response.text()).toContain(`https://docs.mhaibaraai.cn${prefix}/docs/getting-started</loc>`)
+  }
+})
+
 test('robots.txt 允许抓取前端资源并限制 GitHub API', async ({ request }) => {
   const response = await request.get('/robots.txt')
   expect(response.status()).toBe(200)
@@ -56,15 +70,23 @@ test('文档 SEO 元数据、OG 图片与站点信息可用', async ({ page, req
   await expect(page.locator('link[rel="canonical"]')).toHaveAttribute('href', /\/docs\/getting-started$/)
   const structuredData = JSON.parse(await page.locator('script[type="application/ld+json"]').first().textContent() || '{}')
   expect(structuredData['@context']).toBe('https://schema.org')
-  expect(Array.isArray(structuredData['@graph'])).toBe(true)
+  expect(structuredData['@graph']).toEqual(expect.arrayContaining([
+    expect.objectContaining({ '@type': expect.arrayContaining(['TechArticle']), 'headline': '简介' })
+  ]))
 
   // OG 处于 zeroRuntime 模式，元数据来自预渲染 HTML。
   const prerendered = await request.get('/docs/getting-started.html')
   expect(prerendered.ok()).toBe(true)
-  const image = await page.evaluate(html => new DOMParser().parseFromString(html, 'text/html')
-    .querySelector('meta[property="og:image"]')?.getAttribute('content'), await prerendered.text())
-  expect(image).toBeTruthy()
-  const imageUrl = new URL(image!, page.url())
+  const preview = await page.evaluate((html) => {
+    const doc = new DOMParser().parseFromString(html, 'text/html')
+    return {
+      image: doc.querySelector('meta[property="og:image"]')?.getAttribute('content'),
+      alt: doc.querySelector('meta[property="og:image:alt"]')?.getAttribute('content')
+    }
+  }, await prerendered.text())
+  expect(preview.image).toBeTruthy()
+  expect(preview.alt).toBe('简介')
+  const imageUrl = new URL(preview.image!, page.url())
   const response = await request.get(imageUrl.pathname + imageUrl.search)
   expect(response.status()).toBe(200)
   expect(response.headers()['content-type']).toMatch(/^image\//)
@@ -73,6 +95,55 @@ test('文档 SEO 元数据、OG 图片与站点信息可用', async ({ page, req
   const card = await request.get('/.well-known/mcp/server-card.json')
   expect(card.status()).toBe(200)
   expect((await card.json()).serverInfo.name).toBe('Movk Nuxt Docs')
+})
+
+test('中英文页面输出各自的分享标签和 canonical', async ({ page, request }) => {
+  const docsPath = '/docs/getting-started'
+  const pages = [
+    { path: '/', ogTitle: 'Modern Nuxt Documentation Theme' },
+    { path: '/en', ogTitle: 'Modern Nuxt Documentation Theme' },
+    { path: docsPath, ogTitle: '简介' },
+    { path: `/en${docsPath}`, ogTitle: 'Introduction' },
+    { path: '/templates', ogTitle: '案例展示' },
+    { path: '/en/templates', ogTitle: 'Showcase' },
+    { path: '/releases', ogTitle: '版本发布' },
+    { path: '/en/releases', ogTitle: 'Releases' }
+  ]
+
+  for (const { path, ogTitle } of pages) {
+    const response = await request.get(`${path}?utm_source=test`, { headers: { 'Accept-Language': 'zh-CN' } })
+    expect(response.ok(), path).toBe(true)
+    const head = await page.evaluate((html) => {
+      const document = new DOMParser().parseFromString(html, 'text/html')
+      const metadata = (property: string) => document.querySelector(`meta[property="${property}"]`)?.getAttribute('content')
+      return {
+        title: metadata('og:title'),
+        description: metadata('og:description'),
+        type: metadata('og:type'),
+        url: metadata('og:url'),
+        canonicals: [...document.querySelectorAll<HTMLLinkElement>('link[rel=canonical]')].map(link => link.href),
+        alternates: Object.fromEntries([...document.querySelectorAll<HTMLLinkElement>('link[hreflang]')].map(link => [link.hreflang, link.href])),
+        markdown: document.querySelector<HTMLLinkElement>('link[rel=alternate][type="text/markdown"]')?.href
+      }
+    }, await response.text())
+
+    const isDoc = path.endsWith(docsPath)
+    expect(head.title, path).toContain(ogTitle)
+    expect(head.description, path).toBeTruthy()
+    expect(head.type, path).toBe(isDoc ? 'article' : 'website')
+    expect(head.canonicals, path).toEqual([head.url])
+    expect(new URL(head.url!).pathname, path).toBe(path)
+    expect(new URL(head.url!).search, path).toBe('')
+
+    if (isDoc) {
+      expect(new URL(head.markdown!).pathname).toBe(`${path}.md`)
+      expect(head.alternates['x-default']).toBe(head.alternates['zh-CN'])
+      expect(new URL(head.alternates.en!).pathname).toBe(`/en${docsPath}`)
+      expect(new URL(head.alternates['zh-CN']!).pathname).toBe(docsPath)
+    }
+    if (path === docsPath) expect(head.description).toContain('集成排版、导航、搜索、SEO 和 AI')
+    if (path === '/' || path === '/en') expect(head.description).toContain('Build modern Nuxt 4 documentation sites')
+  }
 })
 
 test('访客主题偏好生效且无水合错误', async ({ page }) => {

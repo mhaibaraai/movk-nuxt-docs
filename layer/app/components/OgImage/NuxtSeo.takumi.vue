@@ -29,6 +29,7 @@ const palette = computed(() => props.colorMode === 'dark'
 <template>
   <div
     class="w-full h-full flex flex-col justify-between px-20 py-16"
+    style="font-family: 'Noto Sans SC Variable', sans-serif;"
     :style="{ backgroundColor: palette.background, color: palette.ink }"
   >
     <div class="flex items-center justify-between pb-5" :style="{ borderBottom: `2px solid ${palette.ink}` }">

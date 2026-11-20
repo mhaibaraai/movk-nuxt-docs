@@ -1,11 +1,11 @@
 ---
 title: "代码块"
-description: "代码块默认使用 github-light / github-dark 高亮，支持文件名、行高亮、复制按钮与颜色、图标预览；用 code-group、code-tree 等组件组织多文件与长代码示例。"
+description: "为代码添加文件名和行高亮，并组织多文件及多包管理器示例。"
 canonical_url: "https://docs.mhaibaraai.cn/docs/writing/code-blocks"
 ---
 # 代码块
 
-> 代码块默认使用 github-light / github-dark 高亮，支持文件名、行高亮、复制按钮与颜色、图标预览；用 code-group、code-tree 等组件组织多文件与长代码示例。
+> 为代码添加文件名和行高亮，并组织多文件及多包管理器示例。
 
 ## 基础用法
 

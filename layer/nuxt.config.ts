@@ -2,11 +2,13 @@ import { defineNuxtConfig } from 'nuxt/config'
 import { createResolver, useNuxt } from '@nuxt/kit'
 import { join } from 'pathe'
 import { defu } from 'defu'
+import { resolveModulePath } from 'exsolve'
 import { setupSiteMetadata } from './modules/module'
 import { getFeatures } from './utils/features'
 import { setupPrerenderContentTypes } from './utils/prerender-content-types'
 
 const { resolve } = createResolver(import.meta.url)
+const ogFontPackage = '@fontsource-variable/noto-sans-sc'
 
 export default defineNuxtConfig({
   modules: [
@@ -18,6 +20,47 @@ export default defineNuxtConfig({
         prefix: 'custom',
         dir: join(nuxt.options.srcDir, 'assets/icons')
       })
+
+      nuxt.options.ui ||= {}
+      const ogImage = getFeatures(nuxt).ogImage
+      const ogOnlyFonts = nuxt.options.ui.fonts === undefined && nuxt.options.fonts === undefined
+      nuxt.options.ui.fonts ??= ogImage
+      if (ogImage && nuxt.options.ui.fonts && nuxt.options.fonts !== false) {
+        const fonts: NonNullable<typeof nuxt.options.fonts> = {
+          // The legacy Fonts DevTools panel loads h3 v2 in the Nitro v2 dev server.
+          devtools: false,
+          ...ogOnlyFonts && {
+            processCSSVariables: false,
+            providers: {
+              google: false,
+              googleicons: false,
+              bunny: false,
+              fontshare: false,
+              fontsource: false,
+              adobe: false
+            }
+          },
+          npm: {
+            remote: false,
+            resolve: (id: string) => {
+              // pnpm consumers cannot resolve a dependency installed only under the layer.
+              const from = id.startsWith(`${ogFontPackage}/`) ? import.meta.url : `${nuxt.options.rootDir}/`
+              return resolveModulePath(id, { from, conditions: ['node', 'import', 'style', 'default'], try: true }) ?? null
+            }
+          },
+          families: [{
+            name: 'Noto Sans SC Variable',
+            provider: 'npm',
+            providerOptions: { npm: { package: ogFontPackage } },
+            weights: [400, 700],
+            styles: ['normal'],
+            formats: ['woff2'],
+            global: true,
+            preload: false
+          }]
+        }
+        nuxt.options.fonts = defu(nuxt.options.fonts, fonts)
+      }
     },
     '@nuxt/ui',
     '@nuxt/content',
@@ -91,9 +134,6 @@ export default defineNuxtConfig({
   },
 
   ui: {
-    // 中文字体经 unicode-range 分包，交给 @nuxt/fonts 会让它在构建期把
-    // 全部分片下载进产物，既失去按需加载也丢掉跨项目共享的 CDN 缓存
-    fonts: false,
     theme: {
       colors: ['primary', 'secondary', 'info', 'success', 'warning', 'error', 'important']
     },
@@ -115,7 +155,7 @@ export default defineNuxtConfig({
     githubToken: '',
     public: {
       movkDocs: {
-        filteredLocales: [] as { code: string, name: string }[],
+        filteredLocales: [] as { code: string, name: string, language?: string }[],
         releasesPage: false,
         features: {
           mcp: true,

@@ -1,11 +1,11 @@
 ---
 title: "ComponentProps"
-description: "在 Markdown 中用一行 `:component-props` 生成 Vue 组件的 Props 表格，名称、默认值、类型与 JSDoc 说明均来自 nuxt-component-meta 提取的元数据，组件改动后文档自动同步。"
+description: "用 `:component-props` 从组件元数据生成 Props 表格，展示类型、默认值和说明。"
 canonical_url: "https://docs.mhaibaraai.cn/docs/components/component-props"
 ---
 # ComponentProps
 
-> 在 Markdown 中用一行 `:component-props` 生成 Vue 组件的 Props 表格，名称、默认值、类型与 JSDoc 说明均来自 nuxt-component-meta 提取的元数据，组件改动后文档自动同步。
+> 用 `:component-props` 从组件元数据生成 Props 表格，展示类型、默认值和说明。
 
 `ComponentProps` 读取组件的 `defineProps` 定义，把每个 prop 的名称、默认值、类型和 JSDoc 说明渲染为表格。
 

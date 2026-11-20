@@ -1,6 +1,6 @@
 import { defu } from 'defu'
 
-export type I18nLocale = string | { code: string, name?: string }
+export type I18nLocale = string | { code: string, name?: string, language?: string }
 
 export const localeCode = (locale: I18nLocale): string =>
   typeof locale === 'string' ? locale : locale.code

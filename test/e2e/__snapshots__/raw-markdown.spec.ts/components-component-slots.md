@@ -1,11 +1,11 @@
 ---
 title: "ComponentSlots"
-description: "用一行 `:component-slots` 列出 Vue 组件的全部插槽，插槽名、作用域参数类型与 JSDoc 说明来自 `defineSlots` 的类型定义，无需手写插槽文档。"
+description: "用 `:component-slots` 根据 `defineSlots` 展示插槽名称、参数类型和说明。"
 canonical_url: "https://docs.mhaibaraai.cn/docs/components/component-slots"
 ---
 # ComponentSlots
 
-> 用一行 `:component-slots` 列出 Vue 组件的全部插槽，插槽名、作用域参数类型与 JSDoc 说明来自 `defineSlots` 的类型定义，无需手写插槽文档。
+> 用 `:component-slots` 根据 `defineSlots` 展示插槽名称、参数类型和说明。
 
 `ComponentSlots` 读取组件的 `defineSlots` 类型，渲染插槽名、作用域参数类型与说明。
 

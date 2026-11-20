@@ -64,12 +64,6 @@ export default defineNuxtConfig({
 
   modules: ['@nuxtjs/i18n'],
 
-  $development: {
-    site: {
-      url: 'http://localhost:3000'
-    }
-  },
-
   $production: {
     site: {
       url: 'https://docs.mhaibaraai.cn'

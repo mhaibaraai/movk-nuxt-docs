@@ -2,9 +2,9 @@
 
 SEO best practices for Movk Nuxt Docs documentation sites.
 
-## Title Optimization (`seo.title`)
+## Title Optimization
 
-`title` is the short sidebar and H1 label (1-4 words, or 2-8 Chinese characters). The length rules below apply to `seo.title`, which falls back to `title` when missing.
+`title` is the sidebar and H1 label and supplies the default search title. Evaluate the complete browser title, including the site name added by the title template. Use the length ranges below as guidance for English copy.
 
 ### Length Recommendations
 
@@ -28,7 +28,7 @@ Needs improvement:
 
 ### `title` vs. `seo.title`
 
-`title` is used for the page display; `seo.title` is for search engine optimization (the two may differ):
+Add `seo.title` when a page needs separate search and sharing copy.
 
 ```yaml
 ---
@@ -223,8 +223,7 @@ Avoid: Multiple pages share the same title or description.
 Good: Each page has unique, descriptive metadata.
 
 ### Missing Metadata
-Avoid: No `seo.title` or `seo.description` in frontmatter.
-Good: Every page defines SEO metadata.
+Check the effective metadata from `title` and `description`, or from an explicit SEO override when present.
 
 ### Keyword Stuffing
 Avoid: "Movk Nuxt Docs documentation Movk Nuxt Docs theme Movk Nuxt Docs guide"
@@ -234,8 +233,8 @@ Good: Natural language with keywords integrated in context.
 
 Run this checklist for every page:
 
-- [ ] `seo.title`: 50–60 characters, includes keywords, unique; `title` short.
-- [ ] `seo.description`: 120–160 characters, compelling, accurate.
+- [ ] The search title identifies the page and uses its language.
+- [ ] The description is specific, accurate, and unique to the page.
 - [ ] Single H1 that matches the title.
 - [ ] Heading hierarchy is logical (no skipped levels).
 - [ ] H2/H3 headings are descriptive, not generic.

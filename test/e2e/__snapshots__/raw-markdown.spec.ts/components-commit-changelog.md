@@ -1,11 +1,11 @@
 ---
 title: "CommitChangelog"
-description: "用 `:commit-changelog` 从 GitHub 拉取组件或源文件的提交记录，按版本分组展示为时间线；文件路径由组件名推导，可按目录、扩展名、命名格式与作者调整，一篇文档也可关联多个文件。"
+description: "用 `:commit-changelog` 展示组件或文件的 GitHub 提交记录，并按版本分组。"
 canonical_url: "https://docs.mhaibaraai.cn/docs/components/commit-changelog"
 ---
 # CommitChangelog
 
-> 用 `:commit-changelog` 从 GitHub 拉取组件或源文件的提交记录，按版本分组展示为时间线；文件路径由组件名推导，可按目录、扩展名、命名格式与作者调整，一篇文档也可关联多个文件。
+> 用 `:commit-changelog` 展示组件或文件的 GitHub 提交记录，并按版本分组。
 
 `CommitChangelog` 根据文件路径请求 GitHub 提交记录，并按发布版本分组：已发布的提交归入对应版本，尚未发布的归入 `Soon`。站点有 [版本发布页](https://docs.mhaibaraai.cn/docs/guide/pages) 时，版本标签链接到站内页面，否则跳转到 GitHub Release。
 

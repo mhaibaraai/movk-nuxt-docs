@@ -10,9 +10,6 @@ Every docs page uses the same fields:
 ---
 title: [Page title]                 # Sidebar and H1, short
 description: [What the page covers and what the reader can do after reading it]
-seo:
-  title: [Search-result title, 50-60 characters]
-  description: [Search-result description, 120-160 characters]
 navigation:
   icon: i-lucide-[icon]             # Optional sidebar icon
   title: [Shorter sidebar label]    # Optional
@@ -28,7 +25,7 @@ links:                              # Optional buttons under the page header
 
 - The page body starts with an H2; the title is rendered from `title`.
 - `navigation: false` keeps a route out of the sidebar.
-- On a Chinese site, keep `title` / `description` in Chinese and write `seo.*` in the language you want search engines to show.
+- Write `title` and `description` in the page language. Add `seo.title` or `seo.description` only when a page needs separate search or sharing copy.
 
 ## Section navigation
 
@@ -113,9 +110,6 @@ For screenshots use light and dark variants:
 ---
 title: Introduction
 description: [Project] is [category] that [main benefit]. Learn what it does, when to use it and where to start.
-seo:
-  title: Introduction to [Project]
-  description: [120-160 characters]
 navigation:
   icon: i-lucide-house
 ---
@@ -155,9 +149,6 @@ navigation:
 ---
 title: Installation
 description: Install [Project], add the minimal configuration and verify that it works.
-seo:
-  title: Install [Project]
-  description: [120-160 characters]
 navigation:
   icon: i-lucide-download
 ---
@@ -206,9 +197,6 @@ bun add [package]
 ---
 title: [Topic]
 description: [What the reader will be able to do with this feature.]
-seo:
-  title: [Topic] - [Project]
-  description: [120-160 characters]
 navigation:
   icon: i-lucide-[icon]
 category: [category id]
@@ -249,9 +237,6 @@ category: [category id]
 ---
 title: [functionName]
 description: [One sentence about what it returns or does.]
-seo:
-  title: [functionName] - [Project] API
-  description: [120-160 characters]
 navigation:
   icon: i-lucide-square-function
 ---
@@ -291,9 +276,6 @@ Requires `movkNuxtDocs.componentDocs: true`, the packages `nuxt-component-meta v
 ---
 title: MyButton
 description: [What the component is for.]
-seo:
-  title: MyButton component - [Project]
-  description: [120-160 characters]
 navigation:
   icon: i-lucide-mouse-pointer-click
 links:

@@ -14,21 +14,14 @@ const site = useSiteConfig()
 const title = page.value.seo?.title || page.value.title
 const description = page.value.seo?.description || page.value.description
 
-useSeoMeta({
-  title,
-  description,
-  ogTitle: title,
-  ogDescription: description
-})
-
-useCanonical()
+useMovkPageSeo({ title, description })
 
 if (import.meta.server) {
   defineOgImage('NuxtSeo.takumi', {
     title,
     description,
     siteName: site.name
-  })
+  }, { alt: title })
 }
 
 function slug(value: string): string {

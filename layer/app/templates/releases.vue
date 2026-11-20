@@ -72,21 +72,14 @@ const sectionTitle = page.value.seo?.title || page.value.title
 const description = page.value.seo?.description || page.value.description
 const title = release ? `${release.title} - ${sectionTitle}` : sectionTitle
 
-useSeoMeta({
-  title,
-  description,
-  ogTitle: title,
-  ogDescription: description
-})
-
-useCanonical()
+useMovkPageSeo({ title, description })
 
 if (import.meta.server) {
   defineOgImage('NuxtSeo.takumi', {
     title: release?.title ?? sectionTitle,
     description: release ? t('releases.releasedOn', { date: formatDate(release.date) }) : description,
     siteName: useSiteConfig().name
-  })
+  }, { alt: title })
 }
 </script>
 
