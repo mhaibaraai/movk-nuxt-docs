@@ -14,5 +14,8 @@
   "tailwindCSS.classFunctions": ["defineAppConfig"],
   "tailwindCSS.experimental.classRegex": [
     ["export default[^{]*\\{([\\s\\S]*)\\}", "[:\\[,]\\s*['\"`]([^'\"`]*)['\"`]"]
-  ]
+  ],
+  "tailwindCSS.experimental.configFile": {
+    "docs/.nuxt/movk-nuxt-docs.css": ["docs/**", "layer/**"]
+  }
 }

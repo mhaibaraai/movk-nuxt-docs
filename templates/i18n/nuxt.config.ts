@@ -3,6 +3,10 @@ export default defineNuxtConfig({
 
   modules: ['@nuxt/eslint', '@nuxtjs/i18n'],
 
+  site: {
+    name: 'My Docs'
+  },
+
   routeRules: {
     // redirects - default root pages
     '/docs': { redirect: '/docs/getting-started', prerender: false },
@@ -10,10 +14,6 @@ export default defineNuxtConfig({
   },
 
   compatibilityDate: 'latest',
-
-  site: {
-    name: 'My Docs'
-  },
 
   eslint: {
     config: {
