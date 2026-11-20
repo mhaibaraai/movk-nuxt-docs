@@ -13,8 +13,8 @@
     "@fontsource/noto-serif-sc": "^5.3.1",
     "@movk/nuxt-docs": "workspace:*",
     "@nuxt/a11y": "^1.0.0-alpha.1",
-    "@nuxt/content": "^3.16.2",
-    "@nuxt/ui": "^4.12.2",
+    "@nuxt/content": "^3.17.0",
+    "@nuxt/ui": "^4.13.0",
     "@nuxtjs/i18n": "^10.6.0",
     "@shikijs/engine-javascript": "^4.6.0",
     "@shikijs/langs": "^4.6.0",
@@ -30,6 +30,7 @@
     "vue-component-meta": "^3.3.14"
   },
   "devDependencies": {
+    "eslint-plugin-better-tailwindcss": "^4.11.0",
     "nuxtseo-layer-devtools": "^6.0.2",
     "wrangler": "4.161.0"
   }
