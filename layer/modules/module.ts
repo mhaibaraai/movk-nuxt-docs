@@ -142,9 +142,10 @@ export async function setupSiteMetadata(nuxt: Nuxt) {
   updateSiteConfig(site as SiteConfigInput)
 
   const siteName = (typeof nuxt.options.site === 'object' && nuxt.options.site?.name) || meta.name || gitInfo?.name || ''
+  const siteUrl = typeof site.url === 'string' ? site.url : url
 
   nuxt.options.llms = defu(nuxt.options.llms, {
-    domain: url || 'https://example.com',
+    domain: siteUrl || 'https://example.com',
     title: siteName,
     description: meta.description || '',
     full: {

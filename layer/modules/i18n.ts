@@ -17,7 +17,7 @@ interface I18nOptions {
 
 interface RegisterModuleOptions {
   langDir: string
-  locales: Array<{ code: string, name: string, file: string }>
+  locales: Array<{ code: string, name: string, language?: string, file: string }>
 }
 
 /**
@@ -65,12 +65,15 @@ export default defineNuxtModule({
       experimental: { ...i18n.experimental, typedOptionsAndMessages: 'default' }
     }
 
+    const registeredLocales = filteredLocales.map(locale => ({
+      code: localeCode(locale),
+      name: localeName(locale),
+      language: typeof locale === 'string' ? undefined : locale.language
+    }))
+
     nuxt.options.runtimeConfig.public.movkDocs = {
       ...nuxt.options.runtimeConfig.public.movkDocs,
-      filteredLocales: filteredLocales.map(locale => ({
-        code: localeCode(locale),
-        name: localeName(locale)
-      }))
+      filteredLocales: registeredLocales
     }
 
     const registerI18n = nuxt.hook as unknown as (
@@ -95,10 +98,9 @@ export default defineNuxtModule({
     registerI18n('i18n:registerModule', (register) => {
       register({
         langDir,
-        locales: filteredLocales.map(locale => ({
-          code: localeCode(locale),
-          name: localeName(locale),
-          file: `${localeCode(locale)}.json`
+        locales: registeredLocales.map(locale => ({
+          ...locale,
+          file: `${locale.code}.json`
         }))
       })
     })

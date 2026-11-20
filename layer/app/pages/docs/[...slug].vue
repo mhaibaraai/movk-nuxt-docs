@@ -32,8 +32,6 @@ const { findBreadcrumb } = useNavigation(navigation)
 const breadcrumb = computed(() => findBreadcrumb(page.value?.path as string))
 
 const title = page.value?.seo?.title || page.value?.title
-const prefix = page.value?.path.includes('components/') || page.value?.path.includes('composables/') ? 'Vue ' : ''
-const suffix = page.value?.path.includes('components/') ? 'Component ' : page.value?.path.includes('composables/') ? 'Composable ' : ''
 const description = page.value?.seo?.description || page.value?.description
 
 const { record: recordRecentPage } = useRecentPages()
@@ -90,22 +88,20 @@ const communityLinks = computed(() => {
   return filterValidLinks([...links, ...(toc?.bottom?.links || [])])
 })
 
-const path = computed(() => route.path.replace(/\/$/, ''))
-
 if (import.meta.server) {
   defineOgImage('NuxtSeo.takumi', {
     title,
     description,
     siteName: useSiteConfig().name
-  })
+  }, { alt: title })
 }
 
-useCanonical(computed(() => `${path.value}.md`))
+useMovkPageSeo({ title, description, article: true })
 
 useSchemaOrg([
   defineArticle({
     '@type': 'TechArticle',
-    'headline': `${prefix}${title} ${suffix}`.trim(),
+    'headline': title,
     'description': description
   }),
   defineBreadcrumb({
@@ -115,13 +111,6 @@ useSchemaOrg([
     })) || []
   })
 ])
-
-useSeoMeta({
-  title,
-  ogTitle: title,
-  description,
-  ogDescription: description
-})
 </script>
 
 <template>
