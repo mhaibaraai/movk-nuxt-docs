@@ -28,6 +28,7 @@ cd "$work/site"
 node -e 'const fs=require("fs");const p=JSON.parse(fs.readFileSync("package.json","utf8"));p.dependencies["@movk/nuxt-docs"]="file:"+process.argv[1];fs.writeFileSync("package.json",JSON.stringify(p,null,2)+"\n")' "$tarball"
 
 pnpm install --no-frozen-lockfile
+pnpm run --if-present lint
 pnpm exec nuxt build 2>&1 | tee build.log
 # layer 预渲染开启 failOnError: false，死链只会输出日志，这里显式拦截
 if grep -q "\[request error\]" build.log; then
