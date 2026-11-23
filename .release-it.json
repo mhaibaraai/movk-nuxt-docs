@@ -32,7 +32,6 @@
       },
       "preset": {
         "name": "conventionalcommits",
-        "scope": "layer",
         "scopeOnly": true,
         "types": [
           { "type": "feat", "section": "✨ Features" },

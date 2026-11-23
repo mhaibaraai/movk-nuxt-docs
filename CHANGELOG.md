@@ -1,5 +1,15 @@
 # 📋 Changelog
 
+## [3.0.7](https://github.com/mhaibaraai/movk-nuxt-docs/compare/v3.0.6...v3.0.7) (2026-11-23)
+
+### 🐛 Bug Fixes
+
+* **component-docs:** 服务端改用 standalone prettier 格式化 ([f362a55](https://github.com/mhaibaraai/movk-nuxt-docs/commit/f362a555883157be8400e2595c1513b842d958bc))
+
+### 📝 Documentation
+
+* 更新 README 的 OG 图片链接并同步 layer 说明 ([698892a](https://github.com/mhaibaraai/movk-nuxt-docs/commit/698892a4847a8a292b9729061f9eecf289b0de39))
+
 ## [3.0.6](https://github.com/mhaibaraai/movk-nuxt-docs/compare/v3.0.5...v3.0.6) (2026-11-23)
 
 ### 🐛 Bug Fixes
