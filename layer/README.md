@@ -1,7 +1,7 @@
-[![Movk Nuxt Docs OG](https://docs.mhaibaraai.cn/_og/s/o_t90n9t.png)](https://docs.mhaibaraai.cn/)
+[![Movk Nuxt Docs OG](https://docs.mhaibaraai.cn/_og/s/o_255d4693fb224207.png)](https://docs.mhaibaraai.cn/)
 [![Movk Nuxt Docs](https://docs.mhaibaraai.cn/og-image.png)](https://docs.mhaibaraai.cn/)
 
-[![English README](https://img.shields.io/badge/README-English-00DC82?style=flat&colorA=020420)](https://github.com/mhaibaraai/movk-nuxt-docs/blob/main/README.en.md)
+[![English README](https://img.shields.io/badge/README-English-00DC82?style=flat&colorA=020420)](./README.en.md)
 
 > 基于 Nuxt 4 的现代文档主题，集成组件自动化文档、AI 聊天助手、MCP Server 和完整的开发者体验优化
 
@@ -71,6 +71,8 @@ npx skills add https://docs.mhaibaraai.cn
 
 ## 🚀 快速开始
 
+需要 Nuxt 4.6.1+（4.x），以及 Node.js 22.22.3+（22.x）、24.15.0+（24.x）或 26+。
+
 ### 使用模板创建项目
 
 根据您的需求选择合适的模板：
@@ -86,9 +88,19 @@ cd my-docs
 pnpm dev
 ```
 
-#### 📦 模块文档站点（精简）
+#### 🌐 多语言文档站点
 
-适合为 npm 包或库快速创建文档，内置 Release 页面展示版本发布历史，无额外开发工具。
+在完整模板基础上启用 `@nuxtjs/i18n`，内置简体中文与英文两套内容。
+
+```bash
+npx nuxi init -t gh:mhaibaraai/movk-nuxt-docs/templates/i18n my-docs
+cd my-docs
+pnpm dev
+```
+
+#### 📦 模块文档站点
+
+适合为 npm 包或库创建文档，在完整模板基础上内置 Release 页面展示版本发布历史。
 
 ```bash
 # 使用模块模板创建新项目
@@ -104,8 +116,10 @@ pnpm dev
 在现有 Nuxt 项目中使用 Movk Nuxt Docs 作为 layer：
 
 ```bash [Terminal]
-pnpm add @movk/nuxt-docs tailwindcss
+pnpm add @movk/nuxt-docs @nuxt/content tailwindcss
 ```
+
+> `@nuxt/content` 为 peerDependency，必须安装在应用自身依赖中，否则内容集合类型增强无法解析。
 
 在 `nuxt.config.ts` 中配置：
 
@@ -124,7 +138,7 @@ export default defineNuxtConfig({
 ```bash
 my-docs/
 ├── app/
-│   └── composables/             # 自定义 Composables
+│   └── app.config.ts            # 页头导航、侧栏分类等运行时配置
 ├── content/                     # Markdown 内容
 │   ├── index.md                 # 首页
 │   └── docs/                    # 文档页面
@@ -146,7 +160,8 @@ movk-nuxt-docs/
 ├── layer/                       # @movk/nuxt-docs layer 包
 ├── templates/
 │   ├── default/                 # 完整文档站点模板
-│   └── module/                  # 模块文档站点模板（精简）
+│   ├── i18n/                    # 多语言文档站点模板
+│   └── module/                  # 模块文档站点模板
 └── scripts/                     # 构建脚本
 ```
 
@@ -297,7 +312,7 @@ pnpm dev
 # 构建应用
 pnpm build
 # 本地预览生产构建
-pnpm preview
+pnpm --dir docs exec wrangler dev --local
 ```
 
 ### 发布
