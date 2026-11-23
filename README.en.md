@@ -1,4 +1,4 @@
-[![Movk Nuxt Docs OG](https://docs.mhaibaraai.cn/_og/s/o_86230e9048dbf47d.png)](https://docs.mhaibaraai.cn/)
+[![Movk Nuxt Docs OG](https://docs.mhaibaraai.cn/_og/s/o_255d4693fb224207.png)](https://docs.mhaibaraai.cn/)
 [![Movk Nuxt Docs](https://docs.mhaibaraai.cn/og-image.png)](https://docs.mhaibaraai.cn/)
 
 [![中文 README](https://img.shields.io/badge/README-%E4%B8%AD%E6%96%87-00DC82?style=flat&colorA=020420)](./README.md)
