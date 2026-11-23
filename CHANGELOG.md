@@ -1,5 +1,11 @@
 # 📋 Changelog
 
+## [3.0.6](https://github.com/mhaibaraai/movk-nuxt-docs/compare/v3.0.5...v3.0.6) (2026-11-23)
+
+### 🐛 Bug Fixes
+
+* 修复分享图字体配置时机 ([183a333](https://github.com/mhaibaraai/movk-nuxt-docs/commit/183a333cf25e646c9eb29dac3ee5fc67a6e3d818))
+
 ## [3.0.5](https://github.com/mhaibaraai/movk-nuxt-docs/compare/v3.0.4...v3.0.5) (2026-11-20)
 
 ### 🐛 Bug Fixes
