@@ -20,47 +20,6 @@ export default defineNuxtConfig({
         prefix: 'custom',
         dir: join(nuxt.options.srcDir, 'assets/icons')
       })
-
-      nuxt.options.ui ||= {}
-      const ogImage = getFeatures(nuxt).ogImage
-      const ogOnlyFonts = nuxt.options.ui.fonts === undefined && nuxt.options.fonts === undefined
-      nuxt.options.ui.fonts ??= ogImage
-      if (ogImage && nuxt.options.ui.fonts && nuxt.options.fonts !== false) {
-        const fonts: NonNullable<typeof nuxt.options.fonts> = {
-          // The legacy Fonts DevTools panel loads h3 v2 in the Nitro v2 dev server.
-          devtools: false,
-          ...ogOnlyFonts && {
-            processCSSVariables: false,
-            providers: {
-              google: false,
-              googleicons: false,
-              bunny: false,
-              fontshare: false,
-              fontsource: false,
-              adobe: false
-            }
-          },
-          npm: {
-            remote: false,
-            resolve: (id: string) => {
-              // pnpm consumers cannot resolve a dependency installed only under the layer.
-              const from = id.startsWith(`${ogFontPackage}/`) ? import.meta.url : `${nuxt.options.rootDir}/`
-              return resolveModulePath(id, { from, conditions: ['node', 'import', 'style', 'default'], try: true }) ?? null
-            }
-          },
-          families: [{
-            name: 'Noto Sans SC Variable',
-            provider: 'npm',
-            providerOptions: { npm: { package: ogFontPackage } },
-            weights: [400, 700],
-            styles: ['normal'],
-            formats: ['woff2'],
-            global: true,
-            preload: false
-          }]
-        }
-        nuxt.options.fonts = defu(nuxt.options.fonts, fonts)
-      }
     },
     '@nuxt/ui',
     '@nuxt/content',
@@ -201,6 +160,50 @@ export default defineNuxtConfig({
   telemetry: false,
 
   hooks: {
+    'modules:before': () => {
+      // Nuxt UI resolves its Fonts dependency before module setup.
+      const nuxt = useNuxt()
+      nuxt.options.ui ||= {}
+      const ogImage = getFeatures(nuxt).ogImage
+      const ogOnlyFonts = nuxt.options.ui.fonts === undefined && nuxt.options.fonts === undefined
+      nuxt.options.ui.fonts ??= ogImage
+      if (ogImage && nuxt.options.ui.fonts && nuxt.options.fonts !== false) {
+        const fonts: NonNullable<typeof nuxt.options.fonts> = {
+          // The legacy Fonts panel needs h3 v2 even when the host pins h3 to v1.
+          devtools: false,
+          ...ogOnlyFonts && {
+            processCSSVariables: false,
+            providers: {
+              google: false,
+              googleicons: false,
+              bunny: false,
+              fontshare: false,
+              fontsource: false,
+              adobe: false
+            }
+          },
+          npm: {
+            remote: false,
+            resolve: (id: string) => {
+              // pnpm consumers cannot resolve a dependency installed only under the layer.
+              const from = id.startsWith(`${ogFontPackage}/`) ? import.meta.url : `${nuxt.options.rootDir}/`
+              return resolveModulePath(id, { from, conditions: ['node', 'import', 'style', 'default'], try: true }) ?? null
+            }
+          },
+          families: [{
+            name: 'Noto Sans SC Variable',
+            provider: 'npm',
+            providerOptions: { npm: { package: ogFontPackage } },
+            weights: [400, 700],
+            styles: ['normal'],
+            formats: ['woff2'],
+            global: true,
+            preload: false
+          }]
+        }
+        nuxt.options.fonts = defu(nuxt.options.fonts, fonts)
+      }
+    },
     'nitro:init': setupPrerenderContentTypes,
     'vite:extendConfig': async (config) => {
       const cfg = config as { optimizeDeps?: { include?: string[], exclude?: string[] } }
