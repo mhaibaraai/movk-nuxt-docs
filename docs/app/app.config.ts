@@ -69,9 +69,9 @@ export default defineAppConfig({
       },
       {
         'icon': 'i-lucide-mail',
-        'to': 'mailto:mhaibaraai@gmail.com',
+        'to': 'mailto:hi@mhaibaraai.cn',
         'target': '_blank',
-        'aria-label': 'YiXuan\'s Gmail'
+        'aria-label': 'YiXuan\'s Email'
       }
     ]
   },
