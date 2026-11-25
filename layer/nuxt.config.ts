@@ -143,6 +143,13 @@ export default defineNuxtConfig({
     // Nitro defaults to true; server source maps are useless for a docs site
     // and generating them costs ~270 extra artifacts per build.
     sourceMap: false,
+    // Nuxt 4.7 disables Rolldown's require() polyfill in intermediate Vite SSR
+    // chunks so the server builder resolves them, but Nitro v2's commonjs plugin
+    // leaves require() untouched in ESM chunks unless transformMixedEsModules is
+    // enabled (breaks CJS yaml transpiled by @nuxtjs/mdc on Node presets).
+    commonJS: {
+      transformMixedEsModules: true
+    },
     prerender: {
       routes: ['/', '/raw/index.md'],
       crawlLinks: true,
