@@ -11,7 +11,7 @@ export function useRecentPages() {
   const site = useSiteConfig()
   const { docsRoot } = useMovkI18n()
 
-  const stored = useLocalStorage<RecentPage[]>(`${kebabCase(site.name)}-recent-pages`, [])
+  const stored = useLocalStorage<RecentPage[]>(`${kebabCase(site.name ?? '')}-recent-pages`, [])
 
   const pages = computed(() => stored.value
     .filter(page => page.path.startsWith(`${docsRoot.value}/`))
