@@ -6,7 +6,7 @@ export default defineNuxtPlugin({
   setup() {
     const appConfig = useAppConfig()
     const site = useSiteConfig()
-    const name = kebabCase(site.name)
+    const name = kebabCase(site.name ?? '')
 
     // 在应用访客偏好前记录站点配置的主题，作为重置与差异比较的基准；
     // 客户端沿用服务端写入 payload 的值，避免读到已被 localStorage 覆盖的配置

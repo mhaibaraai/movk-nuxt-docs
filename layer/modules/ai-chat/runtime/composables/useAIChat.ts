@@ -6,7 +6,7 @@ export const useAIChat = createSharedComposable(() => {
   const config = useRuntimeConfig()
   const site = useSiteConfig()
   const route = useRoute()
-  const name = kebabCase(site.name)
+  const name = kebabCase(site.name ?? '')
 
   const isEnabled = computed(() => config.public.aiChat?.enabled ?? false)
 

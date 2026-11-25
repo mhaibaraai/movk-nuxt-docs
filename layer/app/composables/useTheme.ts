@@ -32,7 +32,7 @@ export function useTheme() {
   const appConfig = useAppConfig()
   const colorMode = useColorMode()
   const site = useSiteConfig()
-  const name = kebabCase(site.name)
+  const name = kebabCase(site.name ?? '')
   const defaults = useThemeDefaults()
 
   const color = computed(() => {
