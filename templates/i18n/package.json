@@ -17,7 +17,7 @@
   "dependencies": {
     "@movk/nuxt-docs": "latest",
     "@nuxt/content": "^3.17.0",
-    "@nuxtjs/i18n": "^10.6.0",
+    "@nuxtjs/i18n": "^10.7.0",
     "nuxt": "^4.7.0",
     "tailwindcss": "^4.3.5"
   },

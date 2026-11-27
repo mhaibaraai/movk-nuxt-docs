@@ -15,7 +15,7 @@
     "@nuxt/a11y": "^1.0.0-alpha.1",
     "@nuxt/content": "^3.17.0",
     "@nuxt/ui": "^4.13.1",
-    "@nuxtjs/i18n": "^10.6.0",
+    "@nuxtjs/i18n": "^10.7.0",
     "@shikijs/engine-javascript": "^4.6.0",
     "@shikijs/langs": "^4.6.0",
     "@shikijs/themes": "^4.6.0",
