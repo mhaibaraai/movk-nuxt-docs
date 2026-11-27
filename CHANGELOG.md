@@ -1,5 +1,19 @@
 # 📋 Changelog
 
+## [3.0.8](https://github.com/mhaibaraai/movk-nuxt-docs/compare/v3.0.7...v3.0.8) (2026-11-27)
+
+### 🐛 Bug Fixes
+
+* **layer:** 修复 site.name 可空导致的类型错误 ([ff54290](https://github.com/mhaibaraai/movk-nuxt-docs/commit/ff54290c150235c231cfd9313d5742edca1fa3ec))
+* **layer:** 开启 Nitro 混合 ESM 模块的 CJS 转换 ([9aedf7e](https://github.com/mhaibaraai/movk-nuxt-docs/commit/9aedf7e37173992fd6c20785dbdf4cec958c8b34))
+
+### 🔧 Chores
+
+* **deps:** update ai sdk ([1f27ad4](https://github.com/mhaibaraai/movk-nuxt-docs/commit/1f27ad4fb30622a15d3cea24d22ed394852d6288))
+* **deps:** update all non-major dependencies ([d0ba62e](https://github.com/mhaibaraai/movk-nuxt-docs/commit/d0ba62e174a5b7efd853ac0668d119d024bd76b6))
+* **deps:** update nuxt ([e6a057c](https://github.com/mhaibaraai/movk-nuxt-docs/commit/e6a057c03f05c9b270d02fbfe8038b9856cb6fd8))
+* **deps:** update nuxt ([bcd2e13](https://github.com/mhaibaraai/movk-nuxt-docs/commit/bcd2e1355b2bd2b16bde6aa0688abd686f459da5))
+
 ## [3.0.7](https://github.com/mhaibaraai/movk-nuxt-docs/compare/v3.0.6...v3.0.7) (2026-11-23)
 
 ### 🐛 Bug Fixes
